@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网红建联平台原型</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="themes/theme-switcher.css">
+    <link rel="stylesheet" href="themes/alien-effects.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="themes/theme-config.js"></script>
+    <script src="themes/theme-manager.js"></script>
+</head>
+<body>
+    <!-- 登录页面 -->
+    <div id="login-page" style="display: none;">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-logo">
+                        <span style="font-size: 36px; margin-right: 10px;">📧</span>
+                        <h1>跨境运营助手</h1>
+                    </div>
+                    <p class="login-subtitle">登录您的账号以继续</p>
+                </div>
+                <div class="login-methods">
+                    <button class="google-login-btn" id="google-login-btn">
+                        <i class="ri-google-fill"></i>
+                        使用Google账号登录
+                    </button>
+                    <div class="login-divider">
+                        <span>或</span>
+                    </div>
+                    <div class="phone-login-form">
+                        <div class="login-input-group">
+                            <label>手机号码</label>
+                            <input type="tel" id="phone-input" placeholder="输入您的手机号码" value="+86 13812345678">
+                        </div>
+                        <div class="login-input-group verification-code-group">
+                            <label>验证码</label>
+                            <div class="verification-code-container">
+                                <input type="text" id="verification-code-input" placeholder="输入验证码" maxlength="6">
+                                <button class="send-code-btn" id="send-code-btn">发送验证码</button>
+                            </div>
+                        </div>
+                        <button class="phone-login-btn" id="phone-login-btn">登录</button>
+                    </div>
+                </div>
+                <div class="login-footer">
+                    <p>还没有账号？ <a href="#">立即注册</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google登录模拟页面 -->
+    <div id="google-auth-page" style="display: none;">
+        <div class="google-auth-container">
+            <div class="google-auth-card">
+                <div class="google-auth-header">
+                    <div class="google-logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="74" height="24" viewBox="0 0 74 24"><path fill="#4285F4" d="M9.24 8.19v2.46h5.88c-.18 1.38-.64 2.39-1.34 3.1-.86.86-2.2 1.8-4.54 1.8-3.62 0-6.45-2.92-6.45-6.54s2.83-6.54 6.45-6.54c1.95 0 3.38.77 4.43 1.76L15.4 2.5C13.94 1.08 11.98 0 9.24 0 4.28 0 .11 4.04.11 9s4.17 9 9.13 9c2.68 0 4.7-.88 6.28-2.52 1.62-1.62 2.13-3.91 2.13-5.75 0-.57-.04-1.1-.13-1.54H9.24z"/><path fill="#EA4335" d="M25 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z"/><path fill="#FBBC05" d="M53.58 7.49h-.09c-.57-.68-1.67-1.3-3.06-1.3C47.53 6.19 45 8.72 45 12c0 3.26 2.53 5.81 5.43 5.81 1.39 0 2.49-.62 3.06-1.32h.09v.81c0 2.22-1.19 3.41-3.1 3.41-1.56 0-2.53-1.12-2.93-2.07l-2.22.92c.64 1.54 2.33 3.43 5.15 3.43 2.99 0 5.52-1.76 5.52-6.05V6.49h-2.42v1zm-2.93 8.03c-1.76 0-3.1-1.5-3.1-3.52 0-2.05 1.34-3.52 3.1-3.52 1.74 0 3.1 1.5 3.1 3.54.01 2.03-1.36 3.5-3.1 3.5z"/><path fill="#4285F4" d="M38 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z"/><path fill="#34A853" d="M58 .24h2.51v17.57H58z"/><path fill="#EA4335" d="M68.26 15.52c-1.3 0-2.22-.59-2.82-1.76l7.77-3.21-.26-.66c-.48-1.3-1.96-3.7-4.97-3.7-2.99 0-5.48 2.35-5.48 5.81 0 3.26 2.46 5.81 5.76 5.81 2.66 0 4.2-1.63 4.84-2.57l-1.98-1.32c-.66.96-1.56 1.6-2.86 1.6zm-.18-7.15c1.03 0 1.91.53 2.2 1.28l-5.25 2.17c0-2.44 1.73-3.45 3.05-3.45z"/></svg>
+                    </div>
+                </div>
+                <div class="google-auth-content">
+                    <h2>登录</h2>
+                    <p>使用您的Google账号</p>
+
+                    <div class="google-account-select">
+                        <div class="google-account-option selected">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&q=80" alt="用户头像" class="account-avatar">
+                            <div class="account-info">
+                                <div class="account-name">跨境运营专家</div>
+                                <div class="account-email">user@example.com</div>
+                            </div>
+                            <div class="account-check"><i class="ri-check-line"></i></div>
+                        </div>
+
+                        <div class="google-account-option">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=40&h=40&fit=crop&q=80" alt="用户头像" class="account-avatar">
+                            <div class="account-info">
+                                <div class="account-name">张三</div>
+                                <div class="account-email">work@company.com</div>
+                            </div>
+                        </div>
+
+                        <div class="google-account-option add-account">
+                            <div class="add-account-icon"><i class="ri-add-line"></i></div>
+                            <div class="account-info">
+                                <div class="account-name">使用其他账号</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="google-auth-actions">
+                        <button class="google-cancel-btn">取消</button>
+                        <button class="google-next-btn" id="google-next-btn">下一步</button>
+                    </div>
+                </div>
+                <div class="google-auth-footer">
+                    <div class="auth-footer-links">
+                        <a href="#">隐私权政策</a>
+                        <a href="#">使用条款</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 授权请求页面 -->
+    <div id="auth-request-page" style="display: none;">
+        <div class="auth-request-container">
+            <div class="auth-request-card">
+                <div class="auth-request-header">
+                    <div class="app-logo">
+                        <span style="font-size: 28px; margin-right: 8px;">📧</span>
+                        <h2>跨境运营助手</h2>
+                    </div>
+                    <div class="auth-divider"></div>
+                    <div class="google-logo-small">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="16" viewBox="0 0 74 24"><path fill="#4285F4" d="M9.24 8.19v2.46h5.88c-.18 1.38-.64 2.39-1.34 3.1-.86.86-2.2 1.8-4.54 1.8-3.62 0-6.45-2.92-6.45-6.54s2.83-6.54 6.45-6.54c1.95 0 3.38.77 4.43 1.76L15.4 2.5C13.94 1.08 11.98 0 9.24 0 4.28 0 .11 4.04.11 9s4.17 9 9.13 9c2.68 0 4.7-.88 6.28-2.52 1.62-1.62 2.13-3.91 2.13-5.75 0-.57-.04-1.1-.13-1.54H9.24z"/><path fill="#EA4335" d="M25 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z"/><path fill="#FBBC05" d="M53.58 7.49h-.09c-.57-.68-1.67-1.3-3.06-1.3C47.53 6.19 45 8.72 45 12c0 3.26 2.53 5.81 5.43 5.81 1.39 0 2.49-.62 3.06-1.32h.09v.81c0 2.22-1.19 3.41-3.1 3.41-1.56 0-2.53-1.12-2.93-2.07l-2.22.92c.64 1.54 2.33 3.43 5.15 3.43 2.99 0 5.52-1.76 5.52-6.05V6.49h-2.42v1zm-2.93 8.03c-1.76 0-3.1-1.5-3.1-3.52 0-2.05 1.34-3.52 3.1-3.52 1.74 0 3.1 1.5 3.1 3.54.01 2.03-1.36 3.5-3.1 3.5z"/><path fill="#4285F4" d="M38 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z"/><path fill="#34A853" d="M58 .24h2.51v17.57H58z"/><path fill="#EA4335" d="M68.26 15.52c-1.3 0-2.22-.59-2.82-1.76l7.77-3.21-.26-.66c-.48-1.3-1.96-3.7-4.97-3.7-2.99 0-5.48 2.35-5.48 5.81 0 3.26 2.46 5.81 5.76 5.81 2.66 0 4.2-1.63 4.84-2.57l-1.98-1.32c-.66.96-1.56 1.6-2.86 1.6zm-.18-7.15c1.03 0 1.91.53 2.2 1.28l-5.25 2.17c0-2.44 1.73-3.45 3.05-3.45z"/></svg>
+                    </div>
+                </div>
+                <div class="auth-request-content">
+                    <h2>跨境运营助手请求授权</h2>
+                    <p class="auth-user-info">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&q=80" alt="用户头像" class="auth-user-avatar">
+                        <span>user@example.com</span>
+                    </p>
+
+                    <div class="auth-permissions">
+                        <h3>该应用将能够：</h3>
+                        <ul class="permission-list">
+                            <li><i class="ri-mail-line"></i> 代表您发送电子邮件</li>
+                            <li><i class="ri-mail-open-line"></i> 查看您的邮件消息和设置</li>
+                            <li><i class="ri-contacts-line"></i> 查看您的联系人</li>
+                        </ul>
+                    </div>
+
+                    <div class="auth-note">
+                        <p>跨境运营助手将遵循 <a href="#">隐私权政策</a> 和 <a href="#">服务条款</a> 处理您的数据</p>
+                    </div>
+
+                    <div class="auth-request-actions">
+                        <button class="auth-cancel-btn">取消</button>
+                        <button class="auth-allow-btn" id="auth-allow-btn">允许</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" style="display: block;">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <!-- 侧边栏logo -->
+            <div class="sidebar-logo">
+                <span style="font-size: 28px; margin-right: 8px;">📧</span>
+                <h1>跨境运营助手</h1>
+            </div>
+
+            <!-- 主菜单 -->
+            <div class="menu-section">
+                <h2>主菜单</h2>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="ri-dashboard-line"></i>
+                        <span>仪表盘</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="ri-box-3-line"></i>
+                        <span>产品库</span>
+                        <span class="counter">1</span>
+                    </div>
+                </div>
+                <div class="menu-item has-submenu active" id="ai-assistant-menu">
+                    <div class="menu-item-content">
+                        <i class="ri-robot-line"></i>
+                        <span>AI助手</span>
+                        <i class="ri-arrow-down-s-line submenu-arrow"></i>
+                    </div>
+                    <div class="submenu" id="ai-assistant-submenu">
+                        <div class="submenu-item new-product">
+                            <i class="ri-add-line"></i>
+                            <span>新建商品分析</span>
+                        </div>
+                        <div class="submenu-divider"></div>
+                        <div class="submenu-item active">
+                            <i class="ri-brain-line"></i>
+                            <span>Earbud</span>
+                        </div>
+                        <div class="submenu-item">
+                            <i class="ri-brain-line"></i>
+                            <span>Smartwatch</span>
+                        </div>
+                        <div class="submenu-item">
+                            <i class="ri-brain-line"></i>
+                            <span>Speaker</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="ri-file-list-3-line"></i>
+                        <span>建联记录</span>
+                        <span class="counter">2</span>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <!-- 用户信息 -->
+            <div class="user-profile" id="user-profile-sidebar">
+                <div class="user-profile-clickable" id="sidebar-profile-clickable">
+                    <div class="sidebar-avatar-container">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&q=80" alt="用户头像" id="sidebar-avatar">
+                    </div>
+                    <div class="user-info">
+                        <div class="user-name">跨境运营专家</div>
+                        <div class="user-email">user@example.com</div>
+                    </div>
+                    <i class="ri-arrow-down-s-line dropdown-arrow"></i>
+                </div>
+                <!-- 侧边栏用户下拉菜单 -->
+                <div class="sidebar-dropdown-menu" id="sidebar-dropdown-menu">
+                    <div class="dropdown-item" id="sidebar-account-settings-item">
+                        <i class="ri-user-settings-line"></i>
+                        <span>账号设置</span>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-item" id="sidebar-logout-item">
+                        <i class="ri-logout-box-line"></i>
+                        <span>退出登录</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 顶部导航栏 -->
+            <div class="header">
+                <div class="product-title">AI助手</div>
+                <!-- 顶部导航栏用户头像 -->
+                <div class="user-actions">
+                    <div class="notification-container">
+                        <div class="icon-button" id="notification-button">
+                            <i class="ri-notification-2-line"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                        <!-- 通知列表 -->
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h3>通知中心</h3>
+                                <div class="notification-actions">
+                                    <span class="mark-all-read">全部标为已读</span>
+                                </div>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread" data-creator="MattVidPro AI">
+                                    <div class="notification-avatar">
+                                        <img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=40&h=40&fit=crop&q=80" alt="MattVidPro AI">
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-title">MattVidPro AI 回复了您的邮件</div>
+                                        <div class="notification-text">"您好，我对这个产品很感兴趣，想了解更多细节..."</div>
+                                        <div class="notification-time">42分钟前</div>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread" data-creator="Two Minute Papers">
+                                    <div class="notification-avatar">
+                                        <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=40&h=40&fit=crop&q=80" alt="Two Minute Papers">
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-title">Two Minute Papers 确认了合作</div>
+                                        <div class="notification-text">"我们已经收到了产品样品，将在下周开始制作视频"</div>
+                                        <div class="notification-time">3小时前</div>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread" data-creator="AI TV">
+                                    <div class="notification-avatar">
+                                        <img src="https://images.unsplash.com/photo-1580518324671-c2f0833a3af3?w=40&h=40&fit=crop&q=80" alt="AI TV">
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-title">AI TV 发布了关于您产品的视频</div>
+                                        <div class="notification-text">"新视频上线：《这个耳机的AI翻译功能太神奇了！》"</div>
+                                        <div class="notification-time">昨天</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="javascript:void(0)" class="view-all-notifications" id="view-all-notifications-link">查看全部通知</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-profile-dropdown">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=36&h=36&fit=crop&q=80" alt="用户头像" class="user-avatar" id="user-avatar-header">
+                        <!-- 用户下拉菜单 -->
+                        <div class="user-dropdown-menu" id="user-dropdown-menu">
+                            <div class="dropdown-item" id="account-settings-item">
+                                <i class="ri-user-settings-line"></i>
+                                <span>账号设置</span>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-item" id="logout-item">
+                                <i class="ri-logout-box-line"></i>
+                                <span>退出登录</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI助手内容 -->
+            <div class="ai-assistant-container">
+                <!-- AI助手顶部信息 -->
+                <div class="ai-header card pulse">
+                    <div class="ai-avatar glow">
+                        <i class="ri-robot-line"></i>
+                    </div>
+                    <div class="ai-info">
+                        <div class="ai-name tech-text">AI助手</div>
+                        <!-- 已移除当前产品显示 -->
+                    </div>
+                </div>
+
+                <!-- 新建商品分析会话界面 -->
+                <div class="new-product-container" style="display: flex;">
+                    <div class="welcome-message">
+                        <div class="welcome-icon">
+                            <i class="ri-robot-line"></i>
+                        </div>
+                        <h2>👋 欢迎使用 AI助手！</h2>
+                        <p>我是您的跨境运营伙伴，可以帮您：</p>
+                        <ul>
+                            <li>分析商品信息并推荐适合的 YouTube 博主</li>
+                            <li>为商品特性匹配最适合的合作人选</li>
+                            <li>生成高质量的初步建联邮件</li>
+                        </ul>
+                        <p>请在下方输入框粘贴商品链接或描述信息，即可开始分析！</p>
+                        <p class="welcome-hint">（支持 Amazon、独立站商品页链接，或简要描述如："蓝牙耳机，定位运动用户，预算 $30 左右"）</p>
+                    </div>
+
+                    <!-- 中央输入框 -->
+                    <div class="central-input-container border-glow">
+                        <textarea class="central-input hologram" placeholder="粘贴您的商品链接或输入产品信息……"></textarea>
+                        <button class="central-send-button btn-primary glow">
+                            <i class="ri-send-plane-fill"></i>
+                        </button>
+                    </div>
+
+                    <!-- 快速提示按钮 -->
+                    <div class="quick-prompts">
+                        <button class="quick-prompt-btn card glow" data-prompt="https://www.amazon.com/Sony-WF-1000XM4-Canceling-Headphones-Charging/dp/B094C4VDJZ/">
+                            <i class="ri-link-m"></i> 示例链接
+                        </button>
+                        <button class="quick-prompt-btn card glow" data-prompt="科技类无线耳机，主打降噪功能和长续航，面向商务人士和通勤族，价格区间100-150美元">
+                            <i class="ri-file-text-line"></i> 使用模板描述
+                        </button>
+                        <button class="quick-prompt-btn card glow" data-prompt="demo">
+                            <i class="ri-play-circle-line"></i> 跳过输入，直接体验
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 聊天内容区域 -->
+                <div class="chat-container" style="display: none;">
+
+
+                    <!-- AI消息 -->
+                    <div class="message ai-message">
+                        <div class="ai-avatar message-avatar">
+                            <i class="ri-robot-line"></i>
+                        </div>
+                        <div>
+                            <div class="message-content">
+                                您好！我是您的AI助手，可以帮您：
+                                <ul style="padding-left: 20px; margin-top: 8px;">
+                                    <li>分析商品信息并推荐合适的YouTube博主</li>
+                                    <li>为商品特性匹配最适合的创作者</li>
+                                    <li>评估潜在合作伙伴的影响力和匹配度</li>
+                                </ul>
+                                <div style="margin-top: 10px;">
+                                    <div class="suggestion-tag">分析商品</div>
+                                    <div class="suggestion-tag">推荐博主</div>
+                                    <div class="suggestion-tag">查看热门合作案例</div>
+                                </div>
+                            </div>
+                            <div class="message-time">10:08</div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- AI消息（长回复） -->
+                    <div class="message ai-message">
+                        <div class="ai-avatar message-avatar">
+                            <i class="ri-robot-line"></i>
+                        </div>
+                        <div>
+                            <div class="message-content">
+                                <p>基于您的产品库信息，我为您推荐以下可能适合合作的博主:</p>
+
+                                <!-- 添加博主推荐卡片 -->
+                                <div class="ai-results">
+                                    <!-- 博主卡片1 -->
+                                    <div class="creator-card">
+                                        <img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=64&h=64&fit=crop&q=80" alt="MattVidPro AI" class="creator-avatar">
+                                        <div class="creator-info">
+                                            <div class="creator-name">MattVidPro AI <i class="ri-verified-badge-fill verified"></i></div>
+                                            <div class="creator-stats">
+                                                <span><i class="ri-user-line"></i> 28.67万</span>
+                                                <span><i class="ri-play-circle-line"></i> 3978万</span>
+                                                <span><i class="ri-video-line"></i> 580</span>
+                                                <span><i class="ri-bar-chart-line"></i> 相关度: 92%</span>
+                                            </div>
+                                            <div class="creator-description">
+                                                专注AI技术在视频制作领域的应用，与Earbud的AI功能相匹配。
+                                                <br><strong>依据:</strong> 最近3个视频提及 "AI语音识别", "实时翻译"，与产品特性高度吻合。评论区用户画像与 "科技爱好者" 标签重叠度预估 85%。
+                                            </div>
+                                            <div class="ai-suggestion">
+                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 建议:</strong> 与其沟通时可强调AI语音助手的便捷性，这是其观众近期讨论较多的话题。
+                                            </div>
+                                            <div class="creator-actions">
+                                                <button class="add-outreach-btn">添加到建联记录</button>
+                                                <button class="view-detail-btn">查看详情</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 博主卡片2 -->
+                                    <div class="creator-card">
+                                        <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&q=80" alt="Two Minute Papers" class="creator-avatar">
+                                        <div class="creator-info">
+                                            <div class="creator-name">Two Minute Papers <i class="ri-verified-badge-fill verified"></i></div>
+                                            <div class="creator-stats">
+                                                <span><i class="ri-user-line"></i> 162万</span>
+                                                <span><i class="ri-play-circle-line"></i> 1.5亿</span>
+                                                <span><i class="ri-video-line"></i> 999</span>
+                                                <span><i class="ri-bar-chart-line"></i> 相关度: 89%</span>
+                                            </div>
+                                            <div class="creator-description">
+                                                以短视频形式讲解最新AI研究，观众为技术爱好者。
+                                                <br><strong>依据:</strong> 频道核心主题为 "前沿科技解读"，与产品 "AI特性" 定位相符。历史内容中包含多篇关于 "音频技术" 的分析。
+                                            </div>
+                                            <div class="ai-suggestion">
+                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 建议:</strong> 可提供产品技术白皮书供其参考，强调技术的创新性。
+                                            </div>
+                                            <div class="creator-actions">
+                                                <button class="add-outreach-btn">添加到建联记录</button>
+                                                <button class="view-detail-btn">查看详情</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 博主卡片3 -->
+                                    <div class="creator-card">
+                                        <img src="https://images.unsplash.com/photo-1580518324671-c2f0833a3af3?w=64&h=64&fit=crop&q=80" alt="AI TV" class="creator-avatar">
+                                        <div class="creator-info">
+                                            <div class="creator-name">AI TV</div>
+                                            <div class="creator-stats">
+                                                <span><i class="ri-user-line"></i> 1.38K</span>
+                                                <span><i class="ri-play-circle-line"></i> 11.4万</span>
+                                                <span><i class="ri-video-line"></i> 396</span>
+                                                <span><i class="ri-bar-chart-line"></i> 相关度: 85%</span>
+                                            </div>
+                                            <div class="creator-description">
+                                                专注AI产品评测，虽然规模较小但受众精准。
+                                                <br><strong>依据:</strong> 频道定位为 "AI产品评测"，与合作需求直接相关。近期有 "智能穿戴设备" 评测内容。
+                                            </div>
+                                            <div class="ai-suggestion">
+                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 建议:</strong> 强调产品的多语言翻译功能，满足其评测多样性需求。其互动率稳定，可按标准方案沟通。
+                                            </div>
+                                            <div class="creator-actions">
+                                                <button class="add-outreach-btn">添加到建联记录</button>
+                                                <button class="view-detail-btn">查看详情</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 博主卡片4 -->
+                                    <div class="creator-card">
+                                        <img src="https://images.unsplash.com/photo-1540569876033-6e5d046a1d77?w=64&h=64&fit=crop&q=80" alt="Sciencephile the AI" class="creator-avatar">
+                                        <div class="creator-info">
+                                            <div class="creator-name">Sciencephile the AI <i class="ri-verified-badge-fill verified"></i></div>
+                                            <div class="creator-stats">
+                                                <span><i class="ri-user-line"></i> 108万</span>
+                                                <span><i class="ri-play-circle-line"></i> 2557万</span>
+                                                <span><i class="ri-video-line"></i> 144</span>
+                                                <span><i class="ri-bar-chart-line"></i> 相关度: 78%</span>
+                                            </div>
+                                            <div class="creator-description">
+                                                科技内容创作者，受众对创新科技产品有强烈兴趣。
+                                                 <br><strong>依据:</strong> 频道覆盖 "未来科技"、"创新产品" 等话题，粉丝互动中常讨论 "续航"、"音质"。
+                                            </div>
+                                             <div class="ai-suggestion">
+                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 分析:</strong> 该博主近期内容互动率略有下降，建议提供更有吸引力的合作方案（如：更高的佣金比例或独家内容）。
+                                            </div>
+                                            <div class="creator-actions">
+                                                <button class="add-outreach-btn">添加到建联记录</button>
+                                                <button class="view-detail-btn">查看详情</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p>这些博主的内容都与AI技术相关，并且拥有一定的粉丝基础，能够帮助您的产品触达目标受众。您可以参考 AI 建议，在联系这些博主时，更有针对性地突出产品特点，以吸引他们的兴趣。</p>
+
+                                <div class="json-container">
+                                    <div class="json-toggle">
+                                        <i class="ri-code-line"></i> 查看详细数据
+                                        <i class="ri-arrow-down-s-line"></i>
+                                    </div>
+                                    <div class="ai-json" style="display: none;">
+```json
+<ai-ctx-json>
+{
+"recommendations": [
+{
+  "name": "MattVidPro AI",
+  "subscribers": 286700,
+  "totalViews": 39787267,
+  "videoCount": 580,
+  "relevance": 0.92,
+  "detailedReason": "专注AI技术在视频制作领域的应用，与Earbud的AI功能相匹配。最近3个视频提及 'AI语音识别', '实时翻译'，与产品特性高度吻合。评论区用户画像与 '科技爱好者' 标签重叠度预估 85%。",
+  "aiSuggestion": "与其沟通时可强调AI语音助手的便捷性，这是其观众近期讨论较多的话题。",
+  "contactInfo": "contact@mattvidpro.com",
+  "estimatedReach": "25万-30万",
+  "estimatedCost": "$1500-$2500"
+},
+{
+  "name": "Two Minute Papers",
+  "subscribers": 1620000,
+  "totalViews": 150268844,
+  "videoCount": 999,
+  "relevance": 0.89,
+  "detailedReason": "以短视频形式讲解最新AI研究，观众为技术爱好者。频道核心主题为 '前沿科技解读'，与产品 'AI特性' 定位相符。历史内容中包含多篇关于 '音频技术' 的分析。",
+  "aiSuggestion": "可提供产品技术白皮书供其参考，强调技术的创新性。",
+  "contactInfo": "papers@twominutepapers.com",
+  "estimatedReach": "100万-150万",
+  "estimatedCost": "$3000-$5000"
+},
+{
+  "name": "AI TV",
+  "subscribers": 1380,
+  "totalViews": 114088,
+  "videoCount": 396,
+  "relevance": 0.85,
+  "detailedReason": "专注AI产品评测，虽然规模较小但受众精准。频道定位为 'AI产品评测'，与合作需求直接相关。近期有 '智能穿戴设备' 评测内容。",
+  "aiSuggestion": "强调产品的多语言翻译功能，满足其评测多样性需求。其互动率稳定，可按标准方案沟通。",
+  "contactInfo": "aitvchannel@gmail.com",
+  "estimatedReach": "1千-2千",
+  "estimatedCost": "$200-$500"
+},
+{
+  "name": "Sciencephile the AI",
+  "subscribers": 1080000,
+  "totalViews": 25571204,
+  "videoCount": 144,
+  "relevance": 0.78,
+  "detailedReason": "科技内容创作者，受众对创新科技产品有强烈兴趣。频道覆盖 '未来科技'、'创新产品' 等话题，粉丝互动中常讨论 '续航'、'音质'。",
+  "aiSuggestion": "该博主近期内容互动率略有下降，建议提供更有吸引力的合作方案（如：更高的佣金比例或独家内容）。",
+  "contactInfo": "science@sciencephile.org",
+  "estimatedReach": "50万-80万",
+  "estimatedCost": "$2500-$4000"
+}
+]
+}
+</ai-ctx-json>
+```
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-time">10:09</div>
+                        </div>
+                    </div>
+
+                    <!-- 添加推荐结果小结气泡 -->
+                    <div class="message ai-message">
+                        <div class="ai-avatar message-avatar">
+                            <i class="ri-robot-line"></i>
+                        </div>
+                        <div>
+                            <div class="message-content">
+                                <p>已为您推荐了4位适合与Earbud产品合作的YouTube博主。您可以点击"添加到建联记录"按钮，开始建立合作关系。</p>
+                                <div class="suggestion-tag">发起建联活动</div>
+                                <div class="suggestion-tag">查看更多博主</div>
+                                <div class="suggestion-tag">分析产品受众</div>
+                            </div>
+                            <div class="message-time">10:10</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 输入区域 - 仅在分析阶段显示 -->
+                <div class="input-area" style="display: none;">
+                    <textarea class="chat-input" placeholder="输入消息或粘贴商品链接..." value="https://example.com/earbud-product">https://example.com/earbud-product</textarea>
+                    <div class="input-actions">
+                        <button class="input-action-btn"><i class="ri-link-m"></i></button>
+                        <button class="input-action-btn"><i class="ri-attachment-2"></i></button>
+                    </div>
+                    <button class="send-button">
+                        <i class="ri-send-plane-fill"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 建联记录内容区域 -->
+            <div class="outreach-container" style="display: none;">
+                <div class="outreach-header">
+                    <div class="page-title"><i class="ri-links-line"></i> 建联记录</div>
+                    <div class="search-filter">
+                        <input type="text" class="search-input" placeholder="搜索博主名称、产品或状态...">
+                        <div class="filter-controls">
+                            <div class="filter-dropdown">
+                                <button class="filter-dropdown-btn">
+                                    <i class="ri-filter-3-line"></i>
+                                    商品筛选 <i class="ri-arrow-down-s-line"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-item active" data-product="all">所有商品</div>
+                                    <div class="dropdown-item" data-product="earbud">Earbud</div>
+                                    <div class="dropdown-item" data-product="smartwatch">Smartwatch</div>
+                                </div>
+                            </div>
+                            <div class="filter-dropdown">
+                                <button class="filter-dropdown-btn">
+                                    <i class="ri-price-tag-3-line"></i>
+                                    合作类型 <i class="ri-arrow-down-s-line"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-item active" data-intent="all">所有类型</div>
+                                    <div class="dropdown-item" data-intent="测评合作">测评合作</div>
+                                    <div class="dropdown-item" data-intent="付费测评">付费测评</div>
+                                    <div class="dropdown-item" data-intent="深度合作">深度合作</div>
+                                    <div class="dropdown-item" data-intent="科普合作">科普合作</div>
+                                </div>
+                            </div>
+                            <button class="batch-mode-btn">
+                                <i class="ri-checkbox-multiple-line"></i>
+                                批量操作
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 状态标签 -->
+                <div class="status-tabs">
+                    <div class="status-tab active">全部</div>
+                    <div class="status-tab">沟通中</div>
+                    <div class="status-tab">已确认</div>
+                    <div class="status-tab">推广中</div>
+                    <div class="status-tab">已结束</div>
+                </div>
+
+                <!-- 批量操作工具栏 -->
+                <div class="batch-toolbar" style="display: none;">
+                    <div class="batch-info">
+                        <span class="selected-count">已选择 0 项</span>
+                    </div>
+                    <div class="batch-actions">
+                        <button class="batch-action-btn" data-action="email">
+                            <i class="ri-mail-send-line"></i> 批量发送邮件
+                        </button>
+                        <button class="batch-action-btn" data-action="status">
+                            <i class="ri-exchange-line"></i> 批量更新状态
+                        </button>
+                        <button class="batch-action-btn cancel-batch">
+                            <i class="ri-close-line"></i> 取消
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 建联列表 -->
+                <div class="outreach-list batch-mode-off">
+                    <!-- 建联项1: MattVidPro AI -->
+                    <div class="outreach-item verified" data-product="earbud" data-intent="测评合作">
+                        <div class="item-checkbox">
+                            <input type="checkbox" id="item-1" class="outreach-checkbox">
+                            <label for="item-1"></label>
+                        </div>
+                        <div class="outreach-creator">
+                            <img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=50&h=50&fit=crop&q=80" alt="MattVidPro AI" class="creator-avatar">
+                            <div class="creator-basic-info">
+                                <div class="creator-name">MattVidPro AI</div>
+                                <div class="creator-stats">
+                                    <span><i class="ri-user-line"></i> 28.67万</span>
+                                    <span><i class="ri-play-circle-line"></i> 3978万</span>
+                                </div>
+                                <div class="creator-insights">
+                                    <span class="insight-item" title="平均响应时间：24小时内"><i class="ri-time-line"></i> 24h</span>
+                                    <span class="insight-item" title="最近活跃：2天前"><i class="ri-calendar-check-line"></i> 2天前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outreach-product">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=60&h=60&fit=crop&q=80" alt="Earbud">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">Earbud</div>
+                                <div class="product-description">AI翻译耳机 / $50-100</div>
+                            </div>
+                        </div>
+                        <div class="outreach-intent">
+                            <span class="intent-tag">测评合作</span>
+                            <div class="outreach-summary" title="邮件内容：介绍了Earbud的AI翻译功能和降噪技术，邀请进行产品测评">邮件内容：介绍了Earbud的AI翻译功能和降噪技术，邀请进行产品测评</div>
+                        </div>
+                        <div class="outreach-status">
+                            <div class="last-interaction-status">达人已读未回</div>
+                            <span class="status-tag status-in-progress">沟通中</span>
+                        </div>
+                        <div class="outreach-date">
+                            <div class="last-contact">上次联系: 2023/03/21</div>
+                            <div class="created-date">创建于: 2023/03/15</div>
+                        </div>
+                        <div class="outreach-actions">
+                            <button class="action-btn"><i class="ri-mail-send-line"></i> 发送邮件</button>
+                            <button class="action-btn"><i class="ri-more-line"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- 建联项2: AI TV -->
+                    <div class="outreach-item" data-product="earbud" data-intent="付费测评">
+                        <div class="item-checkbox">
+                            <input type="checkbox" id="item-2" class="outreach-checkbox">
+                            <label for="item-2"></label>
+                        </div>
+                        <div class="outreach-creator">
+                            <img src="https://images.unsplash.com/photo-1580518324671-c2f0833a3af3?w=50&h=50&fit=crop&q=80" alt="AI TV" class="creator-avatar">
+                            <div class="creator-basic-info">
+                                <div class="creator-name">AI TV</div>
+                                <div class="creator-stats">
+                                    <span><i class="ri-user-line"></i> 1.38K</span>
+                                    <span><i class="ri-play-circle-line"></i> 11.4万</span>
+                                </div>
+                                <div class="creator-insights">
+                                    <span class="insight-item" title="平均响应时间：12小时内"><i class="ri-time-line"></i> 12h</span>
+                                    <span class="insight-item" title="最近活跃：今天"><i class="ri-calendar-check-line"></i> 今天</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outreach-product">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=60&h=60&fit=crop&q=80" alt="Earbud">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">Earbud</div>
+                                <div class="product-description">AI翻译耳机 / $50-100</div>
+                            </div>
+                        </div>
+                        <div class="outreach-intent">
+                            <span class="intent-tag">付费测评</span>
+                            <div class="outreach-summary" title="邮件内容：提供了Earbud产品样品和$300测评费用，请求详细功能展示">邮件内容：提供了Earbud产品样品和$300测评费用，请求详细功能展示</div>
+                        </div>
+                        <div class="outreach-status">
+                            <div class="last-interaction-status">已报价：$300</div>
+                            <span class="status-tag status-confirmed">已确认</span>
+                        </div>
+                        <div class="outreach-date">
+                            <div class="last-contact">上次联系: 2023/03/22</div>
+                            <div class="created-date">创建于: 2023/03/15</div>
+                        </div>
+                        <div class="outreach-actions">
+                            <button class="action-btn"><i class="ri-mail-send-line"></i> 发送邮件</button>
+                            <button class="action-btn"><i class="ri-more-line"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- 建联项3: Two Minute Papers -->
+                    <div class="outreach-item verified" data-product="earbud" data-intent="深度合作">
+                        <div class="item-checkbox">
+                            <input type="checkbox" id="item-3" class="outreach-checkbox">
+                            <label for="item-3"></label>
+                        </div>
+                        <div class="outreach-creator">
+                            <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=50&h=50&fit=crop&q=80" alt="Two Minute Papers" class="creator-avatar">
+                            <div class="creator-basic-info">
+                                <div class="creator-name">Two Minute Papers</div>
+                                <div class="creator-stats">
+                                    <span><i class="ri-user-line"></i> 162万</span>
+                                    <span><i class="ri-play-circle-line"></i> 1.5亿</span>
+                                </div>
+                                <div class="creator-insights">
+                                    <span class="insight-item" title="平均响应时间：48小时内"><i class="ri-time-line"></i> 48h</span>
+                                    <span class="insight-item" title="最近活跃：3天前"><i class="ri-calendar-check-line"></i> 3天前</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outreach-product">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=60&h=60&fit=crop&q=80" alt="Earbud">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">Earbud</div>
+                                <div class="product-description">AI翻译耳机 / $50-100</div>
+                            </div>
+                        </div>
+                        <div class="outreach-intent">
+                            <span class="intent-tag">深度合作</span>
+                            <div class="outreach-summary" title="邮件内容：提供了Earbud产品样品和$800合作费用，请求AI技术深度解析">邮件内容：提供了Earbud产品样品和$800合作费用，请求AI技术深度解析</div>
+                        </div>
+                        <div class="outreach-status">
+                            <div class="last-interaction-status">视频制作中</div>
+                            <span class="status-tag status-promoting">推广中</span>
+                        </div>
+                        <div class="outreach-date">
+                            <div class="last-contact">上次联系: 2023/03/20</div>
+                            <div class="created-date">创建于: 2023/03/12</div>
+                        </div>
+                        <div class="outreach-actions">
+                            <button class="action-btn"><i class="ri-mail-send-line"></i> 发送邮件</button>
+                            <button class="action-btn"><i class="ri-more-line"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- 建联项4: Sciencephile the AI -->
+                    <div class="outreach-item verified" data-product="earbud" data-intent="科普合作">
+                        <div class="item-checkbox">
+                            <input type="checkbox" id="item-4" class="outreach-checkbox">
+                            <label for="item-4"></label>
+                        </div>
+                        <div class="outreach-creator">
+                            <img src="https://images.unsplash.com/photo-1540569876033-6e5d046a1d77?w=50&h=50&fit=crop&q=80" alt="Sciencephile the AI" class="creator-avatar">
+                            <div class="creator-basic-info">
+                                <div class="creator-name">Sciencephile the AI</div>
+                                <div class="creator-stats">
+                                    <span><i class="ri-user-line"></i> 108万</span>
+                                    <span><i class="ri-play-circle-line"></i> 2557万</span>
+                                </div>
+                                <div class="creator-insights">
+                                    <span class="insight-item success" title="平均响应时间：6小时内"><i class="ri-time-line"></i> 6h</span>
+                                    <span class="insight-item" title="最近活跃：5天前"><i class="ri-calendar-check-line"></i> 5天前</span>
+                                    <span class="insight-item success" title="合作成功率：100%"><i class="ri-bar-chart-line"></i> 100%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outreach-product">
+                            <div class="product-img">
+                                <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=60&h=60&fit=crop&q=80" alt="Earbud">
+                            </div>
+                            <div class="product-info">
+                                <div class="product-name">Earbud</div>
+                                <div class="product-description">AI翻译耳机 / $50-100</div>
+                            </div>
+                        </div>
+                        <div class="outreach-intent">
+                            <span class="intent-tag">科普合作</span>
+                            <div class="outreach-summary" title="邮件内容：提供了Earbud产品样品和$500合作费用，请求AI翻译技术科普">邮件内容：提供了Earbud产品样品和$500合作费用，请求AI翻译技术科普</div>
+                        </div>
+                        <div class="outreach-status">
+                            <div class="last-interaction-status">合作完成 / 效果良好</div>
+                            <span class="status-tag status-completed">已结束</span>
+                        </div>
+                        <div class="outreach-date">
+                            <div class="last-contact">上次联系: 2023/03/10</div>
+                            <div class="created-date">创建于: 2023/03/01</div>
+                        </div>
+                        <div class="outreach-actions">
+                            <button class="action-btn"><i class="ri-file-list-line"></i> 查看报告</button>
+                            <button class="action-btn"><i class="ri-more-line"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 建联详情侧边栏 -->
+                <div class="outreach-detail" style="display: none;">
+                    <div class="detail-header">
+                        <button class="close-detail"><i class="ri-close-line"></i></button>
+                        <div class="combined-info-card">
+                            <div class="creator-product-info">
+                                <div class="creator-section">
+                                    <img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=80&h=80&fit=crop&q=80" alt="MattVidPro AI" class="creator-avatar-large">
+                                    <div class="detail-creator-info">
+                                        <div class="detail-creator-name">MattVidPro AI</div>
+                                        <div class="detail-creator-stats">
+                                            <span><i class="ri-user-line"></i> 28.67万订阅者</span>
+                                            <span><i class="ri-play-circle-line"></i> 3978万总观看</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-section">
+                                    <div class="product-img">
+                                        <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=60&h=60&fit=crop&q=80" alt="Earbud">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="product-name">Earbud</div>
+                                        <div class="product-description">AI翻译耳机 / $50-100</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="collaboration-details">
+                                <div class="creator-insights-detail">
+                                    <span class="insight-item" title="平均响应时间：24小时内"><i class="ri-time-line"></i> 24h</span>
+                                    <span class="insight-item" title="最近活跃：2天前"><i class="ri-calendar-check-line"></i> 2天前</span>
+                                </div>
+                                <div class="collaboration-info">
+                                    <div class="collaboration-type">
+                                        <span class="intent-tag">测评合作</span>
+                                    </div>
+                                    <div class="collaboration-budget">
+                                        <span class="budget-tag">预算: $300</span>
+                                    </div>
+                                </div>
+                                <div class="channel-status-wrapper">
+                                    <a href="#" class="channel-link"><i class="ri-youtube-line"></i> 访问频道</a>
+                                    <div class="detail-status">
+                                        <span class="status-tag status-in-progress">沟通中</span>
+                                        <button class="status-change-btn"><i class="ri-arrow-down-s-line"></i></button>
+                                        <div class="status-dropdown">
+                                            <div class="status-option" data-status="in-progress">沟通中</div>
+                                            <div class="status-option" data-status="confirmed">已确认</div>
+                                            <div class="status-option" data-status="promoting">推广中</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="detail-tabs">
+                        <div class="detail-tab active"><i class="ri-chat-history-line"></i> 沟通记录</div>
+                        <div class="detail-tab"><i class="ri-youtube-line"></i> 近期内容</div>
+                    </div>
+
+                    <div class="detail-content">
+                        <!-- 沟通记录内容 -->
+                        <div class="tab-content communication-content" style="display: block;">
+                            <!-- 沟通时间线 -->
+                            <div class="communication-timeline">
+                                <div class="timeline-item synced-email">
+                                    <div class="timeline-icon"><i class="ri-mail-forbid-line"></i></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">邮件回复 (自动同步)</div>
+                                        <div class="timeline-meta">来自: contact@mattvidpro.com · 2023/03/21 14:30</div>
+                                        <div class="timeline-body">
+                                            <p>"Hi [Your Name], thanks for reaching out! The Earbud sounds interesting, especially the AI translation feature. Could you share more details on its accuracy and supported languages? Also, what are your proposed collaboration terms?"</p>
+                                            <div class="timeline-actions">
+                                                <button class="timeline-action-btn"><i class="ri-mail-open-line"></i> 查看邮件原文</button>
+                                                <button class="timeline-action-btn"><i class="ri-reply-line"></i> 回复</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item synced-email">
+                                    <div class="timeline-icon"><i class="ri-mail-send-line"></i></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">合作意向邮件 (自动同步)</div>
+                                        <div class="timeline-meta">发往: contact@mattvidpro.com · 2023/03/18 10:15</div>
+                                        <div class="timeline-body">
+                                            <p>向博主介绍了Earbud产品，重点强调了AI语音翻译功能和音质表现，提出合作意向。</p>
+                                            <div class="timeline-actions">
+                                                <button class="timeline-action-btn"><i class="ri-mail-open-line"></i> 查看邮件原文</button>
+                                                <button class="timeline-action-btn"><i class="ri-file-copy-line"></i> 复制模板</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item">
+                                    <div class="timeline-icon"><i class="ri-user-add-line"></i></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-title">创建建联</div>
+                                        <div class="timeline-meta">操作人: 跨境运营专家 · 2023/03/15 09:00</div>
+                                        <div class="timeline-body">
+                                            <p>通过AI助手推荐，将MattVidPro AI添加到建联列表。匹配度为92%，预计费用$1500-$2500。</p>
+                                            <div class="timeline-actions">
+                                                <button class="timeline-action-btn"><i class="ri-file-list-line"></i> 查看匹配报告</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 添加记录 -->
+                            <div class="add-record">
+                                <h4>添加新记录</h4>
+                                <textarea class="record-input" placeholder="添加新的沟通记录..."></textarea>
+                                <div class="record-actions">
+                                    <button class="record-type-btn"><i class="ri-mail-line"></i> 邮件</button>
+                                    <button class="record-type-btn"><i class="ri-phone-line"></i> 通话</button>
+                                    <button class="record-type-btn"><i class="ri-chat-1-line"></i> 聊天</button>
+                                    <button class="record-type-btn"><i class="ri-file-text-line"></i> 备注</button>
+                                    <button class="save-record-btn">保存记录</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 近期内容标签页 -->
+                        <div class="tab-content recent-content" style="display: none;">
+                            <!-- 最近发布 -->
+                            <div class="recent-content-preview">
+                                <h4>最近发布</h4>
+                                <div class="content-item">
+                                    <div class="content-platform youtube"><i class="ri-youtube-fill"></i> YouTube</div>
+                                    <div class="content-thumbnail"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Video Thumbnail"></div>
+                                    <div class="content-info">
+                                        <div class="content-title">AI Voice Cloning is Getting SCARY Good!</div>
+                                        <div class="content-meta"><span>发布于: 2天前</span> <span>观看: 5.2万</span> <span>互动率: 15%</span></div>
+                                    </div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="content-platform instagram"><i class="ri-instagram-fill"></i> Instagram</div>
+                                    <div class="content-thumbnail"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=100&h=100&fit=crop&q=80" alt="Post Thumbnail"></div>
+                                    <div class="content-info">
+                                        <div class="content-title">Quick look at the new AI features in the latest editing software update. #AI #VideoEditing</div>
+                                        <div class="content-meta"><span>发布于: 1天前</span> <span>点赞: 1.1K</span> <span>评论: 85</span></div>
+                                    </div>
+                                </div>
+                                <div class="content-item">
+                                    <div class="content-platform youtube"><i class="ri-youtube-fill"></i> YouTube</div>
+                                    <div class="content-thumbnail"><img src="https://img.youtube.com/vi/L_LUpnjgPso/mqdefault.jpg" alt="Video Thumbnail"></div>
+                                    <div class="content-info">
+                                        <div class="content-title">Comparing the Top 5 AI Translation Earbuds</div>
+                                        <div class="content-meta"><span>发布于: 5天前</span> <span>观看: 8.9万</span> <span>互动率: 12%</span></div>
+                                    </div>
+                                </div>
+                                <div class="load-more-content">
+                                    <button>加载更多内容</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 产品库内容（隐藏） -->
+            <div class="content-area" style="display: none;">
+                <div class="page-header">
+                    <h1 class="page-title">产品库</h1>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary add-product-btn">
+                            <i class="ri-add-line"></i>
+                            添加产品
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 搜索和筛选 -->
+                <div class="search-filter">
+                    <input type="text" class="search-input" placeholder="搜索产品名称、类别或描述...">
+                    <div class="filter-controls">
+
+                        <div class="filter-dropdown">
+                            <button class="filter-dropdown-btn">
+                                分类 <i class="ri-arrow-down-s-line"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item" data-category="all">全部分类</div>
+                                <div class="dropdown-item" data-category="电子产品">电子产品</div>
+                                <div class="dropdown-item" data-category="智能手表">智能手表</div>
+                                <div class="dropdown-item" data-category="相机配件">相机配件</div>
+                                <div class="dropdown-item" data-category="智能家居">智能家居</div>
+                            </div>
+                        </div>
+                        <div class="filter-dropdown">
+                            <button class="filter-dropdown-btn">
+                                价格区间 <i class="ri-arrow-down-s-line"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-item" data-price-range="all">全部价格</div>
+                                <div class="dropdown-item" data-price-range="0-50">$0 - $50</div>
+                                <div class="dropdown-item" data-price-range="50-100">$50 - $100</div>
+                                <div class="dropdown-item" data-price-range="100-150">$100 - $150</div>
+                                <div class="dropdown-item" data-price-range="150-200">$150 - $200</div>
+                                <div class="dropdown-item" data-price-range="200+">$200+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 产品网格头部 -->
+                <div class="product-grid-header">
+                    <div class="product-count">
+                        共找到 <strong>4</strong> 个产品
+                    </div>
+                    <div class="grid-controls">
+                        <div class="product-sort-by">
+                            <div class="sort-label">排序方式:</div>
+                            <div class="sort-select-wrapper">
+                                <select class="sort-select">
+                                    <option>最新添加</option>
+                                    <option>价格从低到高</option>
+                                    <option>价格从高到低</option>
+                                    <option>建联数量</option>
+                                    <option>沟通数量</option>
+                                </select>
+                                <i class="ri-arrow-down-s-line sort-icon"></i>
+                            </div>
+                        </div>
+                        <div class="grid-view-options">
+                            <!-- 横竖列表切换按钮已移除 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 产品展示 -->
+                <div class="product-grid">
+                    <!-- 产品卡片1 - Earbud -->
+                    <div class="product-card selected-product">
+                        <div class="product-img">
+                            <!-- <div class="product-badge new">新上架</div> 已移除 -->
+                            <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300&h=200&fit=crop&q=80" alt="Earbud" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">AI 智能即时翻译耳机</div>
+                            <div class="product-category">
+                                <span class="category-tag">电子产品</span>
+                                <span class="category-tag price-tag">$69.99</span>
+                            </div>
+                            <div class="product-tags">
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>智能翻译</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>旅行必备</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>高科技</span>
+                            </div>
+                            <div class="product-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">42</div>
+                                    <div class="stat-label">建联数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">28</div>
+                                    <div class="stat-label">沟通数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">15</div>
+                                    <div class="stat-label">合作数量</div>
+                                </div>
+                            </div>
+                            <div class="product-description">多语言即时翻译，AI智能语音，高清音质，长续航，适合科技爱好者和国际旅行者</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="chat-btn" data-product="AI 智能即时翻译耳机">
+                                <i class="ri-robot-line"></i>
+                                开始AI协作
+                            </button>
+                            <button class="product-menu-btn" data-product-id="1">
+                                <i class="ri-more-2-fill"></i>
+                            </button>
+                            <div class="product-menu" id="product-menu-1">
+                                <div class="product-menu-item edit" data-product-id="1">
+                                    <i class="ri-edit-line"></i>编辑商品
+                                </div>
+                                <div class="product-menu-item delete" data-product-id="1">
+                                    <i class="ri-delete-bin-line"></i>删除商品
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 产品卡片2 - SmartWatch -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <!-- <div class="product-badge">热销</div> 已移除 -->
+                            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=200&fit=crop&q=80" alt="SmartWatch" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">SmartWatch Pro 健康运动手表</div>
+                            <div class="product-category">
+                                <span class="category-tag">智能手表</span>
+                                <span class="category-tag price-tag">$149.99</span>
+                            </div>
+                            <div class="product-tags">
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>健康监测</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>运动追踪</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>NFC支付</span>
+                            </div>
+                            <div class="product-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">35</div>
+                                    <div class="stat-label">建联数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">22</div>
+                                    <div class="stat-label">沟通数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">12</div>
+                                    <div class="stat-label">合作数量</div>
+                                </div>
+                            </div>
+                            <div class="product-description">健康监测，运动追踪，NFC支付，7天续航，兼容多平台，适合健身爱好者和商务人士</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="chat-btn" data-product="SmartWatch Pro 健康运动手表">
+                                <i class="ri-robot-line"></i>
+                                开始AI协作
+                            </button>
+                            <button class="product-menu-btn" data-product-id="2">
+                                <i class="ri-more-2-fill"></i>
+                            </button>
+                            <div class="product-menu" id="product-menu-2">
+                                <div class="product-menu-item edit" data-product-id="2">
+                                    <i class="ri-edit-line"></i>编辑商品
+                                </div>
+                                <div class="product-menu-item delete" data-product-id="2">
+                                    <i class="ri-delete-bin-line"></i>删除商品
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 产品卡片3 - 便携相机 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <!-- <div class="product-badge sale">特价</div> 已移除 -->
+                            <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=300&h=200&fit=crop&q=80" alt="MiniCam" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">MiniCam 4K 迷你便携相机</div>
+                            <div class="product-category">
+                                <span class="category-tag">相机配件</span>
+                                <span class="category-tag price-tag">$129.99</span>
+                            </div>
+                            <div class="product-tags">
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>4K录制</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>防抖功能</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>便携小巧</span>
+                            </div>
+                            <div class="product-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">28</div>
+                                    <div class="stat-label">建联数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">19</div>
+                                    <div class="stat-label">沟通数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">8</div>
+                                    <div class="stat-label">合作数量</div>
+                                </div>
+                            </div>
+                            <div class="product-description">便携式4K录制，防抖功能，自动跟踪拍摄，长达5小时续航，适合Vlogger和旅行爱好者</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="chat-btn" data-product="MiniCam 4K 迷你便携相机">
+                                <i class="ri-robot-line"></i>
+                                开始AI协作
+                            </button>
+                            <button class="product-menu-btn" data-product-id="3">
+                                <i class="ri-more-2-fill"></i>
+                            </button>
+                            <div class="product-menu" id="product-menu-3">
+                                <div class="product-menu-item edit" data-product-id="3">
+                                    <i class="ri-edit-line"></i>编辑商品
+                                </div>
+                                <div class="product-menu-item delete" data-product-id="3">
+                                    <i class="ri-delete-bin-line"></i>删除商品
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 产品卡片4 - 智能灯泡 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=300&h=200&fit=crop&q=80" alt="SmartLamp" loading="lazy">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">SmartLamp RGB 智能灵光灯泡</div>
+                            <div class="product-category">
+                                <span class="category-tag"><i class="ri-home-gear-line"></i>智能家居</span>
+                                <span class="category-tag price-tag"><i class="ri-money-dollar-circle-line"></i>$39.99</span>
+                            </div>
+                            <div class="product-tags">
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>RGB灯光</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>WiFi控制</span>
+                                <span class="product-tag"><i class="ri-price-tag-3-line"></i>语音助手</span>
+                            </div>
+                            <div class="product-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value">20</div>
+                                    <div class="stat-label">建联数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">14</div>
+                                    <div class="stat-label">沟通数量</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">6</div>
+                                    <div class="stat-label">合作数量</div>
+                                </div>
+                            </div>
+                            <div class="product-description">1600万色彩变化，WiFi控制，支持语音助手，定时设置，场景模式，适合智能家居爱好者</div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="chat-btn" data-product="SmartLamp RGB 智能灵光灯泡">
+                                <i class="ri-robot-line"></i>
+                                开始AI协作
+                            </button>
+                            <button class="product-menu-btn" data-product-id="4">
+                                <i class="ri-more-2-fill"></i>
+                            </button>
+                            <div class="product-menu" id="product-menu-4">
+                                <div class="product-menu-item edit" data-product-id="4">
+                                    <i class="ri-edit-line"></i>编辑商品
+                                </div>
+                                <div class="product-menu-item delete" data-product-id="4">
+                                    <i class="ri-delete-bin-line"></i>删除商品
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 添加产品卡片 -->
+                    <div class="product-card add-product-card">
+                        <div class="add-product-content">
+                            <div class="add-icon">
+                                <i class="ri-add-line"></i>
+                            </div>
+                            <div class="add-text">添加新产品</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- 仪表盘内容区域 -->
+            <div class="dashboard-container" style="display: none;">
+                <div class="dashboard-header">
+                    <div class="page-title">仪表盘</div>
+                </div>
+                <div class="dashboard-content">
+                    <!-- 第一行：核心KPI指标 -->
+                    <div class="kpi-cards">
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="ri-team-line"></i></div>
+                            <div class="kpi-data">
+                                <div class="kpi-value">12</div>
+                                <div class="kpi-label">活跃合作</div>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="ri-arrow-up-line"></i>
+                                <span>23%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="ri-links-line"></i></div>
+                            <div class="kpi-data">
+                                <div class="kpi-value">28</div>
+                                <div class="kpi-label">本周新增建联</div>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="ri-arrow-up-line"></i>
+                                <span>12%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="ri-broadcast-line"></i></div>
+                            <div class="kpi-data">
+                                <div class="kpi-value">247万</div>
+                                <div class="kpi-label">活动触达潜力</div>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="ri-arrow-up-line"></i>
+                                <span>36%</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon"><i class="ri-line-chart-line"></i></div>
+                            <div class="kpi-data">
+                                <div class="kpi-value">32.8%</div>
+                                <div class="kpi-label">平均回复率</div>
+                            </div>
+                            <div class="kpi-trend positive">
+                                <i class="ri-arrow-up-line"></i>
+                                <span>5.2%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 主要内容区域 -->
+                    <div class="dashboard-main-content">
+                        <!-- 左侧内容 -->
+                        <div class="dashboard-left-column">
+                            <!-- 近期活动 -->
+                            <div class="dashboard-card activities-card">
+                                <div class="card-header">
+                                    <h3><i class="ri-history-line"></i> 近期活动</h3>
+                                    <div class="card-action">
+                                        <button class="icon-btn"><i class="ri-more-2-line"></i></button>
+                                    </div>
+                                </div>
+                                <div class="activity-timeline">
+                                    <div class="activity-item">
+                                        <div class="activity-icon mail">
+                                            <i class="ri-mail-line"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-title">Two Minute Papers 回复了你的邮件</div>
+                                            <div class="activity-time">42分钟前</div>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon update">
+                                            <i class="ri-refresh-line"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-title">MattVidPro AI 的合作状态更新为「已确认」</div>
+                                            <div class="activity-time">3小时前</div>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon ai">
+                                            <i class="ri-robot-line"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-title">AI助手推荐了3位新的合适博主</div>
+                                            <div class="activity-time">昨天 14:28</div>
+                                        </div>
+                                    </div>
+                                    <div class="activity-item">
+                                        <div class="activity-icon mail">
+                                            <i class="ri-mail-send-line"></i>
+                                        </div>
+                                        <div class="activity-content">
+                                            <div class="activity-title">你向 AI TV 发送了合作邮件</div>
+                                            <div class="activity-time">昨天 10:15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="view-all-btn" id="view-all-activities">查看全部</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右侧内容 -->
+                        <div class="dashboard-right-column">
+                            <!-- 合作漏斗 -->
+                            <div class="dashboard-card funnel-card">
+                                <div class="card-header">
+                                    <h3><i class="ri-filter-3-line"></i> 合作漏斗</h3>
+                                    <div class="date-filter">
+                                        <select>
+                                            <option>本月</option>
+                                            <option>上月</option>
+                                            <option>本季度</option>
+                                            <option>全年</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="funnel-chart">
+                                    <div class="funnel-stage">
+                                        <div class="stage-bar" style="width: 100%; background: linear-gradient(90deg, #bbdefb, #90caf9);">
+                                            <span class="stage-label">已联系</span>
+                                            <span class="stage-value">42</span>
+                                        </div>
+                                    </div>
+                                    <div class="funnel-stage">
+                                        <div class="stage-bar" style="width: 83%; background: linear-gradient(90deg, #90caf9, #64b5f6);">
+                                            <span class="stage-label">沟通中</span>
+                                            <span class="stage-value">35</span>
+                                        </div>
+                                    </div>
+                                    <div class="funnel-stage">
+                                        <div class="stage-bar" style="width: 57%; background: linear-gradient(90deg, #64b5f6, #42a5f5);">
+                                            <span class="stage-label">已确认</span>
+                                            <span class="stage-value">24</span>
+                                        </div>
+                                    </div>
+                                    <div class="funnel-stage">
+                                        <div class="stage-bar" style="width: 43%; background: linear-gradient(90deg, #42a5f5, #2196f3);">
+                                            <span class="stage-label">推广中</span>
+                                            <span class="stage-value">18</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- 用户设置页面 -->
+        <div class="user-settings-container" style="display: none;">
+            <div class="settings-header">
+                <div class="page-title">账号设置</div>
+                <button class="close-settings-btn"><i class="ri-close-line"></i></button>
+            </div>
+
+            <div class="settings-content">
+                <!-- 主账号信息 -->
+                <div class="settings-section">
+                    <h3 class="section-title">主账号信息</h3>
+                    <div class="account-info-card">
+                        <div class="account-avatar-section">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&q=80" alt="用户头像" class="account-avatar">
+                            <button class="change-avatar-btn">更换头像</button>
+                        </div>
+                        <div class="account-details">
+                            <div class="account-field">
+                                <label>用户名</label>
+                                <input type="text" value="跨境运营专家" class="account-input">
+                            </div>
+                            <div class="account-field">
+                                <label>电子邮箱</label>
+                                <div class="account-value">user@example.com</div>
+                                <div class="account-note">主账号邮箱不可更改</div>
+                            </div>
+                            <div class="account-field">
+                                <label>账号类型</label>
+                                <div class="account-value">企业账号</div>
+                            </div>
+                            <div class="account-field">
+                                <label>账号状态</label>
+                                <div class="account-status active">已验证</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- 邮箱发件通道管理 -->
+                <div class="settings-section">
+                    <h3 class="section-title">邮箱发件通道管理</h3>
+                    <p class="section-description">配置您的SMTP邮箱发件通道，用于发送邮件和同步回复。</p>
+
+                    <!-- 未配置邮箱状态 -->
+                    <div id="no-email-configured" class="no-email-state">
+                        <div class="empty-state-icon">
+                            <i class="ri-mail-settings-line"></i>
+                        </div>
+                        <h4>您尚未配置任何邮箱</h4>
+                        <p>添加SMTP邮箱以开始发送外联邮件和接收回复</p>
+                        <button class="add-first-email-btn" id="add-first-email-btn">
+                            <i class="ri-add-line"></i> 添加SMTP邮箱
+                        </button>
+                    </div>
+
+                    <!-- 已配置的邮箱列表 -->
+                    <div id="email-configured" class="connected-accounts" style="display: none;">
+                        <!-- 邮箱列表将通过JavaScript动态添加 -->
+                    </div>
+
+                    <!-- 添加新邮箱 -->
+                    <div id="add-more-email" class="add-account-section" style="display: none;">
+                        <button class="add-email-btn" id="add-email-btn">
+                            <i class="ri-add-line"></i> 添加SMTP邮箱
+                        </button>
+                        <div class="account-note">
+                            <i class="ri-information-line"></i> 添加多个SMTP邮箱可以帮助您从不同的邮箱发送建联邮件，提高送达率和回复率。
+                        </div>
+                        <!-- 仅用于开发测试 -->
+                        <div class="dev-tools" style="margin-top: 20px; text-align: right;">
+                            <button class="clear-emails-btn" id="clear-emails-btn" style="padding: 5px 10px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px; cursor: pointer;">
+                                清除所有邮箱配置（仅用于测试）
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 添加邮箱弹窗 -->
+                    <div class="email-modal" id="email-modal" style="display: none;">
+                        <div class="email-modal-content">
+                            <div class="email-modal-header">
+                                <h3>添加SMTP邮箱</h3>
+                                <button class="close-email-modal"><i class="ri-close-line"></i></button>
+                            </div>
+                            <div class="email-modal-body">
+                                <div class="email-channel-options">
+                                    <!-- SMTP邮箱选项 -->
+                                    <div class="email-option">
+                                        <div class="email-option-icon"><i class="ri-mail-settings-line"></i></div>
+                                        <div class="email-option-info">
+                                            <div class="email-option-title">SMTP邮箱</div>
+                                            <div class="email-option-desc">配置您的SMTP服务器，支持任意邮箱</div>
+                                        </div>
+                                        <button class="email-option-btn" id="add-smtp-btn">添加</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SMTP配置弹窗 -->
+                    <div class="smtp-modal" id="smtp-modal" style="display: none;">
+                        <div class="smtp-modal-content">
+                            <div class="smtp-modal-header">
+                                <h3>配置SMTP邮箱</h3>
+                                <button class="close-smtp-modal"><i class="ri-close-line"></i></button>
+                            </div>
+                            <div class="smtp-modal-body">
+                                <div class="smtp-form">
+                                    <div class="form-group">
+                                        <label for="smtp-email">邮箱地址</label>
+                                        <input type="email" id="smtp-email" placeholder="例如: your.name@company.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtp-name">显示名称</label>
+                                        <input type="text" id="smtp-name" placeholder="例如: 您的姓名">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtp-host">SMTP服务器</label>
+                                        <input type="text" id="smtp-host" placeholder="例如: smtp.gmail.com">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group half">
+                                            <label for="smtp-port">端口</label>
+                                            <input type="number" id="smtp-port" placeholder="例如: 587">
+                                        </div>
+                                        <div class="form-group half">
+                                            <label for="smtp-security">安全连接</label>
+                                            <select id="smtp-security">
+                                                <option value="tls">TLS</option>
+                                                <option value="ssl">SSL</option>
+                                                <option value="none">无</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtp-username">用户名</label>
+                                        <input type="text" id="smtp-username" placeholder="通常是您的完整邮箱地址">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtp-password">密码</label>
+                                        <input type="password" id="smtp-password" placeholder="您的邮箱密码或应用专用密码">
+                                    </div>
+                                    <div class="form-actions">
+                                        <button class="test-smtp-btn" id="test-smtp-btn">测试连接</button>
+                                        <button class="save-smtp-btn" id="save-smtp-btn">保存</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- 保留原有的步骤内容，但设为隐藏 -->
+        <div id="dashboard" class="step">
+            <!-- 步骤 0: 仪表盘内容 -->
+            <div id="dashboard" class="step active">
+                <h1>仪表盘</h1>
+                <p>欢迎回来！</p>
+                <div id="notifications">
+                    <!-- 网红回复通知将出现在这里 -->
+                </div>
+                <button id="start-new-outreach"> + 发起新外联活动</button>
+                <div id="activity-status" style="margin-top: 20px;">
+                    <!-- 活动状态概览 -->
+                    <div class="recent-activities">
+                        <div class="section-header">
+                            <h3>近期活动</h3>
+                            <a href="javascript:void(0)" class="view-all-link" id="dashboard-view-all">查看全部</a>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon reply">
+                                    <i class="ri-mail-line"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">MattVidPro AI 回复了您的邮件</div>
+                                    <div class="activity-time">42分钟前</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon confirm">
+                                    <i class="ri-check-line"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Two Minute Papers 确认了合作</div>
+                                    <div class="activity-time">3小时前</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon publish">
+                                    <i class="ri-video-line"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">AI TV 发布了关于您产品的视频</div>
+                                    <div class="activity-time">昨天</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="step1-product-input" class="step">
+            <!-- 步骤 1: 发起活动 & 商品信息输入内容 -->
+            <h2>步骤 1: 发起活动 & 商品信息输入</h2>
+            <label for="product-url">输入商品网页链接 (URL):</label>
+            <input type="url" id="product-url" placeholder="https://example.com/product/123">
+            <p><small>或 手动输入商品信息 (本次演示不交互)</small></p>
+            <button id="analyze-product">开始分析商品</button>
+        </div>
+
+        <!-- 步骤 2: 商品信息自动抓取与 AI 分析 -->
+        <div id="step2-ai-analysis" class="step">
+            <h2>步骤 2: 商品信息自动抓取与 AI 分析</h2>
+            <div class="loading-indicator">
+                <div class="spinner"></div>
+                <p id="analysis-status">正在抓取商品信息...</p>
+            </div>
+            <div id="analysis-result" style="display: none;">
+                <h3>分析结果:</h3>
+                <p><strong>商品名称:</strong> <span id="product-name"></span></p>
+                <p><strong>核心描述:</strong> <span id="product-description"></span></p>
+                <p><strong>AI 建议标签:</strong> <span id="ai-tags"></span></p>
+                <button id="find-creators">寻找匹配创作者</button>
+            </div>
+        </div>
+
+        <!-- 步骤 3: AI 匹配创作者 -->
+        <div id="step3-creator-matching" class="step">
+            <h2>步骤 3: AI 匹配创作者</h2>
+            <div class="loading-indicator">
+                <div class="spinner"></div>
+                <p id="matching-status">AI 正在根据商品标签筛选创作者...</p>
+            </div>
+            <div id="matching-result" style="display: none;">
+                <h3>匹配到的创作者:</h3>
+                <ul id="creator-list">
+                    <!-- 创作者列表将出现在这里 -->
+                </ul>
+                <button id="generate-emails">生成外联邮件</button>
+            </div>
+        </div>
+
+        <!-- 步骤 4: 自动生成邮件 & 准备发送 -->
+        <div id="step4-email-preview" class="step">
+            <h2>步骤 4: 自动生成邮件 & 准备发送</h2>
+            <div id="selected-creators-preview">
+                <h4>选中的创作者:</h4>
+                <ul id="selected-creator-list-preview"></ul>
+            </div>
+            <div id="email-preview-area">
+                <h3>邮件预览:</h3>
+                <div id="email-content">
+                    <!-- 邮件内容将出现在这里 -->
+                </div>
+                <p><small><i class="ai-icon"></i> 部分内容由 AI 辅助生成</small></p>
+            </div>
+            <button id="send-emails">确认并发送外联邮件</button>
+        </div>
+
+        <!-- 步骤 5: 发送确认 & 活动进行中 (简单提示) -->
+        <div id="step5-sending" class="step">
+            <h2>步骤 5: 发送确认</h2>
+            <p id="sending-status">邮件已加入发送队列...</p>
+            <!-- 稍后自动跳转回仪表盘 -->
+        </div>
+
+        <!-- 步骤 6: 网红回复 & 人工接管 -->
+        <div id="step6-manual-takeover" class="step">
+            <h2>步骤 6: 回复处理</h2>
+            <h3>来自 <span id="replied-creator-name"></span> 的回复:</h3>
+            <div id="reply-content" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; background-color: #f9f9f9;">
+                <!-- 回复内容 -->
+            </div>
+            <p><strong>AI 意向分析:</strong> <span id="ai-intent-analysis" style="background-color: #e0f7fa; padding: 2px 5px; border-radius: 3px;"></span></p>
+            <p><strong>请您接管后续沟通:</strong></p>
+            <textarea id="manual-reply" rows="4" placeholder="在此输入您的回复..."></textarea><br>
+            <button id="send-manual-reply">发送回复</button>
+            <button id="mark-as-processed">标记为已处理</button>
+            <button id="back-to-dashboard">返回仪表盘</button>
+        </div>
+    </div>
+
+    <!-- 通知弹窗容器 -->
+    <div class="notifications-modal" id="notifications-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="ri-notification-3-line"></i> 通知中心</h2>
+                <button class="close-modal-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="modal-tabs">
+                <div class="modal-tab" data-tab="all">全部通知</div>
+                <div class="modal-tab" data-tab="unread">未读通知</div>
+                <div class="modal-tab active" data-tab="activities">近期活动</div>
+            </div>
+            <div class="notifications-filter">
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <span class="filter-label">类型：</span>
+                        <select class="filter-select">
+                            <option value="all">全部类型</option>
+                            <option value="reply">博主回复</option>
+                            <option value="confirm">合作确认</option>
+                            <option value="publish">内容发布</option>
+                            <option value="system">系统通知</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <span class="filter-label">时间：</span>
+                        <select class="filter-select">
+                            <option value="all">全部时间</option>
+                            <option value="today">今天</option>
+                            <option value="week">本周</option>
+                            <option value="month">本月</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="mark-all-read-btn"><i class="ri-check-double-line"></i> 全部标为已读</button>
+            </div>
+            <div class="notifications-list">
+                <!-- 通知项 - 博主回复 -->
+                <div class="notification-item-full unread" data-type="reply" data-creator="MattVidPro AI">
+                    <div class="notification-icon reply">
+                        <i class="ri-mail-line"></i>
+                    </div>
+                    <div class="notification-content-full">
+                        <div class="notification-header-row">
+                            <div class="notification-title-full">
+                                <span class="notification-type-badge reply">回复</span>
+                                <span class="creator-name">MattVidPro AI</span> 回复了您的邮件
+                            </div>
+                            <div class="notification-time-full">42分钟前</div>
+                        </div>
+                        <div class="notification-message">
+                            "您好，我对这个产品很感兴趣，特别是它的AI翻译功能。我想了解更多关于产品的规格和功能细节，以及您对合作内容的期望。我们可以安排一次视频通话讨论更多细节吗？"
+                        </div>
+                        <div class="notification-actions">
+                            <button class="action-btn primary"><i class="ri-mail-send-line"></i> 回复</button>
+                            <button class="action-btn"><i class="ri-eye-line"></i> 查看详情</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知项 - 合作确认 -->
+                <div class="notification-item-full unread" data-type="confirm" data-creator="Two Minute Papers">
+                    <div class="notification-icon confirm">
+                        <i class="ri-check-line"></i>
+                    </div>
+                    <div class="notification-content-full">
+                        <div class="notification-header-row">
+                            <div class="notification-title-full">
+                                <span class="notification-type-badge confirm">建联</span>
+                                <span class="creator-name">Two Minute Papers</span> 确认了合作
+                            </div>
+                            <div class="notification-time-full">3小时前</div>
+                        </div>
+                        <div class="notification-message">
+                            "我们已经收到了产品样品，并进行了初步测试。我对这个产品的翻译准确度印象深刻。我们将在下周开始制作视频，预计在两周内发布。请提供任何您希望在视频中特别强调的功能或信息。"
+                        </div>
+                        <div class="notification-actions">
+                            <button class="action-btn primary"><i class="ri-mail-send-line"></i> 回复</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知项 - 内容发布 -->
+                <div class="notification-item-full unread" data-type="publish" data-creator="AI TV">
+                    <div class="notification-icon publish">
+                        <i class="ri-video-line"></i>
+                    </div>
+                    <div class="notification-content-full">
+                        <div class="notification-header-row">
+                            <div class="notification-title-full">
+                                <span class="notification-type-badge publish">发布</span>
+                                <span class="creator-name">AI TV</span> 发布了关于您产品的视频
+                            </div>
+                            <div class="notification-time-full">昨天</div>
+                        </div>
+                        <div class="notification-message">
+                            "新视频上线：《这个耳机的AI翻译功能太神奇了！》视频已经发布，目前有 3,245 次观看和 412 个赞。评论区反馈非常积极，多位观众表示对产品感兴趣。"
+                        </div>
+                        <div class="notification-actions">
+                            <button class="action-btn primary"><i class="ri-youtube-line"></i> 查看视频</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知项 - 系统通知 -->
+                <div class="notification-item-full" data-type="system">
+                    <div class="notification-icon system">
+                        <i class="ri-information-line"></i>
+                    </div>
+                    <div class="notification-content-full">
+                        <div class="notification-header-row">
+                            <div class="notification-title-full">
+                                <span class="notification-type-badge system">系统</span>
+                                系统通知：平台更新
+                            </div>
+                            <div class="notification-time-full">2天前</div>
+                        </div>
+                        <div class="notification-message">
+                            我们对平台进行了更新，新增了以下功能：1) 改进的数据分析工具，可以更精准地跟踪博主合作效果；2) 新的邮件模板系统，提供更多自定义选项；3) 改进的AI博主匹配算法。点击查看完整更新日志。
+                        </div>
+                        <div class="notification-actions">
+                            <button class="action-btn"><i class="ri-file-list-line"></i> 查看更新日志</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 更多通知项... -->
+                <div class="notification-item-full" data-type="reply" data-creator="Tech Reviewer">
+                    <div class="notification-icon reply">
+                        <i class="ri-mail-line"></i>
+                    </div>
+                    <div class="notification-content-full">
+                        <div class="notification-header-row">
+                            <div class="notification-title-full">
+                                <span class="notification-type-badge reply">回复</span>
+                                <span class="creator-name">Tech Reviewer</span> 回复了您的邮件
+                            </div>
+                            <div class="notification-time-full">3天前</div>
+                        </div>
+                        <div class="notification-message">
+                            "感谢您的邮件和产品介绍。目前我的内容计划已满，但我对您的产品非常感兴趣。我可以在下个月安排评测，如果您能提供产品样品的话。"
+                        </div>
+                        <div class="notification-actions">
+                            <button class="action-btn primary"><i class="ri-mail-send-line"></i> 回复</button>
+                            <button class="action-btn"><i class="ri-eye-line"></i> 查看详情</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 近期活动列表 -->
+            <div class="activities-list" style="display: none;">
+                <!-- 活动项 - 发送邮件 -->
+                <div class="activity-item-full" data-type="user-action">
+                    <div class="activity-icon user-action">
+                        <i class="ri-mail-send-line"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-header-row">
+                            <div class="activity-title-full">
+                                <span class="activity-type-badge email">邮件</span>
+                                你向 <span class="creator-name">AI TV</span> 发送了合作邮件
+                            </div>
+                            <div class="activity-time-full"><i class="ri-time-line"></i>今天 10:15</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-product"><i class="ri-shopping-bag-line"></i>产品：Earbud 智能翻译耳机</div>
+                            <div class="activity-summary"><i class="ri-mail-line"></i>邮件主题：Earbud 智能翻译耳机合作邀请 - 多语言实时翻译功能</div>
+                        </div>
+                        <div class="activity-actions">
+                            <button class="action-btn"><i class="ri-eye-line"></i> 查看详情</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 活动项 - 添加建联达人 -->
+                <div class="activity-item-full" data-type="user-action">
+                    <div class="activity-icon user-action add">
+                        <i class="ri-user-add-line"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-header-row">
+                            <div class="activity-title-full">
+                                <span class="activity-type-badge add">建联</span>
+                                你为 <span class="product-name">Earbud 智能翻译耳机</span> 新增了3位建联达人
+                            </div>
+                            <div class="activity-time-full"><i class="ri-time-line"></i>昨天 15:30</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-product"><i class="ri-shopping-bag-line"></i>产品：Earbud 智能翻译耳机</div>
+                            <div class="activity-summary"><i class="ri-user-add-line"></i>新增达人：MattVidPro AI, Two Minute Papers, AI TV</div>
+                        </div>
+                        <div class="activity-actions">
+                            <button class="action-btn"><i class="ri-links-line"></i> 查看建联记录</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 活动项 - 编辑产品 -->
+                <div class="activity-item-full" data-type="user-action">
+                    <div class="activity-icon user-action edit">
+                        <i class="ri-edit-line"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-header-row">
+                            <div class="activity-title-full">
+                                <span class="activity-type-badge edit">编辑</span>
+                                你编辑了 <span class="product-name">Earbud 智能翻译耳机</span> 的信息
+                            </div>
+                            <div class="activity-time-full"><i class="ri-time-line"></i>2天前 09:45</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-product"><i class="ri-shopping-bag-line"></i>产品：Earbud 智能翻译耳机</div>
+                            <div class="activity-summary"><i class="ri-edit-line"></i>修改内容：产品描述、价格和标签</div>
+                        </div>
+                        <div class="activity-actions">
+                            <button class="action-btn"><i class="ri-shopping-bag-line"></i> 查看产品</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 活动项 - 确认合作 -->
+                <div class="activity-item-full" data-type="user-action">
+                    <div class="activity-icon user-action confirm">
+                        <i class="ri-check-double-line"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-header-row">
+                            <div class="activity-title-full">
+                                <span class="activity-type-badge confirm">确认</span>
+                                你确认了与 <span class="creator-name">Tech Reviewer</span> 的合作状态
+                            </div>
+                            <div class="activity-time-full"><i class="ri-time-line"></i>3天前 14:20</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-product"><i class="ri-shopping-bag-line"></i>产品：SmartLamp RGB 智能灵光灯泡</div>
+                            <div class="activity-summary"><i class="ri-exchange-line"></i>状态更新：从"沟通中"更新为"已确认"</div>
+                        </div>
+                        <div class="activity-actions">
+                            <button class="action-btn"><i class="ri-links-line"></i> 查看建联记录</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 活动项 - AI推荐 -->
+                <div class="activity-item-full" data-type="user-action">
+                    <div class="activity-icon user-action ai">
+                        <i class="ri-robot-line"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-header-row">
+                            <div class="activity-title-full">
+                                <span class="activity-type-badge ai">AI</span>
+                                你触发了AI推荐功能
+                            </div>
+                            <div class="activity-time-full"><i class="ri-time-line"></i>4天前 11:05</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-product"><i class="ri-shopping-bag-line"></i>产品：Earbud 智能翻译耳机</div>
+                            <div class="activity-summary"><i class="ri-robot-line"></i>AI为您推荐了5位潜在合作达人</div>
+                        </div>
+                        <div class="activity-actions">
+                            <button class="action-btn"><i class="ri-robot-line"></i> 查看AI助手</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 活动项 - 添加更多示例 -->
+                <div class="activity-item-full" data-type="user-action">
+                    <div class="activity-icon user-action edit">
+                        <i class="ri-price-tag-3-line"></i>
+                    </div>
+                    <div class="activity-content-full">
+                        <div class="activity-header-row">
+                            <div class="activity-title-full">
+                                <span class="activity-type-badge edit">标签</span>
+                                你为 <span class="product-name">SmartLamp RGB 智能灵光灯泡</span> 添加了新标签
+                            </div>
+                            <div class="activity-time-full"><i class="ri-time-line"></i>5天前 16:40</div>
+                        </div>
+                        <div class="activity-details">
+                            <div class="activity-product"><i class="ri-shopping-bag-line"></i>产品：SmartLamp RGB 智能灵光灯泡</div>
+                            <div class="activity-summary"><i class="ri-price-tag-3-line"></i>新增标签：智能家居、氛围灯、RGB灯光</div>
+                        </div>
+                        <div class="activity-actions">
+                            <button class="action-btn"><i class="ri-shopping-bag-line"></i> 查看产品</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="pagination">
+                    <button class="pagination-btn"><i class="ri-arrow-left-s-line"></i></button>
+                    <div class="pagination-info">1-5 / 12</div>
+                    <button class="pagination-btn"><i class="ri-arrow-right-s-line"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 编辑商品弹窗 -->
+    <div class="modal-overlay" id="edit-product-modal" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2><i class="ri-edit-line"></i> 编辑商品</h2>
+                <button class="close-modal-btn" id="edit-modal-close-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="modal-content">
+                <form id="edit-product-form">
+                    <input type="hidden" id="edit-product-id">
+
+                    <div class="form-group">
+                        <label>商品图片</label>
+                        <div class="image-upload-container">
+                            <div class="image-preview-wrapper">
+                                <img id="product-image-preview" src="" alt="商品图片预览">
+                            </div>
+                            <div class="upload-actions">
+                                <button type="button" class="upload-btn">上传图片</button>
+                                <input type="file" id="edit-product-image" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-product-name">商品名称</label>
+                        <input type="text" id="edit-product-name" class="form-input" placeholder="输入商品名称">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-product-price">商品价格 ($)</label>
+                        <input type="number" id="edit-product-price" class="form-input" placeholder="输入商品价格" min="0" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-product-category">商品分类</label>
+                        <input type="text" id="edit-product-category" class="form-input" placeholder="输入商品分类">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-product-tags">商品标签</label>
+                        <div class="tag-input-container">
+                            <input type="text" id="edit-product-tags" class="form-input" placeholder="输入标签，按回车添加">
+                            <button type="button" id="add-tag-btn" class="add-tag-btn">添加</button>
+                        </div>
+                        <div class="tags-container" id="product-tags-container">
+                            <!-- 标签将在这里动态添加 -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>数据统计</label>
+                        <div class="stats-edit-container">
+                            <div class="stat-edit-item">
+                                <label for="edit-connections">建联数量</label>
+                                <input type="number" id="edit-connections" class="form-input" min="0">
+                            </div>
+                            <div class="stat-edit-item">
+                                <label for="edit-communications">沟通数量</label>
+                                <input type="number" id="edit-communications" class="form-input" min="0">
+                            </div>
+                            <div class="stat-edit-item">
+                                <label for="edit-collaborations">合作数量</label>
+                                <input type="number" id="edit-collaborations" class="form-input" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-product-description">商品描述</label>
+                        <textarea id="edit-product-description" class="form-textarea" placeholder="输入商品描述"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel-edit" class="btn-secondary">取消</button>
+                <button type="button" id="save-product" class="btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="notification-update.js"></script>
+    
+    <!-- 主题系统 -->
+    <script src="themes/theme-config.js"></script>
+    <script src="themes/theme-manager.js"></script>
+    <link rel="stylesheet" href="themes/theme-switcher.css">
+</body>
+</html>

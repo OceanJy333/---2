@@ -1,0 +1,659 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 跨境运营助手 - 项目开发规范
+
+## 📋 项目概述
+
+跨境运营助手是一个面向跨境电商运营人员的现代化综合管理平台，集成AI助手、产品管理、网红建联、数据分析等功能。本项目采用现代化的前端技术栈，支持**智能主题系统2.0**，具备系统主题跟随和时间自动切换功能。
+
+## 🎨 CSS变量系统规范 ⭐⭐⭐
+
+### 1. 核心原则 🚨
+
+**绝对禁止硬编码颜色值，必须使用CSS变量系统！**
+
+```css
+/* ✅ 正确示例 - 使用CSS变量 */
+.element {
+    color: var(--primary-color);
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    transition: all var(--animation-duration) var(--animation-easing);
+}
+
+/* ❌ 错误示例 - 硬编码颜色值 */
+.element {
+    color: #1976d2;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+```
+
+### 2. 完整变量分类系统
+
+#### 🎨 品牌色系
+```css
+--primary-color        /* 主品牌色 */
+--primary-dark         /* 主色深色版 */
+--primary-light        /* 主色浅色版 */
+--primary-pale         /* 主色极浅版 */
+--primary-accent       /* 主色强调版 */
+--primary-hover        /* 主色悬停态 */
+```
+
+#### 🎯 语义化状态色系
+```css
+/* 成功状态 */
+--success-color        --success-dark        --success-light
+--success-pale         --success-bg
+
+/* 警告状态 */
+--warning-color        --warning-dark        --warning-light
+--warning-pale         --warning-bg
+
+/* 错误状态 */
+--error-color          --error-dark          --error-light
+--error-pale           --error-bg
+
+/* 信息状态 */
+--info-color           --info-dark           --info-light
+--info-pale            --info-bg
+```
+
+#### 📝 文本色系
+```css
+--text-primary         /* 主文本色 */
+--text-secondary       /* 次要文本色 */
+--text-tertiary        /* 辅助文本色 */
+--text-disabled        /* 禁用文本色 */
+--text-inverse         /* 反色文本（如白色） */
+--text-muted           /* 静音文本色 */
+```
+
+#### 🏠 背景色系
+```css
+--background-color     /* 页面主背景色 */
+--background-alt       /* 替代背景色 */
+--background-dark      /* 深色背景 */
+--surface-color        /* 表面背景色 */
+--surface-hover        /* 表面悬停色 */
+--surface-active       /* 表面激活色 */
+--surface-disabled     /* 表面禁用色 */
+--surface-elevated     /* 表面提升色 */
+```
+
+#### 🖼️ 边框色系
+```css
+--border-color         /* 主边框色 */
+--border-light         /* 浅色边框 */
+--border-dark          /* 深色边框 */
+--border-focus         /* 焦点边框色 */
+--border-hover         /* 悬停边框色 */
+```
+
+#### 🌫️ 阴影和效果色系
+```css
+--shadow-color         /* 基础阴影 */
+--shadow-hover         /* 悬停阴影 */
+--shadow-focus         /* 焦点阴影 */
+--shadow-error         /* 错误阴影 */
+--shadow-success       /* 成功阴影 */
+--overlay              /* 遮罩层 */
+--overlay-light        /* 轻量遮罩 */
+--backdrop-blur        /* 背景模糊 */
+```
+
+#### 💫 Alpha透明度色系
+```css
+/* 主色透明度变体 */
+--primary-alpha-05  --primary-alpha-10  --primary-alpha-15
+--primary-alpha-20  --primary-alpha-30  --primary-alpha-50
+--primary-alpha-70  --primary-alpha-80  --primary-alpha-90
+
+/* 状态色透明度 */
+--success-alpha-10     --success-alpha-90
+--error-alpha-90       --info-alpha-10
+
+/* 黑白透明度 */
+--black-alpha-03       --black-alpha-05      --black-alpha-08
+--black-alpha-10       --black-alpha-12      --black-alpha-15
+--white-alpha-30       --white-alpha-50      --white-alpha-80
+```
+
+#### ⚫ 灰色系统
+```css
+--gray-50   --gray-100  --gray-200  --gray-300  --gray-400
+--gray-500  --gray-600  --gray-700  --gray-800  --gray-900
+```
+
+#### 🎨 交互状态色系
+```css
+/* 悬停状态 */
+--hover-bg             --hover-border        --hover-text
+
+/* 激活状态 */
+--active-bg            --active-border       --active-text
+
+/* 选中状态 */
+--selected-bg          --selected-border     --selected-text
+
+/* 禁用状态 */
+--disabled-bg          --disabled-border     --disabled-text
+```
+
+#### 📊 数据可视化色系
+```css
+--chart-primary        --chart-secondary     --chart-third
+--chart-fourth         --chart-fifth         --chart-sixth
+--google-blue          --google-red          --google-yellow
+--google-green
+```
+
+#### 🔗 特殊功能色
+```css
+--highlight            --highlight-bg
+--link                 --link-hover          --link-visited
+--code                 --code-bg
+```
+
+### 3. 最佳实践代码模板
+
+#### 💻 按钮交互状态
+```css
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--text-inverse);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--radius-base);
+    padding: var(--spacing-sm) var(--spacing-base);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    transition: all var(--animation-duration) var(--animation-easing);
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    box-shadow: 0 2px 8px var(--primary-alpha-20);
+    transform: translateY(-1px);
+}
+
+.btn-primary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--primary-alpha-30);
+}
+
+.btn-primary:active {
+    background: var(--primary-dark);
+    transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+    background: var(--disabled-bg);
+    color: var(--disabled-text);
+    border-color: var(--disabled-border);
+    cursor: not-allowed;
+    transform: none;
+}
+```
+
+#### 📝 表单输入状态
+```css
+.form-input {
+    background: var(--surface-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-base);
+    padding: var(--spacing-sm);
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    transition: all var(--animation-duration) var(--animation-easing);
+}
+
+.form-input:hover {
+    border-color: var(--border-hover);
+}
+
+.form-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-alpha-15);
+}
+
+.form-input:invalid {
+    border-color: var(--error-color);
+    box-shadow: 0 0 0 2px var(--error-alpha-90);
+}
+```
+
+#### 🏷️ 状态提示样式
+```css
+.alert {
+    border-radius: var(--radius-base);
+    padding: var(--spacing-base);
+    margin: var(--spacing-sm) 0;
+    border-left: 4px solid;
+}
+
+.alert-success {
+    background: var(--success-pale);
+    color: var(--success-dark);
+    border-color: var(--success-color);
+}
+
+.alert-warning {
+    background: var(--warning-pale);
+    color: var(--warning-dark);
+    border-color: var(--warning-color);
+}
+
+.alert-error {
+    background: var(--error-pale);
+    color: var(--error-dark);
+    border-color: var(--error-color);
+}
+
+.alert-info {
+    background: var(--info-pale);
+    color: var(--info-dark);
+    border-color: var(--info-color);
+}
+```
+
+#### 🏗️ 层级阴影系统
+```css
+/* 阴影层级 */
+.elevation-1 { box-shadow: 0 1px 3px var(--black-alpha-05); }
+.elevation-2 { box-shadow: 0 2px 6px var(--black-alpha-08); }
+.elevation-3 { box-shadow: 0 4px 12px var(--black-alpha-10); }
+.elevation-4 { box-shadow: 0 8px 24px var(--black-alpha-12); }
+.elevation-5 { box-shadow: 0 16px 32px var(--black-alpha-15); }
+
+/* 交互阴影 */
+.card:hover {
+    box-shadow: 0 8px 24px var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.interactive:focus {
+    box-shadow: 0 0 0 3px var(--primary-alpha-20);
+}
+```
+
+## 🤖 智能主题系统2.0架构
+
+### 1. 文件结构
+```
+themes/
+├── theme-config.js         # 主题配置 + 自动切换配置 (867行)
+├── theme-manager.js        # 主题管理器 + 智能切换逻辑 (624行)
+├── theme-switcher.css      # 主题切换器样式 + 自动模式UI (286行)
+└── alien-effects.css       # 外星人主题特效样式 (774行)
+```
+
+### 2. 核心功能实现
+
+#### 🎛️ 四种智能模式
+```javascript
+// 自动模式类型
+const AUTO_MODES = {
+    AUTO: 'auto',     // 智能自动：系统主题跟随 + 时间切换
+    LIGHT: 'light',   // 强制浅色：始终使用现代简约主题
+    DARK: 'dark',     // 强制深色：始终使用深色专业主题
+    ALIEN: 'alien'    // 外星人模式：始终使用外星人主题
+};
+
+// 模式切换API
+themeManager.setAutoMode('auto');    // 设置自动模式
+themeManager.setAutoMode('light');   // 设置浅色模式
+themeManager.setAutoMode('dark');    // 设置深色模式
+themeManager.setAutoMode('alien');   // 设置外星人模式
+```
+
+#### 🕐 时间自动切换配置
+```javascript
+// themes/theme-config.js
+autoTheme: {
+    enabled: true,
+    mode: 'both', // 'system'|'time'|'both'
+    timeConfig: {
+        dayStart: 6,      // 白天开始时间 (6:00)
+        nightStart: 18    // 夜晚开始时间 (18:00)
+    },
+    themeMapping: {
+        light: 'modern',        // 浅色模式使用现代简约主题
+        dark: 'professional'    // 深色模式使用深色专业主题
+    }
+}
+```
+
+#### 📱 系统主题检测
+```javascript
+// 检测系统主题
+detectSystemTheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        this.isSystemDarkMode = true;
+        return 'dark';
+    } else {
+        this.isSystemDarkMode = false;
+        return 'light';
+    }
+}
+
+// 监听系统主题变化
+watchSystemTheme() {
+    if (window.matchMedia) {
+        this.systemThemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        this.systemThemeMediaQuery.addListener(this.onSystemThemeChange);
+    }
+}
+```
+
+### 3. 主题配置规范
+
+#### 🎨 三大主题架构
+```javascript
+themes: {
+    modern: {
+        name: '现代简约',
+        id: 'modern',
+        description: '清新简洁的日间设计风格',
+        colors: { /* 完整颜色配置 */ },
+        fonts: { /* 字体配置 */ },
+        spacing: { /* 间距配置 */ },
+        borderRadius: { /* 圆角配置 */ },
+        animations: { /* 动画配置 */ }
+    },
+    professional: {
+        name: '深色专业',
+        id: 'professional',
+        description: '高端专业的暗色主题',
+        // ... 配置结构同上
+    },
+    alien: {
+        name: '外星人',
+        id: 'alien',
+        description: '未来科技感的游戏风格',
+        // ... 配置结构同上
+    }
+}
+```
+
+#### 🔗 CSS变量映射
+```javascript
+cssVariables: {
+    colors: {
+        '--primary-color': 'primary.main',
+        '--primary-dark': 'primary.dark',
+        '--primary-light': 'primary.light',
+        '--text-primary': 'text.primary',
+        '--text-secondary': 'text.secondary',
+        '--background-color': 'background.main',
+        '--surface-color': 'background.surface',
+        // ... 完整映射关系
+    },
+    fonts: {
+        '--font-family': 'primary',
+        '--font-family-heading': 'heading',
+        '--font-size-base': 'sizes.base',
+        // ... 字体映射
+    }
+}
+```
+
+## 📋 开发规范详解
+
+### 1. 组件开发规范
+
+#### 🧩 组件模板
+```css
+.component {
+    /* 必需的主题变量 */
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-base);
+    padding: var(--spacing-base);
+    
+    /* 字体系统 */
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    
+    /* 动画过渡 */
+    transition: all var(--animation-duration) var(--animation-easing);
+    
+    /* 阴影层级 */
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+```
+
+#### 📱 响应式主题适配
+```css
+.component {
+    /* 基础样式使用主题变量 */
+    background: var(--surface-color);
+    
+    /* 响应式断点 */
+    @media (max-width: 768px) {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-sm);
+    }
+    
+    @media (max-width: 480px) {
+        padding: var(--spacing-xs);
+        border-radius: var(--radius-sm);
+    }
+}
+
+/* 主题特定样式 */
+[data-theme="alien"] .component {
+    /* 外星人主题特效 */
+    background: linear-gradient(135deg, var(--surface-color), var(--primary-alpha-05));
+    box-shadow: 0 0 20px var(--primary-alpha-20);
+}
+```
+
+### 2. 主题切换检查清单
+
+开发新组件时必须验证：
+- [ ] **CSS变量覆盖**: 所有颜色、字体、间距都使用CSS变量
+- [ ] **三主题测试**: 在现代简约、深色专业、外星人三个主题下显示正常
+- [ ] **自动切换**: 自动模式切换时组件样式正确响应
+- [ ] **交互状态**: hover、focus、active状态在各主题下表现正常
+- [ ] **可访问性**: 颜色对比度符合WCAG 2.1 AA级标准
+- [ ] **响应式**: 在不同屏幕尺寸下主题显示正常
+- [ ] **性能**: 主题切换时无明显卡顿或闪烁
+
+### 3. 新主题添加流程
+
+1. **扩展theme-config.js**
+```javascript
+newTheme: {
+    name: '新主题名称',
+    id: 'new-theme-id',
+    description: '主题描述',
+    colors: {
+        primary: { main: '#color', dark: '#color', light: '#color' },
+        text: { primary: '#color', secondary: '#color' },
+        background: { main: '#color', surface: '#color' },
+        // ... 完整颜色配置
+    },
+    fonts: { /* 字体配置 */ },
+    spacing: { /* 间距配置 */ },
+    borderRadius: { /* 圆角配置 */ },
+    animations: { /* 动画配置 */ }
+}
+```
+
+2. **更新CSS变量映射**（如有新变量）
+3. **测试所有页面和组件**
+4. **添加主题预览界面**
+5. **更新文档和规范**
+
+## ⚡ 性能优化规范
+
+### 1. CSS过渡优化
+```css
+/* ✅ 优化的过渡效果 */
+.optimized-transition {
+    transition: 
+        background-color var(--animation-duration) var(--animation-easing),
+        border-color var(--animation-duration) var(--animation-easing),
+        box-shadow var(--animation-duration) var(--animation-easing),
+        transform var(--animation-duration) var(--animation-easing);
+    will-change: transform, background-color;
+}
+
+/* ❌ 避免的写法 */
+.avoid-transition {
+    transition: all 0.3s ease; /* 会影响所有属性 */
+}
+```
+
+### 2. 主题切换性能
+```javascript
+// 批量应用CSS变量
+batchApplyVariables(variables) {
+    const root = document.documentElement;
+    
+    // 使用documentFragment减少重排
+    const tempStyle = document.createElement('style');
+    const cssRules = Object.entries(variables).map(([prop, value]) => 
+        `${prop}: ${value};`
+    ).join(' ');
+    
+    tempStyle.textContent = `:root { ${cssRules} }`;
+    document.head.appendChild(tempStyle);
+    
+    // 清理临时样式
+    setTimeout(() => {
+        document.head.removeChild(tempStyle);
+    }, 0);
+}
+```
+
+### 3. 内存管理
+```javascript
+// 清理资源
+destroy() {
+    // 停止定时器
+    if (this.timeCheckTimer) {
+        clearInterval(this.timeCheckTimer);
+        this.timeCheckTimer = null;
+    }
+    
+    // 移除事件监听器
+    if (this.systemThemeMediaQuery) {
+        this.systemThemeMediaQuery.removeListener(this.onSystemThemeChange);
+        this.systemThemeMediaQuery = null;
+    }
+    
+    // 清理DOM事件
+    document.removeEventListener('DOMContentLoaded', this.init);
+}
+```
+
+## 🧪 测试与验证
+
+### 1. 主题系统测试清单
+
+#### 自动主题功能测试
+- [ ] **系统主题跟随**: 系统切换深色/浅色模式时自动响应
+- [ ] **时间自动切换**: 6:00切换到浅色，18:00切换到深色
+- [ ] **四种模式切换**: auto/light/dark/alien模式正常工作
+- [ ] **设置持久化**: 刷新页面后设置保持不变
+- [ ] **实时响应**: 系统主题变化时立即切换
+
+#### 视觉效果测试
+- [ ] **主题一致性**: 所有组件在各主题下风格统一
+- [ ] **过渡动画**: 主题切换时动画流畅自然
+- [ ] **特效显示**: 外星人主题特效正常显示
+- [ ] **响应式适配**: 各屏幕尺寸下显示正常
+
+#### 性能测试
+- [ ] **切换速度**: 主题切换响应时间 < 300ms
+- [ ] **内存使用**: 长时间使用无内存泄漏
+- [ ] **CPU占用**: 自动检测不影响性能
+
+### 2. 兼容性验证
+
+- **现代浏览器**: Chrome 80+, Firefox 75+, Safari 13+, Edge 80+
+- **移动设备**: iOS Safari 13+, Android Chrome 80+
+- **CSS特性**: CSS变量、媒体查询、Flexbox、Grid
+- **JavaScript**: ES6+语法、媒体查询API、localStorage
+
+## 🔧 故障排除
+
+### 常见问题解决方案
+
+#### Q: 主题切换后某些元素颜色没变化？
+```javascript
+// A: 检查是否使用CSS变量
+// 1. 查找硬编码颜色值
+// 2. 确保CSS变量名正确
+// 3. 验证变量在主题配置中存在
+```
+
+#### Q: 自动主题切换不工作？
+```javascript
+// A: 检查浏览器支持和配置
+console.log('系统主题支持:', window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)'));
+console.log('当前自动模式:', themeManager.autoMode);
+console.log('ThemeConfig加载:', typeof ThemeConfig !== 'undefined');
+```
+
+#### Q: 外星人主题特效不显示？
+```css
+/* A: 检查CSS支持和GPU加速 */
+.check-support {
+    animation: check 1s ease;
+    transform: translateZ(0); /* 强制GPU加速 */
+}
+
+@keyframes check {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+```
+
+## 📈 版本更新
+
+### v2.0.0 (当前版本) - 智能主题系统
+- ✅ **智能自动切换**: 系统主题跟随 + 时间自动切换
+- ✅ **四种模式**: auto/light/dark/alien完整支持
+- ✅ **性能优化**: 智能缓存和批量更新
+- ✅ **完整CSS变量**: 80+主题变量覆盖所有设计元素
+- ✅ **持久化存储**: 用户设置自动保存恢复
+
+### 未来计划
+- 🔄 **主题编辑器**: 可视化主题定制工具
+- 🔄 **导入导出**: 主题配置的导入导出功能
+- 🔄 **更多预设**: 增加更多预设主题选择
+- 🔄 **组件级定制**: 支持单个组件的主题重写
+- 🔄 **动画效果库**: 丰富的主题切换动画效果
+
+---
+
+## 💻 开发环境要求
+
+- **Node.js**: 14+ (用于开发工具)
+- **现代编辑器**: VS Code + 相关插件
+- **浏览器开发工具**: Chrome DevTools
+- **本地服务器**: Live Server 或 http-server
+
+## 📚 相关资源
+
+- [CSS变量 MDN文档](mdc:https:/developer.mozilla.org/zh-CN/docs/Web/CSS/Using_CSS_custom_properties)
+- [媒体查询 prefers-color-scheme](mdc:https:/developer.mozilla.org/zh-CN/docs/Web/CSS/@media/prefers-color-scheme)
+- [WCAG 2.1 可访问性指南](mdc:https:/www.w3.org/WAI/WCAG21/quickref)
+- [Material Design 色彩系统](mdc:https:/material.io/design/color/the-color-system.html)
+
+---
+
+*此规范文档随项目发展持续更新，请定期查看最新版本。* 
