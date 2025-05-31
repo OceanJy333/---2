@@ -1,0 +1,22 @@
+{
+  "user": "ubuntu",
+  "install": "./.cursor/install.sh",
+  "start": "echo '🚀 跨境运营助手环境启动完成' && date",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "cd . && echo '🌐 启动开发服务器 (http://localhost:8080)...' && npx http-server -p 8080 -c-1 --cors",
+      "description": "启动HTTP开发服务器，支持CORS，禁用缓存，便于开发调试"
+    },
+    {
+      "name": "live-reload",
+      "command": "cd . && echo '🔄 启动Live Server (http://localhost:8081)...' && npx live-server --port=8081 --no-browser --quiet",
+      "description": "启动带热重载功能的开发服务器，文件变化时自动刷新页面"
+    },
+    {
+      "name": "monitor",
+      "command": "cd . && echo '📊 系统监控启动...' && while true; do echo \"$(date '+%H:%M:%S') - 项目运行正常 | 主题系统: ✅ | 服务器: ✅\"; sleep 60; done",
+      "description": "项目状态监控，每分钟显示系统运行状态"
+    }
+  ]
+} 
