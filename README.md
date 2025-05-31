@@ -72,7 +72,7 @@
 2. **启动项目**
    ```bash
    # 方法1: 直接打开HTML文件
-   open index.html
+   open public/index.html
    
    # 方法2: 使用Python本地服务器
    python -m http.server 8000
@@ -81,12 +81,12 @@
    npx serve .
    
    # 方法4: 使用Live Server扩展（推荐）
-   # 在VS Code中安装Live Server扩展，右键index.html选择"Open with Live Server"
+   # 在VS Code中安装Live Server扩展，右键public/index.html选择"Open with Live Server"
    ```
 
 3. **访问应用**
    ```
-   本地文件: file:///path/to/index.html
+   本地文件: file:///path/to/public/index.html
    本地服务器: http://localhost:8000
    ```
 
@@ -165,19 +165,22 @@
 
 ```
 跨境运营助手/
-├── index.html                  # 主页面 - 引入智能主题系统
-├── style.css                   # 主样式文件 - 使用完整CSS变量系统
-├── script.js                   # 主脚本文件 - 业务逻辑
-├── notification-update.js      # 通知功能模块
-├── themes/                     # 🎨 智能主题系统 2.0
-│   ├── theme-config.js         # 主题配置 + 自动切换配置 (867行)
-│   ├── theme-manager.js        # 主题管理器 + 智能切换逻辑 (624行)
-│   ├── theme-switcher.css      # 主题切换器样式 + 自动模式UI (286行)
-│   └── alien-effects.css       # 外星人主题特效样式 (774行)
-├── .cursor/                    # 开发规范和配置
+├── public/
+│   └── index.html                  # 主页面 - 引入智能主题系统
+├── src/
+│   ├── main.js                     # 主脚本文件 - 业务逻辑
+│   ├── notification-update.js      # 通知功能模块
+│   ├── styles/
+│   │   └── style.css               # 主样式文件 - 使用完整CSS变量系统
+│   └── themes/                     # 🎨 智能主题系统 2.0
+│       ├── theme-config.js         # 主题配置 + 自动切换配置 (867行)
+│       ├── theme-manager.js        # 主题管理器 + 智能切换逻辑 (624行)
+│       ├── theme-switcher.css      # 主题切换器样式 + 自动模式UI (286行)
+│       └── alien-effects.css       # 外星人主题特效样式 (774行)
+├── .cursor/
 │   └── rules/
-│       └── rules.mdc           # 项目开发规范文档
-└── README.md                   # 项目文档（本文件）
+│       └── rules.mdc               # 项目开发规范文档
+└── README.md                       # 项目文档（本文件）
 ```
 
 ## 🛠️ 技术栈
@@ -216,7 +219,7 @@
 
 ### 1. 首次使用
 
-1. **打开应用**: 访问 index.html 或启动本地服务器
+1. **打开应用**: 访问 public/index.html 或启动本地服务器
 2. **登录系统**: 选择Google登录或手机号登录（演示界面）
 3. **主题设置**: 首次使用会使用默认的"自动模式"
 4. **个性化**: 根据个人喜好调整主题设置
@@ -423,21 +426,21 @@ window.themeManager.isDarkTheme();         // 是否深色主题
 ### 部署前检查清单
 
 #### 📁 文件完整性
-- [ ] `index.html` - 主页面文件
-- [ ] `style.css` - 主样式文件（使用CSS变量）
-- [ ] `script.js` - 主脚本文件
-- [ ] `notification-update.js` - 通知模块
-- [ ] `themes/theme-config.js` - 主题配置文件
-- [ ] `themes/theme-manager.js` - 主题管理器
-- [ ] `themes/theme-switcher.css` - 主题切换器样式
+- [ ] `public/index.html` - 主页面文件
+- [ ] `src/styles/style.css` - 主样式文件（使用CSS变量）
+- [ ] `src/main.js` - 主脚本文件
+- [ ] `src/notification-update.js` - 通知模块
+- [ ] `src/themes/theme-config.js` - 主题配置文件
+- [ ] `src/themes/theme-manager.js` - 主题管理器
+- [ ] `src/themes/theme-switcher.css` - 主题切换器样式
 
 #### 🔧 脚本引入顺序
 ```html
-<!-- 在index.html中的正确引入顺序 -->
-<script src="themes/theme-config.js"></script>
-<script src="themes/theme-manager.js"></script>
-<script src="notification-update.js"></script>
-<script src="script.js"></script>
+<!-- 在public/index.html中的正确引入顺序 -->
+<script src="../src/themes/theme-config.js"></script>
+<script src="../src/themes/theme-manager.js"></script>
+<script src="../src/notification-update.js"></script>
+<script src="../src/main.js"></script>
 ```
 
 #### ✅ 功能验证
