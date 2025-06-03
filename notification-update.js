@@ -1,6 +1,7 @@
 /**
- * 通知更新脚本
+ * 通知更新脚本 - 增强版
  * 用于处理通知相关的交互和更新
+ * 集成 Font Awesome 图标和 Tailwind CSS 样式
  */
 
 document.addEventListener('DOMContentLoaded', function() {

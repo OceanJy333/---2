@@ -4,10 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>网红建联平台原型</title>
+    <!-- 资源预加载优化 -->
+    <link rel="preconnect" href="https://cdn.staticfile.org">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.staticfile.org">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- 核心CSS框架 - 优化加载顺序 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css" crossorigin="anonymous">
+    
+    <!-- 项目基础样式 -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-enhanced.css">
+    
+    <!-- 主题系统样式 -->
     <link rel="stylesheet" href="themes/theme-switcher.css">
     <link rel="stylesheet" href="themes/alien-effects.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    
+    <!-- Remix Icons (保留用于主题系统兼容) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" media="print" onload="this.media='all'">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
     <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
@@ -167,48 +183,66 @@
                 <h2>主菜单</h2>
                 <div class="menu-item">
                     <div class="menu-item-content">
-                        <i class="ri-dashboard-line"></i>
+                        <i class="fas fa-tachometer-alt fa-icon-md text-blue-500"></i>
                         <span>仪表盘</span>
                     </div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-content">
-                        <i class="ri-box-3-line"></i>
+                        <i class="fas fa-cube fa-icon-md text-purple-500"></i>
                         <span>产品库</span>
-                        <span class="counter">1</span>
-                    </div>
-                </div>
-                <div class="menu-item has-submenu active" id="ai-assistant-menu">
-                    <div class="menu-item-content">
-                        <i class="ri-robot-line"></i>
-                        <span>AI助手</span>
-                        <i class="ri-arrow-down-s-line submenu-arrow"></i>
-                    </div>
-                    <div class="submenu" id="ai-assistant-submenu">
-                        <div class="submenu-item new-product">
-                            <i class="ri-add-line"></i>
-                            <span>新建商品分析</span>
-                        </div>
-                        <div class="submenu-divider"></div>
-                        <div class="submenu-item active">
-                            <i class="ri-brain-line"></i>
-                            <span>Earbud</span>
-                        </div>
-                        <div class="submenu-item">
-                            <i class="ri-brain-line"></i>
-                            <span>Smartwatch</span>
-                        </div>
-                        <div class="submenu-item">
-                            <i class="ri-brain-line"></i>
-                            <span>Speaker</span>
-                        </div>
+                        <span class="counter badge-primary-enhanced">1</span>
                     </div>
                 </div>
                 <div class="menu-item">
                     <div class="menu-item-content">
-                        <i class="ri-file-list-3-line"></i>
+                        <i class="fas fa-users fa-icon-md text-green-500"></i>
                         <span>建联记录</span>
-                        <span class="counter">2</span>
+                        <span class="counter badge-success-enhanced">2</span>
+                    </div>
+                </div>
+                <div class="menu-item has-submenu active" id="ai-assistant-menu">
+                    <div class="menu-item-content">
+                        <i class="fas fa-robot fa-icon-md text-indigo-500"></i>
+                        <span>AI助手</span>
+                        <i class="fas fa-chevron-down submenu-arrow"></i>
+                    </div>
+                    <div class="submenu" id="ai-assistant-submenu">
+                        <div class="submenu-item new-chat btn-enhanced bg-blue-50 hover:bg-blue-100 border border-blue-200" onclick="showNewProductPage()">
+                            <i class="fas fa-plus fa-icon-sm text-blue-600"></i>
+                            <span class="text-blue-700 font-medium">新建商品分析</span>
+                        </div>
+                        <div class="submenu-divider"></div>
+                        <div class="chat-history-section">
+                            <div class="submenu-section-title text-gray-500 text-xs uppercase tracking-wider font-semibold">最近对话</div>
+                            <div class="submenu-item active chat-item" data-chat-id="earbud-1" data-product="Earbud">
+                                <div class="chat-item-content icon-text-enhanced">
+                                    <i class="fas fa-comments fa-icon-sm text-green-500"></i>
+                                    <span class="chat-title">Earbud</span>
+                                </div>
+                                <button class="chat-action-btn btn-enhanced p-1 hover:bg-red-50" title="删除对话">
+                                    <i class="fas fa-trash fa-icon-sm text-red-500"></i>
+                                </button>
+                            </div>
+                            <div class="submenu-item chat-item" data-chat-id="smartwatch-1" data-product="Smartwatch">
+                                <div class="chat-item-content icon-text-enhanced">
+                                    <i class="fas fa-comments fa-icon-sm text-blue-500"></i>
+                                    <span class="chat-title">Smartwatch</span>
+                                </div>
+                                <button class="chat-action-btn btn-enhanced p-1 hover:bg-red-50" title="删除对话">
+                                    <i class="fas fa-trash fa-icon-sm text-red-500"></i>
+                                </button>
+                            </div>
+                            <div class="submenu-item chat-item" data-chat-id="speaker-1" data-product="Speaker">
+                                <div class="chat-item-content icon-text-enhanced">
+                                    <i class="fas fa-comments fa-icon-sm text-purple-500"></i>
+                                    <span class="chat-title">Speaker</span>
+                                </div>
+                                <button class="chat-action-btn btn-enhanced p-1 hover:bg-red-50" title="删除对话">
+                                    <i class="fas fa-trash fa-icon-sm text-red-500"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -217,26 +251,26 @@
 
 
             <!-- 用户信息 -->
-            <div class="user-profile" id="user-profile-sidebar">
-                <div class="user-profile-clickable" id="sidebar-profile-clickable">
+            <div class="user-profile card-enhanced p-3 m-2" id="user-profile-sidebar">
+                <div class="user-profile-clickable cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors duration-200" id="sidebar-profile-clickable">
                     <div class="sidebar-avatar-container">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&q=80" alt="用户头像" id="sidebar-avatar">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&q=80" alt="用户头像" id="sidebar-avatar" class="avatar-md-enhanced border-2 border-blue-200">
                     </div>
-                    <div class="user-info">
-                        <div class="user-name">跨境运营专家</div>
-                        <div class="user-email">user@example.com</div>
+                    <div class="user-info flex-1">
+                        <div class="user-name font-semibold text-gray-800">跨境运营专家</div>
+                        <div class="user-email text-sm text-gray-500">user@example.com</div>
                     </div>
-                    <i class="ri-arrow-down-s-line dropdown-arrow"></i>
+                    <i class="fas fa-chevron-down dropdown-arrow text-gray-400 fa-icon-sm"></i>
                 </div>
                 <!-- 侧边栏用户下拉菜单 -->
-                <div class="sidebar-dropdown-menu" id="sidebar-dropdown-menu">
-                    <div class="dropdown-item" id="sidebar-account-settings-item">
-                        <i class="ri-user-settings-line"></i>
+                <div class="sidebar-dropdown-menu dropdown-menu-enhanced" id="sidebar-dropdown-menu">
+                    <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced" id="sidebar-account-settings-item">
+                        <i class="fas fa-user-cog fa-icon-sm text-gray-600"></i>
                         <span>账号设置</span>
                     </div>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item" id="sidebar-logout-item">
-                        <i class="ri-logout-box-line"></i>
+                    <div class="dropdown-divider border-gray-200"></div>
+                    <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced text-red-600 hover:bg-red-50" id="sidebar-logout-item">
+                        <i class="fas fa-sign-out-alt fa-icon-sm text-red-500"></i>
                         <span>退出登录</span>
                     </div>
                 </div>
@@ -247,18 +281,24 @@
         <div class="main-content">
             <!-- 顶部导航栏 -->
             <div class="header">
-                <div class="product-title">AI助手</div>
-                <!-- 顶部导航栏用户头像 -->
+                <div class="product-title text-2xl font-bold text-gray-900">AI助手</div>
+                
+                <!-- 顶部导航栏用户操作区域 -->
                 <div class="user-actions">
+                    <!-- 通知中心 -->
                     <div class="notification-container">
                         <div class="icon-button" id="notification-button">
-                            <i class="ri-notification-2-line"></i>
+                            <i class="fas fa-bell fa-icon-md text-gray-600"></i>
                             <span class="notification-badge">3</span>
                         </div>
-                        <!-- 通知列表 -->
+                        
+                                                <!-- 通知列表 -->
                         <div class="notification-dropdown" id="notification-dropdown">
                             <div class="notification-header">
-                                <h3>通知中心</h3>
+                                <h3>
+                                    <i class="fas fa-bell fa-icon-sm text-blue-500"></i>
+                                    通知中心
+                                </h3>
                                 <div class="notification-actions">
                                     <span class="mark-all-read">全部标为已读</span>
                                 </div>
@@ -300,17 +340,19 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- 用户头像 -->
                     <div class="user-profile-dropdown">
                         <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=36&h=36&fit=crop&q=80" alt="用户头像" class="user-avatar" id="user-avatar-header">
                         <!-- 用户下拉菜单 -->
                         <div class="user-dropdown-menu" id="user-dropdown-menu">
                             <div class="dropdown-item" id="account-settings-item">
-                                <i class="ri-user-settings-line"></i>
+                                <i class="fas fa-user-cog fa-icon-sm text-gray-600"></i>
                                 <span>账号设置</span>
                             </div>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item" id="logout-item">
-                                <i class="ri-logout-box-line"></i>
+                                <i class="fas fa-sign-out-alt fa-icon-sm text-red-500"></i>
                                 <span>退出登录</span>
                             </div>
                         </div>
@@ -321,52 +363,66 @@
             <!-- AI助手内容 -->
             <div class="ai-assistant-container">
                 <!-- AI助手顶部信息 -->
-                <div class="ai-header card pulse">
-                    <div class="ai-avatar glow">
-                        <i class="ri-robot-line"></i>
+                <div class="ai-header card-enhanced p-4 m-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100">
+                    <div class="ai-avatar glow bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-robot fa-icon-lg text-blue-600"></i>
                     </div>
                     <div class="ai-info">
-                        <div class="ai-name tech-text">AI助手</div>
-                        <!-- 已移除当前产品显示 -->
+                        <div class="ai-name text-xl font-bold text-blue-900">AI助手</div>
+                        <div class="ai-status text-sm text-blue-600 icon-text-enhanced">
+                            <i class="fas fa-circle fa-icon-sm text-green-500"></i>
+                            在线 · 准备为您服务
+                        </div>
                     </div>
                 </div>
 
                 <!-- 新建商品分析会话界面 -->
                 <div class="new-product-container" style="display: flex;">
-                    <div class="welcome-message">
-                        <div class="welcome-icon">
-                            <i class="ri-robot-line"></i>
+                    <div class="welcome-message card-enhanced p-8 m-4 text-center bg-gradient-to-br from-white to-blue-50">
+                        <div class="welcome-icon mb-6 text-6xl">
+                            <i class="fas fa-robot text-blue-500"></i>
                         </div>
-                        <h2>👋 欢迎使用 AI助手！</h2>
-                        <p>我是您的跨境运营伙伴，可以帮您：</p>
-                        <ul>
-                            <li>分析商品信息并推荐适合的 YouTube 博主</li>
-                            <li>为商品特性匹配最适合的合作人选</li>
-                            <li>生成高质量的初步建联邮件</li>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-4">👋 欢迎使用 AI助手！</h2>
+                        <p class="text-lg text-gray-700 mb-6">我是您的跨境运营伙伴，可以帮您：</p>
+                        <ul class="text-left max-w-lg mx-auto mb-6 space-y-2">
+                            <li class="icon-text-enhanced text-gray-700">
+                                <i class="fas fa-search fa-icon-sm text-blue-500"></i>
+                                分析商品信息并推荐适合的 YouTube 博主
+                            </li>
+                            <li class="icon-text-enhanced text-gray-700">
+                                <i class="fas fa-users fa-icon-sm text-green-500"></i>
+                                为商品特性匹配最适合的合作人选
+                            </li>
+                            <li class="icon-text-enhanced text-gray-700">
+                                <i class="fas fa-envelope fa-icon-sm text-purple-500"></i>
+                                生成高质量的初步建联邮件
+                            </li>
                         </ul>
-                        <p>请在下方输入框粘贴商品链接或描述信息，即可开始分析！</p>
-                        <p class="welcome-hint">（支持 Amazon、独立站商品页链接，或简要描述如："蓝牙耳机，定位运动用户，预算 $30 左右"）</p>
+                        <p class="text-base text-gray-600">请在下方输入框粘贴商品链接或描述信息，即可开始分析！</p>
                     </div>
 
                     <!-- 中央输入框 -->
-                    <div class="central-input-container border-glow">
-                        <textarea class="central-input hologram" placeholder="粘贴您的商品链接或输入产品信息……"></textarea>
-                        <button class="central-send-button btn-primary glow">
-                            <i class="ri-send-plane-fill"></i>
-                        </button>
-                    </div>
-
-                    <!-- 快速提示按钮 -->
-                    <div class="quick-prompts">
-                        <button class="quick-prompt-btn card glow" data-prompt="https://www.amazon.com/Sony-WF-1000XM4-Canceling-Headphones-Charging/dp/B094C4VDJZ/">
-                            <i class="ri-link-m"></i> 示例链接
-                        </button>
-                        <button class="quick-prompt-btn card glow" data-prompt="科技类无线耳机，主打降噪功能和长续航，面向商务人士和通勤族，价格区间100-150美元">
-                            <i class="ri-file-text-line"></i> 使用模板描述
-                        </button>
-                        <button class="quick-prompt-btn card glow" data-prompt="demo">
-                            <i class="ri-play-circle-line"></i> 跳过输入，直接体验
-                        </button>
+                    <div class="central-input-container border-glow card-enhanced p-4 m-4">
+                        <div class="relative">
+                            <textarea class="central-input form-input-enhanced resize-none h-32 pr-12" placeholder="粘贴您的商品链接或输入产品信息……"></textarea>
+                            <button class="central-send-button btn-primary-enhanced absolute bottom-2 right-2 p-2">
+                                <i class="fas fa-paper-plane fa-icon-sm"></i>
+                            </button>
+                        </div>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <button class="quick-prompt-btn btn-outline-enhanced text-sm" data-prompt="demo">
+                                <i class="fas fa-magic fa-icon-sm text-purple-500"></i>
+                                试用演示
+                            </button>
+                            <button class="quick-prompt-btn btn-outline-enhanced text-sm" data-prompt="请分析这个商品">
+                                <i class="fas fa-cube fa-icon-sm text-blue-500"></i>
+                                商品分析
+                            </button>
+                            <button class="quick-prompt-btn btn-outline-enhanced text-sm" data-prompt="推荐YouTube博主">
+                                <i class="fas fa-video fa-icon-sm text-red-500"></i>
+                                推荐博主
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -377,7 +433,7 @@
                     <!-- AI消息 -->
                     <div class="message ai-message">
                         <div class="ai-avatar message-avatar">
-                            <i class="ri-robot-line"></i>
+                            <i class="fas fa-robot text-blue-600"></i>
                         </div>
                         <div>
                             <div class="message-content">
@@ -404,7 +460,7 @@
                     <!-- AI消息（长回复） -->
                     <div class="message ai-message">
                         <div class="ai-avatar message-avatar">
-                            <i class="ri-robot-line"></i>
+                            <i class="fas fa-robot text-blue-600"></i>
                         </div>
                         <div>
                             <div class="message-content">
@@ -416,19 +472,19 @@
                                     <div class="creator-card">
                                         <img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=64&h=64&fit=crop&q=80" alt="MattVidPro AI" class="creator-avatar">
                                         <div class="creator-info">
-                                            <div class="creator-name">MattVidPro AI <i class="ri-verified-badge-fill verified"></i></div>
+                                            <div class="creator-name">MattVidPro AI <i class="fas fa-check-circle verified text-blue-500"></i></div>
                                             <div class="creator-stats">
-                                                <span><i class="ri-user-line"></i> 28.67万</span>
-                                                <span><i class="ri-play-circle-line"></i> 3978万</span>
-                                                <span><i class="ri-video-line"></i> 580</span>
-                                                <span><i class="ri-bar-chart-line"></i> 相关度: 92%</span>
+                                                <span><i class="fas fa-users text-gray-500"></i> 28.67万</span>
+                                                <span><i class="fas fa-play-circle text-red-500"></i> 3978万</span>
+                                                <span><i class="fas fa-video text-purple-500"></i> 580</span>
+                                                <span><i class="fas fa-chart-bar text-green-500"></i> 相关度: 92%</span>
                                             </div>
                                             <div class="creator-description">
                                                 专注AI技术在视频制作领域的应用，与Earbud的AI功能相匹配。
                                                 <br><strong>依据:</strong> 最近3个视频提及 "AI语音识别", "实时翻译"，与产品特性高度吻合。评论区用户画像与 "科技爱好者" 标签重叠度预估 85%。
                                             </div>
                                             <div class="ai-suggestion">
-                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 建议:</strong> 与其沟通时可强调AI语音助手的便捷性，这是其观众近期讨论较多的话题。
+                                                <i class="fas fa-lightbulb text-yellow-500"></i> <strong>AI 建议:</strong> 与其沟通时可强调AI语音助手的便捷性，这是其观众近期讨论较多的话题。
                                             </div>
                                             <div class="creator-actions">
                                                 <button class="add-outreach-btn">添加到建联记录</button>
@@ -441,19 +497,19 @@
                                     <div class="creator-card">
                                         <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=64&h=64&fit=crop&q=80" alt="Two Minute Papers" class="creator-avatar">
                                         <div class="creator-info">
-                                            <div class="creator-name">Two Minute Papers <i class="ri-verified-badge-fill verified"></i></div>
+                                            <div class="creator-name">Two Minute Papers <i class="fas fa-check-circle verified text-blue-500"></i></div>
                                             <div class="creator-stats">
-                                                <span><i class="ri-user-line"></i> 162万</span>
-                                                <span><i class="ri-play-circle-line"></i> 1.5亿</span>
-                                                <span><i class="ri-video-line"></i> 999</span>
-                                                <span><i class="ri-bar-chart-line"></i> 相关度: 89%</span>
+                                                <span><i class="fas fa-users text-gray-500"></i> 162万</span>
+                                                <span><i class="fas fa-play-circle text-red-500"></i> 1.5亿</span>
+                                                <span><i class="fas fa-video text-purple-500"></i> 999</span>
+                                                <span><i class="fas fa-chart-bar text-green-500"></i> 相关度: 89%</span>
                                             </div>
                                             <div class="creator-description">
                                                 以短视频形式讲解最新AI研究，观众为技术爱好者。
                                                 <br><strong>依据:</strong> 频道核心主题为 "前沿科技解读"，与产品 "AI特性" 定位相符。历史内容中包含多篇关于 "音频技术" 的分析。
                                             </div>
                                             <div class="ai-suggestion">
-                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 建议:</strong> 可提供产品技术白皮书供其参考，强调技术的创新性。
+                                                <i class="fas fa-lightbulb text-yellow-500"></i> <strong>AI 建议:</strong> 可提供产品技术白皮书供其参考，强调技术的创新性。
                                             </div>
                                             <div class="creator-actions">
                                                 <button class="add-outreach-btn">添加到建联记录</button>
@@ -468,17 +524,17 @@
                                         <div class="creator-info">
                                             <div class="creator-name">AI TV</div>
                                             <div class="creator-stats">
-                                                <span><i class="ri-user-line"></i> 1.38K</span>
-                                                <span><i class="ri-play-circle-line"></i> 11.4万</span>
-                                                <span><i class="ri-video-line"></i> 396</span>
-                                                <span><i class="ri-bar-chart-line"></i> 相关度: 85%</span>
+                                                <span><i class="fas fa-users text-gray-500"></i> 1.38K</span>
+                                                <span><i class="fas fa-play-circle text-red-500"></i> 11.4万</span>
+                                                <span><i class="fas fa-video text-purple-500"></i> 396</span>
+                                                <span><i class="fas fa-chart-bar text-green-500"></i> 相关度: 85%</span>
                                             </div>
                                             <div class="creator-description">
                                                 专注AI产品评测，虽然规模较小但受众精准。
                                                 <br><strong>依据:</strong> 频道定位为 "AI产品评测"，与合作需求直接相关。近期有 "智能穿戴设备" 评测内容。
                                             </div>
                                             <div class="ai-suggestion">
-                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 建议:</strong> 强调产品的多语言翻译功能，满足其评测多样性需求。其互动率稳定，可按标准方案沟通。
+                                                <i class="fas fa-lightbulb text-yellow-500"></i> <strong>AI 建议:</strong> 强调产品的多语言翻译功能，满足其评测多样性需求。其互动率稳定，可按标准方案沟通。
                                             </div>
                                             <div class="creator-actions">
                                                 <button class="add-outreach-btn">添加到建联记录</button>
@@ -491,19 +547,19 @@
                                     <div class="creator-card">
                                         <img src="https://images.unsplash.com/photo-1540569876033-6e5d046a1d77?w=64&h=64&fit=crop&q=80" alt="Sciencephile the AI" class="creator-avatar">
                                         <div class="creator-info">
-                                            <div class="creator-name">Sciencephile the AI <i class="ri-verified-badge-fill verified"></i></div>
+                                            <div class="creator-name">Sciencephile the AI <i class="fas fa-check-circle verified text-blue-500"></i></div>
                                             <div class="creator-stats">
-                                                <span><i class="ri-user-line"></i> 108万</span>
-                                                <span><i class="ri-play-circle-line"></i> 2557万</span>
-                                                <span><i class="ri-video-line"></i> 144</span>
-                                                <span><i class="ri-bar-chart-line"></i> 相关度: 78%</span>
+                                                <span><i class="fas fa-users text-gray-500"></i> 108万</span>
+                                                <span><i class="fas fa-play-circle text-red-500"></i> 2557万</span>
+                                                <span><i class="fas fa-video text-purple-500"></i> 144</span>
+                                                <span><i class="fas fa-chart-bar text-green-500"></i> 相关度: 78%</span>
                                             </div>
                                             <div class="creator-description">
                                                 科技内容创作者，受众对创新科技产品有强烈兴趣。
                                                  <br><strong>依据:</strong> 频道覆盖 "未来科技"、"创新产品" 等话题，粉丝互动中常讨论 "续航"、"音质"。
                                             </div>
                                              <div class="ai-suggestion">
-                                                <i class="ri-lightbulb-flash-line"></i> <strong>AI 分析:</strong> 该博主近期内容互动率略有下降，建议提供更有吸引力的合作方案（如：更高的佣金比例或独家内容）。
+                                                <i class="fas fa-lightbulb text-yellow-500"></i> <strong>AI 分析:</strong> 该博主近期内容互动率略有下降，建议提供更有吸引力的合作方案（如：更高的佣金比例或独家内容）。
                                             </div>
                                             <div class="creator-actions">
                                                 <button class="add-outreach-btn">添加到建联记录</button>
@@ -517,8 +573,8 @@
 
                                 <div class="json-container">
                                     <div class="json-toggle">
-                                        <i class="ri-code-line"></i> 查看详细数据
-                                        <i class="ri-arrow-down-s-line"></i>
+                                        <i class="fas fa-code text-gray-600"></i> 查看详细数据
+                                        <i class="fas fa-chevron-down text-gray-400"></i>
                                     </div>
                                     <div class="ai-json" style="display: none;">
 ```json
@@ -1358,17 +1414,7 @@
                                 <span>12%</span>
                             </div>
                         </div>
-                        <div class="kpi-card">
-                            <div class="kpi-icon"><i class="ri-broadcast-line"></i></div>
-                            <div class="kpi-data">
-                                <div class="kpi-value">247万</div>
-                                <div class="kpi-label">活动触达潜力</div>
-                            </div>
-                            <div class="kpi-trend positive">
-                                <i class="ri-arrow-up-line"></i>
-                                <span>36%</span>
-                            </div>
-                        </div>
+
                         <div class="kpi-card">
                             <div class="kpi-icon"><i class="ri-line-chart-line"></i></div>
                             <div class="kpi-data">
@@ -1472,12 +1518,7 @@
                                             <span class="stage-value">24</span>
                                         </div>
                                     </div>
-                                    <div class="funnel-stage">
-                                        <div class="stage-bar" style="width: 43%; background: linear-gradient(90deg, #42a5f5, #2196f3);">
-                                            <span class="stage-label">推广中</span>
-                                            <span class="stage-value">18</span>
-                                        </div>
-                                    </div>
+
                                 </div>
 
                             </div>
@@ -2169,6 +2210,8 @@
 
     <script src="script.js"></script>
     <script src="notification-update.js"></script>
+    <!-- 性能优化器 -->
+    <script src="performance-optimizer.js"></script>
     
     <!-- 主题系统 -->
     <script src="themes/theme-config.js"></script>

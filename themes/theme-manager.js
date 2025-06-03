@@ -151,6 +151,9 @@ class ThemeManager {
         // 应用颜色变量
         this.applyCategoryVariables(root, theme.colors, variables.colors);
         
+        // 生成并应用透明度变量
+        this.generateAlphaVariables(root, theme.colors);
+        
         // 应用字体变量
         this.applyCategoryVariables(root, theme.fonts, variables.fonts);
         
@@ -162,6 +165,66 @@ class ThemeManager {
         
         // 应用动画变量
         this.applyCategoryVariables(root, theme.animations, variables.animations);
+    }
+
+    generateAlphaVariables(root, colors) {
+        // 为主要颜色生成透明度变量
+        const colorNames = ['primary', 'success', 'warning', 'error', 'info'];
+        const alphaLevels = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.90];
+        
+        colorNames.forEach(colorName => {
+            const baseColor = colors[colorName];
+            if (baseColor) {
+                // 将hex颜色转换为RGB
+                const rgb = this.hexToRgb(baseColor);
+                if (rgb) {
+                    alphaLevels.forEach(alpha => {
+                        const alphaValue = Math.round(alpha * 100);
+                        const variableName = `--${colorName}-alpha-${alphaValue.toString().padStart(2, '0')}`;
+                        const rgbaValue = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+                        root.style.setProperty(variableName, rgbaValue);
+                    });
+                }
+            }
+        });
+        
+        // 添加黑白透明度变量
+        const blackAlphas = [0.03, 0.05, 0.08, 0.10, 0.12, 0.15];
+        const whiteAlphas = [0.30, 0.50, 0.80];
+        
+        blackAlphas.forEach(alpha => {
+            const alphaValue = Math.round(alpha * 100);
+            const variableName = `--black-alpha-${alphaValue.toString().padStart(2, '0')}`;
+            const rgbaValue = `rgba(0, 0, 0, ${alpha})`;
+            root.style.setProperty(variableName, rgbaValue);
+        });
+        
+        whiteAlphas.forEach(alpha => {
+            const alphaValue = Math.round(alpha * 100);
+            const variableName = `--white-alpha-${alphaValue.toString().padStart(2, '0')}`;
+            const rgbaValue = `rgba(255, 255, 255, ${alpha})`;
+            root.style.setProperty(variableName, rgbaValue);
+        });
+    }
+
+    hexToRgb(hex) {
+        // 移除#符号
+        hex = hex.replace('#', '');
+        
+        // 处理3位和6位十六进制
+        if (hex.length === 3) {
+            hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        }
+        
+        if (hex.length !== 6) {
+            return null;
+        }
+        
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        
+        return { r, g, b };
     }
 
     applyCategoryVariables(root, themeValues, variableMap) {

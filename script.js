@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation(); // 阻止事件冒泡
 
             // 如果是"新建商品分析"按钮
-            if (item.classList.contains('new-product')) {
+            if (item.classList.contains('new-chat')) {
                 // 获取AI助手容器和其他容器
                 const aiAssistantContainer = document.querySelector('.ai-assistant-container');
                 const chatContainer = document.querySelector('.chat-container');
@@ -1623,7 +1623,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const notificationItemsFull = document.querySelectorAll('.notification-item-full');
     const markAllReadModalBtn = document.querySelector('.mark-all-read-btn');
 
-    // 点击“查看全部通知”打开通知弹窗
+    // 点击"查看全部通知"打开通知弹窗
     if (viewAllNotificationsLinks) {
         viewAllNotificationsLinks.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -1649,7 +1649,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // 点击仪表盘中的“查看全部”打开通知弹窗
+    // 点击仪表盘中的"查看全部"打开通知弹窗
     const dashboardViewAllLink = document.querySelector('#dashboard-view-all');
     if (dashboardViewAllLink) {
         dashboardViewAllLink.addEventListener('click', function(e) {
@@ -1765,8 +1765,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         item.style.display = 'none';
                     }
                 } else if (tabType === 'important') {
-                    // 这里可以根据实际需求定义“重要”通知的条件
-                    // 例如，将“合作确认”和“内容发布”类型的通知视为重要
+                    // 这里可以根据实际需求定义"重要"通知的条件
+                    // 例如，将"合作确认"和"内容发布"类型的通知视为重要
                     const type = item.getAttribute('data-type');
                     if (type === 'confirm' || type === 'publish') {
                         item.style.display = 'flex';
@@ -1778,7 +1778,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 点击弹窗中的“全部标为已读”按钮
+    // 点击弹窗中的"全部标为已读"按钮
     if (markAllReadModalBtn) {
         markAllReadModalBtn.addEventListener('click', function() {
             if (notificationItemsFull) {
@@ -2309,155 +2309,302 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 分析商品链接的函数
     function analyzeProductLink(link) {
-        // 清空之前的消息，避免重复
-        const chatContainer = document.querySelector('.chat-container');
-        if (chatContainer) {
-            chatContainer.innerHTML = '';
-        }
-
-        // 添加正在分析的消息
-        addAIMessage('正在分析商品信息，请稍候...');
+        // 添加分析消息
+        addAIMessage('正在分析商品链接，请稍候...');
 
         // 确保输入框隐藏
         const inputArea = document.querySelector('.input-area');
         if (inputArea) inputArea.style.display = 'none';
 
-        // 模拟分析过程
+        // 第一步：显示链接抓取
         setTimeout(() => {
-            const analysisSteps = `
-                <div class="analysis-steps">
-                    <div class="step-item">
-                        <div class="step-label"><i class="ri-link-m"></i> 链接抓取</div>
-                        <div class="step-content">成功获取商品信息: Earbud 智能翻译耳机</div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-label"><i class="ri-file-list-line"></i> 提取特征</div>
-                        <div class="step-content">
-                            <ul>
-                                <li>多语言实时翻译功能</li>
-                                <li>AI语音助手集成</li>
-                                <li>高清音质，降噪技术</li>
-                                <li>长续航（8小时+）</li>
-                                <li>防水设计 IPX5</li>
-                                <li>适用人群: 商务人士、旅行者、科技爱好者</li>
-                                <li>价格区间: 50-100元</li>
-                            </ul>
+            showLinkScrapingStep();
+            
+            // 第二步：延迟显示特征提取
+            setTimeout(() => {
+                showFeatureExtractionStep();
+                
+                // 第三步：显示商品信息分析卡片
+                setTimeout(() => {
+                    showProductAnalysisCard();
+                }, 1500);
+            }, 1500);
+        }, 1000);
+    }
+
+    // 分步骤显示链接抓取
+    function showLinkScrapingStep() {
+        const linkScrapingStep = `
+            <div class="analysis-steps">
+                <div class="step-item step-animate-in" data-step="1">
+                    <div class="step-label"><i class="ri-link-m"></i> 链接抓取</div>
+                    <div class="step-content">
+                        <div class="product-info-card">
+                            <div class="product-image-container">
+                                <div class="product-image-loader">
+                                    <div class="image-loading-spinner"></div>
+                                    <span>正在加载商品图片...</span>
+                                </div>
+                                <img src="https://images.unsplash.com/photo-1606220588913-b3aacb4d2f46?w=150&h=150&fit=crop&q=80" 
+                                     alt="Earbud 智能翻译耳机" 
+                                     class="product-image"
+                                     onload="this.previousElementSibling.style.display='none'; this.style.display='block';"
+                                     onerror="this.previousElementSibling.innerHTML='<i class=\\"ri-image-line\\"></i><span>图片加载失败</span>'"
+                                     style="display: none;">
+                                </div>
+                            <div class="product-basic-info">
+                                <h4 class="product-title">
+                                    <i class="ri-check-line success-icon"></i>
+                                    成功获取商品信息
+                                </h4>
+                                <div class="product-name">Earbud 智能翻译耳机</div>
+                                <div class="product-category-tag">
+                                    <i class="ri-headphone-line"></i>
+                                    智能音频设备
+                                </div>
+                                <div class="product-quick-stats">
+                                    <span class="price-range"><i class="ri-price-tag-line"></i> 50-100元</span>
+                                    <span class="target-market"><i class="ri-user-line"></i> 科技爱好者</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-label"><i class="ri-search-line"></i> 匹配算法</div>
-                        <div class="step-content">正在通过AI模型分析13,487位YouTube博主的内容特征、受众群体与产品的匹配度...</div>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
+        
+        addAIMessage(linkScrapingStep);
+    }
 
-            addAIMessage(analysisSteps);
-
-            // 模拟延迟后显示商品信息卡片
-            setTimeout(() => {
-                const productCard = `
-                    <div class="product-analysis-card">
-                        <div class="product-analysis-header">
-                            <h4><i class="ri-shopping-bag-line"></i> 商品信息分析结果</h4>
-                        </div>
-                        <div class="product-analysis-content">
-                            <div class="product-info-item">
-                                <div class="info-label">商品名称:</div>
-                                <div class="info-value">
-                                    <input type="text" class="editable-field" value="Earbud 智能翻译耳机">
+    // 分步骤显示特征提取
+    function showFeatureExtractionStep() {
+        const featureExtractionStep = `
+            <div class="analysis-steps">
+                <div class="step-item step-animate-in" data-step="2">
+                    <div class="step-label"><i class="ri-file-list-line"></i> 提取特征</div>
+                    <div class="step-content">
+                        <div class="feature-analysis">
+                            <div class="core-features">
+                                <div class="feature-tag ai-feature">
+                                    <i class="ri-robot-line"></i>
+                                    多语言实时翻译功能
+                                </div>
+                                <div class="feature-tag ai-feature">
+                                    <i class="ri-mic-line"></i>
+                                    AI语音助手集成
+                                </div>
+                                <div class="feature-tag quality-feature">
+                                    <i class="ri-volume-up-line"></i>
+                                    高清音质，降噪技术
+                                </div>
+                                <div class="feature-tag battery-feature">
+                                    <i class="ri-battery-charge-line"></i>
+                                    长续航（8小时+）
+                                </div>
+                                <div class="feature-tag durability-feature">
+                                    <i class="ri-shield-check-line"></i>
+                                    防水设计 IPX5
                                 </div>
                             </div>
-                            <div class="product-info-item">
-                                <div class="info-label">价格区间:</div>
-                                <div class="info-value">
-                                    <input type="text" class="editable-field" value="50-100元">
+                            <div class="target-audience">
+                                <h5><i class="ri-group-line"></i> 目标受众分析</h5>
+                                <div class="audience-tags">
+                                    <span class="audience-tag">商务人士</span>
+                                    <span class="audience-tag">旅行者</span>
+                                    <span class="audience-tag">科技爱好者</span>
                                 </div>
                             </div>
-                            <div class="product-info-item">
-                                <div class="info-label">核心特性:</div>
-                                <div class="info-value">
-                                    <textarea class="editable-field" rows="3">多语言实时翻译, AI语音助手, 高清音质, 降噪技术, 长续航, 防水设计</textarea>
-                                </div>
-                            </div>
-                            <div class="product-info-item">
-                                <div class="info-label">目标受众:</div>
-                                <div class="info-value">
-                                    <textarea class="editable-field" rows="2">商务人士, 旅行者, 科技爱好者</textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-analysis-actions">
-                            <button class="edit-product-btn"><i class="ri-edit-line"></i> 修改信息</button>
-                            <button class="confirm-product-btn primary-btn"><i class="ri-check-line"></i> 开始匹配博主</button>
                         </div>
                     </div>
-                `;
+                </div>
+            </div>
+        `;
+        
+        addAIMessage(featureExtractionStep);
+    }
 
-                addAIMessage(productCard);
+    // 显示商品信息分析卡片
+    function showProductAnalysisCard() {
+        const productCard = `
+            <div class="product-analysis-card">
+                <div class="product-analysis-header">
+                    <h4><i class="ri-shopping-bag-line"></i> 商品信息分析结果</h4>
+                </div>
+                <div class="product-analysis-content">
+                    <div class="product-info-item">
+                        <div class="info-label">商品名称:</div>
+                        <div class="info-value">
+                            <input type="text" class="editable-field" value="Earbud 智能翻译耳机">
+                        </div>
+                    </div>
+                    <div class="product-info-item">
+                        <div class="info-label">价格区间:</div>
+                        <div class="info-value">
+                            <input type="text" class="editable-field" value="50-100元">
+                        </div>
+                    </div>
+                    <div class="product-info-item">
+                        <div class="info-label">核心特性:</div>
+                        <div class="info-value">
+                            <textarea class="editable-field" rows="3">多语言实时翻译, AI语音助手, 高清音质, 降噪技术, 长续航, 防水设计</textarea>
+                        </div>
+                    </div>
+                    <div class="product-info-item">
+                        <div class="info-label">目标受众:</div>
+                        <div class="info-value">
+                            <textarea class="editable-field" rows="2">商务人士, 旅行者, 科技爱好者</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-analysis-actions">
+                    <button class="edit-product-btn"><i class="ri-edit-line"></i> 修改信息</button>
+                    <button class="confirm-product-btn primary-btn"><i class="ri-check-line"></i> 开始匹配博主</button>
+                </div>
+            </div>
+        `;
 
-                // 添加产品卡片交互
-                setTimeout(() => {
-                    const editBtn = document.querySelector('.edit-product-btn');
-                    const confirmBtn = document.querySelector('.confirm-product-btn');
-                    const editableFields = document.querySelectorAll('.editable-field');
+        addAIMessage(productCard);
 
-                    // 初始状态下禁用编辑
+        // 添加产品卡片交互
+        setTimeout(() => {
+            const editBtn = document.querySelector('.edit-product-btn');
+            const confirmBtn = document.querySelector('.confirm-product-btn');
+            const editableFields = document.querySelectorAll('.editable-field');
+
+            // 初始状态下禁用编辑
+            editableFields.forEach(field => {
+                field.disabled = true;
+            });
+
+            // 编辑按钮点击
+            if (editBtn) {
+                editBtn.addEventListener('click', function() {
+                    editableFields.forEach(field => {
+                        field.disabled = !field.disabled;
+                    });
+
+                    if (editableFields[0].disabled) {
+                        editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
+                    } else {
+                        editBtn.innerHTML = '<i class="ri-save-line"></i> 保存修改';
+                    }
+                });
+            }
+
+            // 确认按钮点击
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', function() {
+                    // 确保所有字段都被禁用编辑
                     editableFields.forEach(field => {
                         field.disabled = true;
                     });
+                    editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
 
-                    // 编辑按钮点击
-                    if (editBtn) {
-                        editBtn.addEventListener('click', function() {
-                            editableFields.forEach(field => {
-                                field.disabled = !field.disabled;
-                            });
+                    // 显示匹配中的消息
+                    addAIMessage('正在匹配最适合的YouTube博主，请稍候...');
 
-                            if (editableFields[0].disabled) {
-                                editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
-                            } else {
-                                editBtn.innerHTML = '<i class="ri-save-line"></i> 保存修改';
-                            }
-                        });
-                    }
-
-                    // 确认按钮点击
-                    if (confirmBtn) {
-                        confirmBtn.addEventListener('click', function() {
-                            // 确保所有字段都被禁用编辑
-                            editableFields.forEach(field => {
-                                field.disabled = true;
-                            });
-                            editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
-
-                            // 显示匹配中的消息
-                            addAIMessage('正在匹配最适合的YouTube博主，请稍候...');
-
-                            // 延迟后显示匹配结果
-                            setTimeout(() => {
-                                const resultMessage = `
-                                    <div class="analysis-complete">
-                                        <div class="step-item">
-                                            <div class="step-label"><i class="ri-check-double-line"></i> 匹配完成</div>
-                                            <div class="step-content">已根据产品特性匹配到 5 位最合适的YouTube博主</div>
+                    // 显示匹配算法步骤
+                    setTimeout(() => {
+                        const matchingSteps = `
+                            <div class="analysis-steps">
+                                <div class="step-item">
+                                    <div class="step-label"><i class="ri-search-line"></i> 匹配算法</div>
+                                    <div class="step-content">
+                                        <div class="matching-progress">
+                                            <div class="progress-info">
+                                                <span>正在通过AI模型分析YouTube博主的内容特征、受众群体与产品的匹配度...</span>
+                                            </div>
+                                            <div class="progress-bar-container">
+                                                <div class="progress-bar">
+                                                    <div class="progress-fill"></div>
+                                                </div>
+                                                <span class="progress-text">分析受众群体... 72%</span>
+                                            </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        `;
+                        addAIMessage(matchingSteps);
 
-                                    <h4 style="margin: 20px 0 10px 0;">⭐ 推荐的YouTube博主</h4>
-                                `;
+                        // 启动进度条动画
+                        setTimeout(() => {
+                            startProgressAnimation();
+                        }, 500);
+                    }, 800);
+                });
+            }
+        }, 500);
+    }
 
-                                addAIMessage(resultMessage);
+    // 进度条动画函数
+    function startProgressAnimation() {
+        // 查找最新的进度条元素（可能有多个，选择最后一个）
+        const progressFills = document.querySelectorAll('.progress-fill');
+        const progressTexts = document.querySelectorAll('.progress-text');
+        
+        const progressFill = progressFills[progressFills.length - 1];
+        const progressText = progressTexts[progressTexts.length - 1];
+        
+        if (!progressFill || !progressText) {
+            console.log('Progress elements not found');
+            return;
+        }
 
-                                // 再延迟一点展示推荐结果
-                                setTimeout(() => {
-                                    showRecommendedCreators();
-                                }, 1000);
-                            }, 2000);
-                        });
-                    }
+        let progress = 0;
+        const totalDuration = 5000; // 5秒总时长
+        const interval = 50; // 每50ms更新一次
+        const increment = (100 / (totalDuration / interval)); // 每次增加的百分比
+
+        const progressTimer = setInterval(() => {
+            progress += increment;
+            
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(progressTimer);
+                
+                // 进度完成后的处理
+                setTimeout(() => {
+                    showMatchingComplete();
                 }, 500);
-            }, 2000);
-        }, 1500);
+            }
+
+            // 更新进度条
+            progressFill.style.width = progress + '%';
+            progressText.textContent = `分析中... ${Math.round(progress)}%`;
+            
+            // 在不同进度阶段显示不同的文案
+            if (progress >= 30 && progress < 60) {
+                progressText.textContent = `匹配内容特征... ${Math.round(progress)}%`;
+            } else if (progress >= 60 && progress < 90) {
+                progressText.textContent = `分析受众群体... ${Math.round(progress)}%`;
+            } else if (progress >= 90 && progress < 100) {
+                progressText.textContent = `计算匹配度... ${Math.round(progress)}%`;
+            } else if (progress === 100) {
+                progressText.textContent = `匹配完成! 100%`;
+            }
+        }, interval);
+    }
+
+    // 显示匹配完成结果
+    function showMatchingComplete() {
+        const resultMessage = `
+            <div class="analysis-complete">
+                <div class="step-item">
+                    <div class="step-label"><i class="ri-check-double-line"></i> 匹配完成</div>
+                    <div class="step-content">已根据产品特性匹配到 5 位最合适的YouTube博主</div>
+                </div>
+            </div>
+
+            <h4 style="margin: 20px 0 10px 0;">⭐ 推荐的YouTube博主</h4>
+        `;
+
+        addAIMessage(resultMessage);
+
+        // 再延迟一点展示推荐结果
+        setTimeout(() => {
+            showRecommendedCreators();
+        }, 1000);
     }
 
     // 显示推荐的创作者列表
@@ -3114,26 +3261,75 @@ Earbud 产品运营专员`;
                 <div class="analysis-steps">
                     <div class="step-item">
                         <div class="step-label"><i class="ri-link-m"></i> 链接抓取</div>
-                        <div class="step-content">成功获取商品信息: Smartwatch 智能手表</div>
+                        <div class="step-content">
+                            <div class="product-info-card">
+                                <div class="product-image-container">
+                                    <div class="product-image-loader">
+                                        <div class="image-loading-spinner"></div>
+                                        <span>正在加载商品图片...</span>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150&h=150&fit=crop&q=80" 
+                                         alt="Smartwatch 智能手表" 
+                                         class="product-image"
+                                         onload="this.previousElementSibling.style.display='none'; this.style.display='block';"
+                                         onerror="this.previousElementSibling.innerHTML='<i class=\\"ri-image-line\\"></i><span>图片加载失败</span>'"
+                                         style="display: none;">
+                                </div>
+                                <div class="product-basic-info">
+                                    <h4 class="product-title">
+                                        <i class="ri-check-line success-icon"></i>
+                                        成功获取商品信息
+                                    </h4>
+                                    <div class="product-name">Smartwatch 智能手表</div>
+                                    <div class="product-category-tag">
+                                        <i class="ri-time-line"></i>
+                                        智能穿戴设备
+                                    </div>
+                                    <div class="product-quick-stats">
+                                        <span class="price-range"><i class="ri-price-tag-line"></i> 100-150美元</span>
+                                        <span class="target-market"><i class="ri-user-line"></i> 健身爱好者</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="step-item">
                         <div class="step-label"><i class="ri-file-list-line"></i> 提取特征</div>
                         <div class="step-content">
-                            <ul>
-                                <li>健康监测功能（心率、血氧、睡眠）</li>
-                                <li>运动追踪（多种运动模式）</li>
-                                <li>防水设计（50米防水）</li>
-                                <li>长续航（7天+）</li>
-                                <li>通知提醒和快速回复</li>
-                                <li>适用人群: 健身爱好者、商务人士</li>
-                                <li>价格区间: 100-150美元</li>
-                            </ul>
+                            <div class="feature-analysis">
+                                <div class="core-features">
+                                    <div class="feature-tag health-feature">
+                                        <i class="ri-heart-pulse-line"></i>
+                                        健康监测功能（心率、血氧、睡眠）
+                                    </div>
+                                    <div class="feature-tag fitness-feature">
+                                        <i class="ri-run-line"></i>
+                                        运动追踪（多种运动模式）
+                                    </div>
+                                    <div class="feature-tag durability-feature">
+                                        <i class="ri-shield-check-line"></i>
+                                        防水设计（50米防水）
+                                    </div>
+                                    <div class="feature-tag battery-feature">
+                                        <i class="ri-battery-charge-line"></i>
+                                        长续航（7天+）
+                                    </div>
+                                    <div class="feature-tag smart-feature">
+                                        <i class="ri-notification-line"></i>
+                                        通知提醒和快速回复
+                                    </div>
+                                </div>
+                                <div class="target-audience">
+                                    <h5><i class="ri-group-line"></i> 目标受众分析</h5>
+                                    <div class="audience-tags">
+                                        <span class="audience-tag">健身爱好者</span>
+                                        <span class="audience-tag">商务人士</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="step-item">
-                        <div class="step-label"><i class="ri-search-line"></i> 匹配算法</div>
-                        <div class="step-content">正在通过AI模型分析15,623位YouTube博主的内容特征、受众群体与产品的匹配度...</div>
-                    </div>
+
                 </div>
             `;
 
@@ -3143,7 +3339,7 @@ Earbud 产品运营专员`;
 
             // 模拟延迟后显示商品信息卡片
             setTimeout(() => {
-                analyzeProductLink(inputText || 'https://example.com/smartwatch');
+                showProductAnalysisCard();
             }, 2000);
         }, 1500);
     }
@@ -3449,3 +3645,84 @@ Earbud 产品运营专员`;
         document.querySelector('.kpi-card:nth-child(4) .kpi-value').textContent = '7.2%';
     }
 });
+
+// 全局函数：显示新建商品分析页面
+function showNewProductPage() {
+    console.log('showNewProductPage 被调用');
+    
+    // 获取相关容器
+    const aiAssistantContainer = document.querySelector('.ai-assistant-container');
+    const chatContainer = document.querySelector('.chat-container');
+    const newProductContainer = document.querySelector('.new-product-container');
+    const contentArea = document.querySelector('.content-area');
+    const outreachContainer = document.querySelector('.outreach-container');
+    const influencerContainer = document.querySelector('.influencer-container');
+    const dashboardContainer = document.querySelector('.dashboard-container');
+    const analyticsContainer = document.querySelector('.analytics-container');
+    
+    console.log('容器元素检查:');
+    console.log('aiAssistantContainer:', aiAssistantContainer);
+    console.log('newProductContainer:', newProductContainer);
+    console.log('chatContainer:', chatContainer);
+    
+    // 先隐藏所有其他容器
+    if (contentArea) contentArea.style.display = 'none';
+    if (outreachContainer) outreachContainer.style.display = 'none';
+    if (influencerContainer) influencerContainer.style.display = 'none';
+    if (dashboardContainer) dashboardContainer.style.display = 'none';
+    if (analyticsContainer) analyticsContainer.style.display = 'none';
+    
+    // 显示AI助手容器
+    if (aiAssistantContainer) {
+        aiAssistantContainer.style.display = 'flex';
+        console.log('AI助手容器已显示');
+        
+        // 隐藏聊天界面，显示新建商品分析界面（欢迎界面）
+        if (chatContainer) {
+            chatContainer.style.display = 'none';
+            console.log('聊天容器已隐藏');
+        }
+        if (newProductContainer) {
+            newProductContainer.style.display = 'flex';
+            console.log('新建商品分析容器已显示');
+        }
+        
+        // 更新页面标题
+        const productTitle = document.querySelector('.product-title');
+        if (productTitle) {
+            productTitle.textContent = 'AI助手';
+            console.log('页面标题已更新');
+        }
+        
+        // 更新侧边栏菜单激活状态
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => item.classList.remove('active'));
+        
+        // 激活AI助手菜单
+        const aiAssistantMenu = document.getElementById('ai-assistant-menu');
+        if (aiAssistantMenu) {
+            aiAssistantMenu.classList.add('active');
+            aiAssistantMenu.classList.add('expanded');
+            console.log('AI助手菜单已激活');
+            
+            // 确保AI助手子菜单显示
+            const submenu = aiAssistantMenu.querySelector('.submenu');
+            if (submenu) {
+                submenu.style.display = 'block';
+                console.log('子菜单已显示');
+            }
+            
+            // 激活新建商品分析子菜单项
+            const submenuItems = document.querySelectorAll('.submenu-item');
+            submenuItems.forEach(item => item.classList.remove('active'));
+            
+            const newChatItem = document.querySelector('.new-chat');
+            if (newChatItem) {
+                newChatItem.classList.add('active');
+                console.log('新建商品分析菜单项已激活');
+            }
+        }
+    } else {
+        console.error('AI助手容器未找到');
+    }
+}
