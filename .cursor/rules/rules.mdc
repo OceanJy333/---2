@@ -3,6 +3,15 @@ description:
 globs: 
 alwaysApply: true
 ---
+---
+description: 跨境运营助手项目开发规范 - CSS变量系统、主题管理、开发规范的完整指南
+globs: 
+  - "**/*.{js,ts,jsx,tsx,css,scss,html,vue}"
+  - "themes/**/*"
+  - "*.config.js"
+alwaysApply: true
+---
+
 # 跨境运营助手 - 项目开发规范
 
 ## 📋 项目概述
