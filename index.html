@@ -963,6 +963,11 @@
                                             <span><i class="ri-user-line"></i> 28.67万订阅者</span>
                                             <span><i class="ri-play-circle-line"></i> 3978万总观看</span>
                                         </div>
+                                        <div class="creator-tags">
+                                            <span class="creator-tag tech">科技达人</span>
+                                            <span class="creator-tag ai">AI专家</span>
+                                            <span class="creator-tag review">产品测评</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="product-section">
@@ -1021,7 +1026,15 @@
                                         <div class="timeline-title">邮件回复 (自动同步)</div>
                                         <div class="timeline-meta">来自: contact@mattvidpro.com · 2023/03/21 14:30</div>
                                         <div class="timeline-body">
-                                            <p>"Hi [Your Name], thanks for reaching out! The Earbud sounds interesting, especially the AI translation feature. Could you share more details on its accuracy and supported languages? Also, what are your proposed collaboration terms?"</p>
+                                            <div class="email-content">
+                                                <p class="original-text">"Hi [Your Name], thanks for reaching out! The Earbud sounds interesting, especially the AI translation feature. Could you share more details on its accuracy and supported languages? Also, what are your proposed collaboration terms?"</p>
+                                                <button class="translate-btn" onclick="toggleTranslation(this)">
+                                                    <i class="ri-translate-2"></i>
+                                                </button>
+                                                <div class="translated-text" style="display: none;">
+                                                    <p>"您好 [您的姓名]，感谢您的联系！Earbud 听起来很有趣，特别是 AI 翻译功能。您能分享更多关于其准确性和支持语言的详细信息吗？另外，您提议的合作条款是什么？"</p>
+                                                </div>
+                                            </div>
                                             <div class="timeline-actions">
                                                 <button class="timeline-action-btn"><i class="ri-mail-open-line"></i> 查看邮件原文</button>
                                                 <button class="timeline-action-btn"><i class="ri-reply-line"></i> 回复</button>
@@ -1060,16 +1073,27 @@
                                 </div>
                             </div>
 
-                            <!-- 添加记录 -->
-                            <div class="add-record">
-                                <h4>添加新记录</h4>
-                                <textarea class="record-input" placeholder="添加新的沟通记录..."></textarea>
-                                <div class="record-actions">
-                                    <button class="record-type-btn"><i class="ri-mail-line"></i> 邮件</button>
-                                    <button class="record-type-btn"><i class="ri-phone-line"></i> 通话</button>
-                                    <button class="record-type-btn"><i class="ri-chat-1-line"></i> 聊天</button>
-                                    <button class="record-type-btn"><i class="ri-file-text-line"></i> 备注</button>
-                                    <button class="save-record-btn">保存记录</button>
+                            <!-- 发送邮件 -->
+                            <div class="send-email-card">
+                                <h4><i class="ri-mail-send-line"></i> 发送邮件</h4>
+                                <div class="email-form">
+                                    <div class="email-field">
+                                        <label>收件人</label>
+                                        <input type="email" class="email-input" value="contact@mattvidpro.com" readonly>
+                                    </div>
+                                    <div class="email-field">
+                                        <label>邮件主题</label>
+                                        <input type="text" class="email-input" placeholder="输入邮件主题...">
+                                    </div>
+                                    <div class="email-field">
+                                        <label>邮件内容</label>
+                                        <textarea class="email-content-input" placeholder="输入邮件内容..."></textarea>
+                                    </div>
+                                    <div class="email-actions">
+                                        <button class="email-template-btn"><i class="ri-file-text-line"></i> 使用模板</button>
+                                        <button class="ai-assist-btn"><i class="ri-robot-line"></i> AI协助</button>
+                                        <button class="send-email-btn"><i class="ri-send-plane-line"></i> 发送邮件</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

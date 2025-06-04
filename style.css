@@ -1746,6 +1746,91 @@ body {
         left: 0;
         right: 0;
     }
+
+    /* 移动端达人和商品信息布局调整 */
+    .creator-product-info {
+        flex-direction: column;
+        gap: 20px;
+        min-height: auto;
+    }
+
+    .creator-section {
+        gap: 16px;
+    }
+
+    .creator-avatar-large {
+        width: 70px;
+        height: 70px;
+        border-radius: 16px;
+    }
+
+    .detail-creator-name {
+        font-size: 16px;
+    }
+
+    .detail-creator-stats {
+        gap: 8px;
+    }
+
+    .detail-creator-stats span {
+        padding: 3px 6px;
+        font-size: 12px;
+    }
+
+    .creator-tags {
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .creator-tag {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    .product-section {
+        padding-left: 0;
+        border-left: none;
+        border-top: 2px solid var(--border-color);
+        padding-top: 16px;
+    }
+
+    .product-section .product-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+    }
+
+    .product-section .product-name {
+        font-size: 14px;
+    }
+
+    .product-section .product-description {
+        font-size: 13px;
+        padding: 4px 8px;
+    }
+
+    .collaboration-details {
+        gap: 12px;
+        padding-top: 12px;
+    }
+
+    /* 移动端邮件内容调整 */
+    .email-content {
+        padding: 12px;
+    }
+
+    .email-content .original-text {
+        padding-right: 35px;
+        font-size: 13px;
+    }
+
+    .translate-btn {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        top: 8px;
+        right: 8px;
+    }
 }
 
 .product-card {
@@ -6724,10 +6809,10 @@ a[href^="#"] {
     right: 0;
     top: var(--header-height);
     bottom: 0;
-    width: 480px;
+    width: 750px; /* 进一步增加宽度从650px到750px */
     background-color: var(--surface-color);
     border-left: 1px solid  var(--border-color);
-    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.06);
+    box-shadow: -2px 0 16px rgba(0, 0, 0, 0.08);
     z-index: 100;
     display: flex;
     flex-direction: column;
@@ -6779,116 +6864,269 @@ a[href^="#"] {
 /* 合并卡片样式 */
 .combined-info-card {
     background-color: var(--surface-color);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    padding: 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
+    border: 1px solid var(--border-color);
 }
 
 .creator-product-info {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    gap: 16px;
+    align-items: flex-start;
+    gap: 32px; /* 进一步增加间距 */
+    min-height: 100px; /* 确保最小高度 */
 }
 
 .creator-section {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
+    align-items: flex-start;
+    gap: 20px; /* 增加间距 */
+    flex: 1.5; /* 给达人信息更多空间 */
 }
 
 .product-section {
     display: flex;
-    align-items: center;
-    gap: 12px;
+    align-items: flex-start;
+    gap: 18px; /* 增加间距 */
     flex: 1;
-    padding-left: 16px;
-    border-left: 1px solid var(--border-color);
+    padding-left: 24px; /* 增加左边距 */
+    border-left: 2px solid var(--border-color);
+    position: relative;
+}
+
+/* 建联详情弹窗中的商品图片样式 */
+.product-section .product-img {
+    width: 80px; /* 进一步增加商品图片尺寸 */
+    height: 80px; /* 进一步增加商品图片尺寸 */
+    border-radius: 16px; /* 增加圆角 */
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: var(--background-color);
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.product-section .product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.product-section .product-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* 商品信息样式 */
+.product-section .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.product-section .product-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+
+.product-section .product-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    background-color: var(--gray-50);
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .collaboration-details {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 16px;
     justify-content: space-between;
     align-items: center;
-    padding-top: 12px;
-    border-top: 1px solid var(--border-color);
+    padding-top: 16px;
+    border-top: 2px solid var(--border-color);
+    margin-top: 4px;
 }
 
 .creator-avatar-large {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
+    width: 90px; /* 进一步增加头像尺寸 */
+    height: 90px; /* 进一步增加头像尺寸 */
+    border-radius: 20px; /* 增加圆角 */
     object-fit: cover;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    border: 2px solid var(--surface-color);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    border: 3px solid var(--surface-color);
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
 
 .creator-avatar-large:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .detail-creator-info {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 8px;
 }
 
 .detail-creator-name {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 4px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0;
     color: var(--text-color);
     display: flex;
     align-items: center;
+    line-height: 1.3;
 }
 
 .detail-creator-name:after {
     content: '\eb80';
     font-family: 'remixicon';
     color: var(--primary-color);
-    margin-left: 6px;
-    font-size: 16px;
+    margin-left: 8px;
+    font-size: 18px;
 }
 
 .detail-creator-stats {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    font-size: 13px;
+    gap: 12px;
+    font-size: 14px;
     color: var(--text-light);
+    margin-top: 4px;
 }
 
 .detail-creator-stats span {
     display: flex;
     align-items: center;
-    margin-right: 10px;
+    background-color: var(--gray-50);
+    padding: 4px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .detail-creator-stats span i {
     margin-right: 6px;
-    font-size: 15px;
+    font-size: 16px;
     color: var(--primary-color);
+}
+
+/* 达人标签样式 */
+.creator-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.creator-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.creator-tag.tech {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+}
+
+.creator-tag.ai {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+    border: 1px solid #ce93d8;
+}
+
+.creator-tag.review {
+    background-color: #e8f5e8;
+    color: #388e3c;
+    border: 1px solid #a5d6a7;
+}
+
+.creator-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.12);
 }
 
 .creator-insights-detail {
     display: flex;
-    gap: 8px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.insight-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background-color: var(--gray-50);
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.insight-item:hover {
+    background-color: var(--primary-alpha-05);
+    border-color: var(--primary-alpha-20);
+    color: var(--primary-color);
+}
+
+.insight-item i {
+    color: var(--primary-color);
+    font-size: 14px;
+}
+
+.collaboration-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.intent-tag {
+    padding: 6px 12px;
+    background-color: var(--primary-alpha-10);
+    color: var(--primary-color);
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid var(--primary-alpha-20);
+    transition: all 0.2s ease;
+}
+
+.intent-tag:hover {
+    background-color: var(--primary-alpha-20);
+    transform: translateY(-1px);
 }
 
 .channel-status-wrapper {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 12px;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
 .detail-product-info {
@@ -7328,18 +7566,80 @@ a[href^="#"] {
     border-left: 2px solid var(--primary-color);
 }
 
+/* 邮件内容和翻译按钮样式 */
+.email-content {
+    position: relative;
+    padding: 16px;
+    background-color: var(--surface-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin: 12px 0;
+}
+
+.email-content .original-text {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-color);
+    font-size: 14px;
+    padding-right: 40px; /* 为翻译按钮留出空间 */
+}
+
+.translate-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--surface-color);
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.translate-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.translated-text {
+    margin-top: 16px;
+    padding: 16px;
+    background-color: var(--gray-50);
+    border-radius: 12px;
+    border-left: 4px solid var(--success-color);
+    font-style: italic;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.translated-text p {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
 .timeline-actions {
     display: flex;
     justify-content: flex-end;
-    margin-top: 12px;
+    gap: 8px;
+    margin-top: 16px;
+    flex-wrap: wrap;
 }
 
 .timeline-action-btn {
     font-size: 13px;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 20px;
-    background-color: var(--surface-color);
-    border: none;
+    background-color: var(--gray-50);
+    border: 1px solid var(--border-color);
     color: var(--primary-color);
     cursor: pointer;
     display: flex;
@@ -7347,11 +7647,14 @@ a[href^="#"] {
     gap: 6px;
     transition: all 0.2s ease;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .timeline-action-btn:hover {
     background-color: var(--primary-light);
-    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .add-record {
@@ -7452,6 +7755,143 @@ a[href^="#"] {
     background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(25, 118, 210, 0.4);
+}
+
+/* 发送邮件卡片样式 */
+.send-email-card {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    margin-bottom: 16px;
+}
+
+.send-email-card h4 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: var(--text-color);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.send-email-card h4 i {
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+.email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.email-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.email-field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.email-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-family: inherit;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background-color: var(--surface-color);
+}
+
+.email-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-alpha-10);
+}
+
+.email-input[readonly] {
+    background-color: var(--background-color);
+    color: var(--text-light);
+}
+
+.email-content-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    resize: vertical;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+.email-content-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-alpha-10);
+}
+
+.email-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.email-template-btn, .ai-assist-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.email-template-btn:hover, .ai-assist-btn:hover {
+    background-color: var(--hover-bg);
+    transform: translateY(-1px);
+    color: var(--primary-color);
+    border-color: var(--primary-light);
+}
+
+.send-email-btn {
+    margin-left: auto;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    background: linear-gradient(135deg, var(--primary-color), #2196f3);
+    color: var(--text-inverse);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 2px 6px var(--primary-alpha-30);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.send-email-btn:hover {
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(25, 118, 210, 0.4);
 }
 
 /* YouTube博主界面样式 */
@@ -10451,6 +10891,66 @@ a[href^="#"] {
     margin-top: 2px;
 }
 
+/* 营销活动设置样式 */
+.campaign-settings-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.campaign-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.required {
+    color: var(--error-color);
+    font-size: var(--font-size-xs);
+}
+
+.campaign-input {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: var(--font-size-sm);
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.campaign-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.campaign-input:invalid {
+    border-color: var(--error-color);
+}
+
+.input-hint {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
 .feature-card-actions {
     margin-top: 20px;
     padding-top: 15px;
@@ -10613,5 +11113,16 @@ a[href^="#"] {
         width: 100%;
         justify-content: center;
         padding: 8px 16px;
+    }
+
+    /* 营销活动设置移动端优化 */
+    .campaign-inputs {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .campaign-input {
+        padding: 12px;
+        font-size: var(--font-size-md);
     }
 }

@@ -2936,6 +2936,22 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     </div>
+
+                    <div class="campaign-settings-section">
+                        <div class="section-title">营销活动设置</div>
+                        <div class="campaign-inputs">
+                            <div class="input-group">
+                                <label for="marketing-budget">营销总预算 (单位美金) <span class="required">*</span></label>
+                                <input type="number" id="marketing-budget" class="campaign-input" placeholder="请输入预算金额" min="1" max="100000" value="5000">
+                                <span class="input-hint">建议预算: 1$ - 100,000$</span>
+                            </div>
+                            <div class="input-group">
+                                <label for="target-contacts">预期建联数量 <span class="required">*</span></label>
+                                <input type="number" id="target-contacts" class="campaign-input" placeholder="请输入建联数量" min="1" max="50" value="10">
+                                <span class="input-hint">最高数量: 50个</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="feature-card-actions">
                     <button class="start-matching-btn primary-btn">
@@ -2952,7 +2968,37 @@ document.addEventListener('DOMContentLoaded', function() {
             const startMatchingBtn = document.querySelector('.start-matching-btn');
             if (startMatchingBtn) {
                 startMatchingBtn.addEventListener('click', function() {
-                    // 显示博主匹配进度
+                    // 验证输入字段
+                    const budgetInput = document.getElementById('marketing-budget');
+                    const contactsInput = document.getElementById('target-contacts');
+
+                    let isValid = true;
+                    let errorMessage = '';
+
+                    // 验证预算
+                    if (!budgetInput.value || budgetInput.value < 1 || budgetInput.value > 100000) {
+                        isValid = false;
+                        errorMessage += '请输入有效的营销预算 (1-100,000美金)\\n';
+                        budgetInput.style.borderColor = 'var(--error-color)';
+                    } else {
+                        budgetInput.style.borderColor = 'var(--border-color)';
+                    }
+
+                    // 验证建联数量
+                    if (!contactsInput.value || contactsInput.value < 1 || contactsInput.value > 50) {
+                        isValid = false;
+                        errorMessage += '请输入有效的建联数量 (1-50个)\\n';
+                        contactsInput.style.borderColor = 'var(--error-color)';
+                    } else {
+                        contactsInput.style.borderColor = 'var(--border-color)';
+                    }
+
+                    if (!isValid) {
+                        alert(errorMessage);
+                        return;
+                    }
+
+                    // 验证通过，显示博主匹配进度
                     showBloggerMatchingProgress();
                 });
             }
@@ -3873,6 +3919,25 @@ Earbud 产品运营专员`;
         // 这里可以实现详情展示，例如弹出一个模态框
         alert(`查看 ${creatorName} 的详细信息将在此实现`);
     }
+
+    // 翻译功能
+    window.toggleTranslation = function(button) {
+        const emailContent = button.closest('.email-content');
+        const translatedText = emailContent.querySelector('.translated-text');
+        const icon = button.querySelector('i');
+
+        if (translatedText.style.display === 'none') {
+            translatedText.style.display = 'block';
+            icon.className = 'ri-translate-2';
+            button.style.backgroundColor = 'var(--success-pale)';
+            button.style.color = 'var(--success-dark)';
+        } else {
+            translatedText.style.display = 'none';
+            icon.className = 'ri-translate-2';
+            button.style.backgroundColor = 'var(--primary-pale)';
+            button.style.color = 'var(--primary-color)';
+        }
+    };
 
     // 添加用户消息到聊天窗口
     function addUserMessage(text) {
