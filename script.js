@@ -2345,15 +2345,10 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             showLinkScrapingStepAsMessage();
 
-            // 第二步：显示商品特征分析进度
+            // 链接抓取完成后，直接进入特征提取流程
             setTimeout(() => {
-                showProductFeatureAnalysisProgress();
-
-                // 第三步：显示商品信息分析结果卡片
-                setTimeout(() => {
-                    showProductAnalysisCard();
-                }, 2500);
-            }, 1500);
+                showFeatureExtractionProgress();
+            }, 1500); // 链接抓取完成后1.5秒开始特征提取
         }, 3000); // 等待分析进度完成
     }
 
@@ -4170,15 +4165,10 @@ Earbud 产品运营专员`;
         setTimeout(() => {
             showLinkScrapingStepAsMessage();
 
-            // 第二步：显示商品特征分析进度
+            // 链接抓取完成后，直接进入特征提取流程
             setTimeout(() => {
-                showProductFeatureAnalysisProgress();
-
-                // 第三步：显示商品信息分析结果卡片
-                setTimeout(() => {
-                    showProductAnalysisCard();
-                }, 2500);
-            }, 1500);
+                showFeatureExtractionProgress();
+            }, 1500); // 链接抓取完成后1.5秒开始特征提取
         }, 3000); // 等待分析进度完成
     }
 
@@ -4358,16 +4348,10 @@ Earbud 产品运营专员`;
             setTimeout(() => {
                 showLinkScrapingStepAsMessage();
 
-                // 然后显示商品特征分析进度
+                // 链接抓取完成后，直接进入特征提取流程
                 setTimeout(() => {
-                    showProductFeatureAnalysisProgress();
-
-                    // 最后显示商品信息分析结果卡片
-                    setTimeout(() => {
-                        showProductAnalysisCard();
-                        // 注意：特征提取结果卡片不自动显示，需要用户点击"开始提取特征"按钮
-                    }, 2500);
-                }, 1500);
+                    showFeatureExtractionProgress();
+                }, 1500); // 链接抓取完成后1.5秒开始特征提取
             }, 500);
         }, 1500);
     };
