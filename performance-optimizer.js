@@ -1,7 +1,7 @@
 /**
  * 性能优化器 - Performance Optimizer
+ * 专为 Font Awesome 6.5.1 + Tailwind CSS 2.2.9 优化
  * 集成懒加载、虚拟滚动、性能监控等功能
- * 与 Font Awesome 和 Tailwind CSS 配合使用
  */
 
 class PerformanceOptimizer {
@@ -17,8 +17,10 @@ class PerformanceOptimizer {
         this.setupPerformanceMonitoring();
         this.optimizeAnimations();
         this.setupImageOptimization();
-        
-        console.log('📈 Performance Optimizer 已初始化');
+        this.optimizeFontAwesome();
+        this.optimizeTailwind();
+
+        console.log('📈 Performance Optimizer 已初始化 (Font Awesome 6.5.1 + Tailwind CSS 2.2.9)');
     }
 
     // 1. 懒加载优化
@@ -313,36 +315,93 @@ class PerformanceOptimizer {
         });
     }
 
-    // 6. Font Awesome 优化
+    // 6. Font Awesome 6.5.1 优化
     optimizeFontAwesome() {
-        // 预加载常用图标
+        // 预加载 Font Awesome 6.5.1 字体文件
+        const fontPreload = document.createElement('link');
+        fontPreload.rel = 'preload';
+        fontPreload.as = 'font';
+        fontPreload.href = 'https://cdn.staticfile.net/font-awesome/6.5.1/webfonts/fa-solid-900.woff2';
+        fontPreload.type = 'font/woff2';
+        fontPreload.crossOrigin = 'anonymous';
+        document.head.appendChild(fontPreload);
+
+        // 预加载常用图标类
         const commonIcons = [
-            'fa-user', 'fa-home', 'fa-search', 'fa-bell', 'fa-cog',
-            'fa-plus', 'fa-edit', 'fa-trash', 'fa-check', 'fa-times'
+            'fa-robot', 'fa-users', 'fa-envelope', 'fa-search', 'fa-bell',
+            'fa-user-cog', 'fa-chevron-down', 'fa-plus', 'fa-trash', 'fa-comments',
+            'fa-tachometer-alt', 'fa-cube', 'fa-lightbulb', 'fa-check-circle',
+            'fa-play-circle', 'fa-video', 'fa-chart-bar', 'fa-paper-plane'
         ];
 
-        commonIcons.forEach(icon => {
-            const link = document.createElement('link');
-            link.rel = 'preload';
-            link.as = 'font';
-            link.href = `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2`;
-            link.crossOrigin = 'anonymous';
-            document.head.appendChild(link);
+        // 为图标添加GPU加速
+        document.querySelectorAll('.fas, .far, .fab, .fal, .fad').forEach(icon => {
+            icon.style.transform = 'translateZ(0)';
+            icon.style.backfaceVisibility = 'hidden';
+            icon.style.fontDisplay = 'swap';
+        });
+
+        console.log('✅ Font Awesome 6.5.1 优化完成');
+    }
+
+    // 7. Tailwind CSS 2.2.9 优化
+    optimizeTailwind() {
+        // 优化 Tailwind 动画性能
+        this.optimizeTailwindAnimations();
+
+        // 优化响应式断点
+        this.optimizeBreakpoints();
+
+        // 优化 Tailwind 工具类
+        this.optimizeTailwindUtilities();
+    }
+
+    optimizeTailwindAnimations() {
+        // 为 Tailwind 动画类添加性能优化
+        const animatedElements = document.querySelectorAll(
+            '.transition-all, .transition-colors, .transition-transform, ' +
+            '.hover\\:scale-110, .hover\\:bg-blue-50, .animate-pulse, .animate-spin, ' +
+            '.hover\\:shadow-lg, .hover\\:-translate-y-1'
+        );
+
+        animatedElements.forEach(element => {
+            // 根据动画类型设置 will-change
+            if (element.className.includes('scale') ||
+                element.className.includes('translate') ||
+                element.className.includes('transform')) {
+                element.style.willChange = 'transform';
+            } else if (element.className.includes('bg-') ||
+                       element.className.includes('text-') ||
+                       element.className.includes('colors')) {
+                element.style.willChange = 'background-color, color';
+            } else if (element.className.includes('shadow')) {
+                element.style.willChange = 'box-shadow';
+            } else {
+                element.style.willChange = 'auto';
+            }
+
+            // 添加GPU加速
+            element.style.transform = element.style.transform || 'translateZ(0)';
         });
     }
 
-    // 7. Tailwind CSS 优化
-    optimizeTailwind() {
-        // 移除未使用的 Tailwind 类
-        this.purgeUnusedClasses();
-        
-        // 优化响应式断点
-        this.optimizeBreakpoints();
+    optimizeTailwindUtilities() {
+        // 优化常用的 Tailwind 工具类性能
+        const utilityElements = document.querySelectorAll(
+            '.btn-enhanced, .card-enhanced, .form-input-enhanced, ' +
+            '.dropdown-menu-enhanced, .badge-primary-enhanced'
+        );
+
+        utilityElements.forEach(element => {
+            element.style.contain = 'layout style paint';
+        });
+
+        console.log('✅ Tailwind CSS 2.2.9 优化完成');
     }
 
     purgeUnusedClasses() {
         // 在生产环境中，这应该在构建时完成
-        if (process.env.NODE_ENV === 'production') {
+        if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 'production') {
             console.log('🧹 Tailwind CSS 类已优化');
         }
     }

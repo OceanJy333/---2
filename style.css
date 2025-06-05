@@ -5467,44 +5467,142 @@ input:checked + .slider:before {
     margin-bottom: 20px;
 }
 
-/* 博主列表样式 */
+/* 博主列表样式 - 优化为列表布局 */
 .creators-recommendation-container {
     background-color: var(--surface-color);
     border-radius: 8px;
     box-shadow: 0 2px 8px var(--shadow-color);
-    margin: 10px auto; /* 居中对齐 */
+    margin: 10px auto;
     overflow: hidden;
-    max-width: 900px; /* 与商品分析卡片保持一致 */
-    width: 100%; /* 统一宽度 */
+    max-width: 1200px;
+    width: 100%;
 }
 
-.creators-list {
+.creators-list-header {
+    background-color: var(--gray-50);
     padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.list-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.list-count {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+
+.creators-row-list {
+    padding: 15px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* 行式网红列表项样式 */
+.creator-row-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background-color: var(--surface-color);
+    transition: all 0.2s ease;
     gap: 15px;
 }
 
-.creator-list-item {
-    display: flex;
-    border: 1px solid  var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: all 0.2s ease;
+.creator-row-item:hover {
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transform: translateY(-1px);
 }
 
-.creator-list-item:hover {
-    box-shadow: 0 2px 8px var(--shadow-color);
-    transform: translateY(-2px);
-}
-
-.creator-selection {
-    padding: 15px;
+.creator-row-checkbox {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: var(--gray-50);
-    border-right: 1px solid  var(--border-color);
+    flex-shrink: 0;
+}
+
+.creator-row-avatar {
+    flex-shrink: 0;
+}
+
+.creator-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.creator-row-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.creator-row-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 5px;
+}
+
+.creator-row-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.creator-row-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.creator-row-description {
+    flex: 2;
+    min-width: 200px;
+    padding: 0 15px;
+}
+
+.creator-row-description p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.creator-row-relevance {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 6px;
+    min-width: 80px;
+}
+
+/* 优化达人选择区域 - 紧凑型布局 */
+.creator-selection {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    padding: 0;
+    background: none;
+    border: none;
 }
 
 .creator-checkbox {
@@ -5512,12 +5610,14 @@ input:checked + .slider:before {
 }
 
 .creator-checkbox-label {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     border: 2px solid #bdbdbd;
-    border-radius: 4px;
+    border-radius: 3px;
     cursor: pointer;
     position: relative;
+    background-color: var(--surface-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .creator-checkbox:checked + .creator-checkbox-label {
@@ -5531,43 +5631,61 @@ input:checked + .slider:before {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--text-color);
-    font-size: 14px;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
 }
 
+/* 优化达人信息容器 - 紧凑型垂直布局 */
 .creator-info-container {
     flex: 1;
-    padding: 15px;
+    padding: 12px;
+    padding-top: 30px; /* 为复选框留出空间 */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .creator-basic-details {
     display: flex;
-    margin-bottom: 10px;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 8px;
+    text-align: center;
 }
 
 .creator-list-avatar {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    margin-right: 15px;
+    margin: 0 auto 8px;
+    object-fit: cover;
+    flex-shrink: 0;
 }
 
 .creator-list-info {
     flex: 1;
+    width: 100%;
 }
 
 .creator-list-name {
     font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .creator-list-stats {
     display: flex;
-    gap: 15px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    color: var(--text-light);
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
 }
 
 .creator-list-stats span {
@@ -5576,41 +5694,47 @@ input:checked + .slider:before {
 }
 
 .creator-list-stats span i {
-    margin-right: 4px;
+    margin-right: 2px;
 }
 
+/* 优化标签和相关度显示 */
 .creator-tags-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
+    margin-bottom: 6px;
+    justify-content: center;
 }
 
 .creator-tag {
-    background-color: #f0f4f8;
-    color: var(--primary-color);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
+    background-color: var(--primary-pale);
+    color: var(--primary-hover);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
 }
 
 .creator-relevance {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0 15px;
-    margin-left: 15px;
-    border-left: 1px solid  var(--border-color);
+    gap: 4px;
+    margin-top: auto;
+    padding: 4px 8px;
+    background-color: var(--gray-50);
+    border-radius: 12px;
+    font-size: 11px;
 }
 
 .relevance-score {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 700;
-    margin-bottom: 4px;
 }
 
 .relevance-text {
-    font-size: 12px;
+    font-size: 10px;
+    font-weight: 500;
     white-space: nowrap;
 }
 
@@ -5626,10 +5750,9 @@ input:checked + .slider:before {
     color: var(--gray-600);
 }
 
+/* 在紧凑模式下隐藏描述 */
 .creator-description {
-    font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.5;
+    display: none; /* 在网格布局中隐藏以节省空间 */
 }
 
 .creators-action-buttons {
@@ -5659,15 +5782,15 @@ input:checked + .slider:before {
     padding: 8px 16px;
 }
 
-/* 邮件生成相关样式 */
+/* 邮件生成相关样式 - 优化支持50个达人 */
 .email-generation-container {
     background-color: var(--surface-color);
     border-radius: 8px;
     box-shadow: 0 2px 8px var(--shadow-color);
-    margin: 10px auto; /* 居中对齐 */
+    margin: 10px auto;
     overflow: hidden;
-    max-width: 850px; /* 调整最大宽度 */
-    width: 100%; /* 统一宽度 */
+    max-width: 1200px; /* 增加最大宽度 */
+    width: 100%;
 }
 
 .email-generation-header {
@@ -5706,15 +5829,47 @@ input:checked + .slider:before {
 .selected-creators-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 12px;
 }
 
 .selected-creator-item {
-    background-color: var(--primary-pale);
-    color: var(--primary-hover);
-    padding: 6px 12px;
-    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--gray-50);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 6px;
     font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.selected-creator-item:hover {
+    background-color: var(--gray-100);
+}
+
+.quick-creator-checkbox {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.quick-creator-label {
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.selected-creator-item:has(.quick-creator-checkbox:not(:checked)) {
+    opacity: 0.6;
+    background-color: var(--gray-100);
+}
+
+.selected-creator-item:has(.quick-creator-checkbox:not(:checked)) .quick-creator-label {
+    text-decoration: line-through;
+    color: var(--text-secondary);
 }
 
 /* 博主切换功能样式 */
@@ -8274,6 +8429,234 @@ a[href^="#"] {
     background-color: var(--primary-dark);
 }
 
+/* 批量邮件操作样式 */
+.bulk-email-container {
+    background-color: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    margin: 10px auto;
+    overflow: hidden;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.bulk-email-header {
+    background-color: var(--gray-50);
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bulk-email-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bulk-email-stats {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.bulk-email-content {
+    padding: 20px;
+}
+
+.email-list-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.email-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    background-color: var(--surface-color);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.email-item:hover {
+    box-shadow: 0 2px 8px var(--shadow-color);
+    transform: translateY(-1px);
+}
+
+.email-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.email-item-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.email-checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.email-checkbox-label {
+    cursor: pointer;
+}
+
+.email-item.email-cancelled {
+    opacity: 0.6;
+    background-color: var(--gray-50);
+}
+
+.email-item.email-cancelled .email-actions .send-single-email-btn {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.email-status.cancelled {
+    background-color: var(--gray-100);
+    color: var(--text-secondary);
+}
+
+.email-recipient {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.email-status {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.email-status.pending {
+    background-color: var(--warning-pale);
+    color: var(--warning-dark);
+}
+
+.email-status.sent {
+    background-color: var(--success-pale);
+    color: var(--success-dark);
+}
+
+.email-status.failed {
+    background-color: var(--error-pale);
+    color: var(--error-dark);
+}
+
+.email-preview {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: 10px;
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.email-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.email-action-btn {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+.email-action-btn:hover {
+    background-color: var(--gray-50);
+}
+
+.email-action-btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.email-action-btn.primary:hover {
+    background-color: var(--primary-hover);
+}
+
+.cancel-email-btn {
+    background-color: var(--gray-100);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.cancel-email-btn:hover {
+    background-color: var(--error-color);
+    color: white;
+    border-color: var(--error-color);
+}
+
+.bulk-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--gray-50);
+}
+
+.bulk-actions-left {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.bulk-actions-right {
+    display: flex;
+    gap: 10px;
+}
+
+.bulk-action-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.bulk-action-btn.secondary {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.bulk-action-btn.primary {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: white;
+}
+
+.bulk-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 /* 响应式调整 */
 @media (max-width: 1024px) {
     .dashboard-main-content {
@@ -8292,6 +8675,21 @@ a[href^="#"] {
     .quick-action-btn {
         flex: 1;
         min-width: 180px;
+    }
+
+    .email-list-container {
+        grid-template-columns: 1fr;
+    }
+
+    .bulk-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bulk-actions-left,
+    .bulk-actions-right {
+        width: 100%;
+        justify-content: center;
     }
 }
 

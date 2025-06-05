@@ -3245,10 +3245,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }, interval);
     }
 
-    // 显示推荐的创作者列表
+    // 显示推荐的创作者列表 - 扩展到50个达人
     function showRecommendedCreators() {
-        // 创建推荐博主卡片
-        const creators = [
+        // 获取预期建联数量
+        const targetContactsInput = document.getElementById('target-contacts');
+        const targetContacts = targetContactsInput ? parseInt(targetContactsInput.value) || 10 : 10;
+
+        // 核心推荐博主卡片
+        const coreCreators = [
             {
                 name: 'MattVidPro AI',
                 avatar: 'https://placehold.co/80x80/34a853/ffffff?text=MP',
@@ -3306,8 +3310,53 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         ];
 
+        // 生成更多达人数据以达到50个
+        const additionalCreators = [];
+        const baseNames = ['TechReview', 'GadgetGuru', 'InnovationHub', 'FutureTech', 'SmartDevice', 'DigitalTrends', 'TechExplorer', 'NextGenTech', 'TechVision', 'ModernTech', 'TechWorld', 'GadgetZone', 'TechDaily', 'SmartTech', 'TechLife'];
+        const colors = ['34a853', '4285f4', 'ea4335', 'fbbc05', '673ab7', '9c27b0', '2196f3', '00bcd4', '009688', '4caf50', 'ff9800', 'ff5722', '795548', '607d8b', '3f51b5'];
+
+        for (let i = 0; i < 45; i++) {
+            const nameIndex = i % baseNames.length;
+            const colorIndex = i % colors.length;
+            const randomName = baseNames[nameIndex] + (Math.floor(i / baseNames.length) > 0 ? ' ' + (Math.floor(i / baseNames.length) + 1) : '');
+            const initials = randomName.split(' ').map(word => word[0]).join('').substring(0, 2);
+            const randomAvatar = `https://placehold.co/80x80/${colors[colorIndex]}/ffffff?text=${initials}`;
+
+            const randomSubs = Math.floor(Math.random() * 500000) + 10000;
+            const randomViews = Math.floor(Math.random() * 100000) + 5000;
+            const randomRelevance = Math.random() * 0.4 + 0.5; // 0.5-0.9
+            const engagements = ['较高', '中等', '一般'];
+            const tagSets = [
+                ['科技评测', '产品测试'],
+                ['AI技术', '智能设备'],
+                ['消费电子', '数码产品'],
+                ['科技新闻', '行业分析'],
+                ['创新产品', '前沿技术'],
+                ['智能硬件', '物联网'],
+                ['移动科技', '应用评测'],
+                ['游戏科技', '娱乐设备']
+            ];
+
+            additionalCreators.push({
+                name: randomName,
+                avatar: randomAvatar,
+                subscribers: randomSubs > 1000000 ? (randomSubs / 1000000).toFixed(1) + 'M' : (randomSubs / 1000).toFixed(0) + 'K',
+                views: randomViews.toLocaleString(),
+                engagement: engagements[Math.floor(Math.random() * engagements.length)],
+                description: '专注科技产品评测和技术分析',
+                channelUrl: '#',
+                relevance: randomRelevance,
+                tags: tagSets[Math.floor(Math.random() * tagSets.length)]
+            });
+        }
+
+        const allCreators = [...coreCreators, ...additionalCreators];
+
         // 按匹配度排序
-        creators.sort((a, b) => b.relevance - a.relevance);
+        allCreators.sort((a, b) => b.relevance - a.relevance);
+
+        // 根据预期建联数量限制显示的网红数量
+        const creators = allCreators.slice(0, targetContacts);
 
         // 创建博主列表HTML
         let creatorsListHTML = '';
@@ -3335,33 +3384,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             creatorsListHTML += `
-                <div class="creator-list-item">
-                    <div class="creator-selection">
+                <div class="creator-row-item">
+                    <div class="creator-row-checkbox">
                         <input type="checkbox" id="creator-${index}" class="creator-checkbox" data-creator-name="${creator.name}">
                         <label for="creator-${index}" class="creator-checkbox-label"></label>
                     </div>
-                    <div class="creator-info-container">
-                        <div class="creator-basic-details">
-                            <img src="${creator.avatar}" alt="${creator.name}" class="creator-list-avatar">
-                            <div class="creator-list-info">
-                                <div class="creator-list-name">${creator.name}</div>
-                                <div class="creator-list-stats">
-                                    <span><i class="ri-user-line"></i> ${creator.subscribers}</span>
-                                    <span><i class="ri-play-circle-line"></i> ${creator.views}/视频</span>
-                                    <span><i class="ri-bar-chart-line"></i> 互动: ${creator.engagement}</span>
-                                </div>
-                                <div class="creator-tags-container">
-                                    ${tagsHTML}
-                                </div>
-                            </div>
-                            <div class="creator-relevance ${relevanceClass}">
-                                <span class="relevance-score">${Math.round(creator.relevance * 100)}%</span>
-                                <span class="relevance-text">${relevanceText}</span>
-                            </div>
+                    <div class="creator-row-avatar">
+                        <img src="${creator.avatar}" alt="${creator.name}" class="creator-avatar">
+                    </div>
+                    <div class="creator-row-info">
+                        <div class="creator-row-name">${creator.name}</div>
+                        <div class="creator-row-stats">
+                            <span class="stat-item"><i class="ri-user-line"></i> ${creator.subscribers}</span>
+                            <span class="stat-item"><i class="ri-play-circle-line"></i> ${creator.views}/视频</span>
+                            <span class="stat-item"><i class="ri-bar-chart-line"></i> 互动: ${creator.engagement}</span>
                         </div>
-                        <div class="creator-description">
-                            <p>${creator.description}</p>
+                        <div class="creator-row-tags">
+                            ${tagsHTML}
                         </div>
+                    </div>
+                    <div class="creator-row-description">
+                        <p>${creator.description}</p>
+                    </div>
+                    <div class="creator-row-relevance ${relevanceClass}">
+                        <span class="relevance-score">${Math.round(creator.relevance * 100)}%</span>
+                        <span class="relevance-text">${relevanceText}</span>
                     </div>
                 </div>
             `;
@@ -3370,7 +3417,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // 创建完整的推荐列表HTML
         const recommendationHTML = `
             <div class="creators-recommendation-container">
-                <div class="creators-list">
+                <div class="creators-list-header">
+                    <div class="list-title">
+                        <i class="ri-user-star-line"></i> 推荐网红列表
+                        <span class="list-count">(共 ${creators.length} 个，基于预期建联数量 ${targetContacts})</span>
+                    </div>
+                </div>
+                <div class="creators-row-list">
                     ${creatorsListHTML}
                 </div>
                 <div class="creators-action-buttons">
@@ -3579,8 +3632,548 @@ Earbud 产品运营经理`
         }
     };
 
-    // 生成建联邮件函数
+    // 生成建联邮件函数 - 支持批量操作
     function generateEmails(selectedCreators) {
+        // 显示邮件生成进度
+        showEmailGenerationProgress();
+
+        // 模拟延迟生成邮件
+        setTimeout(() => {
+            // 生成批量邮件界面
+            generateBulkEmailInterface(selectedCreators);
+        }, 5000); // 等待邮件生成进度完成
+    }
+
+    // 生成批量邮件界面
+    function generateBulkEmailInterface(selectedCreators) {
+        // 创建邮件列表HTML
+        let emailListHTML = '';
+        selectedCreators.forEach((creatorName, index) => {
+            const template = creatorEmailTemplates[creatorName] || {
+                subject: 'Earbud 智能翻译耳机合作邀请 - 多语言实时翻译功能',
+                content: `尊敬的 ${creatorName} 博主：
+
+您好！我是 Earbud 智能翻译耳机的产品运营经理。在观看了您的频道后，我对您在相关领域的专业见解印象深刻。
+
+我们的 Earbud 智能翻译耳机采用前沿 AI 技术，支持 40+ 种语言的实时翻译，并配备高清音质和先进的降噪技术。我们相信这款产品非常适合您的频道受众。
+
+期待您的回复！
+
+祝好，
+[您的名字]
+Earbud 产品运营经理`
+            };
+
+            const emailPreview = template.content.substring(0, 100) + '...';
+
+            emailListHTML += `
+                <div class="email-item" data-creator="${creatorName}">
+                    <div class="email-item-header">
+                        <div class="email-item-left">
+                            <input type="checkbox" id="email-${creatorName}" class="email-checkbox" data-creator="${creatorName}" checked>
+                            <label for="email-${creatorName}" class="email-checkbox-label"></label>
+                            <div class="email-recipient">${creatorName}</div>
+                        </div>
+                        <div class="email-status pending">待发送</div>
+                    </div>
+                    <div class="email-preview">${emailPreview}</div>
+                    <div class="email-actions">
+                        <button class="email-action-btn edit-email-btn" data-creator="${creatorName}">
+                            <i class="ri-edit-line"></i> 编辑
+                        </button>
+                        <button class="email-action-btn cancel-email-btn" data-creator="${creatorName}">
+                            <i class="ri-close-line"></i> 取消发送
+                        </button>
+                        <button class="email-action-btn primary send-single-email-btn" data-creator="${creatorName}">
+                            <i class="ri-send-plane-line"></i> 发送
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+        // 创建选中博主列表，每个博主都有复选框
+        let selectedCreatorsList = '';
+        selectedCreators.forEach(name => {
+            selectedCreatorsList += `
+                <div class="selected-creator-item">
+                    <input type="checkbox" id="quick-${name}" class="quick-creator-checkbox" data-creator="${name}" checked>
+                    <label for="quick-${name}" class="quick-creator-label">${name}</label>
+                </div>
+            `;
+        });
+
+        // 生成批量邮件界面HTML
+        const bulkEmailHTML = `
+            <div class="bulk-email-container">
+                <div class="bulk-email-header">
+                    <div class="bulk-email-title">
+                        <i class="ri-mail-send-line"></i> 批量邮件管理
+                    </div>
+                    <div class="bulk-email-stats">
+                        共 ${selectedCreators.length} 个达人
+                    </div>
+                </div>
+                <div class="bulk-email-content">
+                    <div class="selected-creators-section">
+                        <div class="section-title">选中的博主 (${selectedCreators.length}):</div>
+                        <div class="selected-creators-list">
+                            ${selectedCreatorsList}
+                        </div>
+                    </div>
+                    <div class="email-list-container">
+                        ${emailListHTML}
+                    </div>
+                </div>
+                <div class="bulk-actions">
+                    <div class="bulk-actions-left">
+                        <button class="bulk-action-btn secondary select-all-emails-btn">
+                            <i class="ri-checkbox-multiple-line"></i> 全选
+                        </button>
+                        <button class="bulk-action-btn secondary preview-email-btn">
+                            <i class="ri-eye-line"></i> 预览邮件
+                        </button>
+                    </div>
+                    <div class="bulk-actions-right">
+                        <button class="bulk-action-btn secondary regenerate-all-btn">
+                            <i class="ri-refresh-line"></i> 重新生成全部
+                        </button>
+                        <button class="bulk-action-btn primary send-all-emails-btn">
+                            <i class="ri-send-plane-fill"></i> 一键发送全部
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        addAIMessage(bulkEmailHTML);
+
+        // 添加交互功能
+        setTimeout(() => {
+            setupBulkEmailInteractions(selectedCreators);
+        }, 500);
+    }
+
+    // 设置批量邮件交互功能
+    function setupBulkEmailInteractions(selectedCreators) {
+        // 单独发送按钮
+        const sendSingleBtns = document.querySelectorAll('.send-single-email-btn');
+        sendSingleBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const creatorName = this.dataset.creator;
+                sendSingleEmail(creatorName);
+            });
+        });
+
+        // 编辑邮件按钮
+        const editEmailBtns = document.querySelectorAll('.edit-email-btn');
+        editEmailBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const creatorName = this.dataset.creator;
+                showEmailEditModal(creatorName);
+            });
+        });
+
+        // 取消发送按钮
+        const cancelEmailBtns = document.querySelectorAll('.cancel-email-btn');
+        cancelEmailBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const creatorName = this.dataset.creator;
+                cancelEmailSending(creatorName);
+            });
+        });
+
+        // 快速复选框变化（选中的博主列表中的复选框）
+        const quickCheckboxes = document.querySelectorAll('.quick-creator-checkbox');
+        quickCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const creatorName = this.dataset.creator;
+                // 同步到对应的邮件项复选框
+                const emailCheckbox = document.querySelector(`.email-checkbox[data-creator="${creatorName}"]`);
+                if (emailCheckbox) {
+                    emailCheckbox.checked = this.checked;
+                    emailCheckbox.dispatchEvent(new Event('change'));
+                }
+            });
+        });
+
+        // 邮件复选框变化
+        const emailCheckboxes = document.querySelectorAll('.email-checkbox');
+        emailCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const creatorName = this.dataset.creator;
+                const emailItem = this.closest('.email-item');
+
+                // 同步到快速复选框
+                const quickCheckbox = document.querySelector(`.quick-creator-checkbox[data-creator="${creatorName}"]`);
+                if (quickCheckbox) {
+                    quickCheckbox.checked = this.checked;
+                }
+
+                if (this.checked) {
+                    emailItem.classList.remove('email-cancelled');
+                    emailItem.querySelector('.email-status').textContent = '待发送';
+                    emailItem.querySelector('.email-status').className = 'email-status pending';
+                } else {
+                    emailItem.classList.add('email-cancelled');
+                    emailItem.querySelector('.email-status').textContent = '已取消';
+                    emailItem.querySelector('.email-status').className = 'email-status cancelled';
+                }
+            });
+        });
+
+        // 一键发送全部按钮
+        const sendAllBtn = document.querySelector('.send-all-emails-btn');
+        if (sendAllBtn) {
+            sendAllBtn.addEventListener('click', function() {
+                console.log('一键发送全部按钮被点击');
+
+                // 只发送选中的邮件
+                const checkedCreators = [];
+                emailCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        checkedCreators.push(checkbox.dataset.creator);
+                    }
+                });
+
+                console.log('选中的博主:', checkedCreators);
+
+                if (checkedCreators.length === 0) {
+                    alert('请至少选择一个博主');
+                    return;
+                }
+
+                // 确保函数存在后再调用
+                if (typeof sendAllEmails === 'function') {
+                    sendAllEmails(checkedCreators);
+                } else {
+                    console.error('sendAllEmails function not found');
+                    // 备用方案：直接显示成功消息
+                    setTimeout(() => {
+                        showBulkEmailSuccess(checkedCreators);
+                    }, 2000);
+                }
+            });
+        }
+
+        // 重新生成全部按钮
+        const regenerateAllBtn = document.querySelector('.regenerate-all-btn');
+        if (regenerateAllBtn) {
+            regenerateAllBtn.addEventListener('click', function() {
+                regenerateAllEmails(selectedCreators);
+            });
+        }
+
+        // 预览邮件按钮
+        const previewBtn = document.querySelector('.preview-email-btn');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', function() {
+                showEmailPreviewModal(selectedCreators[0]);
+            });
+        }
+    }
+
+    // 取消邮件发送函数
+    function cancelEmailSending(creatorName) {
+        const emailItem = document.querySelector(`[data-creator="${creatorName}"]`);
+        const checkbox = emailItem.querySelector('.email-checkbox');
+
+        if (checkbox) {
+            checkbox.checked = false;
+            checkbox.dispatchEvent(new Event('change'));
+        }
+
+        // 显示取消确认
+        addAIMessage(`已取消向 ${creatorName} 发送邮件`);
+    }
+
+    // 重新生成所有邮件
+    function regenerateAllEmails(selectedCreators) {
+        addAIMessage('正在重新生成所有邮件...');
+
+        setTimeout(() => {
+            generateBulkEmailInterface(selectedCreators);
+        }, 2000);
+    }
+
+    // 显示邮件编辑模态框
+    function showEmailEditModal(creatorName) {
+        const template = creatorEmailTemplates[creatorName] || {
+            subject: 'Earbud 智能翻译耳机合作邀请 - 多语言实时翻译功能',
+            content: `尊敬的 ${creatorName} 博主：
+
+您好！我是 Earbud 智能翻译耳机的产品运营经理。在观看了您的频道后，我对您在相关领域的专业见解印象深刻。
+
+我们的 Earbud 智能翻译耳机采用前沿 AI 技术，支持 40+ 种语言的实时翻译，并配备高清音质和先进的降噪技术。我们相信这款产品非常适合您的频道受众。
+
+期待您的回复！
+
+祝好，
+[您的名字]
+Earbud 产品运营经理`
+        };
+
+        const modalHTML = `
+            <div class="email-edit-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+                <div class="email-edit-content" style="background: var(--surface-color); border-radius: 8px; padding: 20px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div class="email-edit-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>编辑邮件 - ${creatorName}</h3>
+                        <button class="close-modal-btn" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                    </div>
+                    <div class="email-edit-form">
+                        <div class="email-field" style="margin-bottom: 15px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500;">邮件主题:</label>
+                            <input type="text" class="edit-subject-input" value="${template.subject}" style="width: 100%; padding: 8px; border: 1px solid var(--border-color); border-radius: 4px;">
+                        </div>
+                        <div class="email-field">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 500;">邮件内容:</label>
+                            <textarea class="edit-content-input" rows="15" style="width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; resize: vertical;">${template.content}</textarea>
+                        </div>
+                    </div>
+                    <div class="email-edit-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                        <button class="cancel-edit-btn" style="padding: 8px 16px; border: 1px solid var(--border-color); background: var(--surface-color); border-radius: 4px; cursor: pointer;">取消</button>
+                        <button class="save-edit-btn" style="padding: 8px 16px; background: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer;">保存</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // 添加模态框交互
+        const modal = document.querySelector('.email-edit-modal');
+        const closeBtn = modal.querySelector('.close-modal-btn');
+        const cancelBtn = modal.querySelector('.cancel-edit-btn');
+        const saveBtn = modal.querySelector('.save-edit-btn');
+
+        function closeModal() {
+            modal.remove();
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        saveBtn.addEventListener('click', function() {
+            const newSubject = modal.querySelector('.edit-subject-input').value;
+            const newContent = modal.querySelector('.edit-content-input').value;
+
+            // 更新邮件模板
+            creatorEmailTemplates[creatorName] = {
+                subject: newSubject,
+                content: newContent
+            };
+
+            // 更新预览
+            const emailItem = document.querySelector(`[data-creator="${creatorName}"]`);
+            const preview = emailItem.querySelector('.email-preview');
+            preview.textContent = newContent.substring(0, 100) + '...';
+
+            closeModal();
+            addAIMessage(`✅ 已更新 ${creatorName} 的邮件内容`);
+        });
+    }
+
+    // 显示邮件预览模态框
+    function showEmailPreviewModal(creatorName) {
+        const template = creatorEmailTemplates[creatorName] || {
+            subject: 'Earbud 智能翻译耳机合作邀请',
+            content: '邮件内容...'
+        };
+
+        const modalHTML = `
+            <div class="email-preview-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; display: flex; align-items: center; justify-content: center;">
+                <div class="email-preview-content" style="background: var(--surface-color); border-radius: 8px; padding: 20px; max-width: 700px; width: 90%; max-height: 80vh; overflow-y: auto;">
+                    <div class="email-preview-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>邮件预览 - ${creatorName}</h3>
+                        <button class="close-preview-btn" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+                    </div>
+                    <div class="email-preview-body">
+                        <div style="border: 1px solid var(--border-color); border-radius: 4px; padding: 15px;">
+                            <div style="margin-bottom: 10px;"><strong>收件人:</strong> ${creatorName}</div>
+                            <div style="margin-bottom: 15px;"><strong>主题:</strong> ${template.subject}</div>
+                            <div style="border-top: 1px solid var(--border-color); padding-top: 15px; white-space: pre-wrap; line-height: 1.6;">${template.content}</div>
+                        </div>
+                    </div>
+                    <div class="email-preview-actions" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                        <button class="close-preview-btn" style="padding: 8px 16px; border: 1px solid var(--border-color); background: var(--surface-color); border-radius: 4px; cursor: pointer;">关闭</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // 添加关闭功能
+        const modal = document.querySelector('.email-preview-modal');
+        const closeBtns = modal.querySelectorAll('.close-preview-btn');
+
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                modal.remove();
+            });
+        });
+    }
+
+    // 发送单个邮件
+    function sendSingleEmail(creatorName) {
+        const emailItem = document.querySelector(`[data-creator="${creatorName}"]`);
+        const statusElement = emailItem.querySelector('.email-status');
+        const sendBtn = emailItem.querySelector('.send-single-email-btn');
+
+        // 更新状态为发送中
+        statusElement.textContent = '发送中...';
+        statusElement.className = 'email-status sending';
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<i class="ri-loader-line"></i> 发送中';
+
+        // 模拟发送延迟
+        setTimeout(() => {
+            statusElement.textContent = '已发送';
+            statusElement.className = 'email-status sent';
+            sendBtn.innerHTML = '<i class="ri-check-line"></i> 已发送';
+            sendBtn.disabled = true;
+
+            // 显示成功提示
+            showSingleEmailSuccess(creatorName);
+        }, 2000);
+    }
+
+    // 一键发送全部邮件
+    function sendAllEmails(selectedCreators) {
+        console.log('sendAllEmails called with:', selectedCreators);
+
+        if (!selectedCreators || selectedCreators.length === 0) {
+            console.error('No creators selected for sending emails');
+            return;
+        }
+
+        const sendAllBtn = document.querySelector('.send-all-emails-btn');
+        if (!sendAllBtn) {
+            console.error('Send all button not found');
+            return;
+        }
+
+        sendAllBtn.disabled = true;
+        sendAllBtn.innerHTML = '<i class="ri-loader-line"></i> 发送中...';
+
+        // 逐个发送邮件
+        let sentCount = 0;
+        selectedCreators.forEach((creatorName, index) => {
+            setTimeout(() => {
+                console.log(`Sending email to ${creatorName}, count: ${sentCount + 1}/${selectedCreators.length}`);
+
+                const emailItem = document.querySelector(`[data-creator="${creatorName}"]`);
+                if (emailItem) {
+                    const statusElement = emailItem.querySelector('.email-status');
+                    const sendBtn = emailItem.querySelector('.send-single-email-btn');
+
+                    if (statusElement) {
+                        statusElement.textContent = '已发送';
+                        statusElement.className = 'email-status sent';
+                    }
+
+                    if (sendBtn) {
+                        sendBtn.innerHTML = '<i class="ri-check-line"></i> 已发送';
+                        sendBtn.disabled = true;
+                    }
+                }
+
+                sentCount++;
+
+                // 更新发送按钮文本
+                sendAllBtn.innerHTML = `<i class="ri-loader-line"></i> 已发送 ${sentCount}/${selectedCreators.length}`;
+
+                // 全部发送完成
+                if (sentCount === selectedCreators.length) {
+                    console.log('All emails sent, calling showBulkEmailSuccess');
+                    setTimeout(() => {
+                        showBulkEmailSuccess(selectedCreators);
+                    }, 500);
+                }
+            }, index * 500); // 每个邮件间隔500ms发送
+        });
+    }
+
+    // 显示单个邮件发送成功
+    function showSingleEmailSuccess(creatorName) {
+        addAIMessage(`✅ 已成功向 ${creatorName} 发送建联邮件！`);
+    }
+
+    // 显示批量邮件发送成功
+    function showBulkEmailSuccess(selectedCreators) {
+        console.log('showBulkEmailSuccess called with:', selectedCreators);
+
+        if (!selectedCreators || selectedCreators.length === 0) {
+            console.error('No creators provided to showBulkEmailSuccess');
+            return;
+        }
+
+        const successHTML = `
+            <div class="email-sent-success">
+                <div class="success-icon">
+                    <i class="ri-mail-check-line"></i>
+                </div>
+                <div class="success-message">
+                    <h4>批量邮件发送成功！</h4>
+                    <p>已成功向 ${selectedCreators.length} 位达人发送建联邮件。</p>
+                </div>
+                <div class="success-details">
+                    <div class="detail-item">
+                        <i class="ri-time-line"></i>
+                        <span>发送时间: ${new Date().toLocaleString()}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="ri-user-line"></i>
+                        <span>收件人: ${selectedCreators.length} 位达人</span>
+                    </div>
+                </div>
+                <div class="next-steps">
+                    <h5>后续跟进:</h5>
+                    <ul>
+                        <li>所有达人信息已添加到建联记录中</li>
+                        <li>您可以在「建联记录」中查看详情并跟进进展</li>
+                        <li>我们将自动同步邮件往来到建联记录中</li>
+                    </ul>
+                </div>
+                <div class="success-actions">
+                    <button class="continue-ai-btn"><i class="ri-robot-line"></i> 继续使用AI助手</button>
+                    <button class="view-outreach-btn primary-btn"><i class="ri-eye-line"></i> 查看建联记录</button>
+                </div>
+            </div>
+        `;
+
+        console.log('Adding success message to chat');
+        addAIMessage(successHTML);
+
+        // 添加按钮交互
+        setTimeout(() => {
+            const viewOutreachBtn = document.querySelector('.view-outreach-btn');
+            const continueAiBtn = document.querySelector('.continue-ai-btn');
+
+            if (viewOutreachBtn) {
+                viewOutreachBtn.addEventListener('click', function() {
+                    // 切换到建联记录页面
+                    const buildLinkMenuItem = document.querySelector('.menu-item:nth-child(4)');
+                    if (buildLinkMenuItem) {
+                        const menuItemContent = buildLinkMenuItem.querySelector('.menu-item-content');
+                        if (menuItemContent) {
+                            menuItemContent.click();
+                        }
+                    }
+                });
+            }
+
+            if (continueAiBtn) {
+                continueAiBtn.addEventListener('click', function() {
+                    // 继续使用AI助手
+                    addAIMessage('还有什么我可以帮助您的吗？');
+                });
+            }
+        }, 500);
+    }
+
+    // 原有的邮件生成函数（保留用于兼容性）
+    function generateEmailsOld(selectedCreators) {
         // 显示邮件生成进度
         showEmailGenerationProgress();
 
@@ -3965,7 +4558,14 @@ Earbud 产品运营专员`;
 
     // 添加AI消息到聊天窗口
     function addAIMessage(text) {
+        console.log('addAIMessage called with text length:', text.length);
+
         const chatContainer = document.querySelector('.chat-container');
+        if (!chatContainer) {
+            console.error('Chat container not found');
+            return;
+        }
+
         const now = new Date();
         const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
@@ -3973,7 +4573,8 @@ Earbud 产品运营专员`;
         const needsWideDisplay = text.includes('product-analysis-card') ||
                                 text.includes('analysis-steps') ||
                                 text.includes('creators-recommendation-container') ||
-                                text.includes('email-generation-container');
+                                text.includes('email-generation-container') ||
+                                text.includes('email-sent-success');
 
         const wideClass = needsWideDisplay ? ' wide-message' : '';
 
@@ -3991,7 +4592,12 @@ Earbud 产品运营专员`;
             </div>
         `;
 
-        chatContainer.insertAdjacentHTML('beforeend', messageHTML);
+        try {
+            chatContainer.insertAdjacentHTML('beforeend', messageHTML);
+            console.log('Message added successfully');
+        } catch (error) {
+            console.error('Error adding message to chat:', error);
+        }
 
         // 滚动到底部 - 增强Chrome兼容性
         setTimeout(() => {
@@ -4721,7 +5327,6 @@ Earbud 产品运营专员`;
         document.querySelector('.kpi-card:nth-child(3) .kpi-value').textContent = '86.5K';
         document.querySelector('.kpi-card:nth-child(4) .kpi-value').textContent = '7.2%';
     }
-});
 
 // 全局函数：显示新建商品分析页面
 function showNewProductPage() {
@@ -4803,3 +5408,5 @@ function showNewProductPage() {
         console.error('AI助手容器未找到');
     }
 }
+
+}); // 闭合 document.addEventListener('DOMContentLoaded', function() {
