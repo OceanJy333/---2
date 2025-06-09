@@ -442,11 +442,16 @@
 
                     <!-- 中央输入框 -->
                     <div class="central-input-container border-glow card-enhanced p-3">
-                        <div class="relative">
-                            <textarea class="central-input form-input-enhanced resize-none h-24 pr-12" placeholder="粘贴您的商品链接……"></textarea>
-                            <button class="central-send-button btn-primary-enhanced absolute bottom-2 right-2 p-2">
-                                <i class="fas fa-paper-plane fa-icon-sm"></i>
-                            </button>
+                        <div class="input-wrapper-with-buttons">
+                            <textarea class="central-input form-input-enhanced resize-none h-24" placeholder="粘贴您的商品链接……"></textarea>
+                            <div class="input-buttons-overlay">
+                                <button class="circular-plus-btn" id="add-product-btn" title="手动添加商品">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                <button class="central-send-button btn-primary-enhanced">
+                                    <i class="fas fa-paper-plane fa-icon-sm"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="flex flex-wrap gap-2 mt-2">
                             <button class="quick-prompt-btn btn-outline-enhanced text-sm" data-prompt="demo">
@@ -2251,6 +2256,85 @@
             <div class="modal-footer">
                 <button type="button" id="cancel-edit" class="btn-secondary">取消</button>
                 <button type="button" id="save-product" class="btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 手动添加商品弹窗 -->
+    <div class="modal-overlay" id="add-product-modal" style="display: none;">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> 添加商品样式</h2>
+                <button class="close-modal-btn" id="add-modal-close-btn"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="modal-content">
+                <form id="add-product-form">
+                    <div class="form-group">
+                        <label>商品图片</label>
+                        <div class="image-upload-container">
+                            <div class="image-preview-wrapper">
+                                <img id="add-product-image-preview" src="https://via.placeholder.com/300x200/e5e7eb/6b7280?text=商品图片" alt="商品图片预览">
+                            </div>
+                            <div class="upload-actions">
+                                <button type="button" class="upload-btn" id="add-product-upload-btn">自定义图片</button>
+                                <input type="file" id="add-product-image" accept="image/*" style="display: none;">
+                            </div>
+                            <div class="default-images-section" style="margin-top: 10px;">
+                                <label style="font-size: 12px; color: #666;">或选择默认图片:</label>
+                                <div class="default-images-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 5px;">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/f3f4f6/6b7280?text=电子" alt="电子产品" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="电子产品">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fef3c7/d97706?text=服装" alt="服装" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="服装">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fce7f3/db2777?text=美妆" alt="美妆" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="美妆">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/dcfce7/16a34a?text=家居" alt="家居" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="家居">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/dbeafe/3b82f6?text=运动" alt="运动" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="运动">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/f0fdf4/22c55e?text=食品" alt="食品" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="食品">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fef7ff/a855f7?text=数码" alt="数码配件" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="数码配件">
+                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fff7ed/ea580c?text=其他" alt="其他" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="其他">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-product-name">商品名称 *</label>
+                        <input type="text" id="add-product-name" class="form-input" placeholder="输入商品名称" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-product-price">商品价格 ($) *</label>
+                        <input type="number" id="add-product-price" class="form-input" placeholder="输入商品价格" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-product-category">商品分类</label>
+                        <input type="text" id="add-product-category" class="form-input" placeholder="输入商品分类">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-product-params">商品参数</label>
+                        <textarea id="add-product-params" class="form-textarea" placeholder="输入商品参数，如：尺寸、颜色、材质等"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-product-description">商品介绍 *</label>
+                        <textarea id="add-product-description" class="form-textarea" placeholder="输入商品详细介绍" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="add-product-tags">商品标签</label>
+                        <div class="tag-input-container">
+                            <input type="text" id="add-product-tags" class="form-input" placeholder="输入标签，按回车添加">
+                            <button type="button" id="add-new-tag-btn" class="add-tag-btn">添加</button>
+                        </div>
+                        <div class="tags-container" id="add-product-tags-container">
+                            <!-- 标签将在这里动态添加 -->
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancel-add" class="btn-secondary">取消</button>
+                <button type="button" id="confirm-add" class="btn-primary">确认添加</button>
             </div>
         </div>
     </div>

@@ -2681,27 +2681,61 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="product-info-row">
                             <div class="info-item-compact">
                                 <label class="info-label-compact">商品名称</label>
-                                <input type="text" class="editable-field-compact" value="Earbud 智能翻译耳机">
+                                <div class="editable-tags-container" data-field="product-name">
+                                    <span class="editable-tag" data-max-length="5">Earbu</span>
+                                    <span class="editable-tag" data-max-length="5">d智能</span>
+                                    <span class="editable-tag" data-max-length="5">翻译耳</span>
+                                    <span class="editable-tag" data-max-length="5">机</span>
+                                </div>
                             </div>
                             <div class="info-item-compact">
                                 <label class="info-label-compact">价格区间</label>
-                                <input type="text" class="editable-field-compact" value="50-100元">
+                                <div class="editable-tags-container" data-field="price-range">
+                                    <span class="editable-tag" data-max-length="5">50-1</span>
+                                    <span class="editable-tag" data-max-length="5">00元</span>
+                                </div>
                             </div>
                         </div>
                         <div class="product-info-row">
                             <div class="info-item-compact full-width">
                                 <label class="info-label-compact">核心特性</label>
-                                <input type="text" class="editable-field-compact" value="多语言实时翻译, AI语音助手, 高清音质, 降噪技术, 长续航, 防水设计">
+                                <div class="editable-tags-container" data-field="core-features">
+                                    <span class="editable-tag" data-max-length="5">多语言</span>
+                                    <span class="editable-tag" data-max-length="5">实时翻</span>
+                                    <span class="editable-tag" data-max-length="5">译</span>
+                                    <span class="editable-tag" data-max-length="5">AI语</span>
+                                    <span class="editable-tag" data-max-length="5">音助手</span>
+                                    <span class="editable-tag" data-max-length="5">高清音</span>
+                                    <span class="editable-tag" data-max-length="5">质</span>
+                                    <span class="editable-tag" data-max-length="5">降噪技</span>
+                                    <span class="editable-tag" data-max-length="5">术</span>
+                                    <span class="editable-tag" data-max-length="5">长续航</span>
+                                    <span class="editable-tag" data-max-length="5">防水设</span>
+                                    <span class="editable-tag" data-max-length="5">计</span>
+                                </div>
                             </div>
                         </div>
                         <div class="product-info-row">
                             <div class="info-item-compact">
                                 <label class="info-label-compact">目标受众</label>
-                                <input type="text" class="editable-field-compact" value="商务人士, 旅行者, 科技爱好者">
+                                <div class="editable-tags-container" data-field="target-audience">
+                                    <span class="editable-tag" data-max-length="5">商务人</span>
+                                    <span class="editable-tag" data-max-length="5">士</span>
+                                    <span class="editable-tag" data-max-length="5">旅行者</span>
+                                    <span class="editable-tag" data-max-length="5">科技爱</span>
+                                    <span class="editable-tag" data-max-length="5">好者</span>
+                                </div>
                             </div>
                             <div class="info-item-compact">
                                 <label class="info-label-compact">特征标签</label>
-                                <input type="text" class="editable-field-compact" value="智能翻译, 语音识别, 降噪技术">
+                                <div class="editable-tags-container" data-field="feature-tags">
+                                    <span class="editable-tag" data-max-length="5">智能翻</span>
+                                    <span class="editable-tag" data-max-length="5">译</span>
+                                    <span class="editable-tag" data-max-length="5">语音识</span>
+                                    <span class="editable-tag" data-max-length="5">别</span>
+                                    <span class="editable-tag" data-max-length="5">降噪技</span>
+                                    <span class="editable-tag" data-max-length="5">术</span>
+                                </div>
                             </div>
                         </div>
                         <div class="product-info-row">
@@ -2745,24 +2779,24 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             const editBtn = document.querySelector('.edit-product-btn-compact');
             const confirmBtn = document.querySelector('.confirm-product-btn-compact');
-            const editableFields = document.querySelectorAll('.editable-field-compact');
+            const editableTags = document.querySelectorAll('.editable-tag');
 
-            // 初始状态下禁用编辑
-            editableFields.forEach(field => {
-                field.disabled = true;
-            });
+            let isEditMode = false;
+
+            // 初始化可编辑标签功能
+            initEditableTags();
 
             // 编辑按钮点击
             if (editBtn) {
                 editBtn.addEventListener('click', function() {
-                    editableFields.forEach(field => {
-                        field.disabled = !field.disabled;
-                    });
+                    isEditMode = !isEditMode;
 
-                    if (editableFields[0].disabled) {
-                        editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
-                    } else {
+                    if (isEditMode) {
                         editBtn.innerHTML = '<i class="ri-save-line"></i> 保存修改';
+                        enableTagEditing();
+                    } else {
+                        editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
+                        disableTagEditing();
                     }
                 });
             }
@@ -2770,17 +2804,111 @@ document.addEventListener('DOMContentLoaded', function() {
             // 确认按钮点击
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', function() {
-                    // 确保所有字段都被禁用编辑
-                    editableFields.forEach(field => {
-                        field.disabled = true;
-                    });
-                    editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
+                    // 确保退出编辑模式
+                    if (isEditMode) {
+                        isEditMode = false;
+                        editBtn.innerHTML = '<i class="ri-edit-line"></i> 修改信息';
+                        disableTagEditing();
+                    }
 
                     // 显示特征提取进度
                     showFeatureExtractionProgress();
                 });
             }
         }, 500);
+    }
+
+    // 初始化可编辑标签功能
+    function initEditableTags() {
+        const editableTags = document.querySelectorAll('.editable-tag');
+
+        editableTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                if (this.classList.contains('editing')) return;
+
+                const container = this.closest('.editable-tags-container');
+                if (container && container.dataset.editMode === 'true') {
+                    startTagEditing(this);
+                }
+            });
+        });
+    }
+
+    // 启用标签编辑模式
+    function enableTagEditing() {
+        const containers = document.querySelectorAll('.editable-tags-container');
+        containers.forEach(container => {
+            container.dataset.editMode = 'true';
+            container.style.borderColor = 'var(--primary-color)';
+            container.style.backgroundColor = 'var(--primary-alpha-05)';
+        });
+    }
+
+    // 禁用标签编辑模式
+    function disableTagEditing() {
+        const containers = document.querySelectorAll('.editable-tags-container');
+        containers.forEach(container => {
+            container.dataset.editMode = 'false';
+            container.style.borderColor = 'var(--border-color)';
+            container.style.backgroundColor = 'var(--surface-color)';
+        });
+
+        // 结束所有正在编辑的标签
+        const editingTags = document.querySelectorAll('.editable-tag.editing');
+        editingTags.forEach(tag => {
+            endTagEditing(tag);
+        });
+    }
+
+    // 开始编辑标签
+    function startTagEditing(tag) {
+        const originalText = tag.textContent;
+        const maxLength = parseInt(tag.dataset.maxLength) || 5;
+
+        tag.classList.add('editing');
+        tag.innerHTML = `<input type="text" class="tag-edit-input" value="${originalText}" maxlength="${maxLength}">`;
+
+        const input = tag.querySelector('.tag-edit-input');
+        input.focus();
+        input.select();
+
+        // 处理输入完成
+        const finishEditing = () => {
+            const newText = input.value.trim();
+            if (newText && newText.length <= maxLength) {
+                tag.textContent = newText;
+            } else {
+                tag.textContent = originalText;
+            }
+            tag.classList.remove('editing');
+        };
+
+        input.addEventListener('blur', finishEditing);
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                finishEditing();
+            } else if (e.key === 'Escape') {
+                tag.textContent = originalText;
+                tag.classList.remove('editing');
+            }
+        });
+    }
+
+    // 结束编辑标签
+    function endTagEditing(tag) {
+        if (tag.classList.contains('editing')) {
+            const input = tag.querySelector('.tag-edit-input');
+            if (input) {
+                const newText = input.value.trim();
+                const maxLength = parseInt(tag.dataset.maxLength) || 5;
+                if (newText && newText.length <= maxLength) {
+                    tag.textContent = newText;
+                } else {
+                    tag.textContent = tag.dataset.originalText || '标签';
+                }
+            }
+            tag.classList.remove('editing');
+        }
     }
 
     // 显示特征提取进度
@@ -2867,57 +2995,120 @@ document.addEventListener('DOMContentLoaded', function() {
         }, interval);
     }
 
+    // 产品分析数据管理
+    let productAnalysisData = {
+        coreFeatures: ["实时翻译功能", "高清音质与降噪技术", "AI智能语音识别", "便携设计与长续航"],
+        targetAudience: ["商务人士", "旅行者", "科技爱好者", "语言学习者"]
+    };
+
+    // 从localStorage加载数据
+    function loadProductAnalysisData() {
+        try {
+            const savedData = localStorage.getItem('productAnalysisData');
+            if (savedData) {
+                const parsedData = JSON.parse(savedData);
+                if (parsedData.coreFeatures && parsedData.targetAudience) {
+                    productAnalysisData = parsedData;
+                }
+            }
+        } catch (error) {
+            console.warn('无法加载产品分析数据:', error);
+        }
+    }
+
+    // 保存数据到localStorage
+    function saveProductAnalysisData() {
+        try {
+            localStorage.setItem('productAnalysisData', JSON.stringify(productAnalysisData));
+        } catch (error) {
+            console.warn('无法保存产品分析数据:', error);
+        }
+    }
+
+    // 初始化时加载数据
+    loadProductAnalysisData();
+
+    // 数组转逗号分隔字符串
+    function arrayToString(arr) {
+        return arr.filter(item => item.trim()).join(',');
+    }
+
+    // 逗号分隔字符串转数组
+    function stringToArray(str) {
+        return str.split(',').map(item => item.trim()).filter(item => item);
+    }
+
+    // 创建可编辑标签组件
+    function createEditableTagsSection(fieldName, title, data, iconClass) {
+        const tags = data.map((tag, index) => {
+            const colorClass = fieldName === 'coreFeatures' ?
+                ['health-feature', 'tech-feature', 'smart-feature', 'portable-feature'][index % 4] :
+                ['business', 'travel', 'tech', 'student'][index % 4];
+
+            const icon = fieldName === 'coreFeatures' ?
+                ['ri-translate-2', 'ri-headphone-line', 'ri-brain-line', 'ri-wireless-charging-line'][index % 4] :
+                ['ri-briefcase-line', 'ri-plane-line', 'ri-smartphone-line', 'ri-graduation-cap-line'][index % 4];
+
+            return `
+                <div class="${fieldName === 'coreFeatures' ? 'feature-tag' : 'audience-tag'} ${colorClass}">
+                    <i class="${icon}"></i>
+                    ${tag}
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div class="editable-section" data-field="${fieldName}">
+                <div class="section-title-with-edit">
+                    <div class="section-title">${title}</div>
+                    <button class="edit-section-btn" title="编辑${title}">
+                        <i class="ri-edit-line"></i>
+                    </button>
+                </div>
+                <div class="tags-display">
+                    <div class="${fieldName === 'coreFeatures' ? 'core-features' : 'audience-tags'}">
+                        ${tags}
+                    </div>
+                </div>
+                <div class="tags-editor" style="display: none;">
+                    <div class="existing-tags"></div>
+                    <div class="input-container">
+                        <input type="text" class="tag-input" maxlength="5" placeholder="输入新标签(最多5字符)">
+                        <span class="char-counter">0/5</span>
+                    </div>
+                    <div class="editor-actions">
+                        <button class="save-tags-btn primary-btn-small">保存</button>
+                        <button class="cancel-tags-btn secondary-btn-small">取消</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     // 显示特征提取结果卡片
     function showFeatureExtractionCard() {
+        const coreFeatureSection = createEditableTagsSection(
+            'coreFeatures',
+            '核心特征',
+            productAnalysisData.coreFeatures,
+            'ri-star-line'
+        );
+
+        const targetAudienceSection = createEditableTagsSection(
+            'targetAudience',
+            '目标受众分析',
+            productAnalysisData.targetAudience,
+            'ri-group-line'
+        );
+
         const featureCard = `
             <div class="feature-extraction-card">
                 <div class="feature-card-header">
                     <h4><i class="ri-file-list-line"></i> 特征提取结果</h4>
                 </div>
                 <div class="feature-card-content">
-                    <div class="core-features-section">
-                        <div class="section-title">核心特征</div>
-                        <div class="core-features">
-                            <div class="feature-tag health-feature">
-                                <i class="ri-translate-2"></i>
-                                实时翻译功能（40+语言）
-                            </div>
-                            <div class="feature-tag tech-feature">
-                                <i class="ri-headphone-line"></i>
-                                高清音质与降噪技术
-                            </div>
-                            <div class="feature-tag smart-feature">
-                                <i class="ri-brain-line"></i>
-                                AI智能语音识别
-                            </div>
-                            <div class="feature-tag portable-feature">
-                                <i class="ri-wireless-charging-line"></i>
-                                便携设计与长续航
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="target-audience-section">
-                        <div class="section-title">目标受众分析</div>
-                        <div class="audience-tags">
-                            <div class="audience-tag business">
-                                <i class="ri-briefcase-line"></i>
-                                商务人士
-                            </div>
-                            <div class="audience-tag travel">
-                                <i class="ri-plane-line"></i>
-                                旅行者
-                            </div>
-                            <div class="audience-tag tech">
-                                <i class="ri-smartphone-line"></i>
-                                科技爱好者
-                            </div>
-                            <div class="audience-tag student">
-                                <i class="ri-graduation-cap-line"></i>
-                                语言学习者
-                            </div>
-                        </div>
-                    </div>
+                    ${coreFeatureSection}
+                    ${targetAudienceSection}
 
                     <div class="marketing-points-section">
                         <div class="section-title">营销要点</div>
@@ -2963,8 +3154,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         addAIMessage(featureCard);
 
-        // 添加匹配博主按钮事件
+        // 添加编辑功能事件监听
         setTimeout(() => {
+            initializeEditableSections();
+
             const startMatchingBtn = document.querySelector('.start-matching-btn');
             if (startMatchingBtn) {
                 startMatchingBtn.addEventListener('click', function() {
@@ -3003,6 +3196,163 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             }
         }, 500);
+    }
+
+    // 初始化可编辑区域
+    function initializeEditableSections() {
+        const editableSections = document.querySelectorAll('.editable-section');
+
+        editableSections.forEach(section => {
+            const fieldName = section.dataset.field;
+            const editBtn = section.querySelector('.edit-section-btn');
+            const tagsDisplay = section.querySelector('.tags-display');
+            const tagsEditor = section.querySelector('.tags-editor');
+            const tagInput = section.querySelector('.tag-input');
+            const charCounter = section.querySelector('.char-counter');
+            const saveBtn = section.querySelector('.save-tags-btn');
+            const cancelBtn = section.querySelector('.cancel-tags-btn');
+
+            let originalData = [...productAnalysisData[fieldName]];
+            let currentTags = [...productAnalysisData[fieldName]];
+
+            // 编辑按钮点击事件
+            editBtn.addEventListener('click', () => {
+                enterEditMode();
+            });
+
+            // 输入框事件
+            tagInput.addEventListener('input', updateCharCounter);
+            tagInput.addEventListener('keydown', handleKeyDown);
+
+            // 保存按钮事件
+            saveBtn.addEventListener('click', saveTags);
+
+            // 取消按钮事件
+            cancelBtn.addEventListener('click', cancelEdit);
+
+            function enterEditMode() {
+                originalData = [...productAnalysisData[fieldName]];
+                currentTags = [...productAnalysisData[fieldName]];
+
+                tagsDisplay.style.display = 'none';
+                tagsEditor.style.display = 'block';
+
+                updateExistingTags();
+                tagInput.focus();
+            }
+
+            function exitEditMode() {
+                tagsDisplay.style.display = 'block';
+                tagsEditor.style.display = 'none';
+                tagInput.value = '';
+                updateCharCounter();
+            }
+
+            function updateCharCounter() {
+                const length = tagInput.value.length;
+                charCounter.textContent = `${length}/5`;
+                charCounter.style.color = length >= 5 ? 'var(--error-color)' : 'var(--text-secondary)';
+            }
+
+            function handleKeyDown(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addTag();
+                } else if (e.key === 'Escape') {
+                    cancelEdit();
+                }
+            }
+
+            function addTag() {
+                const value = tagInput.value.trim();
+
+                if (!value) return;
+
+                if (value.length > 5) {
+                    alert('标签长度不能超过5个字符');
+                    return;
+                }
+
+                if (currentTags.includes(value)) {
+                    alert('标签已存在');
+                    return;
+                }
+
+                currentTags.push(value);
+                tagInput.value = '';
+                updateCharCounter();
+                updateExistingTags();
+            }
+
+            function removeTag(index) {
+                currentTags.splice(index, 1);
+                updateExistingTags();
+            }
+
+            function updateExistingTags() {
+                const existingTagsContainer = section.querySelector('.existing-tags');
+                existingTagsContainer.innerHTML = currentTags.map((tag, index) => `
+                    <span class="tag-item">
+                        ${tag}
+                        <button class="remove-tag-btn" data-index="${index}" title="删除标签">
+                            <i class="ri-close-line"></i>
+                        </button>
+                    </span>
+                `).join('');
+
+                // 添加删除按钮事件
+                existingTagsContainer.querySelectorAll('.remove-tag-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const index = parseInt(btn.dataset.index);
+                        removeTag(index);
+                    });
+                });
+            }
+
+            function saveTags() {
+                if (currentTags.length === 0) {
+                    alert('至少需要一个标签');
+                    return;
+                }
+
+                // 更新全局数据
+                productAnalysisData[fieldName] = [...currentTags];
+
+                // 保存到localStorage
+                saveProductAnalysisData();
+
+                // 更新显示
+                updateTagsDisplay();
+                exitEditMode();
+            }
+
+            function cancelEdit() {
+                currentTags = [...originalData];
+                exitEditMode();
+            }
+
+            function updateTagsDisplay() {
+                const container = section.querySelector(fieldName === 'coreFeatures' ? '.core-features' : '.audience-tags');
+                const data = productAnalysisData[fieldName];
+
+                container.innerHTML = data.map((tag, index) => {
+                    const colorClass = fieldName === 'coreFeatures' ?
+                        ['health-feature', 'tech-feature', 'smart-feature', 'portable-feature'][index % 4] :
+                        ['business', 'travel', 'tech', 'student'][index % 4];
+
+                    const icon = fieldName === 'coreFeatures' ?
+                        ['ri-translate-2', 'ri-headphone-line', 'ri-brain-line', 'ri-wireless-charging-line'][index % 4] :
+                        ['ri-briefcase-line', 'ri-plane-line', 'ri-smartphone-line', 'ri-graduation-cap-line'][index % 4];
+
+                    return `
+                        <div class="${fieldName === 'coreFeatures' ? 'feature-tag' : 'audience-tag'} ${colorClass}">
+                            <i class="${icon}"></i>
+                            ${tag}
+                        </div>
+                    `;
+                }).join('');
+            }
+        });
     }
 
     // 显示博主匹配进度
@@ -4787,6 +5137,16 @@ Earbud 产品运营专员`;
         });
     }
 
+    // 加号按钮点击事件 - 触发添加商品流程
+    const addProductBtn = document.getElementById('add-product-btn');
+    if (addProductBtn) {
+        addProductBtn.addEventListener('click', function() {
+            console.log('加号按钮被点击 - 触发添加商品流程');
+            // 直接显示添加商品信息卡片，不显示抓取进度
+            showAddProductFlow();
+        });
+    }
+
     // 中央输入框回车键发送
     if (centralInput) {
         centralInput.addEventListener('keydown', function(e) {
@@ -4843,6 +5203,29 @@ Earbud 产品运营专员`;
         }, 3000); // 等待分析进度完成
     }
 
+    // 添加商品流程 - 直接显示商品信息卡片
+    function showAddProductFlow() {
+        // 获取容器
+        const newProductContainer = document.querySelector('.new-product-container');
+        const chatContainer = document.querySelector('.chat-container');
+
+        // 隐藏新建商品分析界面，显示聊天界面
+        if (newProductContainer) newProductContainer.style.display = 'none';
+        if (chatContainer) chatContainer.style.display = 'block';
+
+        // 清空聊天内容
+        if (chatContainer) {
+            chatContainer.innerHTML = '';
+        }
+
+        // 隐藏输入框
+        const inputArea = document.querySelector('.input-area');
+        if (inputArea) inputArea.style.display = 'none';
+
+        // 直接显示添加商品信息卡片
+        showAddProductCompletionCard();
+    }
+
     // 独立站商品演示分析流程
     function simulateIndependentStoreAnalysis(inputText = '') {
         // 获取容器
@@ -4874,7 +5257,92 @@ Earbud 产品运营专员`;
         }, 3000); // 等待分析进度完成
     }
 
-    // 显示商品信息补全卡片
+    // 显示添加商品信息卡片
+    function showAddProductCompletionCard() {
+        const completionCard = `
+            <div class="product-completion-card">
+                <div class="completion-card-header">
+                    <h4><i class="ri-add-box-line"></i> 添加商品信息</h4>
+                </div>
+                <div class="completion-form">
+                    <div class="form-field">
+                        <label>商品标题 <span class="required">*</span></label>
+                        <input type="text" id="product_title" placeholder="请输入商品标题" value="">
+                    </div>
+                    <div class="form-field">
+                        <label>商品价格 <span class="required">*</span></label>
+                        <input type="text" id="price" placeholder="请输入价格（美元）" value="">
+                    </div>
+                    <div class="form-field image-upload-field">
+                        <label>商品图片 <span class="required">*</span></label>
+                        <div class="upload-options">
+                            <div class="upload-option">
+                                <label>图片链接</label>
+                                <input type="url" id="product_image_url" placeholder="请输入图片URL链接">
+                            </div>
+                            <div class="upload-option">
+                                <label>本地上传</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="product_image_file" class="file-upload-input" accept="image/jpeg,image/jpg,image/png,image/webp">
+                                    <div class="file-upload-button">
+                                        <i class="fas fa-upload"></i>
+                                        选择图片文件
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-preview-container" id="image-preview-container">
+                            <img id="image-preview" class="image-preview" alt="图片预览">
+                            <div class="preview-actions">
+                                <button type="button" class="preview-action-btn remove" onclick="removeImagePreview()">
+                                    <i class="fas fa-trash"></i> 移除
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label>商品特点 <span class="required">*</span></label>
+                        <textarea id="features" placeholder="请描述商品的主要特点和功能"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label>详细描述 <span class="required">*</span></label>
+                        <textarea id="description" placeholder="请输入商品的详细描述"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label>商品类别 <span class="required">*</span></label>
+                        <input type="text" id="category_source" placeholder="请输入商品类别" value="">
+                    </div>
+                    <div class="form-field">
+                        <label>品牌名称 <span class="required">*</span></label>
+                        <input type="text" id="brand_name" placeholder="请输入品牌名称" value="">
+                    </div>
+                </div>
+                <div class="completion-actions">
+                    <div class="completion-info">
+                        <i class="ri-information-line"></i>
+                        完善商品信息有助于提高建联效果
+                    </div>
+                    <button class="submit-completion-btn" onclick="submitAddProductCompletion()">
+                        <i class="ri-check-line"></i>
+                        添加商品
+                    </button>
+                </div>
+                <div class="error-message" id="completion-error">
+                    只有完善商品信息才能保证建联效果
+                </div>
+            </div>
+        `;
+
+        addAIMessage(completionCard);
+
+        // 添加实时验证
+        setTimeout(() => {
+            setupCompletionValidation();
+            setupImageUpload();
+        }, 500);
+    }
+
+    // 显示商品信息补全卡片（独立站演示用）
     function showProductCompletionCard() {
         const completionCard = `
             <div class="product-completion-card">
@@ -4889,6 +5357,33 @@ Earbud 产品运营专员`;
                     <div class="form-field">
                         <label>商品价格 <span class="required">*</span></label>
                         <input type="text" id="price" placeholder="请输入价格（美元）" value="$89.99">
+                    </div>
+                    <div class="form-field image-upload-field">
+                        <label>商品图片 <span class="required">*</span></label>
+                        <div class="upload-options">
+                            <div class="upload-option">
+                                <label>图片链接</label>
+                                <input type="url" id="product_image_url" placeholder="请输入图片URL链接">
+                            </div>
+                            <div class="upload-option">
+                                <label>本地上传</label>
+                                <div class="file-upload-wrapper">
+                                    <input type="file" id="product_image_file" class="file-upload-input" accept="image/jpeg,image/jpg,image/png,image/webp">
+                                    <div class="file-upload-button">
+                                        <i class="fas fa-upload"></i>
+                                        选择图片文件
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="image-preview-container" id="image-preview-container">
+                            <img id="image-preview" class="image-preview" alt="图片预览">
+                            <div class="preview-actions">
+                                <button type="button" class="preview-action-btn remove" onclick="removeImagePreview()">
+                                    <i class="fas fa-trash"></i> 移除
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-field">
                         <label>商品特点 <span class="required">*</span></label>
@@ -4928,7 +5423,110 @@ Earbud 产品运营专员`;
         // 添加实时验证
         setTimeout(() => {
             setupCompletionValidation();
+            setupImageUpload();
         }, 500);
+    }
+
+    // 设置图片上传功能
+    function setupImageUpload() {
+        const imageUrlInput = document.getElementById('product_image_url');
+        const imageFileInput = document.getElementById('product_image_file');
+        const previewContainer = document.getElementById('image-preview-container');
+        const previewImage = document.getElementById('image-preview');
+
+        // URL输入处理
+        if (imageUrlInput) {
+            imageUrlInput.addEventListener('input', function() {
+                const url = this.value.trim();
+                if (url && isValidImageUrl(url)) {
+                    showImagePreview(url);
+                    // 清空文件输入
+                    if (imageFileInput) imageFileInput.value = '';
+                } else if (!url) {
+                    hideImagePreview();
+                }
+            });
+        }
+
+        // 文件上传处理
+        if (imageFileInput) {
+            imageFileInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file && isValidImageFile(file)) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        showImagePreview(e.target.result);
+                        // 清空URL输入
+                        if (imageUrlInput) imageUrlInput.value = '';
+                    };
+                    reader.readAsDataURL(file);
+                } else if (!file) {
+                    hideImagePreview();
+                }
+            });
+        }
+    }
+
+    // 验证图片URL
+    function isValidImageUrl(url) {
+        const imageExtensions = /\.(jpg|jpeg|png|webp|gif)$/i;
+        try {
+            const urlObj = new URL(url);
+            return imageExtensions.test(urlObj.pathname) || url.includes('unsplash.com') || url.includes('images.');
+        } catch {
+            return false;
+        }
+    }
+
+    // 验证图片文件
+    function isValidImageFile(file) {
+        const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        const maxSize = 5 * 1024 * 1024; // 5MB
+
+        if (!validTypes.includes(file.type)) {
+            alert('请选择有效的图片格式（JPG、PNG、WebP）');
+            return false;
+        }
+
+        if (file.size > maxSize) {
+            alert('图片文件大小不能超过5MB');
+            return false;
+        }
+
+        return true;
+    }
+
+    // 显示图片预览
+    function showImagePreview(src) {
+        const previewContainer = document.getElementById('image-preview-container');
+        const previewImage = document.getElementById('image-preview');
+
+        if (previewContainer && previewImage) {
+            previewImage.src = src;
+            previewContainer.style.display = 'block';
+        }
+    }
+
+    // 隐藏图片预览
+    function hideImagePreview() {
+        const previewContainer = document.getElementById('image-preview-container');
+        if (previewContainer) {
+            previewContainer.style.display = 'none';
+        }
+    }
+
+    // 移除图片预览
+    window.removeImagePreview = function() {
+        const imageUrlInput = document.getElementById('product_image_url');
+        const imageFileInput = document.getElementById('product_image_file');
+
+        if (imageUrlInput) imageUrlInput.value = '';
+        if (imageFileInput) imageFileInput.value = '';
+
+        hideImagePreview();
+
+        // 重新验证表单
+        validateCompletionForm();
     }
 
     // 设置补全表单验证
@@ -4949,6 +5547,17 @@ Earbud 产品运营专员`;
             }
         });
 
+        // 为图片字段添加验证
+        const imageUrlInput = document.getElementById('product_image_url');
+        const imageFileInput = document.getElementById('product_image_file');
+
+        if (imageUrlInput) {
+            imageUrlInput.addEventListener('input', validateCompletionForm);
+        }
+        if (imageFileInput) {
+            imageFileInput.addEventListener('change', validateCompletionForm);
+        }
+
         function validateField(field) {
             const formField = field.closest('.form-field');
             if (field.value.trim() === '') {
@@ -4958,8 +5567,21 @@ Earbud 产品运营专员`;
             }
         }
 
+        // 验证图片字段
+        function validateImageField() {
+            const imageUrlInput = document.getElementById('product_image_url');
+            const imageFileInput = document.getElementById('product_image_file');
+
+            const hasUrl = imageUrlInput && imageUrlInput.value.trim() !== '';
+            const hasFile = imageFileInput && imageFileInput.files.length > 0;
+
+            return hasUrl || hasFile;
+        }
+
         function validateCompletionForm() {
             let allValid = true;
+
+            // 验证基本字段
             fields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
                 if (field && field.value.trim() === '') {
@@ -4967,16 +5589,95 @@ Earbud 产品运营专员`;
                 }
             });
 
+            // 验证图片字段
+            if (!validateImageField()) {
+                allValid = false;
+            }
+
             if (submitBtn) {
                 submitBtn.disabled = !allValid;
             }
         }
 
+        // 将validateCompletionForm设为全局函数，供其他地方调用
+        window.validateCompletionForm = validateCompletionForm;
+
         // 初始验证
         validateCompletionForm();
     }
 
-    // 提交商品补全信息
+    // 提交添加商品信息
+    window.submitAddProductCompletion = function() {
+        const fields = ['product_title', 'price', 'features', 'description', 'category_source', 'brand_name'];
+        const errorMessage = document.getElementById('completion-error');
+        let allValid = true;
+        const formData = {};
+
+        // 验证所有字段
+        fields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            const formField = field.closest('.form-field');
+
+            if (field.value.trim() === '') {
+                formField.classList.add('error');
+                allValid = false;
+            } else {
+                formField.classList.remove('error');
+                formData[fieldId] = field.value.trim();
+            }
+        });
+
+        // 验证图片字段
+        const imageUrlInput = document.getElementById('product_image_url');
+        const imageFileInput = document.getElementById('product_image_file');
+        const imageFormField = document.querySelector('.image-upload-field');
+
+        const hasUrl = imageUrlInput && imageUrlInput.value.trim() !== '';
+        const hasFile = imageFileInput && imageFileInput.files.length > 0;
+
+        if (!hasUrl && !hasFile) {
+            if (imageFormField) imageFormField.classList.add('error');
+            allValid = false;
+        } else {
+            if (imageFormField) imageFormField.classList.remove('error');
+
+            // 保存图片信息
+            if (hasUrl) {
+                formData.product_image = imageUrlInput.value.trim();
+                formData.image_type = 'url';
+            } else if (hasFile) {
+                formData.product_image = imageFileInput.files[0].name;
+                formData.image_type = 'file';
+                formData.image_file = imageFileInput.files[0];
+            }
+        }
+
+        if (!allValid) {
+            errorMessage.style.display = 'block';
+            return;
+        }
+
+        errorMessage.style.display = 'none';
+
+        // 禁用提交按钮，显示加载状态
+        const submitBtn = document.querySelector('.submit-completion-btn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="ri-loader-4-line"></i> 处理中...';
+
+        // 模拟提交处理
+        setTimeout(() => {
+            // 更新按钮状态为已提交
+            submitBtn.innerHTML = '<i class="ri-check-line"></i> 已添加';
+            submitBtn.style.background = '#10b981'; // 绿色背景表示成功
+
+            // 提交成功后，直接进入特征提取流程
+            setTimeout(() => {
+                showFeatureExtractionProgress();
+            }, 1000);
+        }, 1500);
+    };
+
+    // 提交商品补全信息（独立站演示用）
     window.submitProductCompletion = function() {
         const fields = ['product_title', 'price', 'features', 'description', 'category_source', 'brand_name'];
         const errorMessage = document.getElementById('completion-error');
@@ -4996,6 +5697,31 @@ Earbud 产品运营专员`;
                 formData[fieldId] = field.value.trim();
             }
         });
+
+        // 验证图片字段
+        const imageUrlInput = document.getElementById('product_image_url');
+        const imageFileInput = document.getElementById('product_image_file');
+        const imageFormField = document.querySelector('.image-upload-field');
+
+        const hasUrl = imageUrlInput && imageUrlInput.value.trim() !== '';
+        const hasFile = imageFileInput && imageFileInput.files.length > 0;
+
+        if (!hasUrl && !hasFile) {
+            if (imageFormField) imageFormField.classList.add('error');
+            allValid = false;
+        } else {
+            if (imageFormField) imageFormField.classList.remove('error');
+
+            // 保存图片信息
+            if (hasUrl) {
+                formData.product_image = imageUrlInput.value.trim();
+                formData.image_type = 'url';
+            } else if (hasFile) {
+                formData.product_image = imageFileInput.files[0].name;
+                formData.image_type = 'file';
+                formData.image_file = imageFileInput.files[0];
+            }
+        }
 
         if (!allValid) {
             errorMessage.style.display = 'block';
@@ -5408,5 +6134,264 @@ function showNewProductPage() {
         console.error('AI助手容器未找到');
     }
 }
+
+    // ========== 手动添加商品模态框功能 ==========
+    
+    // 添加样式按钮点击事件
+    const addStyleBtn = document.getElementById('add-style-btn');
+    if (addStyleBtn) {
+        addStyleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const addProductModal = document.getElementById('add-product-modal');
+            if (addProductModal) {
+                addProductModal.style.display = 'flex';
+                console.log('打开手动添加商品模态框');
+            }
+        });
+    }
+
+    // 关闭模态框功能
+    const addModalCloseBtn = document.getElementById('add-modal-close-btn');
+    const cancelAddBtn = document.getElementById('cancel-add');
+    
+    function closeAddProductModal() {
+        const addProductModal = document.getElementById('add-product-modal');
+        if (addProductModal) {
+            addProductModal.style.display = 'none';
+            // 清空表单
+            document.getElementById('add-product-form').reset();
+            document.getElementById('add-product-tags-container').innerHTML = '';
+            // 重置图片预览为默认占位图
+            const imagePreview = document.getElementById('add-product-image-preview');
+            if (imagePreview) {
+                imagePreview.src = 'https://via.placeholder.com/300x200/e5e7eb/6b7280?text=商品图片';
+                imagePreview.style.display = 'block';
+            }
+            // 重置默认图片选择状态
+            document.querySelectorAll('.default-image-option').forEach(img => {
+                img.style.border = '2px solid transparent';
+            });
+        }
+    }
+
+    if (addModalCloseBtn) {
+        addModalCloseBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeAddProductModal();
+        });
+    }
+
+    if (cancelAddBtn) {
+        cancelAddBtn.addEventListener('click', function() {
+            closeAddProductModal();
+        });
+    }
+
+    // 点击模态框外部关闭
+    document.addEventListener('click', function(e) {
+        if (e.target.id === 'add-product-modal') {
+            closeAddProductModal();
+        }
+    });
+
+    // 图片上传功能
+    const addProductUploadBtn = document.getElementById('add-product-upload-btn');
+    const addProductImageInput = document.getElementById('add-product-image');
+    
+    if (addProductUploadBtn && addProductImageInput) {
+        addProductUploadBtn.addEventListener('click', function() {
+            addProductImageInput.click();
+        });
+
+        addProductImageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imagePreview = document.getElementById('add-product-image-preview');
+                    if (imagePreview) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    }
+                    // 重置默认图片选择状态
+                    document.querySelectorAll('.default-image-option').forEach(img => {
+                        img.style.border = '2px solid transparent';
+                    });
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    }
+
+    // 默认图片选择功能
+    document.querySelectorAll('.default-image-option').forEach(img => {
+        img.addEventListener('click', function() {
+            // 更新主图片预览
+            const imagePreview = document.getElementById('add-product-image-preview');
+            if (imagePreview) {
+                imagePreview.src = this.src.replace('80x60', '300x200');
+                imagePreview.style.display = 'block';
+            }
+            
+            // 自动填充对应分类
+            const category = this.getAttribute('data-category');
+            const categoryInput = document.getElementById('add-product-category');
+            if (categoryInput && category) {
+                categoryInput.value = category;
+            }
+            
+            // 重置默认图片边框
+            document.querySelectorAll('.default-image-option').forEach(otherImg => {
+                otherImg.style.border = '2px solid transparent';
+            });
+            
+            // 高亮选中的图片
+            this.style.border = '2px solid #3b82f6';
+            
+            // 清空文件输入
+            const fileInput = document.getElementById('add-product-image');
+            if (fileInput) {
+                fileInput.value = '';
+            }
+        });
+    });
+
+    // 标签功能
+    const addNewTagBtn = document.getElementById('add-new-tag-btn');
+    const addProductTagsInput = document.getElementById('add-product-tags');
+    
+    function addTag() {
+        const tagText = addProductTagsInput.value.trim();
+        if (tagText) {
+            const tagsContainer = document.getElementById('add-product-tags-container');
+            const tagElement = document.createElement('div');
+            tagElement.className = 'tag-item';
+            tagElement.innerHTML = `${tagText} <i class="ri-close-line" onclick="this.parentElement.remove()"></i>`;
+            tagsContainer.appendChild(tagElement);
+            addProductTagsInput.value = '';
+        }
+    }
+
+    if (addNewTagBtn && addProductTagsInput) {
+        addNewTagBtn.addEventListener('click', addTag);
+        
+        addProductTagsInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addTag();
+            }
+        });
+    }
+
+    // 确认添加按钮功能
+    const confirmAddBtn = document.getElementById('confirm-add');
+    if (confirmAddBtn) {
+        confirmAddBtn.addEventListener('click', function() {
+            // 获取表单数据
+            const productName = document.getElementById('add-product-name').value.trim();
+            const productPrice = document.getElementById('add-product-price').value.trim();
+            const productCategory = document.getElementById('add-product-category').value.trim();
+            const productParams = document.getElementById('add-product-params').value.trim();
+            const productDescription = document.getElementById('add-product-description').value.trim();
+            
+            // 验证必填字段
+            if (!productName || !productPrice || !productDescription) {
+                alert('请填写所有必填字段（商品名称、价格、介绍）');
+                return;
+            }
+
+            // 验证价格是否为正数
+            if (parseFloat(productPrice) <= 0) {
+                alert('请输入有效的商品价格');
+                return;
+            }
+
+            // 收集标签
+            const tags = [];
+            document.querySelectorAll('#add-product-tags-container .tag-item').forEach(tag => {
+                const tagText = tag.textContent.replace('×', '').trim();
+                if (tagText) tags.push(tagText);
+            });
+
+            // 获取上传的图片
+            const imageFile = document.getElementById('add-product-image').files[0];
+            let imageSrc = '';
+            if (imageFile) {
+                imageSrc = URL.createObjectURL(imageFile);
+            } else {
+                // 使用默认图片
+                imageSrc = 'https://via.placeholder.com/300x200?text=Product+Image';
+            }
+
+            // 创建新的商品数据对象
+            const newProduct = {
+                name: productName,
+                price: parseFloat(productPrice),
+                category: productCategory || '未分类',
+                params: productParams,
+                description: productDescription,
+                tags: tags,
+                image: imageSrc,
+                connections: 0,
+                communications: 0,
+                collaborations: 0,
+                dateAdded: new Date().toLocaleDateString()
+            };
+
+            // 添加到商品列表（模拟添加到现有的商品展示区域）
+            addProductToDisplay(newProduct);
+
+            // 显示成功消息
+            alert('商品样式添加成功！即将进入建联演示流程...');
+
+            // 关闭模态框
+            closeAddProductModal();
+
+            // 延迟后跳转到建联演示流程
+            setTimeout(() => {
+                redirectToOutreachWorkflow();
+            }, 1000);
+        });
+    }
+
+    // 添加商品到展示区域的函数
+    function addProductToDisplay(product) {
+        // 这里可以根据实际需求添加商品到相应的显示区域
+        // 例如添加到产品列表、仪表盘等
+        console.log('添加新商品:', product);
+        
+        // 示例：向控制台输出商品信息
+        console.log('商品名称:', product.name);
+        console.log('商品价格:', product.price);
+        console.log('商品分类:', product.category);
+        console.log('商品参数:', product.params);
+        console.log('商品介绍:', product.description);
+        console.log('商品标签:', product.tags);
+        
+        // TODO: 这里可以添加将商品插入到实际页面显示区域的逻辑
+        // 例如：向产品卡片容器添加新的产品卡片
+    }
+
+    // 跳转到建联演示流程的函数
+    function redirectToOutreachWorkflow() {
+        console.log('跳转到建联演示流程');
+
+        // 首先切换到AI助手页面
+        const aiAssistantMenuItem = document.querySelector('.menu-item:nth-child(2)');
+        if (aiAssistantMenuItem) {
+            const menuItemContent = aiAssistantMenuItem.querySelector('.menu-item-content');
+            if (menuItemContent) {
+                menuItemContent.click();
+                console.log('已切换到AI助手页面');
+
+                // 延迟后启动演示分析流程
+                setTimeout(() => {
+                    simulateProductAnalysis();
+                    console.log('已启动商品分析演示流程');
+                }, 500);
+            }
+        } else {
+            console.error('未找到AI助手菜单项');
+        }
+    }
 
 }); // 闭合 document.addEventListener('DOMContentLoaded', function() {

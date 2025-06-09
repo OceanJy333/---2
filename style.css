@@ -4317,25 +4317,32 @@ input:checked + .slider:before {
 
 .central-send-button {
     position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 8px;
+    bottom: 8px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: var(--primary-color);
-    color: var(--text-color);
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    z-index: 20;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
 .central-send-button:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-50%) scale(1.05);
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+}
+
+.central-send-button:active {
+    transform: scale(0.95);
 }
 
 .central-send-button i {
@@ -5213,6 +5220,80 @@ input:checked + .slider:before {
 .info-item-compact.full-width .editable-field-compact {
     border-color: var(--primary-alpha-20);
     background: linear-gradient(135deg, var(--surface-color) 0%, rgba(255, 255, 255, 0.8) 100%);
+}
+
+/* 可编辑标签容器样式 */
+.editable-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 32px;
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--surface-color);
+    transition: all 0.2s ease;
+}
+
+.editable-tags-container:hover {
+    border-color: var(--primary-alpha-30);
+}
+
+/* 可编辑标签样式 */
+.editable-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, var(--primary-alpha-10) 0%, var(--primary-alpha-05) 100%);
+    border: 1px solid var(--primary-alpha-20);
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    max-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+}
+
+.editable-tag:hover {
+    background: linear-gradient(135deg, var(--primary-alpha-20) 0%, var(--primary-alpha-10) 100%);
+    border-color: var(--primary-alpha-40);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.editable-tag.editing {
+    background: var(--surface-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-alpha-20);
+}
+
+/* 特征标签的特殊样式 */
+.editable-tag.feature-tag {
+    background: linear-gradient(135deg, var(--secondary-alpha-10) 0%, var(--secondary-alpha-05) 100%);
+    border-color: var(--secondary-alpha-20);
+    color: var(--secondary-color);
+}
+
+.editable-tag.feature-tag:hover {
+    background: linear-gradient(135deg, var(--secondary-alpha-20) 0%, var(--secondary-alpha-10) 100%);
+    border-color: var(--secondary-alpha-40);
+}
+
+/* 编辑输入框样式 */
+.tag-edit-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    width: 100%;
+    min-width: 40px;
+    max-width: 60px;
 }
 
 /* 字段聚焦时的增强效果 */
@@ -10924,6 +11005,161 @@ a[href^="#"] {
     margin-top: var(--spacing-sm);
 }
 
+/* 中央输入框按钮布局样式 */
+.input-wrapper-with-buttons {
+    position: relative;
+}
+
+.input-buttons-overlay {
+    /* 容器不再需要定位，按钮直接使用绝对定位 */
+    display: contents;
+}
+
+.circular-plus-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    position: absolute;
+    bottom: 8px;
+    right: 56px;
+    z-index: 20;
+}
+
+.circular-plus-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.circular-plus-btn:active {
+    transform: scale(0.95);
+}
+
+/* 重复的central-send-button样式已移除，使用上面的主要定义 */
+
+/* 确保输入框有足够的右侧内边距，为按钮留出空间 */
+.input-wrapper-with-buttons .central-input {
+    padding-right: 100px;
+    resize: none;
+    overflow: hidden;
+}
+
+/* 图片上传字段样式 */
+.image-upload-field {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.upload-options {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.upload-option {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.upload-option label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.file-upload-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.file-upload-input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-upload-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    background: var(--background-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.file-upload-button:hover {
+    border-color: var(--primary-color);
+    background: var(--primary-alpha-05);
+    color: var(--primary-color);
+}
+
+.image-preview-container {
+    margin-top: 12px;
+    display: none;
+}
+
+.image-preview {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    object-fit: cover;
+}
+
+.preview-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.preview-action-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--background-color);
+    color: var(--text-secondary);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.preview-action-btn:hover {
+    background: var(--surface-hover);
+    color: var(--text-primary);
+}
+
+.preview-action-btn.remove {
+    color: #ef4444;
+    border-color: #ef4444;
+}
+
+.preview-action-btn.remove:hover {
+    background: rgba(239, 68, 68, 0.1);
+}
+
 .progress-info {
     margin-bottom: var(--spacing-sm);
     color: var(--text-secondary);
@@ -11373,6 +11609,159 @@ a[href^="#"] {
     box-shadow: 0 4px 12px rgba(var(--primary-color-rgb), 0.3);
 }
 
+/* 可编辑标签区域样式 */
+.editable-section {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.section-title-with-edit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.edit-section-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.edit-section-btn:hover {
+    background-color: var(--gray-50);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.tags-editor {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.existing-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+    min-height: 24px;
+}
+
+.tag-item {
+    background: var(--gray-100);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+.remove-tag-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.2s ease;
+}
+
+.remove-tag-btn:hover {
+    background-color: var(--error-color);
+    color: white;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tag-input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+}
+
+.tag-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.char-counter {
+    font-size: 10px;
+    color: var(--text-secondary);
+    min-width: 30px;
+    text-align: right;
+    font-weight: 500;
+}
+
+.editor-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.primary-btn-small,
+.secondary-btn-small {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.primary-btn-small {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.primary-btn-small:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.secondary-btn-small {
+    background-color: var(--gray-100);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.secondary-btn-small:hover {
+    background-color: var(--gray-200);
+    color: var(--text-primary);
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .analysis-chain,
@@ -11522,5 +11911,61 @@ a[href^="#"] {
     .campaign-input {
         padding: 12px;
         font-size: var(--font-size-md);
+    }
+
+    /* 可编辑标签移动端优化 */
+    .section-title-with-edit {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .edit-section-btn {
+        align-self: flex-end;
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+
+    .tags-editor {
+        padding: 10px;
+    }
+
+    .existing-tags {
+        margin-bottom: 10px;
+    }
+
+    .tag-item {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    .input-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .tag-input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .char-counter {
+        align-self: flex-end;
+        font-size: 11px;
+    }
+
+    .editor-actions {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .primary-btn-small,
+    .secondary-btn-small {
+        padding: 8px 12px;
+        font-size: 13px;
+        width: 100%;
+        justify-content: center;
     }
 }
