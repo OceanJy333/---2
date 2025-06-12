@@ -1663,80 +1663,226 @@
                         </div>
                     </div>
 
-                    <!-- 添加邮箱弹窗 -->
-                    <div class="email-modal" id="email-modal" style="display: none;">
-                        <div class="email-modal-content">
-                            <div class="email-modal-header">
-                                <h3>添加SMTP邮箱</h3>
-                                <button class="close-email-modal"><i class="ri-close-line"></i></button>
+                    <!-- 邮箱配置弹窗 - 整合版 -->
+                    <div class="email-config-modal-unified" id="email-config-modal-unified" style="display: none;">
+                        <div class="email-config-modal-content-unified">
+                            <div class="email-config-modal-header-unified">
+                                <h3>配置邮箱</h3>
+                                <button class="close-email-config-modal-unified"><i class="ri-close-line"></i></button>
                             </div>
-                            <div class="email-modal-body">
-                                <div class="email-channel-options">
-                                    <!-- SMTP邮箱选项 -->
-                                    <div class="email-option">
-                                        <div class="email-option-icon"><i class="ri-mail-settings-line"></i></div>
-                                        <div class="email-option-info">
-                                            <div class="email-option-title">SMTP邮箱</div>
-                                            <div class="email-option-desc">配置您的SMTP服务器，支持任意邮箱</div>
+
+                            <!-- 邮箱类型选择器 -->
+                            <div class="email-type-selector">
+                                <div class="form-group">
+                                    <label for="email-type-select">选择邮箱类型</label>
+                                    <select id="email-type-select" class="email-type-dropdown">
+                                        <option value="qq">QQ邮箱</option>
+                                        <option value="163">163邮箱</option>
+                                        <option value="other">其他邮箱</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="email-config-modal-body-unified">
+                                <!-- QQ邮箱配置区域 -->
+                                <div class="email-config-section" id="qq-config-section">
+                                    <!-- 配置指导卡片 -->
+                                    <div class="config-guide-card">
+                                        <div class="config-guide-header">
+                                            <i class="ri-information-line"></i>
+                                            <span>📧 QQ邮箱配置指导</span>
                                         </div>
-                                        <button class="email-option-btn" id="add-smtp-btn">添加</button>
+                                        <div class="config-guide-content">
+                                            <ol>
+                                                <li>登录网页端 → 右上角 设置 → 账户</li>
+                                                <li>找到「POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV 服务」，点击 开启 IMAP/SMTP</li>
+                                                <li>系统会弹出短信二次验证，验证后生成一次性 16 位授权码，复制保存，填到下方授权码处</li>
+                                            </ol>
+                                            <a href="https://mail.qq.com/" target="_blank" class="guide-link">
+                                                <i class="ri-external-link-line"></i> 点击获取授权码
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="email-config-form">
+                                        <div class="form-group">
+                                            <label for="unified-qq-email">邮箱地址</label>
+                                            <input type="email" id="unified-qq-email" placeholder="例如: yourname@qq.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="unified-qq-auth-code">授权码</label>
+                                            <input type="password" id="unified-qq-auth-code" placeholder="请输入QQ邮箱授权码">
+                                        </div>
+
+                                        <!-- 自动配置的服务器参数（只读显示） -->
+                                        <div class="auto-config-section">
+                                            <h4>自动配置参数</h4>
+                                            <div class="form-row">
+                                                <div class="form-group half">
+                                                    <label>SMTP服务器</label>
+                                                    <input type="text" value="smtp.qq.com" readonly>
+                                                </div>
+                                                <div class="form-group half">
+                                                    <label>SMTP端口</label>
+                                                    <input type="text" value="465 (SSL)" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group half">
+                                                    <label>IMAP服务器</label>
+                                                    <input type="text" value="imap.qq.com" readonly>
+                                                </div>
+                                                <div class="form-group half">
+                                                    <label>IMAP端口</label>
+                                                    <input type="text" value="993 (SSL)" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button class="test-connection-btn" id="unified-test-qq-btn">测试连接</button>
+                                            <button class="save-config-btn" id="unified-save-qq-btn">保存配置</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 163邮箱配置区域 -->
+                                <div class="email-config-section" id="163-config-section" style="display: none;">
+                                    <!-- 配置指导卡片 -->
+                                    <div class="config-guide-card">
+                                        <div class="config-guide-header">
+                                            <i class="ri-information-line"></i>
+                                            <span>📧 163邮箱配置指导</span>
+                                        </div>
+                                        <div class="config-guide-content">
+                                            <ol>
+                                                <li>登录网页端 → 顶栏 设置 → POP3/SMTP/IMAP</li>
+                                                <li>点击 开启 IMAP/SMTP，系统会要求 短信验证</li>
+                                                <li>成功后立即显示16 位授权码，复制保存，填到下方授权码处</li>
+                                            </ol>
+                                            <a href="https://mail.163.com/" target="_blank" class="guide-link">
+                                                <i class="ri-external-link-line"></i> 点击获取授权码
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="email-config-form">
+                                        <div class="form-group">
+                                            <label for="unified-163-email">邮箱地址</label>
+                                            <input type="email" id="unified-163-email" placeholder="例如: yourname@163.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="unified-163-auth-code">授权码</label>
+                                            <input type="password" id="unified-163-auth-code" placeholder="请输入163邮箱授权码">
+                                        </div>
+
+                                        <!-- 自动配置的服务器参数（只读显示） -->
+                                        <div class="auto-config-section">
+                                            <h4>自动配置参数</h4>
+                                            <div class="form-row">
+                                                <div class="form-group half">
+                                                    <label>SMTP服务器</label>
+                                                    <input type="text" value="smtp.163.com" readonly>
+                                                </div>
+                                                <div class="form-group half">
+                                                    <label>SMTP端口</label>
+                                                    <input type="text" value="465 (SSL)" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group half">
+                                                    <label>IMAP服务器</label>
+                                                    <input type="text" value="imap.163.com" readonly>
+                                                </div>
+                                                <div class="form-group half">
+                                                    <label>IMAP端口</label>
+                                                    <input type="text" value="993 (SSL)" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button class="test-connection-btn" id="unified-test-163-btn">测试连接</button>
+                                            <button class="save-config-btn" id="unified-save-163-btn">保存配置</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- 其他邮箱配置区域 -->
+                                <div class="email-config-section" id="other-config-section" style="display: none;">
+                                    <div class="email-config-form">
+                                        <div class="form-group">
+                                            <label for="unified-other-email">邮箱地址</label>
+                                            <input type="email" id="unified-other-email" placeholder="例如: your.name@company.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="unified-other-password">密码</label>
+                                            <input type="password" id="unified-other-password" placeholder="您的邮箱密码或应用专用密码">
+                                        </div>
+
+                                        <!-- SMTP配置 -->
+                                        <div class="smtp-config-section">
+                                            <h4>SMTP配置</h4>
+                                            <div class="form-group">
+                                                <label for="unified-other-smtp-host">SMTP服务器</label>
+                                                <input type="text" id="unified-other-smtp-host" placeholder="例如: smtp.gmail.com">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group half">
+                                                    <label for="unified-other-smtp-port">SMTP端口</label>
+                                                    <input type="number" id="unified-other-smtp-port" placeholder="例如: 587">
+                                                </div>
+                                                <div class="form-group half">
+                                                    <label for="unified-other-smtp-security">SMTP加密</label>
+                                                    <select id="unified-other-smtp-security">
+                                                        <option value="tls">TLS</option>
+                                                        <option value="ssl">SSL</option>
+                                                        <option value="none">无</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- IMAP配置 -->
+                                        <div class="imap-config-section">
+                                            <h4>IMAP配置</h4>
+                                            <div class="form-group">
+                                                <label for="unified-other-imap-host">IMAP服务器</label>
+                                                <input type="text" id="unified-other-imap-host" placeholder="例如: imap.gmail.com">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group half">
+                                                    <label for="unified-other-imap-port">IMAP端口</label>
+                                                    <input type="number" id="unified-other-imap-port" placeholder="例如: 993">
+                                                </div>
+                                                <div class="form-group half">
+                                                    <label for="unified-other-imap-security">IMAP加密</label>
+                                                    <select id="unified-other-imap-security">
+                                                        <option value="ssl">SSL</option>
+                                                        <option value="tls">TLS</option>
+                                                        <option value="none">无</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button class="test-connection-btn" id="unified-test-other-btn">测试连接</button>
+                                            <button class="save-config-btn" id="unified-save-other-btn">保存配置</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- SMTP配置弹窗 -->
-                    <div class="smtp-modal" id="smtp-modal" style="display: none;">
-                        <div class="smtp-modal-content">
-                            <div class="smtp-modal-header">
-                                <h3>配置SMTP邮箱</h3>
-                                <button class="close-smtp-modal"><i class="ri-close-line"></i></button>
-                            </div>
-                            <div class="smtp-modal-body">
-                                <div class="smtp-form">
-                                    <div class="form-group">
-                                        <label for="smtp-email">邮箱地址</label>
-                                        <input type="email" id="smtp-email" placeholder="例如: your.name@company.com">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="smtp-name">显示名称</label>
-                                        <input type="text" id="smtp-name" placeholder="例如: 您的姓名">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="smtp-host">SMTP服务器</label>
-                                        <input type="text" id="smtp-host" placeholder="例如: smtp.gmail.com">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group half">
-                                            <label for="smtp-port">端口</label>
-                                            <input type="number" id="smtp-port" placeholder="例如: 587">
-                                        </div>
-                                        <div class="form-group half">
-                                            <label for="smtp-security">安全连接</label>
-                                            <select id="smtp-security">
-                                                <option value="tls">TLS</option>
-                                                <option value="ssl">SSL</option>
-                                                <option value="none">无</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="smtp-username">用户名</label>
-                                        <input type="text" id="smtp-username" placeholder="通常是您的完整邮箱地址">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="smtp-password">密码</label>
-                                        <input type="password" id="smtp-password" placeholder="您的邮箱密码或应用专用密码">
-                                    </div>
-                                    <div class="form-actions">
-                                        <button class="test-smtp-btn" id="test-smtp-btn">测试连接</button>
-                                        <button class="save-smtp-btn" id="save-smtp-btn">保存</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+
+
+
+
 
 
                 </div>

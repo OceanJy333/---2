@@ -1960,11 +1960,36 @@ document.addEventListener('DOMContentLoaded', function() {
             const card = document.createElement('div');
             card.className = 'account-card';
 
+            // 根据邮箱类型设置图标和名称
+            let serviceIcon, serviceName, serviceColor;
+            switch (emailData.type) {
+                case 'qq':
+                    serviceIcon = 'ri-qq-fill';
+                    serviceName = 'QQ邮箱';
+                    serviceColor = '#12B7F5';
+                    break;
+                case '163':
+                    serviceIcon = 'ri-mail-line';
+                    serviceName = '163邮箱';
+                    serviceColor = '#D32F2F';
+                    break;
+
+                case 'other':
+                    serviceIcon = 'ri-mail-settings-line';
+                    serviceName = '自定义邮箱';
+                    serviceColor = '#FF8F00';
+                    break;
+                default:
+                    serviceIcon = 'ri-mail-settings-line';
+                    serviceName = '自有SMTP';
+                    serviceColor = '#FF8F00';
+            }
+
             card.innerHTML = `
                 <div class="account-service smtp">
-                    <div class="service-icon"><i class="ri-mail-settings-line"></i></div>
+                    <div class="service-icon"><i class="${serviceIcon}" style="color: ${serviceColor};"></i></div>
                     <div class="service-info">
-                        <div class="service-name">自有SMTP</div>
+                        <div class="service-name">${serviceName}</div>
                         <div class="service-email">${emailData.email}</div>
                     </div>
                     <div class="service-status ${isPrimary ? 'primary' : ''}">
@@ -1988,10 +2013,16 @@ document.addEventListener('DOMContentLoaded', function() {
         const addFirstEmailBtn = document.getElementById('add-first-email-btn');
         if (addFirstEmailBtn) {
             addFirstEmailBtn.addEventListener('click', function() {
-                // 显示SMTP配置弹窗
-                const smtpModal = document.getElementById('smtp-modal');
-                if (smtpModal) {
-                    smtpModal.style.display = 'flex';
+                // 显示统一邮箱配置弹窗
+                const unifiedModal = document.getElementById('email-config-modal-unified');
+                if (unifiedModal) {
+                    unifiedModal.style.display = 'flex';
+                    // 默认显示QQ邮箱配置
+                    const emailTypeSelect = document.getElementById('email-type-select');
+                    if (emailTypeSelect) {
+                        emailTypeSelect.value = 'qq';
+                    }
+                    switchEmailConfigSection('qq');
                 }
             });
         }
@@ -2000,42 +2031,282 @@ document.addEventListener('DOMContentLoaded', function() {
         const addEmailBtn = document.getElementById('add-email-btn');
         if (addEmailBtn) {
             addEmailBtn.addEventListener('click', function() {
-                // 显示SMTP配置弹窗
-                const smtpModal = document.getElementById('smtp-modal');
-                if (smtpModal) {
-                    smtpModal.style.display = 'flex';
+                // 显示统一邮箱配置弹窗
+                const unifiedModal = document.getElementById('email-config-modal-unified');
+                if (unifiedModal) {
+                    unifiedModal.style.display = 'flex';
+                    // 默认显示QQ邮箱配置
+                    const emailTypeSelect = document.getElementById('email-type-select');
+                    if (emailTypeSelect) {
+                        emailTypeSelect.value = 'qq';
+                    }
+                    switchEmailConfigSection('qq');
                 }
             });
         }
 
-        // 添加SMTP邮箱按钮
-        const addSmtpBtn = document.getElementById('add-smtp-btn');
-        if (addSmtpBtn) {
-            addSmtpBtn.addEventListener('click', function() {
-                // 关闭添加邮箱弹窗
-                const emailModal = document.getElementById('email-modal');
-                if (emailModal) {
-                    emailModal.style.display = 'none';
-                }
+        // 邮箱类型下拉菜单切换事件处理
+        const emailTypeSelect = document.getElementById('email-type-select');
+        if (emailTypeSelect) {
+            emailTypeSelect.addEventListener('change', function() {
+                const emailType = this.value;
+                switchEmailConfigSection(emailType);
+            });
+        }
 
-                // 显示SMTP配置弹窗
-                const smtpModal = document.getElementById('smtp-modal');
-                if (smtpModal) {
-                    smtpModal.style.display = 'flex';
+        // 切换邮箱配置区域
+        function switchEmailConfigSection(type) {
+            // 隐藏所有配置区域
+            const allSections = document.querySelectorAll('.email-config-section');
+            allSections.forEach(section => {
+                section.style.display = 'none';
+                section.classList.remove('active');
+            });
+
+            // 显示对应的配置区域
+            const targetSection = document.getElementById(`${type}-config-section`);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                targetSection.classList.add('active');
+            }
+        }
+
+        // 关闭统一邮箱配置弹窗
+        const closeUnifiedModal = document.querySelector('.close-email-config-modal-unified');
+        if (closeUnifiedModal) {
+            closeUnifiedModal.addEventListener('click', function() {
+                const unifiedModal = document.getElementById('email-config-modal-unified');
+                if (unifiedModal) {
+                    unifiedModal.style.display = 'none';
+                    // 清空所有表单
+                    clearAllEmailForms();
                 }
             });
         }
 
-        // 关闭SMTP配置弹窗
-        const closeSmtpModal = document.querySelector('.close-smtp-modal');
-        if (closeSmtpModal) {
-            closeSmtpModal.addEventListener('click', function() {
-                const smtpModal = document.getElementById('smtp-modal');
-                if (smtpModal) {
-                    smtpModal.style.display = 'none';
+        // 清空所有邮箱配置表单
+        function clearAllEmailForms() {
+            // 清空QQ邮箱表单
+            document.getElementById('unified-qq-email').value = '';
+            document.getElementById('unified-qq-auth-code').value = '';
+
+            // 清空163邮箱表单
+            document.getElementById('unified-163-email').value = '';
+            document.getElementById('unified-163-auth-code').value = '';
+
+            // 清空其他邮箱表单
+            clearUnifiedOtherEmailForm();
+        }
+
+        // 统一QQ邮箱配置逻辑
+        const unifiedTestQQBtn = document.getElementById('unified-test-qq-btn');
+        const unifiedSaveQQBtn = document.getElementById('unified-save-qq-btn');
+
+        if (unifiedTestQQBtn) {
+            unifiedTestQQBtn.addEventListener('click', function() {
+                const email = document.getElementById('unified-qq-email').value;
+                const authCode = document.getElementById('unified-qq-auth-code').value;
+
+                if (!email || !authCode) {
+                    alert('请填写完整的QQ邮箱配置信息');
+                    return;
                 }
+
+                // 模拟测试连接
+                console.log('正在测试QQ邮箱连接，请稍候...');
+                setTimeout(() => {
+                    console.log('QQ邮箱连接测试成功！');
+                }, 1500);
             });
         }
+
+        if (unifiedSaveQQBtn) {
+            unifiedSaveQQBtn.addEventListener('click', function() {
+                const email = document.getElementById('unified-qq-email').value;
+                const authCode = document.getElementById('unified-qq-auth-code').value;
+
+                if (!email || !authCode) {
+                    console.log('请填写完整的QQ邮箱配置信息');
+                    return;
+                }
+
+                saveEmailConfig({
+                    type: 'qq',
+                    email: email,
+                    password: authCode,
+                    smtpHost: 'smtp.qq.com',
+                    smtpPort: 465,
+                    smtpSecurity: 'ssl',
+                    imapHost: 'imap.qq.com',
+                    imapPort: 993,
+                    imapSecurity: 'ssl',
+                    username: email
+                });
+
+                // 关闭弹窗
+                document.getElementById('email-config-modal-unified').style.display = 'none';
+
+                // 清空表单
+                clearAllEmailForms();
+            });
+        }
+
+        // 统一163邮箱配置逻辑
+        const unifiedTest163Btn = document.getElementById('unified-test-163-btn');
+        const unifiedSave163Btn = document.getElementById('unified-save-163-btn');
+
+        if (unifiedTest163Btn) {
+            unifiedTest163Btn.addEventListener('click', function() {
+                const email = document.getElementById('unified-163-email').value;
+                const authCode = document.getElementById('unified-163-auth-code').value;
+
+                if (!email || !authCode) {
+                    alert('请填写完整的163邮箱配置信息');
+                    return;
+                }
+
+                // 模拟测试连接
+                alert('正在测试163邮箱连接，请稍候...');
+                setTimeout(() => {
+                    alert('163邮箱连接测试成功！');
+                }, 1500);
+            });
+        }
+
+        if (unifiedSave163Btn) {
+            unifiedSave163Btn.addEventListener('click', function() {
+                const email = document.getElementById('unified-163-email').value;
+                const authCode = document.getElementById('unified-163-auth-code').value;
+
+                if (!email || !authCode) {
+                    alert('请填写完整的163邮箱配置信息');
+                    return;
+                }
+
+                saveEmailConfig({
+                    type: '163',
+                    email: email,
+                    password: authCode,
+                    smtpHost: 'smtp.163.com',
+                    smtpPort: 465,
+                    smtpSecurity: 'ssl',
+                    imapHost: 'imap.163.com',
+                    imapPort: 993,
+                    imapSecurity: 'ssl',
+                    username: email
+                });
+
+                // 关闭弹窗
+                document.getElementById('email-config-modal-unified').style.display = 'none';
+
+                // 清空表单
+                clearAllEmailForms();
+            });
+        }
+
+
+
+        // 统一其他邮箱配置逻辑
+        const unifiedTestOtherBtn = document.getElementById('unified-test-other-btn');
+        const unifiedSaveOtherBtn = document.getElementById('unified-save-other-btn');
+
+        if (unifiedTestOtherBtn) {
+            unifiedTestOtherBtn.addEventListener('click', function() {
+                const email = document.getElementById('unified-other-email').value;
+                const smtpHost = document.getElementById('unified-other-smtp-host').value;
+                const smtpPort = document.getElementById('unified-other-smtp-port').value;
+                const password = document.getElementById('unified-other-password').value;
+
+                if (!email || !smtpHost || !smtpPort || !password) {
+                    console.log('请填写完整的邮箱配置信息');
+                    return;
+                }
+
+                // 模拟测试连接
+                console.log('正在测试邮箱连接，请稍候...');
+                setTimeout(() => {
+                    console.log('邮箱连接测试成功！');
+                }, 1500);
+            });
+        }
+
+        if (unifiedSaveOtherBtn) {
+            unifiedSaveOtherBtn.addEventListener('click', function() {
+                const email = document.getElementById('unified-other-email').value;
+                const smtpHost = document.getElementById('unified-other-smtp-host').value;
+                const smtpPort = document.getElementById('unified-other-smtp-port').value;
+                const smtpSecurity = document.getElementById('unified-other-smtp-security').value;
+                const imapHost = document.getElementById('unified-other-imap-host').value;
+                const imapPort = document.getElementById('unified-other-imap-port').value;
+                const imapSecurity = document.getElementById('unified-other-imap-security').value;
+                const password = document.getElementById('unified-other-password').value;
+
+                if (!email || !smtpHost || !smtpPort || !password) {
+                    alert('请填写完整的邮箱配置信息');
+                    return;
+                }
+
+                saveEmailConfig({
+                    type: 'other',
+                    email: email,
+                    password: password,
+                    smtpHost: smtpHost,
+                    smtpPort: parseInt(smtpPort),
+                    smtpSecurity: smtpSecurity,
+                    imapHost: imapHost || smtpHost.replace('smtp', 'imap'),
+                    imapPort: parseInt(imapPort) || (smtpSecurity === 'ssl' ? 993 : 143),
+                    imapSecurity: imapSecurity || smtpSecurity,
+                    username: email // 使用邮箱地址作为用户名
+                });
+
+                // 关闭弹窗
+                document.getElementById('email-config-modal-unified').style.display = 'none';
+
+                // 清空表单
+                clearAllEmailForms();
+            });
+        }
+
+
+
+        // 清空统一其他邮箱表单
+        function clearUnifiedOtherEmailForm() {
+            document.getElementById('unified-other-email').value = '';
+            document.getElementById('unified-other-smtp-host').value = '';
+            document.getElementById('unified-other-smtp-port').value = '';
+            document.getElementById('unified-other-smtp-security').value = 'tls';
+            document.getElementById('unified-other-imap-host').value = '';
+            document.getElementById('unified-other-imap-port').value = '';
+            document.getElementById('unified-other-imap-security').value = 'ssl';
+            document.getElementById('unified-other-password').value = '';
+        }
+
+
+
+        // 保存邮箱配置的通用函数
+        function saveEmailConfig(config) {
+            const configuredEmails = JSON.parse(localStorage.getItem('configuredEmails') || '[]');
+
+            // 检查是否已存在相同邮箱
+            const existingIndex = configuredEmails.findIndex(email => email.email === config.email);
+
+            if (existingIndex !== -1) {
+                // 更新现有配置
+                configuredEmails[existingIndex] = { ...configuredEmails[existingIndex], ...config };
+            } else {
+                // 添加新配置
+                configuredEmails.push(config);
+            }
+
+            localStorage.setItem('configuredEmails', JSON.stringify(configuredEmails));
+
+            alert(`${config.email} 配置已保存`);
+
+            // 更新UI显示
+            checkEmailConfiguration();
+        }
+
+
 
         // 测试SMTP连接按钮
         const testSmtpBtn = document.getElementById('test-smtp-btn');
