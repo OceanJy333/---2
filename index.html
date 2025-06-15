@@ -749,14 +749,7 @@
                     </div>
                 </div>
 
-                <!-- 状态标签 -->
-                <div class="status-tabs">
-                    <div class="status-tab active">全部</div>
-                    <div class="status-tab">沟通中</div>
-                    <div class="status-tab">已确认</div>
-                    <div class="status-tab">推广中</div>
-                    <div class="status-tab">已结束</div>
-                </div>
+
 
                 <!-- 批量操作工具栏 -->
                 <div class="batch-toolbar" style="display: none;">
@@ -807,12 +800,11 @@
                             </div>
                         </div>
                         <div class="outreach-intent">
-                            <span class="intent-tag">测评合作</span>
                             <div class="outreach-summary" title="介绍AI翻译功能和降噪技术，邀请产品测评">AI翻译功能介绍，邀请测评</div>
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">达人已读未回</div>
-                            <span class="status-tag status-in-progress">沟通中</span>
+                            <span class="contact-stage-tag">达人建联阶段</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/21</div>
@@ -851,12 +843,11 @@
                             </div>
                         </div>
                         <div class="outreach-intent">
-                            <span class="intent-tag">付费测评</span>
                             <div class="outreach-summary" title="提供产品样品和$300测评费用，请求功能展示">样品+$300费用，请求功能展示</div>
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">已报价：$300</div>
-                            <span class="status-tag status-confirmed">已确认</span>
+                            <span class="contact-stage-tag">达人建联阶段</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/22</div>
@@ -895,12 +886,11 @@
                             </div>
                         </div>
                         <div class="outreach-intent">
-                            <span class="intent-tag">深度合作</span>
                             <div class="outreach-summary" title="提供产品样品和$800合作费用，请求AI技术深度解析">样品+$800费用，AI技术深度解析</div>
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">视频制作中</div>
-                            <span class="status-tag status-promoting">推广中</span>
+                            <span class="contact-stage-tag">达人建联阶段</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/20</div>
@@ -940,12 +930,11 @@
                             </div>
                         </div>
                         <div class="outreach-intent">
-                            <span class="intent-tag">科普合作</span>
                             <div class="outreach-summary" title="提供产品样品和$500合作费用，请求AI翻译技术科普">样品+$500费用，AI翻译技术科普</div>
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">合作完成 / 效果良好</div>
-                            <span class="status-tag status-completed">已结束</span>
+                            <span class="contact-stage-tag">达人建联阶段</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/10</div>
@@ -960,6 +949,11 @@
                 <div class="outreach-detail" style="display: none;">
                     <div class="detail-header">
                         <button class="close-detail"><i class="ri-close-line"></i></button>
+                    </div>
+
+                    <!-- 可滚动内容容器 -->
+                    <div class="detail-scroll-container">
+                        <!-- 达人和商品信息卡片 -->
                         <div class="combined-info-card">
                             <div class="creator-product-info">
                                 <div class="creator-section">
@@ -975,6 +969,10 @@
                                             <span class="creator-tag ai">AI专家</span>
                                             <span class="creator-tag review">产品测评</span>
                                         </div>
+                                        <!-- 联系阶段标签 -->
+                                        <div class="contact-stage-section">
+                                            <span class="contact-stage-tag pricing">价格谈判</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="product-section">
@@ -984,6 +982,7 @@
                                     <div class="product-info">
                                         <div class="product-name">Earbud</div>
                                         <div class="product-description">AI翻译耳机 / $50-100</div>
+
                                     </div>
                                 </div>
                             </div>
@@ -1002,35 +1001,29 @@
                                 </div>
                                 <div class="channel-status-wrapper">
                                     <a href="#" class="channel-link"><i class="ri-youtube-line"></i> 访问频道</a>
-                                    <div class="detail-status">
-                                        <span class="status-tag status-in-progress">沟通中</span>
-                                        <button class="status-change-btn"><i class="ri-arrow-down-s-line"></i></button>
-                                        <div class="status-dropdown">
-                                            <div class="status-option" data-status="in-progress">沟通中</div>
-                                            <div class="status-option" data-status="confirmed">已确认</div>
-                                            <div class="status-option" data-status="promoting">推广中</div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="detail-tabs">
-                        <div class="detail-tab active"><i class="ri-chat-history-line"></i> 沟通记录</div>
-                        <div class="detail-tab"><i class="ri-youtube-line"></i> 近期内容</div>
-                    </div>
 
-                    <div class="detail-content">
                         <!-- 沟通记录内容 -->
-                        <div class="tab-content communication-content" style="display: block;">
+                        <div class="communication-content">
+                            <div class="communication-header">
+                                <h4><i class="ri-chat-history-line"></i> 沟通记录</h4>
+                            </div>
                             <!-- 沟通时间线 -->
                             <div class="communication-timeline">
                                 <div class="timeline-item synced-email">
                                     <div class="timeline-icon"><i class="ri-mail-forbid-line"></i></div>
                                     <div class="timeline-content">
                                         <div class="timeline-title">邮件回复 (自动同步)</div>
+                                        <!-- 邮件意图和摘要 -->
+                                        <div class="email-intent-summary">
+                                            <span class="email-intent-tag active">报价回复</span>
+                                            <div class="email-summary">博主询问产品详细信息和合作条款，表现出积极的合作意向</div>
+                                        </div>
                                         <div class="timeline-meta">来自: contact@mattvidpro.com · 2023/03/21 14:30</div>
                                         <div class="timeline-body">
                                             <div class="email-content">
@@ -1054,6 +1047,11 @@
                                     <div class="timeline-icon"><i class="ri-mail-send-line"></i></div>
                                     <div class="timeline-content">
                                         <div class="timeline-title">合作意向邮件 (自动同步)</div>
+                                        <!-- 邮件意图和摘要 -->
+                                        <div class="email-intent-summary">
+                                            <span class="email-intent-tag initial">初次联系</span>
+                                            <div class="email-summary">向博主介绍产品特点，重点强调AI翻译功能，提出合作意向</div>
+                                        </div>
                                         <div class="timeline-meta">发往: contact@mattvidpro.com · 2023/03/18 10:15</div>
                                         <div class="timeline-body">
                                             <p>向博主介绍了Earbud产品，重点强调了AI语音翻译功能和音质表现，提出合作意向。</p>
@@ -1080,65 +1078,10 @@
                                 </div>
                             </div>
 
-                            <!-- 发送邮件 -->
-                            <div class="send-email-card">
-                                <h4><i class="ri-mail-send-line"></i> 发送邮件</h4>
-                                <div class="email-form">
-                                    <div class="email-field">
-                                        <label>收件人</label>
-                                        <input type="email" class="email-input" value="contact@mattvidpro.com" readonly>
-                                    </div>
-                                    <div class="email-field">
-                                        <label>邮件主题</label>
-                                        <input type="text" class="email-input" placeholder="输入邮件主题...">
-                                    </div>
-                                    <div class="email-field">
-                                        <label>邮件内容</label>
-                                        <textarea class="email-content-input" placeholder="输入邮件内容..."></textarea>
-                                    </div>
-                                    <div class="email-actions">
-                                        <button class="email-template-btn"><i class="ri-file-text-line"></i> 使用模板</button>
-                                        <button class="ai-assist-btn"><i class="ri-robot-line"></i> AI协助</button>
-                                        <button class="send-email-btn"><i class="ri-send-plane-line"></i> 发送邮件</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- 固定邮件回复框已移除，改为动态生成 -->
                         </div>
 
-                        <!-- 近期内容标签页 -->
-                        <div class="tab-content recent-content" style="display: none;">
-                            <!-- 最近发布 -->
-                            <div class="recent-content-preview">
-                                <h4>最近发布</h4>
-                                <div class="content-item">
-                                    <div class="content-platform youtube"><i class="ri-youtube-fill"></i> YouTube</div>
-                                    <div class="content-thumbnail"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="Video Thumbnail"></div>
-                                    <div class="content-info">
-                                        <div class="content-title">AI Voice Cloning is Getting SCARY Good!</div>
-                                        <div class="content-meta"><span>发布于: 2天前</span> <span>观看: 5.2万</span> <span>互动率: 15%</span></div>
-                                    </div>
-                                </div>
-                                <div class="content-item">
-                                    <div class="content-platform instagram"><i class="ri-instagram-fill"></i> Instagram</div>
-                                    <div class="content-thumbnail"><img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=100&h=100&fit=crop&q=80" alt="Post Thumbnail"></div>
-                                    <div class="content-info">
-                                        <div class="content-title">Quick look at the new AI features in the latest editing software update. #AI #VideoEditing</div>
-                                        <div class="content-meta"><span>发布于: 1天前</span> <span>点赞: 1.1K</span> <span>评论: 85</span></div>
-                                    </div>
-                                </div>
-                                <div class="content-item">
-                                    <div class="content-platform youtube"><i class="ri-youtube-fill"></i> YouTube</div>
-                                    <div class="content-thumbnail"><img src="https://img.youtube.com/vi/L_LUpnjgPso/mqdefault.jpg" alt="Video Thumbnail"></div>
-                                    <div class="content-info">
-                                        <div class="content-title">Comparing the Top 5 AI Translation Earbuds</div>
-                                        <div class="content-meta"><span>发布于: 5天前</span> <span>观看: 8.9万</span> <span>互动率: 12%</span></div>
-                                    </div>
-                                </div>
-                                <div class="load-more-content">
-                                    <button>加载更多内容</button>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- 近期内容模块已移除 -->
                     </div>
                 </div>
             </div>
@@ -2481,6 +2424,115 @@
             <div class="modal-footer">
                 <button type="button" id="cancel-add" class="btn-secondary">取消</button>
                 <button type="button" id="confirm-add" class="btn-primary">确认添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 价格谈判邮件生成模态框 -->
+    <div class="email-tool-modal" id="price-negotiation-modal" style="display: none;">
+        <div class="email-tool-modal-content">
+            <div class="email-tool-modal-header">
+                <h3><i class="ri-money-dollar-circle-line"></i> 价格谈判邮件生成</h3>
+                <button class="close-modal-btn" id="close-price-modal"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="email-tool-modal-body">
+                <div class="email-field">
+                    <label>当前报价 (USD)</label>
+                    <input type="number" id="current-price" class="email-input" placeholder="输入当前报价金额" min="0" step="0.01">
+                </div>
+                <div class="email-field">
+                    <label>期望价格 (USD)</label>
+                    <input type="number" id="expected-price" class="email-input" placeholder="输入期望价格金额" min="0" step="0.01">
+                </div>
+                <div class="email-field">
+                    <label>谈判理由 (可选)</label>
+                    <textarea id="negotiation-reason" class="email-content-input" placeholder="输入谈判理由，如预算限制、长期合作等..."></textarea>
+                </div>
+            </div>
+            <div class="email-tool-modal-footer">
+                <button class="cancel-btn" id="cancel-price-negotiation">取消</button>
+                <button class="generate-btn" id="generate-price-negotiation">生成邮件</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 发货通知邮件生成模态框 -->
+    <div class="email-tool-modal" id="shipping-notification-modal" style="display: none;">
+        <div class="email-tool-modal-content">
+            <div class="email-tool-modal-header">
+                <h3><i class="ri-truck-line"></i> 发货通知邮件生成</h3>
+                <button class="close-modal-btn" id="close-shipping-modal"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="email-tool-modal-body">
+                <div class="email-field">
+                    <label>物流公司</label>
+                    <select id="shipping-company" class="email-input">
+                        <option value="">请选择物流公司</option>
+                        <option value="DHL">DHL</option>
+                        <option value="FedEx">FedEx</option>
+                        <option value="UPS">UPS</option>
+                        <option value="USPS">USPS</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                <div class="email-field">
+                    <label>快递单号</label>
+                    <input type="text" id="tracking-number" class="email-input" placeholder="输入快递单号">
+                </div>
+                <div class="email-field">
+                    <label>预计到达时间</label>
+                    <input type="date" id="estimated-delivery" class="email-input">
+                </div>
+                <div class="email-field">
+                    <label>备注信息 (可选)</label>
+                    <textarea id="shipping-notes" class="email-content-input" placeholder="输入备注信息，如特殊说明、注意事项等..."></textarea>
+                </div>
+            </div>
+            <div class="email-tool-modal-footer">
+                <button class="cancel-btn" id="cancel-shipping-notification">取消</button>
+                <button class="generate-btn" id="generate-shipping-notification">生成邮件</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 视频脚本建议邮件生成模态框 -->
+    <div class="email-tool-modal" id="video-script-modal" style="display: none;">
+        <div class="email-tool-modal-content">
+            <div class="email-tool-modal-header">
+                <h3><i class="ri-video-line"></i> 视频脚本建议邮件生成</h3>
+                <button class="close-modal-btn" id="close-video-modal"><i class="ri-close-line"></i></button>
+            </div>
+            <div class="email-tool-modal-body">
+                <div class="email-field">
+                    <label>视频类型</label>
+                    <select id="video-type" class="email-input">
+                        <option value="">请选择视频类型</option>
+                        <option value="开箱视频">开箱视频</option>
+                        <option value="使用教程">使用教程</option>
+                        <option value="产品评测">产品评测</option>
+                        <option value="对比测试">对比测试</option>
+                        <option value="生活场景">生活场景展示</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+                <div class="email-field">
+                    <label>视频时长</label>
+                    <select id="video-duration" class="email-input">
+                        <option value="">请选择视频时长</option>
+                        <option value="1-3分钟">1-3分钟</option>
+                        <option value="3-5分钟">3-5分钟</option>
+                        <option value="5-10分钟">5-10分钟</option>
+                        <option value="10分钟以上">10分钟以上</option>
+                    </select>
+                </div>
+                <div class="email-field">
+                    <label>特殊要求 (可选)</label>
+                    <textarea id="video-requirements" class="email-content-input" placeholder="输入特殊要求，如重点展示功能、拍摄角度、目标受众等..."></textarea>
+                </div>
+            </div>
+            <div class="email-tool-modal-footer">
+                <button class="cancel-btn" id="cancel-video-script">取消</button>
+                <button class="generate-btn" id="generate-video-script">生成邮件</button>
             </div>
         </div>
     </div>
