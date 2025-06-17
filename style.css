@@ -7818,53 +7818,59 @@ a[href^="#"] {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* 合并卡片样式 */
+/* 合并卡片样式 - 优化空间利用率 */
 .combined-info-card {
     background-color: var(--surface-color);
     border-radius: 16px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-    padding: 24px;
+    padding: 20px; /* 减少内边距 */
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px; /* 减少间距 */
     border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.combined-info-card:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
 }
 
 .creator-product-info {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: 32px; /* 进一步增加间距 */
-    min-height: 100px; /* 确保最小高度 */
+    gap: 24px; /* 优化间距 */
+    min-height: 80px; /* 减少最小高度 */
 }
 
 .creator-section {
     display: flex;
     align-items: flex-start;
-    gap: 20px; /* 增加间距 */
-    flex: 1.5; /* 给达人信息更多空间 */
+    gap: 16px; /* 优化间距 */
+    flex: 1.2; /* 调整空间分配 */
 }
 
 .product-section {
     display: flex;
     align-items: flex-start;
-    gap: 18px; /* 增加间距 */
+    gap: 14px; /* 优化间距 */
     flex: 1;
-    padding-left: 24px; /* 增加左边距 */
-    border-left: 2px solid var(--border-color);
+    padding-left: 20px; /* 减少左边距 */
+    /* 移除分割线，简化布局 */
     position: relative;
 }
 
-/* 建联详情弹窗中的商品图片样式 */
+/* 建联详情弹窗中的商品图片样式 - 优化尺寸 */
 .product-section .product-img {
-    width: 80px; /* 进一步增加商品图片尺寸 */
-    height: 80px; /* 进一步增加商品图片尺寸 */
-    border-radius: 16px; /* 增加圆角 */
+    width: 70px; /* 优化商品图片尺寸 */
+    height: 70px; /* 优化商品图片尺寸 */
+    border-radius: 14px; /* 调整圆角 */
     overflow: hidden;
     flex-shrink: 0;
     background-color: var(--background-color);
-    border: 2px solid var(--border-color);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-color); /* 减少边框粗细 */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06); /* 减少阴影 */
     transition: all 0.3s ease;
 }
 
@@ -7880,50 +7886,50 @@ a[href^="#"] {
     box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
-/* 商品信息样式 */
+/* 商品信息样式 - 优化间距和字体 */
 .product-section .product-info {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px; /* 减少间距 */
     flex: 1;
 }
 
 .product-section .product-name {
-    font-size: 16px;
+    font-size: 15px; /* 稍微减少字体大小 */
     font-weight: 700;
     color: var(--text-color);
     line-height: 1.3;
-    margin-bottom: 4px;
+    margin-bottom: 2px; /* 减少下边距 */
 }
 
 .product-section .product-description {
-    font-size: 14px;
+    font-size: 13px; /* 稍微减少字体大小 */
     color: var(--text-secondary);
     line-height: 1.4;
     background-color: var(--gray-50);
-    padding: 6px 10px;
-    border-radius: 8px;
+    padding: 4px 8px; /* 减少内边距 */
+    border-radius: 6px; /* 减少圆角 */
     border: 1px solid var(--border-color);
 }
 
 .collaboration-details {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 12px; /* 减少间距 */
     justify-content: space-between;
     align-items: center;
-    padding-top: 16px;
-    border-top: 2px solid var(--border-color);
-    margin-top: 4px;
+    padding-top: 12px; /* 减少上边距 */
+    /* 移除分割线，简化布局 */
+    margin-top: 8px; /* 增加上边距以保持视觉层次 */
 }
 
 .creator-avatar-large {
-    width: 90px; /* 进一步增加头像尺寸 */
-    height: 90px; /* 进一步增加头像尺寸 */
-    border-radius: 20px; /* 增加圆角 */
+    width: 75px; /* 优化头像尺寸 */
+    height: 75px; /* 优化头像尺寸 */
+    border-radius: 16px; /* 调整圆角 */
     object-fit: cover;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-    border: 3px solid var(--surface-color);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 减少阴影 */
+    border: 2px solid var(--surface-color); /* 减少边框粗细 */
     transition: all 0.3s ease;
     flex-shrink: 0;
 }
@@ -7937,11 +7943,11 @@ a[href^="#"] {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 8px;
+    gap: 6px; /* 减少间距 */
 }
 
 .detail-creator-name {
-    font-size: 18px;
+    font-size: 17px; /* 稍微减少字体大小 */
     font-weight: 700;
     margin-bottom: 0;
     color: var(--text-color);
@@ -8331,106 +8337,984 @@ a[href^="#"] {
 
 
 
-/* 旧的标签页样式已移除 - 现在使用连续滚动布局 */
+/* 聊天界面样式 - 类似微信/WhatsApp */
 
 .communication-timeline {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
     position: relative;
-    padding-left: 32px;
+    padding: 20px 0;
     margin-bottom: 20px;
+    max-width: 100%;
 }
 
+/* 移除原有的垂直时间线 */
 .communication-timeline:before {
-    content: '';
-    position: absolute;
-    left: 16px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(to bottom, var(--primary-color) 0%, #64b5f6 100%);
-    opacity: 0.5;
+    display: none;
 }
 
 .timeline-item {
     display: flex;
+    align-items: flex-end;
     gap: 12px;
     position: relative;
     transition: all 0.2s ease;
+    margin-bottom: 8px;
 }
 
-.timeline-item:hover {
-    transform: translateY(-2px);
-}
-
+/* 隐藏原有的时间线图标 */
 .timeline-icon {
+    display: none;
+}
+
+/* 基础邮件卡片样式 */
+.timeline-content {
+    max-width: 80%;
+    border-radius: 18px;
+    padding: 12px 16px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    word-wrap: break-word;
+}
+
+/* 接收邮件样式（左侧，灰色） */
+.timeline-item[data-email-direction="inbound"] {
+    justify-content: flex-start;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-content {
+    background-color: #e8eaed;
+    border: 1px solid #d1d5db;
+    border-bottom-left-radius: 4px;
+    margin-left: 44px; /* 为头像留出空间 */
+    padding: 4px; /* 减少外层padding，为内层留出空间 */
+}
+
+/* 接收邮件内层内容卡片 */
+.timeline-item[data-email-direction="inbound"] .timeline-content .timeline-inner-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 接收邮件内层内容的文字颜色调整 */
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-title {
+    color: #5f6368 !important;
+    font-weight: 600;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-meta {
+    background-color: rgba(95, 99, 104, 0.1);
+    color: #5f6368 !important;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-body {
+    color: #202124 !important;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .email-content {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .email-text,
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .email-content p,
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .email-content div,
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-body p,
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-body div,
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-body * {
+    color: #202124 !important;
+    background-color: transparent !important;
+}
+
+/* 接收邮件气泡箭头（指向左侧达人头像） */
+.timeline-item[data-email-direction="inbound"] .timeline-content::before {
+    content: '';
     position: absolute;
-    left: -32px;
-    width: 28px;
-    height: 28px;
+    left: -8px;
+    bottom: 8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 8px 0;
+    border-color: transparent #e8eaed transparent transparent;
+    z-index: 1;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-content::after {
+    content: '';
+    position: absolute;
+    left: -9px;
+    bottom: 8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 9px 9px 0;
+    border-color: transparent #d1d5db transparent transparent;
+    z-index: 0;
+}
+
+/* 接收邮件内层内容的小箭头（指向内层卡片） */
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content::after {
+    content: '';
+    position: absolute;
+    left: -6px;
+    bottom: 12px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 6px 6px 0;
+    border-color: transparent rgba(255, 255, 255, 0.95) transparent transparent;
+    z-index: 2;
+}
+
+/* 发送邮件样式（右侧，蓝色） */
+.timeline-item[data-email-direction="outbound"] {
+    justify-content: flex-end;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-content {
+    background-color: #1976d2;
+    color: white;
+    border: 1px solid #1565c0;
+    border-bottom-right-radius: 4px;
+    margin-right: 44px; /* 为头像留出空间 */
+    padding: 4px; /* 减少外层padding，为内层留出空间 */
+}
+
+/* 发送邮件内层内容卡片 */
+.timeline-item[data-email-direction="outbound"] .timeline-content .timeline-inner-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 14px;
+    padding: 12px 16px;
+    margin: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 发送邮件内层内容的文字颜色调整 */
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .timeline-title {
+    color: #1976d2 !important;
+    font-weight: 600;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .timeline-meta {
+    background-color: rgba(25, 118, 210, 0.1);
+    color: #1976d2 !important;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .timeline-body {
+    color: #333 !important;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .email-content {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .email-text,
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .email-content p,
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .email-content div,
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .timeline-body p,
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .timeline-body div,
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content .timeline-body * {
+    color: #333 !important;
+    background-color: transparent !important;
+}
+
+/* 发送邮件气泡箭头（指向右侧我方头像） */
+.timeline-item[data-email-direction="outbound"] .timeline-content::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    bottom: 8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 8px 8px;
+    border-color: transparent transparent #1976d2 transparent;
+    z-index: 1;
+}
+
+/* 发送邮件内层内容的小箭头（指向内层卡片） */
+.timeline-item[data-email-direction="outbound"] .timeline-inner-content::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    bottom: 12px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 6px 6px;
+    border-color: transparent transparent rgba(255, 255, 255, 0.95) transparent;
+    z-index: 2;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-content::after {
+    content: '';
+    position: absolute;
+    right: -9px;
+    bottom: 8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 9px 9px;
+    border-color: transparent transparent #1565c0 transparent;
+    z-index: 0;
+}
+
+/* 头像样式 */
+.timeline-avatar {
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: var(--surface-color);
+    background-color: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    color: var(--primary-color);
-    z-index: 1;
-    border: 1px solid var(--primary-alpha-20);
-}
-
-.timeline-content {
-    flex: 1;
-    background-color: var(--surface-color);
-    border-radius: 12px;
-    padding: 16px;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.timeline-item:hover .timeline-content {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border-color: var(--primary-light);
-}
-
-.timeline-title {
+    color: white;
     font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--text-color);
-    font-size: 15px;
+    font-size: 13px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 4px; /* 与气泡底部对齐 */
+}
+
+/* 接收邮件头像（左侧） */
+.timeline-item[data-email-direction="inbound"] .timeline-avatar {
+    order: -1;
+    background-color: #6c757d;
+    margin-right: 8px;
+}
+
+/* 发送邮件头像（右侧） */
+.timeline-item[data-email-direction="outbound"] .timeline-avatar {
+    order: 1;
+    background-color: var(--primary-color);
+    margin-left: 8px;
+}
+
+/* 系统消息样式 */
+.timeline-item[data-email-direction="system"] {
+    justify-content: center;
+}
+
+.timeline-item[data-email-direction="system"] .timeline-content {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #6c757d;
+    text-align: center;
+    max-width: 65%;
+    margin: 0;
+    border-radius: 12px;
+}
+
+.timeline-item[data-email-direction="system"] .timeline-avatar {
+    background-color: #6c757d;
+    order: -1;
+    margin-right: 8px;
+}
+
+/* 聊天界面内容样式 */
+.timeline-title {
+    font-weight: 500;
+    margin-bottom: 6px;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* 接收邮件标题样式 */
+.timeline-item[data-email-direction="inbound"] .timeline-title {
+    color: #5f6368;
+}
+
+/* 接收邮件标题样式（内层优先级更高） */
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-title {
+    color: #5f6368 !important;
+    font-weight: 600;
+}
+
+/* 发送邮件标题样式 */
+.timeline-item[data-email-direction="outbound"] .timeline-title {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .timeline-meta {
-    font-size: 12px;
-    color: var(--text-light);
-    margin-bottom: 10px;
+    font-size: 11px;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    background-color: var(--background-color);
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 2px 6px;
+    border-radius: 12px;
     width: fit-content;
+    opacity: 0.7;
+}
+
+/* 接收邮件元信息样式 */
+.timeline-item[data-email-direction="inbound"] .timeline-meta {
+    background-color: rgba(95, 99, 104, 0.1);
+    color: #5f6368;
+}
+
+/* 接收邮件元信息样式（内层优先级更高） */
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-meta {
+    background-color: rgba(95, 99, 104, 0.1) !important;
+    color: #5f6368 !important;
+}
+
+/* 发送邮件元信息样式 */
+.timeline-item[data-email-direction="outbound"] .timeline-meta {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .timeline-meta:before {
     content: '\f04e';
     font-family: 'remixicon';
-    margin-right: 6px;
-    font-size: 14px;
-    color: var(--primary-color);
+    margin-right: 4px;
+    font-size: 12px;
 }
 
 .timeline-body {
     font-size: 14px;
-    color: var(--text-color);
+    line-height: 1.4;
+    background: transparent;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+}
+
+/* 接收邮件正文样式 */
+.timeline-item[data-email-direction="inbound"] .timeline-body {
+    color: #202124;
+}
+
+/* 接收邮件正文样式（内层优先级更高） */
+.timeline-item[data-email-direction="inbound"] .timeline-inner-content .timeline-body {
+    color: #202124 !important;
+}
+
+/* 发送邮件正文样式 */
+.timeline-item[data-email-direction="outbound"] .timeline-body {
+    color: white;
+}
+
+/* 确保发送邮件中的所有文字元素都是白色，并覆盖全局样式 */
+.timeline-item[data-email-direction="outbound"] .email-content {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: white !important;
+}
+
+.timeline-item[data-email-direction="outbound"] .email-text,
+.timeline-item[data-email-direction="outbound"] .email-content p,
+.timeline-item[data-email-direction="outbound"] .email-content div,
+.timeline-item[data-email-direction="outbound"] .timeline-body p,
+.timeline-item[data-email-direction="outbound"] .timeline-body div,
+.timeline-item[data-email-direction="outbound"] .timeline-body * {
+    color: white !important;
+    background-color: transparent !important;
+}
+
+/* 邮件内容样式调整 */
+.email-content {
+    margin-bottom: 12px;
+}
+
+.email-content p {
+    margin: 0 0 8px 0;
     line-height: 1.5;
-    background-color: var(--surface-color);
-    padding: 12px;
+}
+
+/* 翻译按钮样式调整 */
+.translate-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+/* 接收邮件翻译按钮 */
+.timeline-item[data-email-direction="inbound"] .translate-btn {
+    background: rgba(0, 0, 0, 0.1);
+    color: #5f6368;
+}
+
+.timeline-item[data-email-direction="inbound"] .translate-btn:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+/* 发送邮件翻译按钮 */
+.timeline-item[data-email-direction="outbound"] .translate-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.timeline-item[data-email-direction="outbound"] .translate-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 时间线操作按钮样式调整 */
+.timeline-actions {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.timeline-action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 接收邮件操作按钮 */
+.timeline-item[data-email-direction="inbound"] .timeline-action-btn {
+    background: rgba(0, 0, 0, 0.08);
+    color: #5f6368;
+}
+
+.timeline-item[data-email-direction="inbound"] .timeline-action-btn:hover {
+    background: rgba(0, 0, 0, 0.12);
+}
+
+/* 发送邮件操作按钮 */
+.timeline-item[data-email-direction="outbound"] .timeline-action-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.timeline-item[data-email-direction="outbound"] .timeline-action-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* 系统消息操作按钮 */
+.timeline-item[data-email-direction="system"] .timeline-action-btn {
+    background: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+}
+
+.timeline-item[data-email-direction="system"] .timeline-action-btn:hover {
+    background: rgba(108, 117, 125, 0.2);
+}
+
+/* 邮件意图和摘要样式调整 */
+.email-intent-summary {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+/* 接收邮件意图摘要 */
+.timeline-item[data-email-direction="inbound"] .email-intent-summary {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* 发送邮件意图摘要（通常隐藏） */
+.timeline-item[data-email-direction="outbound"] .email-intent-summary {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.email-intent-tag {
+    display: inline-block;
+    padding: 2px 8px;
     border-radius: 8px;
-    border-left: 2px solid var(--primary-color);
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.email-summary {
+    font-size: 11px;
+    opacity: 0.8;
+    line-height: 1.3;
+}
+
+/* 特殊操作按钮样式 */
+.status-change-btn {
+    background: #28a745 !important;
+    color: white !important;
+}
+
+.status-change-btn:hover {
+    background: #218838 !important;
+}
+
+.review-complete-btn {
+    background: #28a745 !important;
+    color: white !important;
+}
+
+.review-complete-btn:hover {
+    background: #218838 !important;
+}
+
+/* 回复卡片样式调整 - 优化聊天界面风格 */
+.reply-card {
+    margin: 16px 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    justify-content: flex-end;
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+/* 回复卡片主体容器 - 现代扁平化白色主题 */
+.reply-card-container {
+    max-width: 80%;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    border-bottom-right-radius: 4px;
+    padding: 18px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    color: #374151;
+    backdrop-filter: blur(10px);
+}
+
+/* 回复卡片气泡箭头（指向右侧我方头像） - 优化渐变效果 */
+.reply-card-container::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    bottom: 8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 8px 8px;
+    border-color: transparent transparent #1565c0 transparent;
+    z-index: 1;
+    filter: drop-shadow(2px 2px 4px rgba(25, 118, 210, 0.1));
+}
+
+.reply-card-container::after {
+    content: '';
+    position: absolute;
+    right: -9px;
+    bottom: 8px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 9px 9px;
+    border-color: transparent transparent rgba(21, 101, 192, 0.3) transparent;
+    z-index: 0;
+}
+
+/* 回复卡片头像 */
+.reply-card-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 4px;
+}
+
+/* 回复卡片内部元素样式调整 */
+.reply-card .reply-card-header {
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.reply-card .reply-card-title {
+    color: #374151;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.reply-card .close-reply-btn {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6b7280;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.reply-card .close-reply-btn:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.reply-card .email-field label {
+    color: #374151;
+    font-size: 12px;
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 500;
+}
+
+.reply-card .email-content-input {
+    background: #f9fafb;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    color: #374151;
+    padding: 14px 16px;
+    width: 100%;
+    resize: vertical;
+    min-height: 140px;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+.reply-card .email-content-input::placeholder {
+    color: #9ca3af;
+}
+
+.reply-card .email-content-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+/* 回复卡片按钮样式 */
+.reply-card .reply-actions {
+    margin-top: 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.reply-card .ai-tool-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.reply-card .ai-tool-btn {
+    background: #f3f4f6;
+    border: 1px solid #d1d5db;
+    border-radius: 20px;
+    color: #374151;
+    padding: 8px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.reply-card .ai-tool-btn:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reply-card .ai-tool-btn.active {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.reply-card .send-reply-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+.reply-card .send-reply-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    /* 移动端调整 */
+    .timeline-content {
+        max-width: 85%;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .timeline-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .timeline-item[data-email-direction="inbound"] .timeline-content {
+        margin-left: 36px;
+    }
+
+    .timeline-item[data-email-direction="outbound"] .timeline-content {
+        margin-right: 36px;
+    }
+
+    .timeline-item[data-email-direction="inbound"] .timeline-avatar {
+        margin-right: 6px;
+    }
+
+    .timeline-item[data-email-direction="outbound"] .timeline-avatar {
+        margin-left: 6px;
+    }
+
+    .timeline-title {
+        font-size: 11px;
+    }
+
+    .timeline-meta {
+        font-size: 10px;
+    }
+
+    .timeline-actions {
+        gap: 6px;
+    }
+
+    .timeline-action-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .translate-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+
+    /* 回复卡片移动端调整 */
+    .reply-card-container {
+        max-width: 85%;
+    }
+
+    .reply-card-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .reply-card .ai-tool-buttons {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .reply-card .ai-tool-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 小屏幕进一步调整 */
+    .timeline-content {
+        max-width: 90%;
+        padding: 8px 12px;
+    }
+
+    .timeline-avatar {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+
+    .timeline-item[data-email-direction="inbound"] .timeline-content {
+        margin-left: 32px;
+    }
+
+    .timeline-item[data-email-direction="outbound"] .timeline-content {
+        margin-right: 32px;
+    }
+
+    .timeline-item[data-email-direction="inbound"] .timeline-avatar {
+        margin-right: 4px;
+    }
+
+    .timeline-item[data-email-direction="outbound"] .timeline-avatar {
+        margin-left: 4px;
+    }
+
+    .timeline-actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .timeline-action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* 回复卡片小屏幕调整 */
+    .reply-card-container {
+        max-width: 90%;
+        padding: 12px;
+    }
+
+    .reply-card-avatar {
+        width: 24px;
+        height: 24px;
+        font-size: 10px;
+    }
+
+    .reply-card .reply-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .reply-card .send-reply-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* 悬停效果优化 */
+.timeline-item:hover .timeline-content {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.timeline-item:hover .timeline-avatar {
+    transform: scale(1.05);
+}
+
+/* 聊天界面整体优化 */
+.communication-timeline {
+    padding: 16px 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.01) 0%, transparent 100%);
+}
+
+/* 邮件间距优化 */
+.timeline-item {
+    margin-bottom: 12px;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 时间戳样式优化 */
+.timeline-meta {
+    font-size: 11px;
+    margin-bottom: 6px;
+    opacity: 0.8;
+}
+
+/* 接收邮件时间戳 */
+.timeline-item[data-email-direction="inbound"] .timeline-meta {
+    background-color: rgba(95, 99, 104, 0.08);
+    color: #5f6368;
+}
+
+/* 发送邮件时间戳 */
+.timeline-item[data-email-direction="outbound"] .timeline-meta {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 邮件意图标签优化 */
+.email-intent-tag {
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+/* 不同意图标签的颜色 */
+.email-intent-tag.content-complete {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+}
+
+.email-intent-tag.active {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.email-intent-tag.initial {
+    background-color: #f3e5f5;
+    color: #7b1fa2;
+}
+
+.email-intent-tag.reply {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+/* 回复卡片动画 */
+.reply-card {
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+@keyframes slideInFromRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* 邮件内容和翻译按钮样式 */
@@ -8629,52 +9513,9 @@ a[href^="#"] {
     display: none; /* 隐藏近期内容模块 */
 }
 
-/* 动态回复卡片样式 */
-.reply-card {
-    margin-top: 16px;
-    background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    animation: slideDown 0.3s ease forwards;
-}
+/* 移除重复的动态回复卡片样式，使用优化后的聊天界面风格 */
 
-.reply-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-}
-
-.reply-card-title {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.reply-card-title i {
-    color: var(--primary-color);
-    font-size: 18px;
-}
-
-.close-reply-btn {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    transition: all 0.2s ease;
-}
-
-.close-reply-btn:hover {
-    background-color: var(--gray-50);
-    color: var(--text-color);
-}
+/* 移除重复的回复卡片头部样式，使用聊天界面风格的样式 */
 
 /* AI工具选择器样式 */
 .ai-tool-selector {
@@ -8771,17 +9612,129 @@ a[href^="#"] {
     font-size: 16px;
 }
 
-/* 工具表单展开区域 */
-.tool-form-container {
-    max-height: 0;
-    overflow: hidden;
+/* 移除重复的回复卡片样式定义，使用聊天界面风格的回复卡片 */
+
+/* ==================== AI工具弹窗样式 ==================== */
+
+/* 弹窗容器 */
+.ai-tool-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
     transition: all 0.3s ease;
-    margin-top: 16px;
+    backdrop-filter: blur(2px);
 }
 
-.tool-form-container.expanded {
-    max-height: 500px;
+.ai-tool-popup.show {
+    opacity: 1;
+    visibility: visible;
 }
+
+/* 弹窗内容 */
+.popup-content {
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    max-width: 480px;
+    width: 90%;
+    max-height: 80vh;
+    overflow: hidden;
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.ai-tool-popup.show .popup-content {
+    transform: scale(1) translateY(0);
+}
+
+/* 弹窗头部 */
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--gray-25);
+}
+
+.popup-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.popup-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+}
+
+.popup-close-btn:hover {
+    background-color: var(--gray-50);
+    color: var(--text-color);
+}
+
+.popup-close-btn i {
+    font-size: 16px;
+}
+
+/* 弹窗主体 */
+.popup-body {
+    padding: 20px;
+    max-height: calc(80vh - 80px);
+    overflow-y: auto;
+}
+
+/* 弹窗中的工具表单样式 */
+.popup-body .tool-form {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    min-height: auto;
+    box-shadow: none;
+}
+
+.popup-body .tool-form h5 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.popup-body .tool-form h5 i {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+
 
 .tool-form {
     padding: 20px;
@@ -9046,7 +9999,8 @@ a[href^="#"] {
 
 .email-content-input {
     width: 100%;
-    min-height: 100px;
+    min-height: 160px; /* 增加最小高度以更好利用卡片空间 */
+    height: 160px; /* 设置固定高度，对应约9行文本 */
     padding: 12px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
@@ -9055,6 +10009,7 @@ a[href^="#"] {
     font-size: 14px;
     line-height: 1.5;
     transition: all 0.2s ease;
+    box-sizing: border-box;
 }
 
 .email-content-input:focus {
@@ -9699,6 +10654,244 @@ a[href^="#"] {
     border-color: #616161;
 }
 
+/* 合作流程进度条样式 */
+.collaboration-progress-container {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.progress-header {
+    margin-bottom: 20px;
+}
+
+.progress-header h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.progress-header h4 i {
+    color: #6366f1;
+}
+
+.progress-timeline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-width: 80px;
+    flex: 1;
+}
+
+.step-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.step-label {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 500;
+    line-height: 1.2;
+    max-width: 70px;
+    transition: all 0.3s ease;
+}
+
+.step-connector {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background: #e5e7eb;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.progress-step:last-child .step-connector {
+    display: none;
+}
+
+/* 已完成状态 */
+.progress-step.completed .step-indicator {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
+.progress-step.completed .step-label {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.progress-step.completed .step-connector {
+    background: linear-gradient(90deg, #22c55e, #16a34a);
+}
+
+/* 当前状态 */
+.progress-step.current .step-indicator {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    box-shadow: 0 2px 12px rgba(59, 130, 246, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.progress-step.current .step-label {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* 待完成状态 */
+.progress-step.pending .step-indicator {
+    background: #f3f4f6;
+    color: #9ca3af;
+    border: 2px solid #e5e7eb;
+}
+
+.progress-step.pending .step-label {
+    color: #9ca3af;
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 2px 12px rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        box-shadow: 0 2px 20px rgba(59, 130, 246, 0.6);
+    }
+    100% {
+        box-shadow: 0 2px 12px rgba(59, 130, 246, 0.4);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .progress-timeline {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .progress-step {
+        min-width: 60px;
+        flex: none;
+    }
+
+    .step-indicator {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
+
+    .step-label {
+        font-size: 11px;
+        max-width: 60px;
+    }
+
+    .step-connector {
+        display: none;
+    }
+}
+
+/* 审核完成按钮样式 */
+.review-complete-btn {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+    color: white !important;
+    border: none !important;
+    transition: all 0.3s ease;
+}
+
+.review-complete-btn:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.review-complete-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.3);
+}
+
+.review-complete-btn.completed {
+    background: linear-gradient(135deg, #6b7280, #4b5563) !important;
+    cursor: not-allowed;
+}
+
+.review-complete-btn.completed:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* 内容完成邮件意图标签 */
+.email-intent-tag.content-complete {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+}
+
+/* 成功消息样式 */
+.success-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+    z-index: 10000;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 400px;
+}
+
+.success-message.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.success-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+}
+
+.success-content i {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.success-content span {
+    line-height: 1.4;
+}
+
 
 
 .intent-header h4 i {
@@ -9814,7 +11007,17 @@ a[href^="#"] {
 
 /* 新的邮件回复交互样式 */
 .email-compose-section {
-    margin-bottom: 16px;
+    margin-bottom: 20px; /* 增加底部间距以适应更大的输入框 */
+}
+
+.email-compose-section .email-field {
+    margin-bottom: 0; /* 移除额外的底部间距 */
+}
+
+.email-compose-section .email-field label {
+    margin-bottom: 8px; /* 标签与输入框间距 */
+    font-weight: 500;
+    color: var(--text-color);
 }
 
 .ai-assistant-section {
@@ -9823,10 +11026,416 @@ a[href^="#"] {
     z-index: 1000; /* 确保AI助手区域有足够的层级 */
 }
 
-.ai-assistant-btn {
+/* 回复操作区域 - 水平布局 */
+.reply-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+/* AI工具按钮容器 */
+.ai-tool-buttons {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* AI工具按钮样式 */
+.ai-tool-btn {
+    min-width: 100px;
+    height: 36px;
+    padding: 6px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--surface-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.ai-tool-btn i {
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.ai-tool-btn .btn-text {
+    font-size: 11px;
+    line-height: 1;
+}
+
+.ai-tool-btn:hover {
+    background-color: var(--primary-pale);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+}
+
+.ai-tool-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
+}
+
+.ai-tool-btn:active {
+    transform: translateY(0);
+}
+
+/* 发送邮件按钮样式调整 */
+.send-reply-btn {
+    padding: 8px 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    height: 36px; /* 与工具按钮保持一致的高度 */
+    min-width: 80px;
+}
+
+.send-reply-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.25);
+}
+
+.send-reply-btn i {
+    font-size: 13px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .ai-tool-buttons {
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+    .ai-tool-btn {
+        min-width: 85px;
+        height: 32px;
+        padding: 4px 6px;
+        font-size: 11px;
+        gap: 3px;
+    }
+
+    .ai-tool-btn i {
+        font-size: 12px;
+    }
+
+    .ai-tool-btn .btn-text {
+        font-size: 10px;
+    }
+
+    .send-reply-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+        height: 32px;
+        min-width: 70px;
+    }
+
+    .send-reply-btn i {
+        font-size: 12px;
+    }
+
+    .reply-actions {
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .reply-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .ai-tool-buttons {
+        justify-content: space-between;
+        gap: 2px;
+    }
+
+    .ai-tool-btn {
+        flex: 1;
+        min-width: 0;
+        max-width: calc(25% - 2px);
+    }
+
+    .ai-tool-btn .btn-text {
+        display: none; /* 在极小屏幕上隐藏文字，只显示图标 */
+    }
+
+    .send-reply-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* 弹窗响应式设计 */
+@media (max-width: 768px) {
+    .popup-content {
+        width: 95%;
+        max-width: none;
+        margin: 10px;
+    }
+
+    .popup-header {
+        padding: 12px 16px;
+    }
+
+    .popup-title {
+        font-size: 15px;
+    }
+
+    .popup-body {
+        padding: 16px;
+        max-height: calc(90vh - 60px);
+    }
+}
+
+@media (max-width: 480px) {
+    .ai-tool-popup {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .popup-content {
+        width: 100%;
+        max-height: 70vh;
+        border-radius: 12px 12px 0 0;
+        margin: 0;
+    }
+
+    .popup-body {
+        padding: 12px;
+    }
+}
+
+/* ==================== 流式输出效果样式 ==================== */
+
+/* 打字机效果 */
+.email-content-input.typing {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+/* 打字光标 */
+.typing-cursor {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 16px;
+    animation: blink 1s infinite;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 光标闪烁动画 */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* 发送按钮生成状态 */
+.send-reply-btn.generating {
+    background-color: var(--gray-400);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.send-reply-btn.generating i.spinning {
+    animation: spin 1s linear infinite;
+}
+
+/* 发送按钮就绪状态 - 统一蓝色主题 */
+.send-reply-btn.ready {
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);
+}
+
+.send-reply-btn.highlight {
+    animation: pulse 0.6s ease-in-out;
+}
+
+/* 旋转动画 */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* 脉冲动画 - 统一蓝色主题 */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(25, 118, 210, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+}
+
+/* 生成成功通知动画 */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* 新邮件高亮动画 */
+@keyframes newEmailHighlight {
+    0% {
+        background-color: rgba(25, 118, 210, 0.1);
+        transform: translateX(-10px);
+    }
+    50% {
+        background-color: rgba(25, 118, 210, 0.05);
+        transform: translateX(0);
+    }
+    100% {
+        background-color: transparent;
+        transform: translateX(0);
+    }
+}
+
+/* 新邮件滑入高亮动画 - 结合滑入和高亮效果 */
+@keyframes newEmailSlideInHighlight {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+        background-color: rgba(25, 118, 210, 0.15);
+    }
+    30% {
+        opacity: 0.7;
+        transform: translateY(-5px) scale(0.98);
+        background-color: rgba(25, 118, 210, 0.2);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        background-color: rgba(25, 118, 210, 0.1);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        background-color: transparent;
+    }
+}
+
+/* 新邮件持续高亮效果 */
+.highlight-new-email {
+    background: linear-gradient(90deg,
+        rgba(25, 118, 210, 0.08) 0%,
+        rgba(25, 118, 210, 0.12) 50%,
+        rgba(25, 118, 210, 0.08) 100%);
+    border-left: 3px solid var(--primary-color);
+    padding-left: 13px; /* 减少padding以补偿border */
+    transition: all 0.3s ease;
+    animation: subtleGlow 2s ease-in-out infinite alternate;
+}
+
+/* 微妙的发光效果 */
+@keyframes subtleGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(25, 118, 210, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(25, 118, 210, 0.3);
+    }
+}
+
+/* 新邮件滑入动画类 */
+.new-email-slide-in {
+    animation: newEmailSlideInHighlight 0.8s ease-out;
+}
+
+/* AI回复邮件意图标签样式 */
+.email-intent-tag.reply {
+    background-color: var(--success-color, #10b981);
+    color: white;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .typing-cursor {
+        right: 8px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .typing-cursor {
+        display: none; /* 在小屏幕上隐藏光标，避免布局问题 */
+    }
+
+    /* 在小屏幕上调整邮件输入框高度 */
+    .email-content-input {
+        height: 140px; /* 在小屏幕上稍微减少高度 */
+        min-height: 140px;
+        font-size: 13px; /* 稍微减小字体 */
+    }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 360px) {
+    .email-content-input {
+        height: 120px; /* 在超小屏幕上进一步减少高度 */
+        min-height: 120px;
+        padding: 10px; /* 减少内边距 */
+        font-size: 12px;
+    }
+
+    .reply-card {
+        padding: 16px; /* 在小屏幕上减少卡片内边距 */
+        margin: 12px 0;
+    }
+
+    .email-compose-section {
+        margin-bottom: 16px; /* 在小屏幕上减少间距 */
+    }
+}
+
+/* AI助手区域 */
+.ai-assistant-section {
+    position: relative;
+    flex: 1;
+}
+
+.ai-assistant-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
     padding: 10px 16px;
     background-color: var(--primary-color);
     color: white;
@@ -9837,6 +11446,7 @@ a[href^="#"] {
     font-weight: 500;
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
 }
 
 .ai-assistant-btn:hover {
@@ -9845,31 +11455,60 @@ a[href^="#"] {
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-.ai-assistant-section .ai-tool-dropdown-menu {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background-color: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-    z-index: 9999; /* 提高z-index确保显示在最上层 */
-    overflow: hidden;
-    min-width: 200px; /* 确保最小宽度 */
-    pointer-events: auto; /* 确保容器可以接收点击事件 */
+.ai-assistant-btn.active {
+    background-color: var(--primary-dark);
 }
 
-.ai-assistant-section .ai-tool-option {
+.ai-assistant-btn .ri-arrow-down-s-line {
+    transition: transform 0.3s ease;
+}
+
+.ai-assistant-btn.active .ri-arrow-down-s-line {
+    transform: rotate(180deg);
+}
+
+/* 发送按钮 - 统一蓝色主题 */
+.send-reply-btn {
     display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2196f3 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+    white-space: nowrap;
+}
+
+.send-reply-btn:hover {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #1976d2 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+
+
+.ai-assistant-section .ai-tool-option {
+    display: flex !important;
     align-items: center;
     gap: 12px;
     padding: 12px 16px;
     cursor: pointer;
     transition: all 0.2s ease;
     border-bottom: 1px solid var(--border-light);
-    pointer-events: auto; /* 确保选项可以接收点击事件 */
+    pointer-events: auto !important; /* 确保选项可以接收点击事件 */
     position: relative; /* 确保选项在正确的层级 */
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    z-index: 999999 !important; /* 确保选项在最顶层 */
 }
 
 .ai-assistant-section .ai-tool-option:last-child {
@@ -9877,13 +11516,18 @@ a[href^="#"] {
 }
 
 .ai-assistant-section .ai-tool-option:hover {
-    background-color: var(--gray-50);
-    color: var(--primary-color);
+    background-color: var(--gray-50) !important;
+    color: var(--primary-color) !important;
+}
+
+.ai-assistant-section .ai-tool-option:active {
+    background-color: var(--primary-pale) !important;
 }
 
 .ai-assistant-section .ai-tool-option i {
     font-size: 16px;
     color: var(--primary-color);
+    flex-shrink: 0;
 }
 
 /* 确保下拉菜单在各种容器中都能正常显示 */
@@ -9894,35 +11538,447 @@ a[href^="#"] {
     overflow: visible !important;
 }
 
-/* 修复可能的层级冲突 */
-.communication-content .ai-assistant-section .ai-tool-dropdown-menu {
-    z-index: 10000 !important;
+/* ==================== AI邮件助手重构样式 ==================== */
+
+/* CSS自定义属性 */
+:root {
+    --ai-assistant-z-index: 999999;
+    --ai-assistant-border-radius: 12px;
+    --ai-assistant-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --ai-assistant-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.16);
+    --ai-assistant-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --ai-assistant-backdrop: rgba(0, 0, 0, 0.02);
 }
 
-/* 确保下拉菜单在所有按钮之上 */
-.ai-assistant-section .ai-tool-dropdown-menu {
-    z-index: 99999 !important;
-    position: fixed !important; /* 使用fixed定位避免被其他元素遮挡 */
+/* AI邮件助手容器 */
+.ai-email-assistant {
+    position: relative;
+    display: inline-block;
+    isolation: isolate; /* 创建新的层叠上下文 */
 }
 
-/* 降低可能遮挡下拉菜单的元素的z-index */
-.send-reply-btn,
-.reply-actions,
-.form-actions,
-.timeline-item,
-.timeline-title,
-.communication-content,
-.detail-scroll-container > * {
-    z-index: 1 !important;
+/* AI助手导航容器 */
+.ai-assistant-nav {
+    position: relative;
+    z-index: var(--ai-assistant-z-index);
 }
 
-/* 确保AI助手相关元素有最高优先级 */
-.ai-assistant-section,
-.ai-assistant-section *,
-.ai-tool-dropdown-menu,
-.ai-tool-dropdown-menu * {
-    z-index: 99999 !important;
-    position: relative !important;
+/* AI助手触发按钮 */
+.ai-assistant-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2196f3 100%);
+    color: white;
+    border: none;
+    border-radius: var(--ai-assistant-border-radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--ai-assistant-transition);
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 按钮悬停效果 */
+.ai-assistant-trigger:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ai-assistant-shadow-hover);
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #1976d2 100%);
+}
+
+/* 按钮激活状态 */
+.ai-assistant-trigger[aria-expanded="true"] {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, #1976d2 100%);
+    box-shadow: var(--ai-assistant-shadow);
+}
+
+/* 按钮图标动画 */
+.ai-assistant-trigger__arrow {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-assistant-trigger[aria-expanded="true"] .ai-assistant-trigger__arrow {
+    transform: rotate(180deg);
+}
+
+/* 按钮涟漪效果 */
+.ai-assistant-trigger::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+    pointer-events: none;
+}
+
+.ai-assistant-trigger:active::before {
+    width: 100%;
+    height: 100%;
+}
+
+/* AI工具菜单容器 */
+.ai-tools-menu {
+    position: fixed;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--ai-assistant-border-radius);
+    box-shadow: var(--ai-assistant-shadow);
+    z-index: calc(var(--ai-assistant-z-index) + 1);
+    min-width: 280px;
+    max-width: 320px;
+    padding: 8px 0;
+    margin: 0;
+    list-style: none;
+
+    /* 初始隐藏状态 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px) scale(0.95);
+    transition: var(--ai-assistant-transition);
+    pointer-events: none;
+    display: none; /* 默认隐藏 */
+
+    /* 背景模糊效果 */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* 菜单显示状态 */
+.ai-tools-menu[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* 菜单项容器 */
+.ai-tools-menu__item {
+    margin: 0;
+    padding: 0;
+}
+
+/* AI工具选项按钮 */
+.ai-tool-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: var(--ai-assistant-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 工具选项悬停效果 */
+.ai-tool-option:hover {
+    background: linear-gradient(90deg, var(--primary-pale) 0%, rgba(25, 118, 210, 0.08) 100%);
+    transform: translateX(4px);
+}
+
+/* 工具选项焦点状态 */
+.ai-tool-option:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: -2px;
+    background: var(--primary-pale);
+}
+
+/* 工具选项激活状态 */
+.ai-tool-option:active {
+    transform: translateX(2px) scale(0.98);
+}
+
+/* 工具选项图标 */
+.ai-tool-option__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2196f3 100%);
+    border-radius: 10px;
+    color: white;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: var(--ai-assistant-transition);
+}
+
+/* 工具选项文本容器 */
+.ai-tool-option__text {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+    line-height: 1.3;
+    margin-bottom: 2px;
+}
+
+/* 工具选项描述 */
+.ai-tool-option__description {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+/* 悬停时图标动画 */
+.ai-tool-option:hover .ai-tool-option__icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+/* 菜单分隔线 */
+.ai-tools-menu__item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--border-light) 50%, transparent 100%);
+}
+
+/* 加载状态动画 */
+@keyframes ai-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+.ai-tool-option--loading {
+    animation: ai-pulse 1.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* 成功状态动画 */
+@keyframes ai-success {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.ai-tool-option--success {
+    animation: ai-success 0.6s ease-out;
+    background: linear-gradient(90deg, #e8f5e8 0%, rgba(76, 175, 80, 0.1) 100%);
+}
+
+/* 错误状态 */
+.ai-tool-option--error {
+    background: linear-gradient(90deg, #ffebee 0%, rgba(244, 67, 54, 0.1) 100%);
+    color: var(--error-color);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .ai-tools-menu {
+        min-width: 260px;
+        max-width: calc(100vw - 32px);
+        margin: 0 16px;
+    }
+
+    .ai-tool-option {
+        padding: 14px 16px;
+        gap: 10px;
+    }
+
+    .ai-tool-option__icon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    .ai-tool-option__text {
+        font-size: 14px;
+    }
+
+    .ai-tool-option__description {
+        font-size: 11px;
+    }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+    .ai-assistant-trigger {
+        border: 2px solid var(--primary-color);
+    }
+
+    .ai-tools-menu {
+        border: 2px solid var(--border-color);
+    }
+
+    .ai-tool-option:focus {
+        outline: 3px solid var(--primary-color);
+    }
+}
+
+/* 减少动画模式支持 */
+@media (prefers-reduced-motion: reduce) {
+    .ai-assistant-trigger,
+    .ai-tools-menu,
+    .ai-tool-option,
+    .ai-tool-option__icon {
+        transition: none;
+        animation: none;
+    }
+
+    .ai-assistant-trigger[aria-expanded="true"] .ai-assistant-trigger__arrow {
+        transform: none;
+    }
+}
+
+/* 暗色主题适配 */
+@media (prefers-color-scheme: dark) {
+    .ai-tools-menu {
+        background: rgba(30, 30, 30, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+    }
+
+    .ai-tool-option:hover {
+        background: linear-gradient(90deg, rgba(25, 118, 210, 0.15) 0%, rgba(25, 118, 210, 0.08) 100%);
+    }
+}
+
+/* 合作流程进度条编辑功能样式 */
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.progress-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-progress-btn,
+.save-progress-btn,
+.cancel-progress-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--surface-color);
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.edit-progress-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.save-progress-btn {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.save-progress-btn:hover {
+    background: var(--success-dark);
+    border-color: var(--success-dark);
+}
+
+.cancel-progress-btn:hover {
+    background: var(--error-color);
+    color: white;
+    border-color: var(--error-color);
+}
+
+/* 可点击的进度步骤样式 */
+.clickable-step {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.progress-timeline.editing .clickable-step:hover {
+    transform: scale(1.05);
+}
+
+.progress-timeline.editing .clickable-step:hover .step-indicator {
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3);
+}
+
+.progress-timeline.editing .clickable-step.selected {
+    transform: scale(1.1);
+}
+
+.progress-timeline.editing .clickable-step.selected .step-indicator {
+    box-shadow: 0 0 0 4px rgba(25, 118, 210, 0.5);
+    background-color: var(--primary-color) !important;
+    color: white;
+}
+
+/* 非编辑模式下禁用点击 */
+.progress-timeline:not(.editing) .clickable-step {
+    cursor: default;
+}
+
+/* 进度编辑提示样式 */
+.progress-edit-tip {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    border: 1px solid rgba(25, 118, 210, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary-color);
+    font-size: 14px;
+    animation: fadeInSlide 0.3s ease;
+}
+
+.progress-edit-tip i {
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+/* 进度保存成功提示样式 */
+.progress-save-success {
+    background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+    border: 1px solid rgba(76, 175, 80, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--success-color);
+    font-size: 14px;
+    animation: fadeInSlide 0.3s ease;
+}
+
+.progress-save-success i {
+    font-size: 16px;
+    color: var(--success-color);
+}
+
+/* 淡入滑动动画 */
+@keyframes fadeInSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .form-actions {

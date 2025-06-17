@@ -785,9 +785,7 @@
                                     <span><i class="ri-user-line"></i> 28.67万</span>
                                     <span><i class="ri-play-circle-line"></i> 3978万</span>
                                 </div>
-                                <div class="creator-insights">
-                                    <span class="insight-item" title="响应时间：24小时内"><i class="ri-time-line"></i> 24h</span>
-                                </div>
+                                <!-- 移除时间显示元素，简化布局 -->
                             </div>
                         </div>
                         <div class="outreach-product">
@@ -828,9 +826,7 @@
                                     <span><i class="ri-user-line"></i> 1.38K</span>
                                     <span><i class="ri-play-circle-line"></i> 11.4万</span>
                                 </div>
-                                <div class="creator-insights">
-                                    <span class="insight-item" title="响应时间：12小时内"><i class="ri-time-line"></i> 12h</span>
-                                </div>
+                                <!-- 移除时间显示元素，简化布局 -->
                             </div>
                         </div>
                         <div class="outreach-product">
@@ -871,9 +867,7 @@
                                     <span><i class="ri-user-line"></i> 162万</span>
                                     <span><i class="ri-play-circle-line"></i> 1.5亿</span>
                                 </div>
-                                <div class="creator-insights">
-                                    <span class="insight-item" title="响应时间：48小时内"><i class="ri-time-line"></i> 48h</span>
-                                </div>
+                                <!-- 移除时间显示元素，简化布局 -->
                             </div>
                         </div>
                         <div class="outreach-product">
@@ -915,7 +909,7 @@
                                     <span><i class="ri-play-circle-line"></i> 2557万</span>
                                 </div>
                                 <div class="creator-insights">
-                                    <span class="insight-item success" title="响应时间：6小时内"><i class="ri-time-line"></i> 6h</span>
+                                    <!-- 移除时间显示元素，保留成功率 -->
                                     <span class="insight-item success" title="合作成功率：100%"><i class="ri-bar-chart-line"></i> 100%</span>
                                 </div>
                             </div>
@@ -969,10 +963,7 @@
                                             <span class="creator-tag ai">AI专家</span>
                                             <span class="creator-tag review">产品测评</span>
                                         </div>
-                                        <!-- 联系阶段标签 -->
-                                        <div class="contact-stage-section">
-                                            <span class="contact-stage-tag pricing">价格谈判</span>
-                                        </div>
+                                        <!-- 移除价格谈判标签，简化布局 -->
                                     </div>
                                 </div>
                                 <div class="product-section">
@@ -987,17 +978,9 @@
                                 </div>
                             </div>
                             <div class="collaboration-details">
-                                <div class="creator-insights-detail">
-                                    <span class="insight-item" title="平均响应时间：24小时内"><i class="ri-time-line"></i> 24h</span>
-                                    <span class="insight-item" title="最近活跃：2天前"><i class="ri-calendar-check-line"></i> 2天前</span>
-                                </div>
+                                <!-- 移除时间显示元素，简化布局 -->
                                 <div class="collaboration-info">
-                                    <div class="collaboration-type">
-                                        <span class="intent-tag">测评合作</span>
-                                    </div>
-                                    <div class="collaboration-budget">
-                                        <span class="budget-tag">预算: $300</span>
-                                    </div>
+                                    <!-- 移除测评合作标签和预算显示，简化布局 -->
                                 </div>
                                 <div class="channel-status-wrapper">
                                     <a href="#" class="channel-link"><i class="ri-youtube-line"></i> 访问频道</a>
@@ -1006,7 +989,80 @@
                             </div>
                         </div>
 
-
+                        <!-- 合作流程进度条 -->
+                        <div class="collaboration-progress-container">
+                            <div class="progress-header">
+                                <h4><i class="ri-route-line"></i> 合作流程进度</h4>
+                                <div class="progress-actions">
+                                    <button class="edit-progress-btn" onclick="toggleProgressEdit()">
+                                        <i class="ri-edit-line"></i> 编辑
+                                    </button>
+                                    <button class="save-progress-btn" onclick="saveProgressChanges()" style="display: none;">
+                                        <i class="ri-save-line"></i> 保存
+                                    </button>
+                                    <button class="cancel-progress-btn" onclick="cancelProgressEdit()" style="display: none;">
+                                        <i class="ri-close-line"></i> 取消
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="progress-timeline" id="progress-timeline">
+                                <div class="progress-step completed clickable-step" data-stage="initial-contact" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-mail-send-line"></i>
+                                    </div>
+                                    <div class="step-label">初次联系</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step completed clickable-step" data-stage="intent-exploration" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-search-eye-line"></i>
+                                    </div>
+                                    <div class="step-label">意图探索</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step current clickable-step" data-stage="price-negotiation" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-money-dollar-circle-line"></i>
+                                    </div>
+                                    <div class="step-label">价格谈判</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step pending clickable-step" data-stage="collaboration-confirmation" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-checkbox-circle-line"></i>
+                                    </div>
+                                    <div class="step-label">合作确认</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step pending clickable-step" data-stage="sample-sending" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-gift-line"></i>
+                                    </div>
+                                    <div class="step-label">样品发送</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step pending clickable-step" data-stage="content-creation" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-video-line"></i>
+                                    </div>
+                                    <div class="step-label">内容创作</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step pending clickable-step" data-stage="content-review" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-eye-line"></i>
+                                    </div>
+                                    <div class="step-label">内容审核</div>
+                                    <div class="step-connector"></div>
+                                </div>
+                                <div class="progress-step pending clickable-step" data-stage="project-completion" onclick="selectProgressStep(this)">
+                                    <div class="step-indicator">
+                                        <i class="ri-check-double-line"></i>
+                                    </div>
+                                    <div class="step-label">项目完成</div>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- 沟通记录内容 -->
                         <div class="communication-content">
@@ -1015,63 +1071,117 @@
                             </div>
                             <!-- 沟通时间线 -->
                             <div class="communication-timeline">
-                                <div class="timeline-item synced-email">
-                                    <div class="timeline-icon"><i class="ri-mail-forbid-line"></i></div>
+                                <!-- 新增：内容完成通知邮件 -->
+                                <div class="timeline-item synced-email" data-email-direction="inbound">
+                                    <div class="timeline-avatar">M</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">邮件回复 (自动同步)</div>
-                                        <!-- 邮件意图和摘要 -->
-                                        <div class="email-intent-summary">
-                                            <span class="email-intent-tag active">报价回复</span>
-                                            <div class="email-summary">博主询问产品详细信息和合作条款，表现出积极的合作意向</div>
-                                        </div>
-                                        <div class="timeline-meta">来自: contact@mattvidpro.com · 2023/03/21 14:30</div>
-                                        <div class="timeline-body">
-                                            <div class="email-content">
-                                                <p class="original-text">"Hi [Your Name], thanks for reaching out! The Earbud sounds interesting, especially the AI translation feature. Could you share more details on its accuracy and supported languages? Also, what are your proposed collaboration terms?"</p>
-                                                <button class="translate-btn" onclick="toggleTranslation(this)">
-                                                    <i class="ri-translate-2"></i>
-                                                </button>
-                                                <div class="translated-text" style="display: none;">
-                                                    <p>"您好 [您的姓名]，感谢您的联系！Earbud 听起来很有趣，特别是 AI 翻译功能。您能分享更多关于其准确性和支持语言的详细信息吗？另外，您提议的合作条款是什么？"</p>
+                                        <div class="timeline-inner-content">
+                                            <div class="timeline-title">内容完成通知 (自动同步)</div>
+                                            <!-- 邮件意图和摘要 -->
+                                            <div class="email-intent-summary">
+                                                <span class="email-intent-tag content-complete">内容完成</span>
+                                                <div class="email-summary">博主已完成视频内容制作，提交最终版本供审核</div>
+                                            </div>
+                                            <div class="timeline-meta">来自: contact@mattvidpro.com · 2023/03/25 16:45</div>
+                                            <div class="timeline-body">
+                                                <div class="email-content">
+                                                    <p class="original-text">"Hi there! Great news - I've completed the video review of the Earbud AI Translation Earphones! The content covers all the key features we discussed: real-time translation accuracy, supported languages, audio quality, and practical use cases. I've included detailed testing footage and my honest assessment. The final video is ready for your review. Please let me know if you need any adjustments or if you're satisfied with the content. Looking forward to your feedback!"</p>
+                                                    <button class="translate-btn" onclick="toggleTranslation(this)">
+                                                        <i class="ri-translate-2"></i>
+                                                    </button>
+                                                    <div class="translated-text" style="display: none;">
+                                                        <p>"您好！好消息 - 我已经完成了Earbud AI翻译耳机的视频评测！内容涵盖了我们讨论的所有关键功能：实时翻译准确性、支持的语言、音质以及实际使用场景。我包含了详细的测试画面和我的诚实评估。最终视频已准备好供您审核。如果您需要任何调整或对内容满意，请告诉我。期待您的反馈！"</p>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-actions">
+                                                    <button class="timeline-action-btn reply-btn"><i class="ri-reply-line"></i> 回复</button>
+                                                    <button class="timeline-action-btn review-complete-btn"><i class="ri-check-double-line"></i> 审核完成</button>
                                                 </div>
                                             </div>
-                                            <div class="timeline-actions">
-                                                <button class="timeline-action-btn"><i class="ri-mail-open-line"></i> 查看邮件原文</button>
-                                                <button class="timeline-action-btn"><i class="ri-reply-line"></i> 回复</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="timeline-item synced-email" data-email-direction="inbound">
+                                    <div class="timeline-avatar">M</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-inner-content">
+                                            <div class="timeline-title">邮件回复 (自动同步)</div>
+                                            <!-- 邮件意图和摘要 -->
+                                            <div class="email-intent-summary">
+                                                <span class="email-intent-tag active">报价回复</span>
+                                                <div class="email-summary">博主询问产品详细信息和合作条款，表现出积极的合作意向</div>
+                                            </div>
+                                            <div class="timeline-meta">来自: contact@mattvidpro.com · 2023/03/21 14:30</div>
+                                            <div class="timeline-body">
+                                                <div class="email-content">
+                                                    <p class="original-text">"Hi [Your Name], thanks for reaching out! The Earbud sounds interesting, especially the AI translation feature. Could you share more details on its accuracy and supported languages? Also, what are your proposed collaboration terms?"</p>
+                                                    <button class="translate-btn" onclick="toggleTranslation(this)">
+                                                        <i class="ri-translate-2"></i>
+                                                    </button>
+                                                    <div class="translated-text" style="display: none;">
+                                                        <p>"您好 [您的姓名]，感谢您的联系！Earbud 听起来很有趣，特别是 AI 翻译功能。您能分享更多关于其准确性和支持语言的详细信息吗？另外，您提议的合作条款是什么？"</p>
+                                                    </div>
+                                                </div>
+                                                <div class="timeline-actions">
+                                                    <button class="timeline-action-btn reply-btn"><i class="ri-reply-line"></i> 回复</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="timeline-item synced-email">
-                                    <div class="timeline-icon"><i class="ri-mail-send-line"></i></div>
+                                <div class="timeline-item synced-email" data-email-direction="outbound">
+                                    <div class="timeline-avatar">我</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">合作意向邮件 (自动同步)</div>
-                                        <!-- 邮件意图和摘要 -->
-                                        <div class="email-intent-summary">
-                                            <span class="email-intent-tag initial">初次联系</span>
-                                            <div class="email-summary">向博主介绍产品特点，重点强调AI翻译功能，提出合作意向</div>
-                                        </div>
-                                        <div class="timeline-meta">发往: contact@mattvidpro.com · 2023/03/18 10:15</div>
-                                        <div class="timeline-body">
-                                            <p>向博主介绍了Earbud产品，重点强调了AI语音翻译功能和音质表现，提出合作意向。</p>
-                                            <div class="timeline-actions">
-                                                <button class="timeline-action-btn"><i class="ri-mail-open-line"></i> 查看邮件原文</button>
-                                                <button class="timeline-action-btn"><i class="ri-file-copy-line"></i> 复制模板</button>
+                                        <div class="timeline-inner-content">
+                                            <div class="timeline-title">合作意向邮件 (自动同步)</div>
+                                            <!-- 邮件意图和摘要 - 发送邮件不显示 -->
+                                            <div class="email-intent-summary" style="display: none;">
+                                                <span class="email-intent-tag initial">初次联系</span>
+                                                <div class="email-summary">向博主介绍产品特点，重点强调AI翻译功能，提出合作意向</div>
+                                            </div>
+                                            <div class="timeline-meta">发往: contact@mattvidpro.com · 2023/03/18 10:15</div>
+                                            <div class="timeline-body">
+                                                <div class="email-content">
+                                                    <p>尊敬的 MattVidPro AI：
+
+您好！我是 Earbud 智能翻译耳机的产品运营经理。在观看了您的频道后，我对您在AI技术领域的专业见解印象深刻。
+
+我们的 Earbud 智能翻译耳机采用前沿 AI 技术，支持 40+ 种语言的实时翻译，并配备高清音质和先进的降噪技术。我们相信这款产品非常适合您的频道受众。
+
+期待您的回复！
+
+此致敬礼，
+[您的名字]
+Earbud 产品运营经理</p>
+                                                </div>
+                                                <!-- 移除复制模板按钮 -->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="timeline-item">
-                                    <div class="timeline-icon"><i class="ri-user-add-line"></i></div>
+                                <div class="timeline-item synced-email" data-email-direction="outbound">
+                                    <div class="timeline-avatar">我</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">创建建联</div>
-                                        <div class="timeline-meta">操作人: 跨境运营专家 · 2023/03/15 09:00</div>
-                                        <div class="timeline-body">
-                                            <p>通过AI助手推荐，将MattVidPro AI添加到建联列表。匹配度为92%，预计费用$1500-$2500。</p>
-                                            <div class="timeline-actions">
-                                                <button class="timeline-action-btn"><i class="ri-file-list-line"></i> 查看匹配报告</button>
+                                        <div class="timeline-inner-content">
+                                            <div class="timeline-title">首次建联邮件 (自动同步)</div>
+                                            <div class="timeline-meta">发往: contact@mattvidpro.com · 2023/03/15 09:00</div>
+                                            <div class="timeline-body">
+                                                <div class="email-content">
+                                                    <div class="email-text">尊敬的 MattVidPro AI：
+
+您好！我是 Earbud 智能翻译耳机的产品运营经理。在观看了您的频道后，我对您在AI技术领域的专业见解印象深刻。
+
+我们的 Earbud 智能翻译耳机采用前沿 AI 技术，支持 40+ 种语言的实时翻译，并配备高清音质和先进的降噪技术。我们相信这款产品非常适合您的频道受众。
+
+期待您的回复！
+
+此致敬礼，
+[您的名字] Earbud 产品运营经理</div>
+                                                </div>
+                                                <!-- 移除复制模板按钮 -->
                                             </div>
                                         </div>
                                     </div>
@@ -2437,10 +2547,6 @@
             </div>
             <div class="email-tool-modal-body">
                 <div class="email-field">
-                    <label>当前报价 (USD)</label>
-                    <input type="number" id="current-price" class="email-input" placeholder="输入当前报价金额" min="0" step="0.01">
-                </div>
-                <div class="email-field">
                     <label>期望价格 (USD)</label>
                     <input type="number" id="expected-price" class="email-input" placeholder="输入期望价格金额" min="0" step="0.01">
                 </div>
@@ -2474,6 +2580,10 @@
                         <option value="USPS">USPS</option>
                         <option value="其他">其他</option>
                     </select>
+                </div>
+                <div class="email-field" id="custom-shipping-field" style="display: none;">
+                    <label>自定义物流公司</label>
+                    <input type="text" id="custom-shipping-company" class="email-input" placeholder="请输入物流公司名称">
                 </div>
                 <div class="email-field">
                     <label>快递单号</label>
@@ -2515,15 +2625,9 @@
                         <option value="其他">其他</option>
                     </select>
                 </div>
-                <div class="email-field">
-                    <label>视频时长</label>
-                    <select id="video-duration" class="email-input">
-                        <option value="">请选择视频时长</option>
-                        <option value="1-3分钟">1-3分钟</option>
-                        <option value="3-5分钟">3-5分钟</option>
-                        <option value="5-10分钟">5-10分钟</option>
-                        <option value="10分钟以上">10分钟以上</option>
-                    </select>
+                <div class="email-field" id="custom-video-type-field" style="display: none;">
+                    <label>自定义视频类型</label>
+                    <input type="text" id="custom-video-type" class="email-input" placeholder="请输入视频类型">
                 </div>
                 <div class="email-field">
                     <label>特殊要求 (可选)</label>
@@ -2533,6 +2637,21 @@
             <div class="email-tool-modal-footer">
                 <button class="cancel-btn" id="cancel-video-script">取消</button>
                 <button class="generate-btn" id="generate-video-script">生成邮件</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI工具表单弹窗 -->
+    <div id="ai-tool-popup" class="ai-tool-popup" style="display: none;">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h4 class="popup-title">AI工具</h4>
+                <button class="popup-close-btn" type="button">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="popup-body">
+                <!-- 工具表单内容将在这里动态加载 -->
             </div>
         </div>
     </div>

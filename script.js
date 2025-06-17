@@ -1372,7 +1372,9 @@ document.addEventListener('DOMContentLoaded', function() {
                            e.target.closest('#sidebar-profile-clickable') ||
                            e.target.closest('#notification-button') ||
                            e.target.closest('.add-product-btn') ||  // 添加产品按钮
-                           e.target.closest('.add-product-card');   // 添加产品卡片
+                           e.target.closest('.add-product-card') ||   // 添加产品卡片
+                           e.target.closest('.ai-assistant-section') ||  // AI助手区域
+                           e.target.closest('.ai-tool-dropdown-menu');   // AI工具下拉菜单
 
         if (!isMenuClick) {
             console.log('点击了菜单外部，关闭所有菜单');
@@ -6605,6 +6607,14 @@ function showNewProductPage() {
             document.getElementById('tracking-number').value = '';
             document.getElementById('estimated-delivery').value = '';
             document.getElementById('shipping-notes').value = '';
+            document.getElementById('custom-shipping-company').value = '';
+            document.getElementById('custom-shipping-field').style.display = 'none';
+
+            // 绑定物流公司选择变化事件
+            const shippingCompanySelect = document.getElementById('shipping-company');
+            if (shippingCompanySelect) {
+                shippingCompanySelect.addEventListener('change', handleShippingCompanyChange);
+            }
         }
     }
 
@@ -6616,6 +6626,21 @@ function showNewProductPage() {
         }
     }
 
+    // 物流公司选择变化事件
+    function handleShippingCompanyChange() {
+        const shippingCompanySelect = document.getElementById('shipping-company');
+        const customShippingField = document.getElementById('custom-shipping-field');
+
+        if (shippingCompanySelect && customShippingField) {
+            if (shippingCompanySelect.value === '其他') {
+                customShippingField.style.display = 'block';
+            } else {
+                customShippingField.style.display = 'none';
+                document.getElementById('custom-shipping-company').value = '';
+            }
+        }
+    }
+
     // 显示视频脚本模态框
     function showVideoScriptModal() {
         const modal = document.getElementById('video-script-modal');
@@ -6623,8 +6648,15 @@ function showNewProductPage() {
             modal.style.display = 'flex';
             // 清空表单
             document.getElementById('video-type').value = '';
-            document.getElementById('video-duration').value = '';
             document.getElementById('video-requirements').value = '';
+            document.getElementById('custom-video-type').value = '';
+            document.getElementById('custom-video-type-field').style.display = 'none';
+
+            // 绑定视频类型选择变化事件
+            const videoTypeSelect = document.getElementById('video-type');
+            if (videoTypeSelect) {
+                videoTypeSelect.addEventListener('change', handleVideoTypeChange);
+            }
         }
     }
 
@@ -6636,15 +6668,29 @@ function showNewProductPage() {
         }
     }
 
+    // 视频类型选择变化事件
+    function handleVideoTypeChange() {
+        const videoTypeSelect = document.getElementById('video-type');
+        const customVideoTypeField = document.getElementById('custom-video-type-field');
+
+        if (videoTypeSelect && customVideoTypeField) {
+            if (videoTypeSelect.value === '其他') {
+                customVideoTypeField.style.display = 'block';
+            } else {
+                customVideoTypeField.style.display = 'none';
+                document.getElementById('custom-video-type').value = '';
+            }
+        }
+    }
+
     // 生成价格谈判邮件
     function generatePriceNegotiationEmail() {
-        const currentPrice = document.getElementById('current-price').value;
         const expectedPrice = document.getElementById('expected-price').value;
         const reason = document.getElementById('negotiation-reason').value;
 
         // 表单验证
-        if (!currentPrice || !expectedPrice) {
-            alert('请填写当前报价和期望价格');
+        if (!expectedPrice) {
+            alert('请填写期望价格');
             return;
         }
 
@@ -6668,13 +6714,13 @@ function showNewProductPage() {
 
 感谢您对我们 ${productName} 的关注和初步合作意向。
 
-关于合作费用，我们理解您提出的 $${currentPrice} 的报价。基于我们的预算考虑`;
+关于合作费用，基于我们的预算考虑`;
 
         if (reason.trim()) {
             content += `和${reason.trim()}`;
         }
 
-        content += `，我们希望能够将合作费用调整到 $${expectedPrice} 左右。
+        content += `，我们希望能够将合作费用设定在 $${expectedPrice} 左右。
 
 我们相信这个价格既能体现您的专业价值，也符合我们当前的市场推广预算。我们非常期待与您建立长期的合作关系，并愿意在其他方面提供额外的支持。
 
@@ -6693,10 +6739,20 @@ ${productName} 产品运营经理`;
 
     // 生成发货通知邮件
     function generateShippingNotificationEmail() {
-        const company = document.getElementById('shipping-company').value;
+        let company = document.getElementById('shipping-company').value;
         const trackingNumber = document.getElementById('tracking-number').value;
         const estimatedDelivery = document.getElementById('estimated-delivery').value;
         const notes = document.getElementById('shipping-notes').value;
+
+        // 如果选择了"其他"，使用自定义物流公司名称
+        if (company === '其他') {
+            const customCompany = document.getElementById('custom-shipping-company').value;
+            if (!customCompany.trim()) {
+                alert('请输入自定义物流公司名称');
+                return;
+            }
+            company = customCompany.trim();
+        }
 
         // 表单验证
         if (!company || !trackingNumber || !estimatedDelivery) {
@@ -6770,13 +6826,22 @@ ${productName} 产品运营团队`;
 
     // 生成视频脚本建议邮件
     function generateVideoScriptEmail() {
-        const videoType = document.getElementById('video-type').value;
-        const duration = document.getElementById('video-duration').value;
+        let videoType = document.getElementById('video-type').value;
         const requirements = document.getElementById('video-requirements').value;
 
+        // 如果选择了"其他"，使用自定义视频类型
+        if (videoType === '其他') {
+            const customVideoType = document.getElementById('custom-video-type').value;
+            if (!customVideoType.trim()) {
+                alert('请输入自定义视频类型');
+                return;
+            }
+            videoType = customVideoType.trim();
+        }
+
         // 表单验证
-        if (!videoType || !duration) {
-            alert('请选择视频类型和视频时长');
+        if (!videoType) {
+            alert('请选择或输入视频类型');
             return;
         }
 
@@ -6796,7 +6861,6 @@ ${productName} 产品运营团队`;
 感谢您同意为我们的 ${productName} 制作${videoType}！为了帮助您创作出更优质的内容，我们为您准备了一些脚本建议和拍摄要点。
 
 🎬 视频类型：${videoType}
-⏱️ 建议时长：${duration}
 
 📝 脚本建议：`;
 
@@ -6994,13 +7058,200 @@ ${productName} 内容合作经理`;
 
     // 初始化回复按钮事件监听器
     function initReplyButtons() {
-        const replyButtons = document.querySelectorAll('.timeline-action-btn');
+        const replyButtons = document.querySelectorAll('.reply-btn');
         replyButtons.forEach(btn => {
-            if (btn.textContent.includes('回复')) {
-                btn.addEventListener('click', function() {
-                    const timelineItem = this.closest('.timeline-item');
+            btn.addEventListener('click', function() {
+                const timelineItem = this.closest('.timeline-item');
+                const emailDirection = timelineItem.getAttribute('data-email-direction');
+
+                // 只允许对接收到的邮件进行回复
+                if (emailDirection === 'inbound') {
                     showReplyCard(timelineItem);
-                });
+                } else {
+                    console.log('不能回复发送的邮件');
+                }
+            });
+        });
+    }
+
+
+
+    // 初始化邮件方向控制
+    function initEmailDirectionControl() {
+        const timelineItems = document.querySelectorAll('.timeline-item[data-email-direction]');
+
+        timelineItems.forEach(item => {
+            const emailDirection = item.getAttribute('data-email-direction');
+            const emailIntentSummary = item.querySelector('.email-intent-summary');
+            const replyBtn = item.querySelector('.reply-btn');
+
+            // 根据邮件方向控制显示
+            if (emailDirection === 'outbound') {
+                // 发送的邮件：隐藏场景标记，隐藏回复按钮
+                if (emailIntentSummary) {
+                    emailIntentSummary.style.display = 'none';
+                }
+                if (replyBtn) {
+                    replyBtn.style.display = 'none';
+                }
+            } else if (emailDirection === 'inbound') {
+                // 接收的邮件：显示场景标记，显示回复按钮
+                if (emailIntentSummary) {
+                    emailIntentSummary.style.display = 'block';
+                }
+                if (replyBtn) {
+                    replyBtn.style.display = 'inline-flex';
+                }
+            }
+        });
+    }
+
+    // 初始化合作流程进度条
+    function initCollaborationProgress() {
+        const progressContainer = document.querySelector('.collaboration-progress-container');
+        if (!progressContainer) return;
+
+        // 获取当前联系阶段
+        const currentStageTag = document.querySelector('.contact-stage-tag');
+        if (!currentStageTag) return;
+
+        const currentStageText = currentStageTag.textContent.trim();
+
+        // 阶段映射
+        const stageMapping = {
+            '初次联系': 'initial-contact',
+            '意图探索': 'intent-exploration',
+            '价格谈判': 'price-negotiation',
+            '合作确认': 'collaboration-confirmation',
+            '样品发送': 'sample-sending',
+            '内容创作': 'content-creation',
+            '内容审核': 'content-review',
+            '项目完成': 'project-completion'
+        };
+
+        // 检查是否有内容完成通知邮件，如果有则设置为内容审核阶段
+        const contentCompleteEmail = document.querySelector('.email-intent-tag.content-complete');
+        let currentStage;
+
+        if (contentCompleteEmail) {
+            currentStage = 'content-review';
+        } else {
+            currentStage = stageMapping[currentStageText];
+        }
+
+        if (!currentStage) return;
+
+        // 阶段顺序
+        const stageOrder = [
+            'initial-contact',
+            'intent-exploration',
+            'price-negotiation',
+            'collaboration-confirmation',
+            'sample-sending',
+            'content-creation',
+            'content-review',
+            'project-completion'
+        ];
+
+        const currentStageIndex = stageOrder.indexOf(currentStage);
+
+        // 更新进度条状态
+        const progressSteps = document.querySelectorAll('.progress-step');
+        progressSteps.forEach((step, index) => {
+            const stepStage = step.getAttribute('data-stage');
+            const stepIndex = stageOrder.indexOf(stepStage);
+
+            // 移除所有状态类
+            step.classList.remove('completed', 'current', 'pending');
+
+            if (stepIndex < currentStageIndex) {
+                // 已完成的阶段
+                step.classList.add('completed');
+            } else if (stepIndex === currentStageIndex) {
+                // 当前阶段
+                step.classList.add('current');
+            } else {
+                // 待完成的阶段
+                step.classList.add('pending');
+            }
+        });
+    }
+
+    // 初始化审核完成按钮
+    function initReviewCompleteButton() {
+        const reviewCompleteBtn = document.querySelector('.review-complete-btn');
+        if (!reviewCompleteBtn) return;
+
+        reviewCompleteBtn.addEventListener('click', function() {
+            // 防止重复点击
+            if (this.classList.contains('completed')) return;
+
+            // 显示确认对话框
+            if (confirm('确认审核完成？此操作将标记项目为已完成状态。')) {
+                // 更新按钮状态
+                this.classList.add('completed');
+                this.innerHTML = '<i class="ri-check-double-line"></i> 已完成';
+
+                // 显示成功消息
+                showSuccessMessage('审核完成！项目已标记为完成状态。');
+
+                // 更新进度条到项目完成阶段
+                updateProgressToCompletion();
+            }
+        });
+    }
+
+    // 显示成功消息
+    function showSuccessMessage(message) {
+        // 创建成功消息元素
+        const successMsg = document.createElement('div');
+        successMsg.className = 'success-message';
+        successMsg.innerHTML = `
+            <div class="success-content">
+                <i class="ri-check-circle-line"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        // 添加到页面
+        document.body.appendChild(successMsg);
+
+        // 显示动画
+        setTimeout(() => {
+            successMsg.classList.add('show');
+        }, 100);
+
+        // 3秒后自动移除
+        setTimeout(() => {
+            successMsg.classList.remove('show');
+            setTimeout(() => {
+                if (successMsg.parentNode) {
+                    successMsg.parentNode.removeChild(successMsg);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // 更新进度条到项目完成阶段
+    function updateProgressToCompletion() {
+        const progressSteps = document.querySelectorAll('.progress-step');
+        progressSteps.forEach(step => {
+            // 移除所有状态类
+            step.classList.remove('completed', 'current', 'pending');
+            // 设置为已完成状态
+            step.classList.add('completed');
+        });
+    }
+
+    // 初始化现有的AI助手按钮
+    function initExistingAIAssistantButtons() {
+        const existingReplyCards = document.querySelectorAll('.reply-card');
+        existingReplyCards.forEach(replyCard => {
+            const aiAssistantBtn = replyCard.querySelector('.ai-assistant-btn');
+            if (aiAssistantBtn && !aiAssistantBtn.hasAttribute('data-initialized')) {
+                console.log('初始化现有的AI助手按钮');
+                initNewReplyCardEvents(replyCard);
+                aiAssistantBtn.setAttribute('data-initialized', 'true');
             }
         });
     }
@@ -7013,65 +7264,55 @@ ${productName} 内容合作经理`;
             existingReplyCard.remove();
         }
 
-        // 创建回复卡片HTML - 新的设计
+        // 创建回复卡片HTML - 统一聊天界面样式
         const replyCardHTML = `
             <div class="reply-card">
-                <div class="reply-card-header">
-                    <div class="reply-card-title">
-                        <i class="ri-reply-line"></i>
-                        回复邮件
-                    </div>
-                    <button class="close-reply-btn">
-                        <i class="ri-close-line"></i>
-                    </button>
-                </div>
-
-                <!-- 默认邮件内容输入框 -->
-                <div class="email-compose-section">
-                    <div class="email-field">
-                        <label>邮件内容</label>
-                        <textarea class="email-content-input" placeholder="请输入邮件内容..." rows="6"></textarea>
-                    </div>
-
-                    <!-- AI邮件助手按钮 -->
-                    <div class="ai-assistant-section">
-                        <button class="ai-assistant-btn">
-                            <i class="ri-robot-line"></i>
-                            AI邮件助手
-                            <i class="ri-arrow-down-s-line"></i>
+                <div class="reply-card-container">
+                    <div class="reply-card-header">
+                        <div class="reply-card-title">
+                            <i class="ri-reply-line"></i>
+                            回复邮件
+                        </div>
+                        <button class="close-reply-btn">
+                            <i class="ri-close-line"></i>
                         </button>
-                        <div class="ai-tool-dropdown-menu" style="display: none;">
-                            <div class="ai-tool-option" data-tool="price-negotiation">
-                                <i class="ri-money-dollar-circle-line"></i>
-                                价格协商工具
+                    </div>
+
+                    <!-- 默认邮件内容输入框 -->
+                    <div class="email-compose-section">
+                        <div class="email-field">
+                            <label>邮件内容</label>
+                            <textarea class="email-content-input" placeholder="请输入邮件内容..." rows="8"></textarea>
+                        </div>
+
+                        <!-- 按钮区域 - 水平排列 -->
+                        <div class="reply-actions">
+                            <div class="ai-tool-buttons">
+                                <button class="ai-tool-btn" data-tool="price-negotiation" title="AI价格协商">
+                                    <i class="ri-money-dollar-circle-line"></i>
+                                    <span class="btn-text">AI价格协商</span>
+                                </button>
+                                <button class="ai-tool-btn" data-tool="shipping-notification" title="AI物流通知">
+                                    <i class="ri-truck-line"></i>
+                                    <span class="btn-text">AI物流通知</span>
+                                </button>
+                                <button class="ai-tool-btn" data-tool="video-script" title="AI视频脚本建议">
+                                    <i class="ri-video-line"></i>
+                                    <span class="btn-text">AI视频脚本</span>
+                                </button>
+                                <button class="ai-tool-btn" data-tool="custom" title="AI自定义邮件工具">
+                                    <i class="ri-edit-line"></i>
+                                    <span class="btn-text">AI自定义工具</span>
+                                </button>
                             </div>
-                            <div class="ai-tool-option" data-tool="shipping-notification">
-                                <i class="ri-truck-line"></i>
-                                物流通知工具
-                            </div>
-                            <div class="ai-tool-option" data-tool="video-script">
-                                <i class="ri-video-line"></i>
-                                视频脚本建议工具
-                            </div>
-                            <div class="ai-tool-option" data-tool="custom">
-                                <i class="ri-edit-line"></i>
-                                自定义内容
-                            </div>
+                            <button class="send-reply-btn">
+                                <i class="ri-send-plane-line"></i>
+                                发送邮件
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <!-- 动态工具表单容器 -->
-                <div class="tool-form-container" style="display: none;">
-                    <!-- 工具表单将在这里动态加载 -->
-                </div>
-
-                <div class="reply-actions">
-                    <button class="send-reply-btn">
-                        <i class="ri-send-plane-line"></i>
-                        发送邮件
-                    </button>
-                </div>
+                <div class="reply-card-avatar">我</div>
             </div>
         `;
 
@@ -7122,65 +7363,735 @@ ${productName} 内容合作经理`;
         return toolMap[stage] || { id: 'custom', name: '自定义内容' };
     }
 
-    // 初始化新的回复卡片事件
-    function initNewReplyCardEvents(replyCard) {
-        const aiAssistantBtn = replyCard.querySelector('.ai-assistant-btn');
-        const dropdownMenu = replyCard.querySelector('.ai-tool-dropdown-menu');
-        const toolOptions = replyCard.querySelectorAll('.ai-tool-option');
-        const toolFormContainer = replyCard.querySelector('.tool-form-container');
-        const emailContentInput = replyCard.querySelector('.email-content-input');
-        const sendBtn = replyCard.querySelector('.send-reply-btn');
-        const closeBtn = replyCard.querySelector('.close-reply-btn');
+    // ==================== AI邮件助手类重构 ====================
 
-        // AI助手按钮点击事件
-        aiAssistantBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const isVisible = dropdownMenu.style.display === 'block';
-            dropdownMenu.style.display = isVisible ? 'none' : 'block';
-        });
+    /**
+     * AI邮件助手类 - 管理工具按钮和表单
+     */
+    class AIEmailAssistant {
+        constructor(container) {
+            this.container = container;
+            this.state = {
+                selectedTool: null,
+                isLoading: false
+            };
 
-        // 点击外部关闭下拉框
-        document.addEventListener('click', function(e) {
-            if (!aiAssistantBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                dropdownMenu.style.display = 'none';
-            }
-        });
+            // 绑定DOM元素
+            this.elements = this.bindElements();
 
-        // 工具选项点击
-        toolOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const toolId = this.dataset.tool;
+            // 初始化事件监听器
+            this.initEventListeners();
 
-                // 隐藏下拉菜单
-                dropdownMenu.style.display = 'none';
-
-                // 显示并加载对应的工具表单
-                toolFormContainer.style.display = 'block';
-                loadNewToolForm(toolFormContainer, toolId, emailContentInput, sendBtn);
+            // 日志记录
+            this.logger = new AIAssistantLogger('AIEmailAssistant');
+            this.logger.info('AI邮件助手初始化完成', {
+                toolButtonCount: this.elements.toolButtons.length,
+                containerId: container.id || 'unknown'
             });
-        });
+        }
 
-        // 关闭回复卡片
-        closeBtn.addEventListener('click', function() {
-            replyCard.remove();
-        });
+        /**
+         * 绑定DOM元素
+         */
+        bindElements() {
+            const replyCard = this.container.closest('.reply-card');
+            const elements = {
+                toolButtons: this.container.querySelectorAll('.ai-tool-btn'),
+                emailContentInput: replyCard?.querySelector('.email-content-input'),
+                sendBtn: replyCard?.querySelector('.send-reply-btn'),
+                closeBtn: replyCard?.querySelector('.close-reply-btn'),
+                popup: document.getElementById('ai-tool-popup'),
+                popupContent: document.querySelector('#ai-tool-popup .popup-content'),
+                popupTitle: document.querySelector('#ai-tool-popup .popup-title'),
+                popupBody: document.querySelector('#ai-tool-popup .popup-body'),
+                popupCloseBtn: document.querySelector('#ai-tool-popup .popup-close-btn')
+            };
 
-        // 发送邮件按钮事件
-        sendBtn.addEventListener('click', function() {
-            const emailContent = emailContentInput.value.trim();
-            if (emailContent) {
-                // 这里可以添加发送邮件的逻辑
-                console.log('发送邮件内容:', emailContent);
+            // 验证必需元素
+            if (!elements.toolButtons || elements.toolButtons.length === 0) {
+                throw new Error('AI邮件助手工具按钮未找到');
+            }
 
-                // 显示发送成功提示
-                showEmailSentNotification('邮件回复', emailContent);
+            if (!elements.popup) {
+                throw new Error('AI工具弹窗容器未找到');
+            }
 
-                // 关闭回复卡片
+            return elements;
+        }
+
+        /**
+         * 初始化事件监听器
+         */
+        initEventListeners() {
+            // 工具按钮点击事件
+            this.elements.toolButtons.forEach(button => {
+                button.addEventListener('click', this.handleToolButtonClick.bind(this));
+            });
+
+            // 关闭按钮事件
+            if (this.elements.closeBtn) {
+                this.elements.closeBtn.addEventListener('click', this.handleCloseClick.bind(this));
+            }
+
+            // 发送按钮事件
+            if (this.elements.sendBtn) {
+                this.elements.sendBtn.addEventListener('click', this.handleSendClick.bind(this));
+            }
+
+            // 弹窗关闭按钮事件
+            if (this.elements.popupCloseBtn) {
+                this.elements.popupCloseBtn.addEventListener('click', this.closePopup.bind(this));
+            }
+
+            // 点击弹窗外部关闭
+            if (this.elements.popup) {
+                this.elements.popup.addEventListener('click', (e) => {
+                    if (e.target === this.elements.popup) {
+                        this.closePopup();
+                    }
+                });
+            }
+
+            // ESC键关闭弹窗
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && this.isPopupOpen()) {
+                    this.closePopup();
+                }
+            });
+        }
+
+        /**
+         * 处理工具按钮点击
+         */
+        handleToolButtonClick(event) {
+            event.stopPropagation();
+
+            const toolButton = event.target.closest('.ai-tool-btn');
+            if (!toolButton) return;
+
+            const toolId = toolButton.dataset.tool;
+            const toolName = toolButton.title;
+
+            this.logger.info('工具按钮被点击', { toolId, toolName });
+
+            // 更新状态
+            this.state.selectedTool = toolId;
+
+            // 更新按钮状态
+            this.updateButtonStates(toolButton);
+
+            // 显示弹窗
+            this.showPopup(toolId, toolName, toolButton);
+        }
+
+        /**
+         * 更新按钮状态
+         */
+        updateButtonStates(activeButton) {
+            // 移除所有按钮的激活状态
+            this.elements.toolButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // 激活当前按钮
+            activeButton.classList.add('active');
+        }
+
+
+
+        /**
+         * 处理关闭按钮点击
+         */
+        handleCloseClick() {
+            const replyCard = this.container.closest('.reply-card');
+            if (replyCard) {
                 replyCard.remove();
+            }
+        }
+
+        /**
+         * 处理发送按钮点击
+         */
+        handleSendClick() {
+            const emailContent = this.elements.emailContentInput?.value.trim();
+            if (emailContent) {
+                showEmailSentNotification('邮件回复', emailContent, true);
+                const replyCard = this.container.closest('.reply-card');
+                if (replyCard) {
+                    replyCard.remove();
+                }
             } else {
                 alert('请输入邮件内容');
             }
-        });
+        }
+
+        /**
+         * 显示弹窗
+         */
+        showPopup(toolId, toolName, triggerButton) {
+            if (!this.elements.popup || !this.elements.popupBody) {
+                this.logger.error('弹窗元素未找到');
+                return;
+            }
+
+            // 设置弹窗标题
+            const toolTitles = {
+                'price-negotiation': 'AI价格协商邮件生成',
+                'shipping-notification': 'AI物流通知邮件生成',
+                'video-script': 'AI视频脚本建议邮件生成',
+                'custom': 'AI自定义邮件内容生成'
+            };
+
+            if (this.elements.popupTitle) {
+                this.elements.popupTitle.innerHTML = `<i class="${this.getToolIcon(toolId)}"></i> ${toolTitles[toolId] || toolName}`;
+            }
+
+            // 生成表单内容
+            const formHTML = this.generateToolFormHTML(toolId);
+            this.elements.popupBody.innerHTML = formHTML;
+
+            // 显示弹窗
+            this.elements.popup.style.display = 'flex';
+            setTimeout(() => {
+                this.elements.popup.classList.add('show');
+            }, 10);
+
+            // 绑定表单事件
+            this.bindPopupFormEvents(toolId);
+
+            this.logger.info('弹窗已显示', { toolId, toolName });
+        }
+
+        /**
+         * 关闭弹窗
+         */
+        closePopup() {
+            if (!this.elements.popup) return;
+
+            this.elements.popup.classList.remove('show');
+            setTimeout(() => {
+                this.elements.popup.style.display = 'none';
+                this.elements.popupBody.innerHTML = '';
+            }, 300);
+
+            // 移除按钮激活状态
+            this.elements.toolButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            this.logger.info('弹窗已关闭');
+        }
+
+        /**
+         * 检查弹窗是否打开
+         */
+        isPopupOpen() {
+            return this.elements.popup && this.elements.popup.classList.contains('show');
+        }
+
+        /**
+         * 获取工具图标
+         */
+        getToolIcon(toolId) {
+            const icons = {
+                'price-negotiation': 'ri-money-dollar-circle-line',
+                'shipping-notification': 'ri-truck-line',
+                'video-script': 'ri-video-line',
+                'custom': 'ri-edit-line'
+            };
+            return icons[toolId] || 'ri-tools-line';
+        }
+
+        /**
+         * 生成工具表单HTML
+         */
+        generateToolFormHTML(toolId) {
+            switch (toolId) {
+                case 'price-negotiation':
+                    return `
+                        <div class="tool-form">
+                            <div class="email-field">
+                                <label>当前报价 (USD)</label>
+                                <input type="number" class="email-input current-price-input" placeholder="输入当前报价金额" min="0" step="0.01">
+                            </div>
+                            <div class="email-field">
+                                <label>期望价格 (USD)</label>
+                                <input type="number" class="email-input expected-price-input" placeholder="输入期望价格金额" min="0" step="0.01">
+                            </div>
+                            <div class="email-field">
+                                <label>谈判理由 (可选)</label>
+                                <textarea class="email-content-input negotiation-reason-input" placeholder="输入谈判理由，如预算限制、长期合作等..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="generate-email-btn" data-tool="price-negotiation">
+                                    <i class="ri-magic-line"></i> AI生成邮件内容
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                case 'shipping-notification':
+                    return `
+                        <div class="tool-form">
+                            <div class="email-field">
+                                <label>物流公司</label>
+                                <select class="email-input shipping-company-input">
+                                    <option value="">选择物流公司</option>
+                                    <option value="DHL">DHL</option>
+                                    <option value="FedEx">FedEx</option>
+                                    <option value="UPS">UPS</option>
+                                    <option value="USPS">USPS</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                            <div class="email-field">
+                                <label>快递单号</label>
+                                <input type="text" class="email-input tracking-number-input" placeholder="输入快递单号">
+                            </div>
+                            <div class="email-field">
+                                <label>预计到达时间</label>
+                                <input type="date" class="email-input estimated-delivery-input">
+                            </div>
+                            <div class="email-field">
+                                <label>备注信息 (可选)</label>
+                                <textarea class="email-content-input shipping-notes-input" placeholder="输入备注信息，如特殊说明、注意事项等..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="generate-email-btn" data-tool="shipping-notification">
+                                    <i class="ri-magic-line"></i> AI生成邮件内容
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                case 'video-script':
+                    return `
+                        <div class="tool-form">
+                            <div class="email-field">
+                                <label>视频类型</label>
+                                <select class="email-input video-type-input">
+                                    <option value="">选择视频类型</option>
+                                    <option value="开箱视频">开箱视频</option>
+                                    <option value="使用教程">使用教程</option>
+                                    <option value="产品评测">产品评测</option>
+                                    <option value="对比测试">对比测试</option>
+                                    <option value="创意短片">创意短片</option>
+                                </select>
+                            </div>
+                            <div class="email-field">
+                                <label>视频时长</label>
+                                <select class="email-input video-duration-input">
+                                    <option value="">选择视频时长</option>
+                                    <option value="30秒-1分钟">30秒-1分钟</option>
+                                    <option value="1-3分钟">1-3分钟</option>
+                                    <option value="3-5分钟">3-5分钟</option>
+                                    <option value="5-10分钟">5-10分钟</option>
+                                    <option value="10分钟以上">10分钟以上</option>
+                                </select>
+                            </div>
+                            <div class="email-field">
+                                <label>特殊要求 (可选)</label>
+                                <textarea class="email-content-input video-requirements-input" placeholder="输入特殊要求，如拍摄角度、重点功能、目标受众等..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="generate-email-btn" data-tool="video-script">
+                                    <i class="ri-magic-line"></i> AI生成邮件内容
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                case 'custom':
+                    return `
+                        <div class="tool-form">
+                            <div class="email-field">
+                                <label>邮件内容要求</label>
+                                <textarea class="custom-content-input" placeholder="请描述您希望AI生成的邮件内容，例如：&#10;- 询问合作进展&#10;- 确认产品规格&#10;- 讨论发布时间&#10;- 其他具体需求..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="generate-email-btn" data-tool="custom">
+                                    <i class="ri-magic-line"></i> AI生成邮件内容
+                                </button>
+                            </div>
+                        </div>
+                    `;
+
+                default:
+                    return '<div class="tool-form"><p>未知的工具类型</p></div>';
+            }
+        }
+
+        /**
+         * 绑定弹窗表单事件
+         */
+        bindPopupFormEvents(toolId) {
+            const generateBtn = this.elements.popupBody.querySelector('.generate-email-btn');
+
+            if (generateBtn) {
+                generateBtn.addEventListener('click', () => {
+                    const generatedContent = this.generateEmailContentFromPopupForm(toolId);
+                    if (generatedContent && this.elements.emailContentInput) {
+                        // 关闭弹窗
+                        this.closePopup();
+
+                        // 开始流式输出
+                        this.startStreamingOutput(generatedContent);
+                    }
+                });
+            }
+        }
+
+        /**
+         * 从弹窗表单生成邮件内容
+         */
+        generateEmailContentFromPopupForm(toolId) {
+            // 获取博主和产品信息
+            const creatorNameElement = document.querySelector('.detail-creator-name');
+            const creatorName = creatorNameElement ? creatorNameElement.textContent : '博主';
+            const productNameElement = document.querySelector('.product-name');
+            const productName = productNameElement ? productNameElement.textContent : '产品';
+
+            const container = this.elements.popupBody;
+
+            switch (toolId) {
+                case 'price-negotiation':
+                    const currentPrice = container.querySelector('.current-price-input')?.value;
+                    const expectedPrice = container.querySelector('.expected-price-input')?.value;
+                    const reason = container.querySelector('.negotiation-reason-input')?.value;
+
+                    if (!currentPrice || !expectedPrice) {
+                        alert('请填写当前报价和期望价格');
+                        return null;
+                    }
+
+                    return `亲爱的 ${creatorName}，
+
+希望您一切都好！
+
+关于我们之前讨论的 ${productName} 合作项目，我想和您进一步商讨价格方面的事宜。
+
+当前报价：$${currentPrice}
+我们的期望价格：$${expectedPrice}
+
+${reason ? `原因说明：${reason}` : ''}
+
+我们非常重视与您的合作关系，希望能够达成一个对双方都有利的协议。期待您的回复。
+
+最好的祝愿！`;
+
+                case 'shipping-notification':
+                    const company = container.querySelector('.shipping-company-input')?.value;
+                    const trackingNumber = container.querySelector('.tracking-number-input')?.value;
+                    const deliveryDate = container.querySelector('.estimated-delivery-input')?.value;
+                    const notes = container.querySelector('.shipping-notes-input')?.value;
+
+                    if (!company || !trackingNumber) {
+                        alert('请填写物流公司和快递单号');
+                        return null;
+                    }
+
+                    return `亲爱的 ${creatorName}，
+
+很高兴通知您，您的 ${productName} 样品已经发货！
+
+物流信息：
+• 物流公司：${company}
+• 快递单号：${trackingNumber}
+${deliveryDate ? `• 预计到达：${deliveryDate}` : ''}
+
+${notes ? `备注：${notes}` : ''}
+
+您可以通过快递单号跟踪包裹状态。如有任何问题，请随时联系我们。
+
+期待您的精彩内容！`;
+
+                case 'video-script':
+                    const videoType = container.querySelector('.video-type-input')?.value;
+                    const duration = container.querySelector('.video-duration-input')?.value;
+                    const requirements = container.querySelector('.video-requirements-input')?.value;
+
+                    if (!videoType) {
+                        alert('请选择视频类型');
+                        return null;
+                    }
+
+                    return `亲爱的 ${creatorName}，
+
+关于 ${productName} 的${videoType}制作，我们为您准备了一些建议和想法。
+
+视频规格：
+• 类型：${videoType}
+${duration ? `• 时长：${duration}` : ''}
+
+${requirements ? `特殊要求：${requirements}` : ''}
+
+我们相信以您的创意和专业水准，一定能制作出精彩的内容。如需任何支持或有疑问，请随时联系我们。
+
+期待看到您的作品！`;
+
+                case 'custom':
+                    const customContent = container.querySelector('.custom-content-input')?.value;
+
+                    if (!customContent) {
+                        alert('请输入邮件内容要求');
+                        return null;
+                    }
+
+                    return `亲爱的 ${creatorName}，
+
+关于 ${productName} 合作项目，${customContent}
+
+如有任何问题或需要进一步讨论，请随时联系我们。
+
+期待您的回复！`;
+
+                default:
+                    return null;
+            }
+        }
+
+        /**
+         * 开始流式输出
+         */
+        startStreamingOutput(content) {
+            if (!this.elements.emailContentInput || !this.elements.sendBtn) return;
+
+            // 禁用发送按钮并显示生成状态
+            this.setSendButtonState('generating');
+
+            // 清空输入框
+            this.elements.emailContentInput.value = '';
+
+            // 添加光标效果
+            this.addTypingCursor();
+
+            // 开始逐字符输出
+            this.typewriterEffect(content, 0, () => {
+                // 输出完成后的回调
+                this.removeTypingCursor();
+                this.setSendButtonState('ready');
+                this.showGenerationSuccess();
+            });
+        }
+
+        /**
+         * 打字机效果
+         */
+        typewriterEffect(text, index, callback) {
+            if (index < text.length) {
+                // 逐字符添加
+                this.elements.emailContentInput.value += text.charAt(index);
+
+                // 自动滚动到底部
+                this.elements.emailContentInput.scrollTop = this.elements.emailContentInput.scrollHeight;
+
+                // 计算延迟时间（标点符号稍微停顿久一点）
+                const char = text.charAt(index);
+                let delay = 30; // 基础延迟30ms
+
+                if (char === '。' || char === '！' || char === '？') {
+                    delay = 200; // 句号等停顿200ms
+                } else if (char === '，' || char === '；' || char === '：') {
+                    delay = 100; // 逗号等停顿100ms
+                } else if (char === '\n') {
+                    delay = 150; // 换行停顿150ms
+                } else if (char === ' ') {
+                    delay = 50; // 空格停顿50ms
+                }
+
+                setTimeout(() => {
+                    this.typewriterEffect(text, index + 1, callback);
+                }, delay);
+            } else {
+                // 输出完成
+                if (callback) callback();
+            }
+        }
+
+        /**
+         * 添加打字光标效果
+         */
+        addTypingCursor() {
+            if (!this.elements.emailContentInput) return;
+
+            this.elements.emailContentInput.classList.add('typing');
+
+            // 创建光标元素
+            if (!this.typingCursor) {
+                this.typingCursor = document.createElement('span');
+                this.typingCursor.className = 'typing-cursor';
+                this.typingCursor.textContent = '|';
+
+                // 将光标插入到输入框后面
+                const container = this.elements.emailContentInput.parentNode;
+                container.style.position = 'relative';
+                container.appendChild(this.typingCursor);
+            }
+        }
+
+        /**
+         * 移除打字光标效果
+         */
+        removeTypingCursor() {
+            if (!this.elements.emailContentInput) return;
+
+            this.elements.emailContentInput.classList.remove('typing');
+
+            if (this.typingCursor) {
+                this.typingCursor.remove();
+                this.typingCursor = null;
+            }
+        }
+
+        /**
+         * 设置发送按钮状态
+         */
+        setSendButtonState(state) {
+            if (!this.elements.sendBtn) return;
+
+            switch (state) {
+                case 'generating':
+                    this.elements.sendBtn.disabled = true;
+                    this.elements.sendBtn.classList.add('generating');
+                    this.elements.sendBtn.innerHTML = '<i class="ri-loader-4-line spinning"></i> AI生成中...';
+                    break;
+
+                case 'ready':
+                    this.elements.sendBtn.disabled = false;
+                    this.elements.sendBtn.classList.remove('generating');
+                    this.elements.sendBtn.classList.add('ready');
+                    this.elements.sendBtn.innerHTML = '<i class="ri-send-plane-line"></i> 发送邮件';
+
+                    // 添加高亮动画
+                    setTimeout(() => {
+                        this.elements.sendBtn.classList.add('highlight');
+                        setTimeout(() => {
+                            this.elements.sendBtn.classList.remove('highlight');
+                        }, 2000);
+                    }, 100);
+                    break;
+
+                default:
+                    this.elements.sendBtn.disabled = false;
+                    this.elements.sendBtn.classList.remove('generating', 'ready');
+                    this.elements.sendBtn.innerHTML = '<i class="ri-send-plane-line"></i> 发送邮件';
+                    break;
+            }
+        }
+
+        /**
+         * 显示生成成功提示
+         */
+        showGenerationSuccess() {
+            // 可以添加一个简单的成功提示
+            const notification = document.createElement('div');
+            notification.className = 'generation-success-notification';
+            notification.textContent = '✅ AI邮件内容生成完成';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--success-color, #10b981);
+                color: white;
+                padding: 12px 16px;
+                border-radius: 8px;
+                font-size: 14px;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        /**
+         * 销毁实例
+         */
+        destroy() {
+            // 移除事件监听器
+            this.elements.toolButtons.forEach(button => {
+                button.removeEventListener('click', this.handleToolButtonClick);
+            });
+
+            this.logger.info('AI邮件助手实例已销毁');
+        }
+    }
+
+    /**
+     * AI助手日志记录器
+     */
+    class AIAssistantLogger {
+        constructor(component) {
+            this.component = component;
+            this.isDebugMode = window.location.search.includes('debug=true');
+        }
+
+        info(message, data = {}) {
+            if (this.isDebugMode) {
+                console.log(`[${this.component}] ${message}`, data);
+            }
+        }
+
+        error(message, error = null) {
+            console.error(`[${this.component}] ${message}`, error);
+        }
+
+        warn(message, data = {}) {
+            if (this.isDebugMode) {
+                console.warn(`[${this.component}] ${message}`, data);
+            }
+        }
+    }
+
+    // 重构后的初始化函数
+    function initNewReplyCardEvents(replyCard) {
+        try {
+            // 查找AI工具按钮容器
+            const aiToolButtonsContainer = replyCard.querySelector('.ai-tool-buttons');
+            if (!aiToolButtonsContainer) {
+                console.warn('未找到AI工具按钮容器');
+                return;
+            }
+
+            // 创建AI邮件助手实例
+            const aiAssistant = new AIEmailAssistant(aiToolButtonsContainer);
+
+            // 绑定其他回复卡片事件
+            bindReplyCardEvents(replyCard, aiAssistant);
+
+        } catch (error) {
+            console.error('初始化AI邮件助手失败:', error);
+        }
+    }
+
+    // 绑定回复卡片其他事件
+    function bindReplyCardEvents(replyCard, aiAssistant) {
+        const closeBtn = replyCard.querySelector('.close-reply-btn');
+        const sendBtn = replyCard.querySelector('.send-reply-btn');
+        const emailContentInput = replyCard.querySelector('.email-content-input');
+
+        // 关闭按钮事件
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                replyCard.remove();
+            });
+        }
+
+        // 发送按钮事件
+        if (sendBtn && emailContentInput) {
+            sendBtn.addEventListener('click', () => {
+                const emailContent = emailContentInput.value.trim();
+                if (emailContent) {
+                    showEmailSentNotification('邮件回复', emailContent, false);
+                    replyCard.remove();
+                } else {
+                    alert('请输入邮件内容');
+                }
+            });
+        }
     }
 
     // 加载新的工具表单
@@ -7192,10 +8103,6 @@ ${productName} 内容合作经理`;
                 formHTML = `
                     <div class="tool-form">
                         <h5><i class="ri-money-dollar-circle-line"></i> 价格协商邮件生成</h5>
-                        <div class="email-field">
-                            <label>当前报价 (USD)</label>
-                            <input type="number" class="email-input current-price-input" placeholder="输入当前报价金额" min="0" step="0.01">
-                        </div>
                         <div class="email-field">
                             <label>期望价格 (USD)</label>
                             <input type="number" class="email-input expected-price-input" placeholder="输入期望价格金额" min="0" step="0.01">
@@ -7227,6 +8134,10 @@ ${productName} 内容合作经理`;
                                 <option value="USPS">USPS</option>
                                 <option value="其他">其他</option>
                             </select>
+                        </div>
+                        <div class="email-field custom-shipping-field" style="display: none;">
+                            <label>自定义物流公司</label>
+                            <input type="text" class="email-input custom-shipping-company-input" placeholder="请输入物流公司名称">
                         </div>
                         <div class="email-field">
                             <label>快递单号</label>
@@ -7261,19 +8172,13 @@ ${productName} 内容合作经理`;
                                 <option value="使用教程">使用教程</option>
                                 <option value="产品评测">产品评测</option>
                                 <option value="对比测试">对比测试</option>
-                                <option value="创意短片">创意短片</option>
+                                <option value="生活场景">生活场景展示</option>
+                                <option value="其他">其他</option>
                             </select>
                         </div>
-                        <div class="email-field">
-                            <label>视频时长</label>
-                            <select class="email-input video-duration-input">
-                                <option value="">选择视频时长</option>
-                                <option value="30秒-1分钟">30秒-1分钟</option>
-                                <option value="1-3分钟">1-3分钟</option>
-                                <option value="3-5分钟">3-5分钟</option>
-                                <option value="5-10分钟">5-10分钟</option>
-                                <option value="10分钟以上">10分钟以上</option>
-                            </select>
+                        <div class="email-field custom-video-type-field" style="display: none;">
+                            <label>自定义视频类型</label>
+                            <input type="text" class="email-input custom-video-type-input" placeholder="请输入视频类型">
                         </div>
                         <div class="email-field">
                             <label>特殊要求 (可选)</label>
@@ -7307,7 +8212,14 @@ ${productName} 内容合作经理`;
         }
 
         container.innerHTML = formHTML;
-        container.classList.add('expanded');
+
+        // 确保容器可见并开始动画
+        container.style.display = 'block';
+
+        // 平滑展开动画
+        setTimeout(() => {
+            container.classList.add('expanded');
+        }, 50);
 
         // 添加生成邮件内容按钮事件
         setupNewFormEvents(container, toolId, emailContentInput);
@@ -7327,6 +8239,40 @@ ${productName} 内容合作经理`;
                 }
             });
         }
+
+        // 为物流通知工具添加物流公司选择事件
+        if (toolId === 'shipping-notification') {
+            const shippingCompanySelect = container.querySelector('.shipping-company-input');
+            const customShippingField = container.querySelector('.custom-shipping-field');
+
+            if (shippingCompanySelect && customShippingField) {
+                shippingCompanySelect.addEventListener('change', function() {
+                    if (this.value === '其他') {
+                        customShippingField.style.display = 'block';
+                    } else {
+                        customShippingField.style.display = 'none';
+                        container.querySelector('.custom-shipping-company-input').value = '';
+                    }
+                });
+            }
+        }
+
+        // 为视频脚本工具添加视频类型选择事件
+        if (toolId === 'video-script') {
+            const videoTypeSelect = container.querySelector('.video-type-input');
+            const customVideoTypeField = container.querySelector('.custom-video-type-field');
+
+            if (videoTypeSelect && customVideoTypeField) {
+                videoTypeSelect.addEventListener('change', function() {
+                    if (this.value === '其他') {
+                        customVideoTypeField.style.display = 'block';
+                    } else {
+                        customVideoTypeField.style.display = 'none';
+                        container.querySelector('.custom-video-type-input').value = '';
+                    }
+                });
+            }
+        }
     }
 
     // 从表单生成邮件内容
@@ -7339,22 +8285,31 @@ ${productName} 内容合作经理`;
 
         switch (toolId) {
             case 'price-negotiation':
-                const currentPrice = container.querySelector('.current-price-input').value;
                 const expectedPrice = container.querySelector('.expected-price-input').value;
                 const reason = container.querySelector('.negotiation-reason-input').value;
 
-                if (!currentPrice || !expectedPrice) {
-                    alert('请填写当前报价和期望价格');
+                if (!expectedPrice) {
+                    alert('请填写期望价格');
                     return null;
                 }
 
-                return generatePriceNegotiationContent(creatorName, productName, currentPrice, expectedPrice, reason);
+                return generatePriceNegotiationContent(creatorName, productName, null, expectedPrice, reason);
 
             case 'shipping-notification':
-                const company = container.querySelector('.shipping-company-input').value;
+                let company = container.querySelector('.shipping-company-input').value;
                 const trackingNumber = container.querySelector('.tracking-number-input').value;
                 const estimatedDelivery = container.querySelector('.estimated-delivery-input').value;
                 const notes = container.querySelector('.shipping-notes-input').value;
+
+                // 如果选择了"其他"，使用自定义物流公司名称
+                if (company === '其他') {
+                    const customCompany = container.querySelector('.custom-shipping-company-input').value;
+                    if (!customCompany.trim()) {
+                        alert('请输入自定义物流公司名称');
+                        return null;
+                    }
+                    company = customCompany.trim();
+                }
 
                 if (!company || !trackingNumber || !estimatedDelivery) {
                     alert('请填写物流公司、快递单号和预计到达时间');
@@ -7364,16 +8319,25 @@ ${productName} 内容合作经理`;
                 return generateShippingNotificationContent(creatorName, productName, company, trackingNumber, estimatedDelivery, notes);
 
             case 'video-script':
-                const videoType = container.querySelector('.video-type-input').value;
-                const duration = container.querySelector('.video-duration-input').value;
+                let videoType = container.querySelector('.video-type-input').value;
                 const requirements = container.querySelector('.video-requirements-input').value;
 
-                if (!videoType || !duration) {
-                    alert('请选择视频类型和时长');
+                // 如果选择了"其他"，使用自定义视频类型
+                if (videoType === '其他') {
+                    const customVideoType = container.querySelector('.custom-video-type-input').value;
+                    if (!customVideoType.trim()) {
+                        alert('请输入自定义视频类型');
+                        return null;
+                    }
+                    videoType = customVideoType.trim();
+                }
+
+                if (!videoType) {
+                    alert('请选择或输入视频类型');
                     return null;
                 }
 
-                return generateVideoScriptContent(creatorName, productName, videoType, duration, requirements);
+                return generateVideoScriptContent(creatorName, productName, videoType, null, requirements);
 
             case 'custom':
                 const customContent = container.querySelector('.custom-content-input').value.trim();
@@ -7490,7 +8454,7 @@ ${productName} 内容合作经理`;
         }
 
         // 显示邮件发送成功提示
-        showEmailSentNotification(subject, content);
+        showEmailSentNotification(subject, content, false);
 
         // 移除回复卡片
         container.closest('.reply-card').remove();
@@ -7502,13 +8466,19 @@ ${productName} 内容合作经理`;
 
 感谢您对我们 ${productName} 的关注和初步合作意向。
 
-关于合作费用，我们理解您提出的 $${currentPrice} 的报价。基于我们的预算考虑`;
+关于合作费用，`;
+
+        if (currentPrice) {
+            content += `我们理解您提出的 $${currentPrice} 的报价。`;
+        }
+
+        content += `基于我们的预算考虑`;
 
         if (reason.trim()) {
             content += `和${reason.trim()}`;
         }
 
-        content += `，我们希望能够将合作费用调整到 $${expectedPrice} 左右。
+        content += `，我们希望能够将合作费用设定在 $${expectedPrice} 左右。
 
 我们相信这个价格既能体现您的专业价值，也符合我们当前的市场推广预算。我们非常期待与您建立长期的合作关系，并愿意在其他方面提供额外的支持。
 
@@ -7577,10 +8547,13 @@ ${productName} 产品运营经理`;
 
 感谢您同意为我们的 ${productName} 制作${videoType}！为了帮助您创作出更优质的内容，我们为您准备了一些脚本建议和拍摄要点。
 
-🎬 视频类型：${videoType}
-⏱️ 建议时长：${duration}
+🎬 视频类型：${videoType}`;
 
-📝 脚本建议：`;
+        if (duration) {
+            content += `\n⏱️ 建议时长：${duration}`;
+        }
+
+        content += `\n\n📝 脚本建议：`;
 
         // 根据视频类型生成不同的脚本建议
         switch(videoType) {
@@ -7697,7 +8670,7 @@ ${productName} 产品运营经理`;
     }
 
     // 显示邮件发送成功通知
-    function showEmailSentNotification(subject, content) {
+    function showEmailSentNotification(subject, content, addToTimeline = true) {
         // 创建通知元素
         const notification = document.createElement('div');
         notification.className = 'email-sent-notification';
@@ -7743,10 +8716,240 @@ ${productName} 产品运营经理`;
                 notification.remove();
             }
         }, 3000);
+
+        // 只有在明确指定时才添加到时间线，避免重复
+        if (addToTimeline) {
+            addEmailToTimeline(subject, content);
+        }
+    }
+
+    // 添加邮件到时间线
+    function addEmailToTimeline(subject, content) {
+        const timeline = document.querySelector('.communication-timeline');
+        if (!timeline) return;
+
+        // 获取当前时间
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}`;
+        const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+        // 获取当前用户邮箱（从配置中获取，这里使用示例）
+        const userEmail = 'user@example.com'; // 在实际应用中应该从用户配置获取
+
+        // 创建新的时间线项目HTML
+        const newTimelineItem = `
+            <div class="timeline-item synced-email new-email new-email-slide-in" data-email-direction="outbound">
+                <div class="timeline-avatar">我</div>
+                <div class="timeline-content">
+                    <div class="timeline-inner-content">
+                        <div class="timeline-title">邮件回复 (刚刚发送)</div>
+                        <!-- 邮件意图和摘要 - 发送邮件不显示 -->
+                        <div class="email-intent-summary" style="display: none;">
+                            <span class="email-intent-tag reply">AI回复</span>
+                            <div class="email-summary">使用AI助手生成的邮件回复内容</div>
+                        </div>
+                        <div class="timeline-meta">发往: ${getCurrentCreatorEmail()} · ${dateStr} ${timeStr}</div>
+                        <div class="timeline-body">
+                            <div class="email-content">
+                                <div class="email-text">${content.replace(/\n/g, '<br>')}</div>
+                            </div>
+                            <div class="timeline-actions">
+                                <button class="timeline-action-btn">
+                                    <i class="ri-file-copy-line"></i> 复制内容
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // 插入到时间线顶部（最新邮件在最上面）
+        timeline.insertAdjacentHTML('afterbegin', newTimelineItem);
+
+        // 为新添加的邮件项目绑定回复按钮事件
+        const newItem = timeline.querySelector('.timeline-item.new-email');
+        if (newItem) {
+            // 移除new-email类，避免重复绑定
+            newItem.classList.remove('new-email');
+
+            // 绑定回复按钮事件
+            const replyBtn = newItem.querySelector('.reply-btn');
+            if (replyBtn) {
+                replyBtn.addEventListener('click', function() {
+                    const emailDirection = newItem.getAttribute('data-email-direction');
+
+                    // 只允许对接收到的邮件进行回复
+                    if (emailDirection === 'inbound') {
+                        showReplyCard(newItem);
+                    } else {
+                        console.log('不能回复发送的邮件');
+                    }
+                });
+            }
+
+            // 绑定复制按钮事件
+            const copyBtn = newItem.querySelector('.timeline-action-btn:last-child');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    navigator.clipboard.writeText(content).then(() => {
+                        // 显示复制成功提示
+                        showCopySuccessNotification();
+                    });
+                });
+            }
+
+            // 添加新邮件高亮动画和滑入效果
+            newItem.style.animation = 'newEmailSlideInHighlight 0.8s ease-out';
+
+            // 自动滚动到时间轴顶部
+            scrollToTimelineTop();
+
+            // 添加视觉高亮提示，持续2-3秒
+            setTimeout(() => {
+                newItem.classList.add('highlight-new-email');
+
+                // 3秒后移除高亮效果
+                setTimeout(() => {
+                    newItem.classList.remove('highlight-new-email');
+                }, 3000);
+            }, 500); // 等待滑入动画完成后再高亮
+        }
+    }
+
+    // 滚动到时间轴顶部的函数
+    function scrollToTimelineTop() {
+        // 查找可滚动的容器
+        const scrollContainer = document.querySelector('.detail-scroll-container');
+        const timeline = document.querySelector('.communication-timeline');
+
+        if (scrollContainer && timeline) {
+            // 使用平滑滚动到时间轴顶部
+            scrollContainer.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+
+            // 备用方案：如果上面的方法不工作，尝试滚动到时间轴元素
+            setTimeout(() => {
+                timeline.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                    inline: 'nearest'
+                });
+            }, 100);
+        }
+    }
+
+    // 获取当前创作者邮箱
+    function getCurrentCreatorEmail() {
+        const creatorEmailElement = document.querySelector('.detail-creator-email');
+        if (creatorEmailElement) {
+            return creatorEmailElement.textContent.trim();
+        }
+
+        // 如果找不到，尝试从其他地方获取
+        const timelineMeta = document.querySelector('.timeline-meta');
+        if (timelineMeta && timelineMeta.textContent.includes('@')) {
+            const emailMatch = timelineMeta.textContent.match(/[\w.-]+@[\w.-]+\.\w+/);
+            return emailMatch ? emailMatch[0] : 'contact@creator.com';
+        }
+
+        return 'contact@creator.com'; // 默认值
+    }
+
+    // 显示复制成功通知
+    function showCopySuccessNotification() {
+        const notification = document.createElement('div');
+        notification.className = 'copy-success-notification';
+        notification.textContent = '✅ 内容已复制到剪贴板';
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success-color, #10b981);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 2000);
     }
 
     // 初始化回复按钮
     initReplyButtons();
+
+    // 初始化邮件方向控制
+    initEmailDirectionControl();
+
+    // 初始化合作流程进度条
+    initCollaborationProgress();
+
+    // 初始化审核完成按钮
+    initReviewCompleteButton();
+
+    // 初始化现有的AI助手按钮（如果页面中已经存在）
+    initExistingAIAssistantButtons();
+
+    // 添加调试功能（开发环境使用）
+    window.debugAIAssistant = function() {
+        console.log('=== AI助手调试信息 ===');
+        const aiButtons = document.querySelectorAll('.ai-assistant-btn');
+        const dropdownMenus = document.querySelectorAll('.ai-tool-dropdown-menu');
+        const replyCards = document.querySelectorAll('.reply-card');
+
+        console.log('找到AI助手按钮数量:', aiButtons.length);
+        console.log('找到下拉菜单数量:', dropdownMenus.length);
+        console.log('找到回复卡片数量:', replyCards.length);
+
+        aiButtons.forEach((btn, index) => {
+            console.log(`按钮 ${index + 1}:`, btn);
+            const dropdown = btn.parentElement.querySelector('.ai-tool-dropdown-menu');
+            console.log(`对应下拉菜单:`, dropdown);
+        });
+    };
+
+    // 测试时间线排序功能
+    window.testTimelineOrdering = function() {
+        console.log('=== 测试时间线排序功能 ===');
+        const timeline = document.querySelector('.communication-timeline');
+        if (timeline) {
+            const timelineItems = timeline.querySelectorAll('.timeline-item');
+            console.log('当前时间线项目数量:', timelineItems.length);
+
+            timelineItems.forEach((item, index) => {
+                const title = item.querySelector('.timeline-title')?.textContent;
+                const meta = item.querySelector('.timeline-meta')?.textContent;
+                console.log(`项目 ${index + 1}: ${title} - ${meta}`);
+            });
+
+            // 模拟发送一封测试邮件
+            addEmailToTimeline('测试邮件', '这是一封测试邮件，用于验证时间线排序功能是否正常工作。');
+            console.log('已添加测试邮件到时间线顶部');
+        } else {
+            console.log('未找到时间线容器');
+        }
+    };
+
+    // 测试邮件输入框高度
+    window.testTextareaHeight = function() {
+        console.log('=== 测试邮件输入框高度 ===');
+        const textareas = document.querySelectorAll('.email-content-input');
+        textareas.forEach((textarea, index) => {
+            const computedStyle = window.getComputedStyle(textarea);
+            console.log(`输入框 ${index + 1}:`);
+            console.log('- 高度:', computedStyle.height);
+            console.log('- 最小高度:', computedStyle.minHeight);
+            console.log('- 行数:', textarea.rows);
+        });
+    };
 
 }); // 闭合 document.addEventListener('DOMContentLoaded', function() {
 
@@ -7886,4 +9089,186 @@ function updateEmailIntentDisplay(intent, badge, description) {
 
     // 更新描述
     description.textContent = intent.description;
+}
+
+// 合作流程进度编辑功能
+let isEditingProgress = false;
+let originalProgressState = null;
+let selectedProgressStep = null;
+
+// 切换进度编辑模式
+function toggleProgressEdit() {
+    const progressTimeline = document.getElementById('progress-timeline');
+    const editBtn = document.querySelector('.edit-progress-btn');
+    const saveBtn = document.querySelector('.save-progress-btn');
+    const cancelBtn = document.querySelector('.cancel-progress-btn');
+
+    if (!isEditingProgress) {
+        // 进入编辑模式
+        isEditingProgress = true;
+        progressTimeline.classList.add('editing');
+
+        // 保存原始状态
+        originalProgressState = getCurrentProgressState();
+
+        // 切换按钮显示
+        editBtn.style.display = 'none';
+        saveBtn.style.display = 'flex';
+        cancelBtn.style.display = 'flex';
+
+        // 显示提示信息
+        showProgressEditTip();
+    }
+}
+
+// 选择进度步骤
+function selectProgressStep(stepElement) {
+    if (!isEditingProgress) return;
+
+    // 移除之前的选中状态
+    document.querySelectorAll('.progress-step').forEach(step => {
+        step.classList.remove('selected');
+    });
+
+    // 添加选中状态
+    stepElement.classList.add('selected');
+    selectedProgressStep = stepElement;
+
+    // 更新进度显示
+    updateProgressDisplay(stepElement);
+}
+
+// 更新进度显示
+function updateProgressDisplay(selectedStep) {
+    const allSteps = document.querySelectorAll('.progress-step');
+    const selectedIndex = Array.from(allSteps).indexOf(selectedStep);
+
+    allSteps.forEach((step, index) => {
+        step.classList.remove('completed', 'current', 'pending');
+
+        if (index < selectedIndex) {
+            step.classList.add('completed');
+        } else if (index === selectedIndex) {
+            step.classList.add('current');
+        } else {
+            step.classList.add('pending');
+        }
+    });
+}
+
+// 保存进度更改
+function saveProgressChanges() {
+    if (!selectedProgressStep) {
+        alert('请选择一个进度步骤');
+        return;
+    }
+
+    // 这里可以添加保存到服务器的逻辑
+    const stageName = selectedProgressStep.getAttribute('data-stage');
+    const stageLabel = selectedProgressStep.querySelector('.step-label').textContent;
+
+    console.log('保存进度更改:', stageName, stageLabel);
+
+    // 退出编辑模式
+    exitProgressEditMode();
+
+    // 显示成功提示
+    showProgressSaveSuccess(stageLabel);
+}
+
+// 取消进度编辑
+function cancelProgressEdit() {
+    if (originalProgressState) {
+        // 恢复原始状态
+        restoreProgressState(originalProgressState);
+    }
+
+    exitProgressEditMode();
+}
+
+// 退出编辑模式
+function exitProgressEditMode() {
+    const progressTimeline = document.getElementById('progress-timeline');
+    const editBtn = document.querySelector('.edit-progress-btn');
+    const saveBtn = document.querySelector('.save-progress-btn');
+    const cancelBtn = document.querySelector('.cancel-progress-btn');
+
+    isEditingProgress = false;
+    progressTimeline.classList.remove('editing');
+
+    // 移除选中状态
+    document.querySelectorAll('.progress-step').forEach(step => {
+        step.classList.remove('selected');
+    });
+
+    // 切换按钮显示
+    editBtn.style.display = 'flex';
+    saveBtn.style.display = 'none';
+    cancelBtn.style.display = 'none';
+
+    // 清理状态
+    selectedProgressStep = null;
+    originalProgressState = null;
+
+    // 隐藏提示信息
+    hideProgressEditTip();
+}
+
+// 获取当前进度状态
+function getCurrentProgressState() {
+    const steps = document.querySelectorAll('.progress-step');
+    const state = [];
+
+    steps.forEach(step => {
+        state.push({
+            element: step,
+            classes: Array.from(step.classList)
+        });
+    });
+
+    return state;
+}
+
+// 恢复进度状态
+function restoreProgressState(state) {
+    state.forEach(stepState => {
+        stepState.element.className = stepState.classes.join(' ');
+    });
+}
+
+// 显示编辑提示
+function showProgressEditTip() {
+    // 创建提示元素
+    const tip = document.createElement('div');
+    tip.className = 'progress-edit-tip';
+    tip.innerHTML = '<i class="ri-information-line"></i> 点击任意步骤来设置当前进度';
+
+    const progressContainer = document.querySelector('.collaboration-progress-container');
+    progressContainer.appendChild(tip);
+}
+
+// 隐藏编辑提示
+function hideProgressEditTip() {
+    const tip = document.querySelector('.progress-edit-tip');
+    if (tip) {
+        tip.remove();
+    }
+}
+
+// 显示保存成功提示
+function showProgressSaveSuccess(stageLabel) {
+    // 创建成功提示
+    const successTip = document.createElement('div');
+    successTip.className = 'progress-save-success';
+    successTip.innerHTML = `<i class="ri-check-line"></i> 进度已更新至：${stageLabel}`;
+
+    const progressContainer = document.querySelector('.collaboration-progress-container');
+    progressContainer.appendChild(successTip);
+
+    // 3秒后自动移除
+    setTimeout(() => {
+        if (successTip.parentNode) {
+            successTip.remove();
+        }
+    }, 3000);
 }
