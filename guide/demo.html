@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨境运营助手 - 新手引导演示</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="guide-styles.css">
+    <style>
+        /* 模拟应用界面的基础样式 */
+        :root {
+            /* CSS变量系统 - 主题色彩 */
+            --primary-color: #3b82f6;
+            --primary-dark: #1e40af;
+            --primary-light: #93c5fd;
+            --primary-pale: #eff6ff;
+            --primary-hover: #2563eb;
+            
+            /* 语义化状态色系 */
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --info-color: #3b82f6;
+            
+            /* 文本色系 */
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-tertiary: #9ca3af;
+            --text-disabled: #d1d5db;
+            --text-inverse: #ffffff;
+            
+            /* 背景色系 */
+            --background-color: #f9fafb;
+            --background-alt: #ffffff;
+            --surface-color: #ffffff;
+            --surface-hover: #f3f4f6;
+            --surface-active: #e5e7eb;
+            
+            /* 边框色系 */
+            --border-color: #e5e7eb;
+            --border-light: #f3f4f6;
+            --border-hover: #d1d5db;
+            
+            /* 阴影和效果 */
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-hover: rgba(0, 0, 0, 0.15);
+            
+            /* 间距和字体 */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-base: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            
+            --font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            
+            --radius-base: 0.5rem;
+            --radius-lg: 0.75rem;
+            
+            --animation-duration: 0.2s;
+            --animation-easing: ease-in-out;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        /* 应用布局 */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            width: 250px;
+            background: var(--surface-color);
+            border-right: 1px solid var(--border-color);
+            padding: var(--spacing-base);
+            flex-shrink: 0;
+            box-shadow: 2px 0 4px var(--shadow-color);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-base) 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        
+        .logo-text {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-base);
+            margin-bottom: var(--spacing-xs);
+            border-radius: var(--radius-base);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--animation-duration) var(--animation-easing);
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            background: var(--surface-hover);
+            color: var(--text-primary);
+        }
+        
+        .menu-item.active {
+            background: var(--primary-pale);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* AI助手菜单特殊样式 */
+        #ai-assistant-menu {
+            background: linear-gradient(135deg, var(--primary-pale), #ecfdf5);
+            border: 1px solid var(--primary-light);
+            font-weight: 600;
+        }
+        
+        #ai-assistant-menu:hover {
+            background: linear-gradient(135deg, var(--primary-light), #d1fae5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--shadow-hover);
+        }
+        
+        #ai-assistant-menu i {
+            color: var(--success-color);
+        }
+        
+        /* 主内容区域 */
+        .main-content {
+            flex: 1;
+            padding: var(--spacing-xl);
+            background: var(--background-color);
+        }
+        
+        /* 页面头部 */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-base);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-base);
+        }
+        
+        .notification-btn, .avatar {
+            padding: var(--spacing-sm);
+            border-radius: var(--radius-base);
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all var(--animation-duration) var(--animation-easing);
+        }
+        
+        .notification-btn:hover, .avatar:hover {
+            background: var(--surface-hover);
+            transform: translateY(-1px);
+        }
+        
+        /* 仪表盘卡片 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--surface-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px var(--shadow-color);
+            transition: all var(--animation-duration) var(--animation-easing);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px var(--shadow-hover);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-base);
+            font-size: 1.5rem;
+        }
+        
+        .stat-icon.blue { background: var(--primary-pale); color: var(--primary-color); }
+        .stat-icon.green { background: #ecfdf5; color: var(--success-color); }
+        .stat-icon.purple { background: #f3e8ff; color: #8b5cf6; }
+        .stat-icon.orange { background: #fff7ed; color: var(--warning-color); }
+        
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* AI助手区域 */
+        .ai-assistant-section {
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-base);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .ai-header i {
+            font-size: 2rem;
+            color: var(--success-color);
+        }
+        
+        .ai-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .new-chat {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: var(--primary-color);
+            color: var(--text-inverse);
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-base);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all var(--animation-duration) var(--animation-easing);
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-base);
+        }
+        
+        .new-chat:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .new-chat:active {
+            transform: translateY(0);
+        }
+        
+        /* 引导提示 */
+        .guide-hint {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            border-radius: var(--radius-base);
+            padding: var(--spacing-base);
+            margin-top: var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .guide-hint i {
+            color: var(--warning-color);
+            font-size: 1.2rem;
+        }
+        
+        .guide-hint-text {
+            color: #92400e;
+            font-weight: 500;
+        }
+        
+        .start-guide-btn {
+            background: var(--warning-color);
+            color: var(--text-inverse);
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-base);
+            border-radius: var(--radius-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--animation-duration) var(--animation-easing);
+            margin-left: var(--spacing-sm);
+        }
+        
+        .start-guide-btn:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .main-content {
+                padding: var(--spacing-base);
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-base);
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: var(--spacing-base);
+                align-items: flex-start;
+            }
+        }
+        
+        /* 模拟内容的淡化效果 */
+        .demo-overlay {
+            position: relative;
+        }
+        
+        .demo-overlay::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(255,255,255,0.1), 
+                rgba(255,255,255,0.3), 
+                rgba(255,255,255,0.1));
+            pointer-events: none;
+            border-radius: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 侧边栏 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-globe"></i>
+                <span class="logo-text">跨境运营助手</span>
+            </div>
+            
+            <div class="menu">
+                <a href="#" class="menu-item active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>仪表盘</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-box"></i>
+                    <span>产品库</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-users"></i>
+                    <span>建联记录</span>
+                </a>
+                <a href="#" class="menu-item" id="ai-assistant-menu">
+                    <i class="fas fa-robot"></i>
+                    <span>AI助手</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </a>
+            </div>
+        </nav>
+        
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 页面头部 -->
+            <header class="page-header">
+                <h1 class="page-title">仪表盘总览</h1>
+                <div class="user-menu">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- 数据统计卡片 -->
+            <section class="dashboard-grid">
+                <div class="stat-card demo-overlay">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="stat-value">156</div>
+                    <div class="stat-label">活跃合作数量</div>
+                </div>
+                
+                <div class="stat-card demo-overlay">
+                    <div class="stat-icon green">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <div class="stat-value">68%</div>
+                    <div class="stat-label">邮件回复率</div>
+                </div>
+                
+                <div class="stat-card demo-overlay">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-trending-up"></i>
+                    </div>
+                    <div class="stat-value">2.3M</div>
+                    <div class="stat-label">潜在触达量</div>
+                </div>
+                
+                <div class="stat-card demo-overlay">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-calendar-week"></i>
+                    </div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">本周新增建联</div>
+                </div>
+            </section>
+            
+            <!-- AI助手区域 -->
+            <section class="ai-assistant-section">
+                <div class="ai-header">
+                    <i class="fas fa-robot"></i>
+                    <h2 class="ai-title">AI智能助手</h2>
+                </div>
+                
+                <p style="color: var(--text-secondary); margin-bottom: var(--spacing-lg);">
+                    使用AI分析您的产品，获得精准的博主推荐和专业的建联邮件模板
+                </p>
+                
+                <button class="new-chat">
+                    <i class="fas fa-plus"></i>
+                    <span>新建商品分析</span>
+                </button>
+                
+                <!-- 引导提示 -->
+                <div class="guide-hint">
+                    <i class="fas fa-lightbulb"></i>
+                    <span class="guide-hint-text">首次使用？让我们为您介绍平台功能</span>
+                    <button class="start-guide-btn" id="start-guide">开始引导</button>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- 引导相关脚本 -->
+    <script src="guide-config.js"></script>
+    <script src="onboarding-guide.js"></script>
+    <script>
+        // 页面加载完成后初始化引导
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // 创建引导实例
+                const guide = new OnboardingGuide(ONBOARDING_CONFIG);
+
+                // 全局暴露引导实例以便调试
+                window.guideInstance = guide;
+
+                // 监听引导事件
+                document.addEventListener('guide:start', function(e) {
+                    console.log('引导开始:', e.detail);
+                });
+
+                document.addEventListener('guide:complete', function(e) {
+                    console.log('引导完成:', e.detail);
+                    // 可以在这里添加完成后的操作
+                });
+
+                document.addEventListener('guide:stop', function(e) {
+                    console.log('引导停止:', e.detail);
+                    if (e.detail.performanceMetrics) {
+                        console.log('性能报告:', e.detail.performanceMetrics);
+                    }
+                });
+
+                // 检查是否应该自动启动引导
+                if (guide.shouldShowGuide()) {
+                    setTimeout(() => {
+                        guide.start();
+                    }, 1000); // 延迟1秒启动，让页面完全加载
+                }
+
+                // 手动启动引导按钮
+                const startButton = document.getElementById('start-guide');
+                if (startButton) {
+                    startButton.addEventListener('click', function() {
+                        guide.restart();
+                    });
+                }
+
+                // 添加键盘快捷键支持（Ctrl+H 启动引导）
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey && e.key === 'h') {
+                        e.preventDefault();
+                        guide.restart();
+                    }
+                });
+
+            } catch (error) {
+                console.error('初始化引导系统失败:', error);
+                // 显示友好的错误提示
+                const errorDiv = document.createElement('div');
+                errorDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #fee2e2;
+                    border: 1px solid #fecaca;
+                    color: #991b1b;
+                    padding: 12px 16px;
+                    border-radius: 8px;
+                    font-size: 14px;
+                    z-index: 10000;
+                `;
+                errorDiv.textContent = '引导系统初始化失败，请刷新页面重试';
+                document.body.appendChild(errorDiv);
+
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html> 

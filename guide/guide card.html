@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨境运营助手 - 新手引导</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 50%, #2b2d42 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .guide-card {
+            background: rgba(45, 55, 72, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 
+                0 4px 24px rgba(0, 0, 0, 0.15),
+                0 8px 64px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            color: white;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 1px;
+        }
+
+        .close-btn::before {
+            transform: rotate(45deg);
+        }
+
+        .close-btn::after {
+            transform: rotate(-45deg);
+        }
+
+        .header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .icon-container {
+            background: linear-gradient(135deg, #7c3aed, #6366f1);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 24px;
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3);
+        }
+
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 8px;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .feature-item::before {
+            content: '•';
+            color: #7c3aed;
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .progress-section {
+            margin: 24px 0;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 50%;
+            background: linear-gradient(90deg, #7c3aed, #6366f1);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed, #6366f1);
+            color: white;
+            border: none;
+            box-shadow: 0 2px 8px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.4);
+        }
+
+        .skip-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: underline;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: auto;
+            transition: color 0.2s ease;
+        }
+
+        .skip-link:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 600px) {
+            .guide-card {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            .header {
+                gap: 12px;
+            }
+
+            .icon-container {
+                width: 56px;
+                height: 56px;
+                font-size: 20px;
+            }
+
+            .title {
+                font-size: 18px;
+            }
+
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .skip-link {
+                margin-left: 0;
+                text-align: center;
+                margin-top: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-card">
+        <button class="close-btn" aria-label="关闭引导"></button>
+        
+        <div class="header">
+            <div class="icon-container">
+                🤖
+            </div>
+            <div class="content">
+                <h2 class="title">AI助手</h2>
+                <p class="description">这是我们的核心功能！AI助手可以帮您：</p>
+                <ul class="feature-list">
+                    <li class="feature-item">分析产品 - 智能解析商品特点</li>
+                    <li class="feature-item">推荐博主 - 匹配合适的合作伙伴</li>
+                    <li class="feature-item">生成邮件 - 个性化沟通模板</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-text">第 6 步，共 12 步</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-secondary">上一步</button>
+            <button class="btn btn-primary">下一步</button>
+            <span class="skip-link">跳过引导</span>
+        </div>
+    </div>
+
+    <script>
+        // 添加一些交互效果
+        document.querySelector('.close-btn').addEventListener('click', function() {
+            document.querySelector('.guide-card').style.transform = 'scale(0.9)';
+            document.querySelector('.guide-card').style.opacity = '0';
+            setTimeout(() => {
+                alert('引导已关闭');
+                location.reload();
+            }, 200);
+        });
+
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const progressFill = document.querySelector('.progress-fill');
+            const progressText = document.querySelector('.progress-text');
+            
+            // 模拟进入下一步
+            progressFill.style.width = '58.33%'; // 7/12
+            progressText.textContent = '第 7 步，共 12 步';
+            
+            // 添加按钮点击反馈
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 100);
+        });
+
+        document.querySelector('.btn-secondary').addEventListener('click', function() {
+            const progressFill = document.querySelector('.progress-fill');
+            const progressText = document.querySelector('.progress-text');
+            
+            // 模拟返回上一步
+            progressFill.style.width = '41.67%'; // 5/12
+            progressText.textContent = '第 5 步，共 12 步';
+            
+            // 添加按钮点击反馈
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 100);
+        });
+
+        document.querySelector('.skip-link').addEventListener('click', function() {
+            if (confirm('确定要跳过新手引导吗？')) {
+                document.querySelector('.guide-card').style.transform = 'translateY(-20px)';
+                document.querySelector('.guide-card').style.opacity = '0';
+                setTimeout(() => {
+                    alert('已跳过新手引导');
+                    location.reload();
+                }, 200);
+            }
+        });
+
+        // 添加键盘支持
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'Escape':
+                    document.querySelector('.close-btn').click();
+                    break;
+                case 'ArrowLeft':
+                    document.querySelector('.btn-secondary').click();
+                    break;
+                case 'ArrowRight':
+                case 'Enter':
+                    document.querySelector('.btn-primary').click();
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,619 @@
+/* 深色主题经典黑暗模式 */
+
+/* 登录页面背景 - 深蓝紫渐变 */
+[data-theme="professional"] #login-page,
+[data-theme="professional"] #google-auth-page,
+[data-theme="professional"] #auth-request-page {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    min-height: 100vh;
+}
+
+/* 主应用页面背景 - 深蓝紫渐变 */
+[data-theme="professional"] body,
+[data-theme="professional"] #app {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh;
+}
+
+/* 登录卡片背景和边框效果 - 半透明玻璃效果 */
+[data-theme="professional"] .login-card,
+[data-theme="professional"] .google-auth-card,
+[data-theme="professional"] .auth-request-card {
+    background: rgba(26, 26, 46, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+    border-radius: 16px !important;
+}
+
+/* 侧边栏背景调整 - 半透明效果 */
+[data-theme="professional"] .sidebar {
+    background: rgba(26, 26, 46, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 内容区域背景调整 */
+[data-theme="professional"] .main-content {
+    background: transparent;
+}
+
+/* 卡片和面板背景调整 - 半透明玻璃效果 */
+[data-theme="professional"] .card,
+[data-theme="professional"] .panel,
+[data-theme="professional"] .modal-content,
+[data-theme="professional"] .dropdown-menu {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 表格背景调整 - 现代化设计 */
+[data-theme="professional"] .table-container {
+    background: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(15px);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+[data-theme="professional"] table {
+    background: transparent;
+}
+
+[data-theme="professional"] table thead th {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="professional"] table tbody tr {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(2px);
+}
+
+[data-theme="professional"] table tbody td {
+    color: rgba(255, 255, 255, 0.9);
+    padding: 16px;
+    border: none;
+}
+
+/* 按钮样式调整 - 现代化设计 */
+[data-theme="professional"] .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 600;
+    color: white;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] .btn-primary:hover {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+}
+
+/* 输入框样式调整 - 现代化设计 */
+[data-theme="professional"] input,
+[data-theme="professional"] textarea,
+[data-theme="professional"] select {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+/* 登录页面输入框的例外规则 - 移除多余边框 */
+[data-theme="professional"] .login-input-wrapper .login-input-new {
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+[data-theme="professional"] input::placeholder,
+[data-theme="professional"] textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="professional"] input:focus,
+[data-theme="professional"] textarea:focus,
+[data-theme="professional"] select:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    outline: none;
+}
+
+/* 登录页面输入框焦点状态的例外规则 */
+[data-theme="professional"] .login-input-wrapper .login-input-new:focus {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* 菜单项悬停效果 - 现代化设计 */
+[data-theme="professional"] .menu-item:hover .menu-item-content {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    transform: translateX(2px);
+}
+
+[data-theme="professional"] .menu-item.active .menu-item-content {
+    background: rgba(59, 130, 246, 0.15);
+    border-radius: 8px;
+    border-left: 3px solid #3b82f6;
+    padding-left: 9px;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* 菜单项图标和文字样式 */
+[data-theme="professional"] .menu-item {
+    margin-bottom: 6px;
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] .menu-item-content {
+    padding: 12px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] .menu-item span {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+[data-theme="professional"] .menu-item.active span {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+[data-theme="professional"] .menu-item:hover span {
+    color: #ffffff;
+}
+
+/* 徽章和标签调整 - 现代化设计 */
+[data-theme="professional"] .badge,
+[data-theme="professional"] .tag {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* 成功状态颜色调整 */
+[data-theme="professional"] .badge-success,
+[data-theme="professional"] .tag-success {
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: white;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+/* 警告状态颜色调整 */
+[data-theme="professional"] .badge-warning,
+[data-theme="professional"] .tag-warning {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: white;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
+/* 错误状态颜色调整 */
+[data-theme="professional"] .badge-error,
+[data-theme="professional"] .tag-error {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+/* 主要徽章样式 */
+[data-theme="professional"] .badge-primary {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: white;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* 移除渐变动画效果，使用简洁的样式 */
+
+/* 滚动条样式 */
+[data-theme="professional"] ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+[data-theme="professional"] ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+[data-theme="professional"] ::-webkit-scrollbar-thumb {
+    background: #555555;
+    border-radius: 4px;
+}
+
+[data-theme="professional"] ::-webkit-scrollbar-thumb:hover {
+    background: #666666;
+}
+
+/* 统计卡片样式 - 现代化设计 */
+[data-theme="professional"] .stat-card {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="professional"] .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(26, 26, 46, 0.9);
+}
+
+/* 统计卡片图标样式 */
+[data-theme="professional"] .stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 20px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 统计卡片数值样式 */
+[data-theme="professional"] .stat-card .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+/* 统计卡片标题样式 */
+[data-theme="professional"] .stat-card .stat-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 12px;
+}
+
+/* 统计卡片变化指示器 */
+[data-theme="professional"] .stat-card .stat-change {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+[data-theme="professional"] .stat-card .stat-change.positive {
+    color: #4ade80;
+}
+
+[data-theme="professional"] .stat-card .stat-change.negative {
+    color: #f87171;
+}
+
+/* 彩色图标背景 */
+[data-theme="professional"] .stat-icon.blue {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+[data-theme="professional"] .stat-icon.green {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+[data-theme="professional"] .stat-icon.orange {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+[data-theme="professional"] .stat-icon.purple {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+}
+
+/* 图表容器背景 */
+[data-theme="professional"] .chart-container {
+    background: #2a2a2a;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+/* 模态框背景 */
+[data-theme="professional"] .modal-backdrop {
+    background: rgba(26, 26, 46, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+/* 选项卡样式 - 现代化设计 */
+[data-theme="professional"] .tab-item {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 12px 16px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+[data-theme="professional"] .tab-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+}
+
+[data-theme="professional"] .tab-item.active {
+    background: rgba(59, 130, 246, 0.2);
+    color: #ffffff;
+    border-bottom: 2px solid #3b82f6;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* 通知样式 */
+[data-theme="professional"] .notification-dropdown {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="professional"] .notification-item {
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] .notification-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateX(2px);
+}
+
+[data-theme="professional"] .notification-item.unread {
+    background: rgba(59, 130, 246, 0.1);
+    border-left: 3px solid #3b82f6;
+}
+
+/* 侧边栏头部标题样式 */
+[data-theme="professional"] .sidebar-logo {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 16px;
+}
+
+[data-theme="professional"] .sidebar-logo h1 {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* 菜单部分标题 */
+[data-theme="professional"] .menu-section {
+    padding: 0 16px;
+    margin-top: 24px;
+}
+
+[data-theme="professional"] .menu-section h2 {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    padding-left: 4px;
+}
+
+/* 菜单项图标颜色 */
+[data-theme="professional"] .menu-item i {
+    color: #888888;
+    transition: color 0.2s ease;
+}
+
+[data-theme="professional"] .menu-item:hover i,
+[data-theme="professional"] .menu-item.active i {
+    color: #66b3ff;
+}
+
+/* 徽章样式重新定义 */
+[data-theme="professional"] .counter {
+    background: #007bff;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* 头部区域样式 - 现代化设计 */
+[data-theme="professional"] .header {
+    background: rgba(26, 26, 46, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px 24px;
+}
+
+/* 页面标题样式 */
+[data-theme="professional"] .page-title,
+[data-theme="professional"] .product-title {
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+    font-size: 28px;
+    margin: 0;
+}
+
+/* 搜索框样式 */
+[data-theme="professional"] .search-input {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 12px 16px;
+}
+
+[data-theme="professional"] .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+[data-theme="professional"] .search-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    outline: none;
+}
+
+/* 用户头像和下拉菜单 */
+[data-theme="professional"] .user-avatar {
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] .user-avatar:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="professional"] .user-dropdown {
+    background: rgba(26, 26, 46, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+}
+
+/* 内容面板样式 */
+[data-theme="professional"] .content-panel {
+    background: #1a1a1a;
+    border: 1px solid #333333;
+    border-radius: 12px;
+}
+
+/* 列表项样式 */
+[data-theme="professional"] .list-item {
+    background: #2a2a2a;
+    border: 1px solid #333333;
+    transition: all 0.2s ease;
+}
+
+[data-theme="professional"] .list-item:hover {
+    background: #3a3a3a;
+    border-color: #555555;
+    transform: translateY(-1px);
+}
+
+/* 操作按钮组 */
+[data-theme="professional"] .btn-group .btn {
+    background: #2a2a2a;
+    border: 1px solid #333333;
+    color: #cccccc;
+}
+
+[data-theme="professional"] .btn-group .btn:hover {
+    background: #3a3a3a;
+    border-color: #555555;
+    color: #ffffff;
+}
+
+/* 分页器样式 */
+[data-theme="professional"] .pagination .page-link {
+    background: #2a2a2a;
+    border: 1px solid #333333;
+    color: #cccccc;
+}
+
+[data-theme="professional"] .pagination .page-link:hover {
+    background: #3a3a3a;
+    color: #ffffff;
+}
+
+[data-theme="professional"] .pagination .page-link.active {
+    background: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+}
+
+/* 状态指示器 */
+[data-theme="professional"] .status-indicator {
+    position: relative;
+}
+
+[data-theme="professional"] .status-indicator::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #28a745;
+    top: -2px;
+    right: -2px;
+    box-shadow: 0 0 4px rgba(40, 167, 69, 0.5);
+}
+
+/* 额外的毛玻璃效果应用 - 确保所有相关组件都有效果 */
+[data-theme="professional"] .welcome-message,
+[data-theme="professional"] .central-input-container,
+[data-theme="professional"] .card-enhanced,
+[data-theme="professional"] .user-profile {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* 头部区域毛玻璃效果增强 */
+[data-theme="professional"] .header {
+    background: rgba(26, 26, 46, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    padding: 16px 24px !important;
+}
+
+/* 通知下拉菜单毛玻璃效果增强 */
+[data-theme="professional"] .notification-dropdown {
+    background: rgba(26, 26, 46, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}

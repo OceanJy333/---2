@@ -5,6 +5,839 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('侧边栏用户信息元素存在：', !!document.querySelector('#sidebar-profile-clickable'));
     console.log('侧边栏下拉菜单元素存在：', !!document.querySelector('#sidebar-dropdown-menu'));
 
+    // ==================== 用户引导系统初始化 ====================
+
+    /**
+     * 初始化用户引导系统
+     */
+    function initUserGuide() {
+        // 检查用户引导系统是否可用
+        if (typeof UserGuide === 'undefined') {
+            console.warn('用户引导系统未加载');
+            return;
+        }
+
+        // 配置引导选项
+        const guideOptions = {
+            autoStart: false, // 不自动开始，等待用户登录后手动触发
+            showProgress: true,
+            allowClose: true,
+            overlayOpacity: 0.75,
+            smoothScroll: true,
+
+            // 事件回调
+            onStart: () => {
+                console.log('🚀 用户引导开始');
+                // 可以在这里添加统计代码
+            },
+            onComplete: () => {
+                console.log('✅ 用户引导完成');
+                // 可以在这里显示完成提示或引导用户进行下一步操作
+                showGuideCompletionMessage();
+            },
+            onSkip: () => {
+                console.log('⏭️ 用户跳过引导');
+                // 可以在这里记录跳过统计
+            }
+        };
+
+        // 初始化引导系统
+        UserGuide.options = { ...UserGuide.options, ...guideOptions };
+        UserGuide.init().then((success) => {
+            if (success) {
+                console.log('✅ 用户引导系统初始化成功');
+
+                // 初始化可访问性增强
+                if (typeof AccessibilityEnhancer !== 'undefined') {
+                    AccessibilityEnhancer.init();
+                }
+
+                // 检查是否需要显示引导（首次访问用户）
+                checkAndStartGuideForNewUsers();
+
+                // 绑定引导触发事件
+                bindGuideEvents();
+            } else {
+                console.error('❌ 用户引导系统初始化失败');
+            }
+        });
+    }
+
+    /**
+     * 检查并为新用户启动引导
+     */
+    function checkAndStartGuideForNewUsers() {
+        // 模拟检查用户是否为首次访问
+        // 在实际应用中，这里应该检查用户的登录状态和引导完成状态
+        const isFirstTimeUser = !UserGuide.isCompleted();
+        const isLoggedIn = checkUserLoginStatus();
+
+        if (isFirstTimeUser && isLoggedIn) {
+            // 延迟启动引导，确保页面完全加载
+            setTimeout(() => {
+                UserGuide.start();
+            }, 2000);
+        }
+    }
+
+    /**
+     * 检查用户登录状态
+     */
+    function checkUserLoginStatus() {
+        // 检查应用是否显示（非登录页面）
+        const app = document.getElementById('app');
+        const loginPage = document.getElementById('login-page');
+
+        return app && app.style.display !== 'none' &&
+               (!loginPage || loginPage.style.display === 'none');
+    }
+
+    /**
+     * 绑定引导相关事件
+     */
+    function bindGuideEvents() {
+        // 延迟绑定，确保DOM元素已经加载
+        setTimeout(() => {
+            // 绑定侧边栏用户菜单中的"新手引导"按钮
+            const sidebarGuideBtn = document.getElementById('sidebar-user-guide-item');
+            if (sidebarGuideBtn) {
+                console.log('✅ 找到侧边栏新手引导按钮，绑定事件');
+                sidebarGuideBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🎯 侧边栏新手引导按钮被点击');
+
+                    // 关闭下拉菜单
+                    const dropdown = document.getElementById('sidebar-dropdown-menu');
+                    if (dropdown) {
+                        dropdown.classList.remove('show');
+                        dropdown.style.display = 'none';
+                    }
+
+                    // 启动引导
+                    if (UserGuide && UserGuide.restart) {
+                        UserGuide.restart();
+                    } else {
+                        console.error('❌ UserGuide.restart 不可用');
+                    }
+                });
+            } else {
+                console.warn('⚠️ 未找到侧边栏新手引导按钮 #sidebar-user-guide-item');
+            }
+
+            // 绑定顶部用户菜单中的"新手引导"按钮 - 增强版
+            const headerGuideBtn = document.getElementById('header-user-guide-item');
+            if (headerGuideBtn) {
+                console.log('✅ 找到顶部新手引导按钮，绑定增强事件');
+
+                // 移除可能存在的旧事件监听器
+                headerGuideBtn.removeEventListener('click', headerGuideClickHandler);
+
+                // 定义事件处理函数
+                function headerGuideClickHandler(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    console.log('🎯 顶部新手引导按钮被点击 (增强版)');
+
+                    // 关闭下拉菜单
+                    const dropdown = document.getElementById('user-dropdown-menu');
+                    if (dropdown) {
+                        dropdown.classList.remove('show');
+                        dropdown.style.display = 'none';
+                    }
+
+                    // 延迟启动引导，确保菜单完全关闭
+                    setTimeout(() => {
+                        startUserGuide();
+                    }, 200);
+                }
+
+                // 绑定事件监听器
+                headerGuideBtn.addEventListener('click', headerGuideClickHandler, true);
+                headerGuideBtn.setAttribute('data-guide-enhanced-bound', 'true');
+            } else {
+                console.warn('⚠️ 未找到顶部新手引导按钮 #header-user-guide-item');
+            }
+
+
+
+            // 统一的引导启动函数 - 增强版
+            function startUserGuide() {
+                console.log('🚀 开始启动用户引导系统...');
+
+                // 检查Driver.js是否已加载
+                const checkDriverLoaded = () => {
+                    return window.Driver || window.driver || (window.UserGuide && window.UserGuide.restart);
+                };
+
+                // 如果Driver.js未加载，等待一段时间再重试
+                if (!checkDriverLoaded()) {
+                    console.log('⏳ Driver.js未完全加载，等待中...');
+                    let retryCount = 0;
+                    const maxRetries = 5;
+
+                    const retryInterval = setInterval(() => {
+                        retryCount++;
+                        if (checkDriverLoaded() || retryCount >= maxRetries) {
+                            clearInterval(retryInterval);
+                            if (checkDriverLoaded()) {
+                                console.log('✅ Driver.js加载完成，启动引导');
+                                executeGuide();
+                            } else {
+                                console.error('❌ Driver.js加载超时');
+                                showGuideError('引导系统加载超时，请刷新页面重试');
+                            }
+                        }
+                    }, 500);
+                } else {
+                    executeGuide();
+                }
+
+                function executeGuide() {
+                    try {
+                        if (window.UserGuide && window.UserGuide.restart) {
+                            console.log('🚀 启动用户引导 (UserGuide.restart)');
+                            window.UserGuide.restart();
+                        } else if (window.userGuide && window.userGuide.restart) {
+                            console.log('🚀 启动用户引导 (userGuide.restart)');
+                            window.userGuide.restart();
+                        } else if (typeof UserGuide !== 'undefined' && UserGuide.restart) {
+                            console.log('🚀 启动用户引导 (全局UserGuide.restart)');
+                            UserGuide.restart();
+                        } else {
+                            console.log('🔄 使用Driver.js备用方案');
+                            startDriverJsGuide();
+                        }
+                    } catch (error) {
+                        console.error('❌ 引导启动失败:', error);
+                        startDriverJsGuide();
+                    }
+                }
+
+                function startDriverJsGuide() {
+                    try {
+                        const DriverConstructor = window.driver?.driver || window.Driver;
+                        if (DriverConstructor) {
+                            console.log('🚀 使用Driver.js直接启动引导');
+                            const driverInstance = DriverConstructor({
+                                className: 'user-guide-driver-enhanced',
+                                animate: true,
+                                opacity: 0.7,
+                                padding: 15,
+                                showProgress: true,
+                                allowClose: true,
+                                overlayClickNext: false,
+                                doneBtnText: '完成引导',
+                                closeBtnText: '跳过',
+                                nextBtnText: '下一步',
+                                prevBtnText: '上一步',
+                                steps: [
+                                    {
+                                        element: 'body',
+                                        popover: {
+                                            title: '👋 欢迎使用跨境运营助手！',
+                                            description: '我将为您介绍平台的主要功能，帮助您快速上手。点击"下一步"开始引导。',
+                                            position: 'center'
+                                        }
+                                    },
+                                    {
+                                        element: '.sidebar',
+                                        popover: {
+                                            title: '📋 主导航菜单',
+                                            description: '这里是主要的功能导航区域，包含仪表盘、产品库、建联记录等功能模块。',
+                                            position: 'right'
+                                        }
+                                    },
+                                    {
+                                        element: '.user-profile-dropdown',
+                                        popover: {
+                                            title: '👤 用户菜单',
+                                            description: '点击头像可以访问账号设置、新手引导等功能。',
+                                            position: 'bottom'
+                                        }
+                                    }
+                                ]
+                            });
+                            driverInstance.drive();
+                        } else {
+                            throw new Error('Driver.js构造函数不可用');
+                        }
+                    } catch (error) {
+                        console.error('❌ Driver.js启动失败:', error);
+                        showGuideError('引导系统启动失败，请刷新页面重试');
+                    }
+                }
+
+                function showGuideError(message) {
+                    // 创建一个友好的错误提示
+                    const errorDiv = document.createElement('div');
+                    errorDiv.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #ff4757;
+                        color: white;
+                        padding: 16px 20px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                        z-index: 10000;
+                        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                        max-width: 300px;
+                    `;
+                    errorDiv.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>${message}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(errorDiv);
+
+                    setTimeout(() => {
+                        if (errorDiv.parentNode) {
+                            errorDiv.parentNode.removeChild(errorDiv);
+                        }
+                    }, 5000);
+                }
+            }
+        }, 500);
+
+        // 监听登录成功事件（如果有的话）
+        document.addEventListener('user:login:success', function() {
+            // 用户登录成功后，检查是否需要显示引导
+            setTimeout(() => {
+                checkAndStartGuideForNewUsers();
+            }, 1000);
+        });
+    }
+
+    /**
+     * 显示引导完成消息
+     */
+    function showGuideCompletionMessage() {
+        // 可以显示一个简单的提示消息
+        const message = document.createElement('div');
+        message.className = 'guide-completion-message';
+        message.innerHTML = `
+            <div class="message-content">
+                <i class="fas fa-check-circle text-green-500"></i>
+                <span>恭喜！您已完成新手引导，现在可以开始使用平台了！</span>
+            </div>
+        `;
+        message.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 10001;
+            max-width: 300px;
+            animation: slideInRight 0.3s ease-out;
+        `;
+
+        document.body.appendChild(message);
+
+        // 3秒后自动移除
+        setTimeout(() => {
+            message.style.animation = 'slideOutRight 0.3s ease-in';
+            setTimeout(() => {
+                if (message.parentNode) {
+                    message.parentNode.removeChild(message);
+                }
+            }, 300);
+        }, 3000);
+    }
+
+    // 初始化用户引导系统
+    initUserGuide();
+
+    // 初始化新版登录页面事件
+    initNewLoginEvents();
+
+    // 确保在DOM完全加载后再次检查引导按钮绑定
+    setTimeout(() => {
+        ensureGuideButtonsBinding();
+    }, 1000);
+
+    // ==================== 默认进入AI助手界面初始化 ====================
+    
+    /**
+     * 初始化默认AI助手界面
+     */
+    function initDefaultAIAssistant() {
+        console.log('🤖 初始化默认AI助手界面');
+        
+        // 激活AI助手菜单项
+        const aiAssistantMenu = document.getElementById('ai-assistant-menu');
+        if (aiAssistantMenu) {
+            // 添加激活状态
+            aiAssistantMenu.classList.add('active');
+            aiAssistantMenu.classList.add('expanded');
+            
+            // 展开子菜单
+            const aiAssistantSubmenu = document.getElementById('ai-assistant-submenu');
+            if (aiAssistantSubmenu) {
+                aiAssistantSubmenu.style.display = 'block';
+            }
+        }
+        
+        // 确保AI助手容器显示
+        const aiAssistantContainer = document.querySelector('.ai-assistant-container');
+        if (aiAssistantContainer) {
+            aiAssistantContainer.style.display = 'flex';
+        }
+        
+        // 隐藏其他页面容器
+        const contentArea = document.querySelector('.content-area');
+        const outreachContainer = document.querySelector('.outreach-container');
+        const dashboardContainer = document.querySelector('.dashboard-container');
+        const analyticsContainer = document.querySelector('.analytics-container');
+        
+        if (contentArea) contentArea.style.display = 'none';
+        if (outreachContainer) outreachContainer.style.display = 'none';
+        if (dashboardContainer) dashboardContainer.style.display = 'none';
+        if (analyticsContainer) analyticsContainer.style.display = 'none';
+        
+        // 更新页面标题
+        const productTitle = document.querySelector('.product-title');
+        if (productTitle) {
+            productTitle.textContent = 'AI助手';
+        }
+        
+        console.log('✅ AI助手界面初始化完成');
+    }
+    
+    // 延迟初始化以确保DOM完全加载
+    setTimeout(() => {
+        initDefaultAIAssistant();
+    }, 100);
+
+    // ==================== 登录/登出功能 ====================
+
+    /**
+     * 显示登录页面
+     */
+    function showLoginPage() {
+        console.log('🔐 用户退出登录');
+
+        // 隐藏主应用
+        const app = document.getElementById('app');
+        if (app) {
+            app.style.display = 'none';
+        }
+
+        // 显示登录页面
+        const loginPage = document.getElementById('login-page');
+        if (loginPage) {
+            loginPage.style.display = 'block';
+        }
+
+        // 清除用户引导状态（可选）
+        if (UserGuide && UserGuide.reset) {
+            // UserGuide.reset(); // 如果希望用户重新登录后重新显示引导，取消注释
+        }
+
+        // 清除其他用户相关的本地存储（可选）
+        // localStorage.removeItem('user_session');
+
+        // 触发登出事件
+        const logoutEvent = new CustomEvent('user:logout', {
+            detail: { timestamp: new Date().toISOString() }
+        });
+        document.dispatchEvent(logoutEvent);
+
+        console.log('✅ 已切换到登录页面');
+    }
+
+    /**
+     * 显示主应用（登录成功后调用）
+     */
+    function showMainApp() {
+        console.log('🔐 用户登录成功');
+
+        // 隐藏登录页面
+        const loginPage = document.getElementById('login-page');
+        if (loginPage) {
+            loginPage.style.display = 'none';
+        }
+
+        // 显示主应用
+        const app = document.getElementById('app');
+        if (app) {
+            app.style.display = 'block';
+        }
+
+        // 触发登录成功事件
+        const loginEvent = new CustomEvent('user:login:success', {
+            detail: { timestamp: new Date().toISOString() }
+        });
+        document.dispatchEvent(loginEvent);
+
+        console.log('✅ 已切换到主应用');
+    }
+
+    /**
+     * 初始化新版登录页面事件
+     */
+    function initNewLoginEvents() {
+        // 手机号登录按钮
+        const loginBtn = document.getElementById('login-btn-new');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('📱 手机号登录按钮被点击');
+                
+                const phoneInput = document.getElementById('phone-input-new');
+                const codeInput = document.getElementById('verification-input-new');
+                
+                if (phoneInput && codeInput) {
+                    const phone = phoneInput.value.trim();
+                    const code = codeInput.value.trim();
+                    
+                    if (!phone) {
+                        showLoginMessage('请输入手机号', 'error');
+                        return;
+                    }
+                    
+                    if (!validatePhoneNumber(phone)) {
+                        showLoginMessage('请输入正确的手机号格式', 'error');
+                        return;
+                    }
+                    
+                    if (!code) {
+                        showLoginMessage('请输入验证码', 'error');
+                        return;
+                    }
+                    
+                    if (code.length !== 6) {
+                        showLoginMessage('验证码应为6位数字', 'error');
+                        return;
+                    }
+                    
+                    // 模拟登录过程
+                    performLogin(phone, code);
+                }
+            });
+        }
+
+        // Google 登录按钮
+        const googleLoginBtn = document.getElementById('google-login-btn-new');
+        if (googleLoginBtn) {
+            googleLoginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('📧 Google登录按钮被点击');
+                
+                // 显示Google登录流程
+                showGoogleAuthFlow();
+            });
+        }
+
+        // 发送验证码按钮
+        const sendCodeBtn = document.getElementById('send-code-btn-new');
+        if (sendCodeBtn) {
+            sendCodeBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('📲 发送验证码按钮被点击');
+                
+                const phoneInput = document.getElementById('phone-input-new');
+                if (phoneInput) {
+                    const phone = phoneInput.value.trim();
+                    
+                    if (!phone) {
+                        showLoginMessage('请先输入手机号', 'error');
+                        return;
+                    }
+                    
+                    if (!validatePhoneNumber(phone)) {
+                        showLoginMessage('请输入正确的手机号格式', 'error');
+                        return;
+                    }
+                    
+                    // 发送验证码
+                    sendVerificationCode(phone, sendCodeBtn);
+                }
+            });
+        }
+
+        // 输入框焦点事件
+        const inputs = document.querySelectorAll('.login-input-new');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.closest('.login-input-wrapper').classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.closest('.login-input-wrapper').classList.remove('focused');
+            });
+        });
+
+        // 回车键登录
+        const phoneInput = document.getElementById('phone-input-new');
+        const codeInput = document.getElementById('verification-input-new');
+        
+        if (phoneInput) {
+            phoneInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const sendCodeBtn = document.getElementById('send-code-btn-new');
+                    if (sendCodeBtn && !sendCodeBtn.disabled) {
+                        sendCodeBtn.click();
+                    }
+                }
+            });
+        }
+        
+        if (codeInput) {
+            codeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const loginBtn = document.getElementById('login-btn-new');
+                    if (loginBtn) {
+                        loginBtn.click();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 执行登录操作
+     */
+    function performLogin(phone, code) {
+        const loginBtn = document.getElementById('login-btn-new');
+        if (loginBtn) {
+            const originalText = loginBtn.textContent;
+            loginBtn.disabled = true;
+            loginBtn.textContent = '登录中...';
+            
+            // 模拟登录延迟
+            setTimeout(() => {
+                // 简单的验证码验证（生产环境应该调用后端API）
+                if (code === '123456' || code === '888888') {
+                    showLoginMessage('登录成功！', 'success');
+                    setTimeout(() => {
+                        showMainApp();
+                    }, 1000);
+                } else {
+                    showLoginMessage('验证码错误，请重新输入', 'error');
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = originalText;
+                }
+            }, 1500);
+        }
+    }
+
+    /**
+     * 发送验证码
+     */
+    function sendVerificationCode(phone, button) {
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = '发送中...';
+        
+        // 模拟发送延迟
+        setTimeout(() => {
+            showLoginMessage(`验证码已发送至 ${maskPhoneNumber(phone)}`, 'success');
+            
+            // 开始倒计时
+            let countdown = 60;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                button.textContent = `${countdown}s`;
+                
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    button.disabled = false;
+                    button.textContent = originalText;
+                }
+            }, 1000);
+        }, 1000);
+    }
+
+    /**
+     * 显示Google登录流程
+     */
+    function showGoogleAuthFlow() {
+        showLoginMessage('正在启动Google登录...', 'info');
+        
+        // 模拟Google登录延迟
+        setTimeout(() => {
+            // 这里可以直接跳转到Google OAuth页面
+            // 或者显示现有的Google登录模拟页面
+            const googleAuthPage = document.getElementById('google-auth-page');
+            if (googleAuthPage) {
+                const loginPage = document.getElementById('login-page');
+                if (loginPage) {
+                    loginPage.style.display = 'none';
+                }
+                googleAuthPage.style.display = 'block';
+            }
+        }, 800);
+    }
+
+    /**
+     * 显示登录消息
+     */
+    function showLoginMessage(message, type = 'info') {
+        // 移除现有的消息
+        const existingMessage = document.querySelector('.login-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        // 创建新消息
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `login-message login-message-${type}`;
+        messageDiv.textContent = message;
+
+        // 插入到登录卡片中
+        const loginCard = document.querySelector('.login-card-new');
+        if (loginCard) {
+            loginCard.appendChild(messageDiv);
+            
+            // 自动移除消息
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.remove();
+                }
+            }, 4000);
+        }
+    }
+
+    /**
+     * 确保引导按钮正确绑定事件
+     */
+    function ensureGuideButtonsBinding() {
+        console.log('🔧 检查并确保引导按钮事件绑定...');
+
+        // 检查侧边栏新手引导按钮
+        const sidebarGuideBtn = document.getElementById('sidebar-user-guide-item');
+        if (sidebarGuideBtn && !sidebarGuideBtn.hasAttribute('data-guide-bound')) {
+            console.log('🔄 重新绑定侧边栏新手引导按钮');
+
+            // 使用捕获阶段确保事件优先处理
+            sidebarGuideBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation(); // 阻止其他监听器
+                console.log('🎯 侧边栏新手引导按钮被点击');
+
+                // 关闭下拉菜单
+                const dropdown = document.getElementById('sidebar-dropdown-menu');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                    dropdown.style.display = 'none';
+                }
+
+                // 延迟启动引导，确保菜单关闭动画完成
+                setTimeout(() => {
+                    if (window.UserGuide && window.UserGuide.restart) {
+                        console.log('🚀 启动用户引导');
+                        window.UserGuide.restart();
+                    } else if (window.userGuide && window.userGuide.restart) {
+                        console.log('🚀 启动用户引导 (备用)');
+                        window.userGuide.restart();
+                    } else {
+                        console.error('❌ UserGuide.restart 不可用，尝试直接调用Driver.js');
+                        // 备用方案：直接使用Driver.js
+                        if (window.Driver || window.driver) {
+                            const DriverConstructor = window.driver?.driver || window.Driver;
+                            if (DriverConstructor) {
+                                const driverInstance = DriverConstructor({
+                                    showProgress: true,
+                                    steps: [
+                                        {
+                                            element: '.sidebar',
+                                            popover: {
+                                                title: '🎯 侧边栏导航',
+                                                description: '这里是主要的导航菜单，包含仪表盘、产品库、建联记录等功能模块。'
+                                            }
+                                        }
+                                    ]
+                                });
+                                driverInstance.drive();
+                            }
+                        }
+                    }
+                }, 300);
+            }, true); // 使用捕获阶段
+
+            sidebarGuideBtn.setAttribute('data-guide-bound', 'true');
+        }
+
+        // 检查顶部新手引导按钮
+        const headerGuideBtn = document.getElementById('header-user-guide-item');
+        if (headerGuideBtn && !headerGuideBtn.hasAttribute('data-guide-bound')) {
+            console.log('🔄 重新绑定顶部新手引导按钮');
+            headerGuideBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🎯 顶部新手引导按钮被点击');
+
+                // 关闭下拉菜单
+                const dropdown = document.getElementById('user-dropdown-menu');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+
+                // 启动引导
+                if (UserGuide && UserGuide.restart) {
+                    UserGuide.restart();
+                } else {
+                    console.error('❌ UserGuide.restart 不可用');
+                }
+            });
+            headerGuideBtn.setAttribute('data-guide-bound', 'true');
+        }
+
+        // 检查退出登录按钮
+        const sidebarLogoutBtn = document.getElementById('sidebar-logout-item');
+        if (sidebarLogoutBtn && !sidebarLogoutBtn.hasAttribute('data-logout-bound')) {
+            console.log('🔄 重新绑定侧边栏退出登录按钮');
+            sidebarLogoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🚪 侧边栏退出登录按钮被点击');
+
+                // 关闭下拉菜单
+                const dropdown = document.getElementById('sidebar-dropdown-menu');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                    dropdown.style.display = 'none';
+                }
+
+                // 执行退出登录
+                showLoginPage();
+            });
+            sidebarLogoutBtn.setAttribute('data-logout-bound', 'true');
+        }
+
+        const headerLogoutBtn = document.getElementById('logout-item');
+        if (headerLogoutBtn && !headerLogoutBtn.hasAttribute('data-logout-bound')) {
+            console.log('🔄 重新绑定顶部退出登录按钮');
+            headerLogoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('🚪 顶部退出登录按钮被点击');
+
+                // 关闭下拉菜单
+                const dropdown = document.getElementById('user-dropdown-menu');
+                if (dropdown) {
+                    dropdown.classList.remove('show');
+                }
+
+                // 执行退出登录
+                showLoginPage();
+            });
+            headerLogoutBtn.setAttribute('data-logout-bound', 'true');
+        }
+
+        console.log('✅ 引导按钮事件绑定检查完成');
+    }
+
+    // ==================== 原有代码继续 ====================
+
     // 初始化添加产品卡片点击事件
     function initAddProductCard() {
         const addProductCards = document.querySelectorAll('.add-product-card');
@@ -252,7 +1085,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 建联记录相关交互
     if (document.querySelector('.outreach-container')) {
+        // 建联状态筛选变量
+        let activeStage = 'all';
 
+        // 建联状态筛选标签点击事件
+        const stageFilterTags = document.querySelectorAll('.stage-filter-tag');
+        stageFilterTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                // 移除所有标签的激活状态
+                stageFilterTags.forEach(t => t.classList.remove('active'));
+                // 添加当前标签的激活状态
+                this.classList.add('active');
+
+                // 更新当前选中的状态
+                activeStage = this.getAttribute('data-stage');
+
+                // 应用筛选
+                const searchTerm = document.querySelector('.outreach-container .search-input').value.toLowerCase().trim();
+                applyOutreachFilters(searchTerm);
+
+                // 更新筛选结果数量统计
+                updateFilterCount();
+            });
+        });
 
         // 商品筛选下拉菜单
         const productFilterItems = document.querySelectorAll('.dropdown-item[data-product]');
@@ -268,7 +1123,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 productFilterBtn.innerHTML = `<i class="ri-filter-3-line"></i> ${this.textContent} <i class="ri-arrow-down-s-line"></i>`;
 
                 // 应用筛选
-                applyFilters();
+                const searchTerm = document.querySelector('.outreach-container .search-input').value.toLowerCase().trim();
+                applyOutreachFilters(searchTerm);
 
                 // 关闭下拉菜单
                 this.closest('.dropdown-menu').classList.remove('show');
@@ -289,7 +1145,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 intentFilterBtn.innerHTML = `<i class="ri-price-tag-3-line"></i> ${this.textContent} <i class="ri-arrow-down-s-line"></i>`;
 
                 // 应用筛选
-                applyFilters();
+                const searchTerm = document.querySelector('.outreach-container .search-input').value.toLowerCase().trim();
+                applyOutreachFilters(searchTerm);
 
                 // 关闭下拉菜单
                 this.closest('.dropdown-menu').classList.remove('show');
@@ -393,28 +1250,71 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // 应用所有筛选条件的函数
-        function applyFilters() {
+        function applyOutreachFilters(searchTerm = '') {
             const outreachItems = document.querySelectorAll('.outreach-item');
             const activeProduct = document.querySelector('.dropdown-item[data-product].active').getAttribute('data-product');
             const activeIntent = document.querySelector('.dropdown-item[data-intent].active').getAttribute('data-intent');
 
             outreachItems.forEach(item => {
-                // 获取项目的状态、商品和合作类型
-                const itemStatus = item.querySelector('.status-tag').textContent;
+                // 获取项目的建联状态、商品和合作类型
+                const itemStage = item.getAttribute('data-stage');
                 const itemProduct = item.getAttribute('data-product');
                 const itemIntent = item.getAttribute('data-intent');
 
+                // 获取搜索相关的文本内容
+                const creatorName = item.querySelector('.creator-name').textContent.toLowerCase();
+                const productName = item.querySelector('.product-name').textContent.toLowerCase();
+                const stageText = item.querySelector('.contact-stage-tag').textContent.toLowerCase();
+                const statusText = item.querySelector('.last-interaction-status').textContent.toLowerCase();
+                const summaryText = item.querySelector('.outreach-summary').textContent.toLowerCase();
+
                 // 检查是否符合所有筛选条件
-                const statusMatch = activeStatus === '全部' || itemStatus === activeStatus;
+                const stageMatch = activeStage === 'all' || itemStage === activeStage;
                 const productMatch = activeProduct === 'all' || itemProduct === activeProduct;
                 const intentMatch = activeIntent === 'all' || itemIntent === activeIntent;
 
+                // 检查搜索条件
+                const searchMatch = searchTerm === '' ||
+                    creatorName.includes(searchTerm) ||
+                    productName.includes(searchTerm) ||
+                    stageText.includes(searchTerm) ||
+                    statusText.includes(searchTerm) ||
+                    summaryText.includes(searchTerm);
+
                 // 显示或隐藏项目
-                if (statusMatch && productMatch && intentMatch) {
+                if (stageMatch && productMatch && intentMatch && searchMatch) {
                     item.style.display = 'flex';
                 } else {
                     item.style.display = 'none';
                 }
+            });
+        }
+
+        // 更新筛选结果数量统计
+        function updateFilterCount() {
+            const outreachItems = document.querySelectorAll('.outreach-item');
+            const visibleItems = Array.from(outreachItems).filter(item => item.style.display !== 'none');
+            const totalItems = outreachItems.length;
+
+            // 更新总体数量统计
+            document.querySelector('.current-count').textContent = visibleItems.length;
+            document.querySelector('.total-count').textContent = totalItems;
+
+            // 更新各个状态标签的数量
+            const stageFilterTags = document.querySelectorAll('.stage-filter-tag');
+            stageFilterTags.forEach(tag => {
+                const stage = tag.getAttribute('data-stage');
+                let count = 0;
+
+                if (stage === 'all') {
+                    count = totalItems;
+                } else {
+                    count = Array.from(outreachItems).filter(item =>
+                        item.getAttribute('data-stage') === stage
+                    ).length;
+                }
+
+                tag.querySelector('.tag-count').textContent = count;
             });
         }
 
@@ -472,8 +1372,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 标签页切换逻辑已移除 - 现在使用连续滚动布局
 
+        // 建联记录搜索功能
+        const outreachSearchInput = document.querySelector('.outreach-container .search-input');
+        if (outreachSearchInput) {
+            outreachSearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                applyOutreachFilters(searchTerm);
+                updateFilterCount();
+            });
+        }
+
         // 初始化状态指示器
         initializeStatusIndicators();
+
+        // 初始化筛选数量统计
+        updateFilterCount();
 
         // 查看详情按钮点击
         const detailBtns = document.querySelectorAll('.detail-btn');
@@ -1374,13 +2287,26 @@ document.addEventListener('DOMContentLoaded', function() {
                            e.target.closest('.add-product-btn') ||  // 添加产品按钮
                            e.target.closest('.add-product-card') ||   // 添加产品卡片
                            e.target.closest('.ai-assistant-section') ||  // AI助手区域
-                           e.target.closest('.ai-tool-dropdown-menu');   // AI工具下拉菜单
+                           e.target.closest('.ai-tool-dropdown-menu') ||   // AI工具下拉菜单
+                           e.target.closest('#sidebar-user-guide-item') ||  // 侧边栏新手引导按钮
+                           e.target.closest('#header-user-guide-item') ||   // 顶部新手引导按钮
+                           e.target.closest('#sidebar-logout-item') ||      // 侧边栏退出登录按钮
+                           e.target.closest('#logout-item');                // 顶部退出登录按钮
+
+        // 特殊处理：如果点击的是新手引导按钮，不要关闭菜单，让按钮的事件处理器处理
+        if (e.target.closest('#sidebar-user-guide-item') || e.target.closest('#header-user-guide-item')) {
+            console.log('🎯 检测到新手引导按钮点击，跳过菜单关闭逻辑');
+            return;
+        }
 
         if (!isMenuClick) {
             console.log('点击了菜单外部，关闭所有菜单');
             // 确保元素存在再操作
             if (userDropdownMenu) userDropdownMenu.classList.remove('show');
-            if (sidebarDropdownMenu) sidebarDropdownMenu.classList.remove('show');
+            if (sidebarDropdownMenu) {
+                sidebarDropdownMenu.classList.remove('show');
+                sidebarDropdownMenu.style.display = 'none';
+            }
             if (notificationDropdown) notificationDropdown.classList.remove('show');
         }
     });

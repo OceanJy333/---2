@@ -11,7 +11,8 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     
     <!-- 核心CSS框架 - 优化加载顺序 -->
-    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"></noscript>
     <link rel="stylesheet" href="https://cdn.staticfile.net/tailwindcss/2.2.9/tailwind.min.css" crossorigin="anonymous">
     
     <!-- 项目基础样式 -->
@@ -22,53 +23,90 @@
     <!-- 主题系统样式 -->
     <link rel="stylesheet" href="themes/theme-switcher.css">
     <link rel="stylesheet" href="themes/alien-effects.css">
-    
+    <link rel="stylesheet" href="themes/dark-theme-gradient.css">
+
+    <!-- 用户引导系统 v2.0 -->
+    <link rel="stylesheet" href="libs/driver.js/driver.min.css">
+    <link rel="stylesheet" href="user-guide-system/styles/core.css">
+
     <!-- Remix Icons (保留用于主题系统兼容) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" media="print" onload="this.media='all'">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
     <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <script src="themes/theme-config.js"></script>
-    <script src="themes/theme-manager.js"></script>
-    <script src="performance-optimizer.js"></script>
+    <script src="libs/driver.js/driver.min.js"></script>
 </head>
 <body>
     <!-- 登录页面 -->
     <div id="login-page" style="display: none;">
-        <div class="login-container">
-            <div class="login-card">
-                <div class="login-header">
-                    <div class="login-logo">
-                        <span style="font-size: 36px; margin-right: 10px;">📧</span>
-                        <h1>跨境运营助手</h1>
-                    </div>
-                    <p class="login-subtitle">登录您的账号以继续</p>
-                </div>
-                <div class="login-methods">
-                    <button class="google-login-btn" id="google-login-btn">
-                        <i class="ri-google-fill"></i>
-                        使用Google账号登录
-                    </button>
-                    <div class="login-divider">
-                        <span>或</span>
-                    </div>
-                    <div class="phone-login-form">
-                        <div class="login-input-group">
-                            <label>手机号码</label>
-                            <input type="tel" id="phone-input" placeholder="输入您的手机号码" value="+86 13812345678">
+        <div class="login-container-new">
+            <!-- 背景装饰元素 -->
+            <div class="login-background-blur"></div>
+            <div class="login-background-shapes">
+                <div class="bg-shape bg-shape-1"></div>
+                <div class="bg-shape bg-shape-2"></div>
+            </div>
+            
+            <!-- 登录卡片 -->
+            <div class="login-card-new">
+                <div class="login-header-new">
+                    <!-- Logo 区域 -->
+                    <div class="login-logo-new">
+                        <div class="logo-icon-container">
+                            <img src="http://localhost:3845/assets/71a5b6b39c6cbb7a357019080b2602539043ad8e.svg" alt="Logo" class="logo-icon-main">
                         </div>
-                        <div class="login-input-group verification-code-group">
-                            <label>验证码</label>
-                            <div class="verification-code-container">
-                                <input type="text" id="verification-code-input" placeholder="输入验证码" maxlength="6">
-                                <button class="send-code-btn" id="send-code-btn">发送验证码</button>
+                        <div class="logo-text-container">
+                            <img src="http://localhost:3845/assets/da821ed04dd0d1d5e21a4a63b731c1db13b08afc.svg" alt="TURING" class="logo-text-top">
+                            <img src="http://localhost:3845/assets/b7e9417ad1d6832bd7efb3d4b0359e016e924363.svg" alt="MARKET" class="logo-text-bottom">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="login-content-new">
+                    <div class="login-title-section">
+                        <h1 class="login-main-title">跨境运营助手</h1>
+                        <p class="login-subtitle-new">登录您的账号以继续</p>
+                    </div>
+                    
+                    <div class="login-form-new">
+                        <!-- 手机号输入 -->
+                        <div class="login-input-wrapper">
+                            <div class="input-icon">
+                                <img src="http://localhost:3845/assets/d6287a5a47e9f2f032023d310602e64044bcbb6e.svg" alt="手机" class="input-icon-svg">
                             </div>
+                            <div class="input-divider"></div>
+                            <input type="tel" id="phone-input-new" placeholder="请输入手机号" class="login-input-new">
                         </div>
-                        <button class="phone-login-btn" id="phone-login-btn">登录</button>
+                        
+                        <!-- 验证码输入 -->
+                        <div class="login-input-wrapper verification-wrapper">
+                            <div class="input-icon">
+                                <img src="http://localhost:3845/assets/16656c95db1af2c7efe727efe1c6adb9f2b4fd17.svg" alt="验证码" class="input-icon-svg">
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="text" id="verification-input-new" placeholder="请输入验证码" class="login-input-new verification-input" maxlength="6">
+                            <button class="send-code-btn-new" id="send-code-btn-new">发送验证码</button>
+                        </div>
+                        
+                        <!-- 登录按钮 -->
+                        <button class="login-btn-new" id="login-btn-new">
+                            登录
+                        </button>
+                        
+                        <!-- Google 登录按钮 -->
+                        <button class="google-login-btn-new" id="google-login-btn-new">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="google-icon">
+                                <path fill="#FFC107" d="M43.6 20.2H24v7.5h11.3c-1.1 5.4-5.7 8.2-11.3 8.2-6.6 0-12-5.4-12-12s5.4-12 12-12c2.9 0 5.5 1 7.5 2.7l5.6-5.6C33.2 5.9 28.9 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 19.9-8 19.9-20 0-1.3-.2-2.7-.3-4z"/>
+                                <path fill="#FF3D00" d="M6.3 14.7l6.5 4.8c1.4-4.2 5.3-7.2 9.8-7.2 2.9 0 5.5 1 7.5 2.7l5.6-5.6C31.8 5.9 28.2 4 24 4 16.8 4 10.9 8.7 6.3 14.7z"/>
+                                <path fill="#4CAF50" d="M24 44c4.1 0 7.9-1.4 10.8-3.7l-5.6-4.3c-1.6 1.1-3.6 1.8-5.8 1.8-4.5 0-8.5-2.5-10.5-6.2l-6.5 5c4.5 8.9 13.7 14.4 24 14.4z"/>
+                                <path fill="#1976D2" d="M43.6 20.2H24v7.5h11.3c-.5 2.6-1.9 4.9-3.9 6.4l5.6 4.3c3.3-3.1 5.4-7.6 5.4-12.7 0-1.3-.2-2.7-.3-4z"/>
+                            </svg>
+                            使用 Google 账号
+                        </button>
                     </div>
-                </div>
-                <div class="login-footer">
-                    <p>还没有账号？ <a href="#">立即注册</a></p>
+                    
+                    <!-- 消息提示容器 -->
+                    <div id="login-message-container"></div>
                 </div>
             </div>
         </div>
@@ -270,6 +308,10 @@
                         <i class="fas fa-user-cog fa-icon-sm text-gray-600"></i>
                         <span>账号设置</span>
                     </div>
+                    <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced" id="sidebar-user-guide-item">
+                        <i class="fas fa-question-circle fa-icon-sm text-blue-600"></i>
+                        <span>新手引导</span>
+                    </div>
                     <div class="dropdown-divider border-gray-200"></div>
                     <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced text-red-600 hover:bg-red-50" id="sidebar-logout-item">
                         <i class="fas fa-sign-out-alt fa-icon-sm text-red-500"></i>
@@ -351,6 +393,10 @@
                             <div class="dropdown-item" id="account-settings-item">
                                 <i class="fas fa-user-cog fa-icon-sm text-gray-600"></i>
                                 <span>账号设置</span>
+                            </div>
+                            <div class="dropdown-item" id="header-user-guide-item">
+                                <i class="fas fa-question-circle fa-icon-sm text-blue-600"></i>
+                                <span>新手引导</span>
                             </div>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item" id="logout-item">
@@ -749,7 +795,65 @@
                     </div>
                 </div>
 
-
+                <!-- 建联状态筛选标签栏 -->
+                <div class="contact-stage-filter">
+                    <div class="filter-header">
+                        <div class="filter-title">
+                            <i class="ri-filter-2-line"></i>
+                            建联状态筛选
+                        </div>
+                        <div class="filter-count">
+                            <span class="current-count">4</span> / <span class="total-count">4</span> 个联系人
+                        </div>
+                    </div>
+                    <div class="stage-filter-tags">
+                        <button class="stage-filter-tag active" data-stage="all">
+                            <i class="ri-list-check-2"></i>
+                            全部
+                            <span class="tag-count">4</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="initial-contact">
+                            <i class="ri-mail-send-line"></i>
+                            初次联系
+                            <span class="tag-count">1</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="intent-exploration">
+                            <i class="ri-search-eye-line"></i>
+                            意图探索
+                            <span class="tag-count">0</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="price-negotiation">
+                            <i class="ri-money-dollar-circle-line"></i>
+                            价格谈判
+                            <span class="tag-count">1</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="collaboration-confirmation">
+                            <i class="ri-checkbox-circle-line"></i>
+                            合作确认
+                            <span class="tag-count">0</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="sample-sending">
+                            <i class="ri-gift-line"></i>
+                            样品发送
+                            <span class="tag-count">0</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="content-creation">
+                            <i class="ri-video-line"></i>
+                            内容创作
+                            <span class="tag-count">1</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="content-review">
+                            <i class="ri-eye-line"></i>
+                            内容审核
+                            <span class="tag-count">0</span>
+                        </button>
+                        <button class="stage-filter-tag" data-stage="project-completion">
+                            <i class="ri-check-double-line"></i>
+                            项目完成
+                            <span class="tag-count">1</span>
+                        </button>
+                    </div>
+                </div>
 
                 <!-- 批量操作工具栏 -->
                 <div class="batch-toolbar" style="display: none;">
@@ -772,7 +876,7 @@
                 <!-- 建联列表 -->
                 <div class="outreach-list batch-mode-off">
                     <!-- 建联项1: MattVidPro AI -->
-                    <div class="outreach-item verified" data-product="earbud" data-intent="测评合作">
+                    <div class="outreach-item verified" data-product="earbud" data-intent="测评合作" data-stage="initial-contact">
                         <div class="item-checkbox">
                             <input type="checkbox" id="item-1" class="outreach-checkbox">
                             <label for="item-1"></label>
@@ -802,7 +906,7 @@
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">达人已读未回</div>
-                            <span class="contact-stage-tag">达人建联阶段</span>
+                            <span class="contact-stage-tag initial-contact">初次联系</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/21</div>
@@ -813,7 +917,7 @@
                     </div>
 
                     <!-- 建联项2: AI TV -->
-                    <div class="outreach-item" data-product="earbud" data-intent="付费测评">
+                    <div class="outreach-item" data-product="earbud" data-intent="付费测评" data-stage="price-negotiation">
                         <div class="item-checkbox">
                             <input type="checkbox" id="item-2" class="outreach-checkbox">
                             <label for="item-2"></label>
@@ -843,7 +947,7 @@
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">已报价：$300</div>
-                            <span class="contact-stage-tag">达人建联阶段</span>
+                            <span class="contact-stage-tag price-negotiation">价格谈判</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/22</div>
@@ -854,7 +958,7 @@
                     </div>
 
                     <!-- 建联项3: Two Minute Papers -->
-                    <div class="outreach-item verified" data-product="earbud" data-intent="深度合作">
+                    <div class="outreach-item verified" data-product="earbud" data-intent="深度合作" data-stage="content-creation">
                         <div class="item-checkbox">
                             <input type="checkbox" id="item-3" class="outreach-checkbox">
                             <label for="item-3"></label>
@@ -884,7 +988,7 @@
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">视频制作中</div>
-                            <span class="contact-stage-tag">达人建联阶段</span>
+                            <span class="contact-stage-tag content-creation">内容创作</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/20</div>
@@ -895,7 +999,7 @@
                     </div>
 
                     <!-- 建联项4: Sciencephile the AI -->
-                    <div class="outreach-item verified" data-product="earbud" data-intent="科普合作">
+                    <div class="outreach-item verified" data-product="earbud" data-intent="科普合作" data-stage="project-completion">
                         <div class="item-checkbox">
                             <input type="checkbox" id="item-4" class="outreach-checkbox">
                             <label for="item-4"></label>
@@ -928,7 +1032,7 @@
                         </div>
                         <div class="outreach-status">
                             <div class="last-interaction-status">合作完成 / 效果良好</div>
-                            <span class="contact-stage-tag">达人建联阶段</span>
+                            <span class="contact-stage-tag project-completion">项目完成</span>
                         </div>
                         <div class="outreach-date">
                             <div class="last-contact">上次联系: 2023/03/10</div>
@@ -2472,7 +2576,7 @@ Earbud 产品运营经理</p>
                         <label>商品图片</label>
                         <div class="image-upload-container">
                             <div class="image-preview-wrapper">
-                                <img id="add-product-image-preview" src="https://via.placeholder.com/300x200/e5e7eb/6b7280?text=商品图片" alt="商品图片预览">
+                                <img id="add-product-image-preview" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZTVlN2ViIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzZiNzI4MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuWVhuWTgeWbvueJhzwvdGV4dD48L3N2Zz4=" alt="商品图片预览">
                             </div>
                             <div class="upload-actions">
                                 <button type="button" class="upload-btn" id="add-product-upload-btn">自定义图片</button>
@@ -2481,14 +2585,14 @@ Earbud 产品运营经理</p>
                             <div class="default-images-section" style="margin-top: 10px;">
                                 <label style="font-size: 12px; color: #666;">或选择默认图片:</label>
                                 <div class="default-images-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 5px;">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/f3f4f6/6b7280?text=电子" alt="电子产品" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="电子产品">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fef3c7/d97706?text=服装" alt="服装" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="服装">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fce7f3/db2777?text=美妆" alt="美妆" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="美妆">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/dcfce7/16a34a?text=家居" alt="家居" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="家居">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/dbeafe/3b82f6?text=运动" alt="运动" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="运动">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/f0fdf4/22c55e?text=食品" alt="食品" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="食品">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fef7ff/a855f7?text=数码" alt="数码配件" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="数码配件">
-                                    <img class="default-image-option" src="https://via.placeholder.com/80x60/fff7ed/ea580c?text=其他" alt="其他" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="其他">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiM2YjcyODAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7nlLXlrZA8L3RleHQ+PC9zdmc+" alt="电子产品" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="电子产品">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2ZlZjNjNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNkOTc3MDYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7mnI3oo4U8L3RleHQ+PC9zdmc+" alt="服装" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="服装">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2ZjZTdmMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNkYjI3NzciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7nvo7lppY8L3RleHQ+PC9zdmc+" alt="美妆" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="美妆">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2RjZmNlNyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMxNmEzNGEiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7lrrblsYU8L3RleHQ+PC9zdmc+" alt="家居" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="家居">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2RiZWFmZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMzYjgyZjYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7ov5Hliqg8L3RleHQ+PC9zdmc+" alt="运动" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="运动">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2YwZmRmNCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiMyMmM1NWUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7po5/lk4E8L3RleHQ+PC9zdmc+" alt="食品" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="食品">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2ZlZjdmZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNhODU1ZjciIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7mlbDnoIE8L3RleHQ+PC9zdmc+" alt="数码配件" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="数码配件">
+                                    <img class="default-image-option" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2ZmZjdlZCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGZpbGw9IiNlYTU4MGMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj7lhbbku5Y8L3RleHQ+PC9zdmc+" alt="其他" style="cursor: pointer; border: 2px solid transparent; border-radius: 4px;" data-category="其他">
                                 </div>
                             </div>
                         </div>
@@ -2660,10 +2764,34 @@ Earbud 产品运营经理</p>
     <script src="notification-update.js"></script>
     <!-- 性能优化器 -->
     <script src="performance-optimizer.js"></script>
-    
+
     <!-- 主题系统 -->
     <script src="themes/theme-config.js"></script>
     <script src="themes/theme-manager.js"></script>
     <link rel="stylesheet" href="themes/theme-switcher.css">
+
+    <!-- 用户引导系统 v2.0 -->
+    <script src="user-guide-init.js"></script>
+
+    <!-- 开发环境测试工具 -->
+    <script>
+        // 仅在开发环境中加载测试工具
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+            const testScript = document.createElement('script');
+            testScript.src = 'user-guide-test.js';
+            testScript.onload = function() {
+                console.log('🧪 用户引导测试工具已加载');
+
+                // 加载集成测试工具
+                const integrationTestScript = document.createElement('script');
+                integrationTestScript.src = 'user-guide-integration-test.js';
+                integrationTestScript.onload = function() {
+                    console.log('🔧 用户引导集成测试工具已加载');
+                };
+                document.head.appendChild(integrationTestScript);
+            };
+            document.head.appendChild(testScript);
+        }
+    </script>
 </body>
 </html>

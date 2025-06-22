@@ -213,138 +213,138 @@ const ThemeConfig = {
             }
         },
         
-        // 深色专业风格 - 升级配色
+        // 深色专业风格 - 经典黑暗模式
         professional: {
             name: '深色专业',
             id: 'professional',
             description: '专业高效的深色主题',
             colors: {
                 // === 品牌色系 ===
-                primary: '#6366f1',
-                primaryDark: '#5856eb',
-                primaryLight: '#8b5cf6',
-                primaryPale: '#1e1b4b',
-                primaryAccent: '#7c3aed',
-                
-                secondary: '#64748b',
-                secondaryDark: '#475569',
-                secondaryLight: '#94a3b8',
-                secondaryPale: '#1e293b',
-                
+                primary: '#007bff',
+                primaryDark: '#0056b3',
+                primaryLight: '#66b3ff',
+                primaryPale: '#1a1a1a',
+                primaryAccent: '#0099ff',
+
+                secondary: '#6c757d',
+                secondaryDark: '#495057',
+                secondaryLight: '#adb5bd',
+                secondaryPale: '#2a2a2a',
+
                 // === 中性色系 ===
                 white: '#ffffff',
-                whiteSmoke: '#f8fafc',
+                whiteSmoke: '#f8f9fa',
                 lightGray: '#f1f5f9',
-                
+
                 // 深色灰色系
-                gray50: '#f8fafc',
+                gray50: '#f8f9fa',
                 gray100: '#f1f5f9',
-                gray200: '#e2e8f0',
-                gray300: '#cbd5e1',
-                gray400: '#94a3b8',
-                gray500: '#64748b',
-                gray600: '#475569',
-                gray700: '#334155',
-                gray800: '#1e293b',
-                gray900: '#0f172a',
+                gray200: '#e9ecef',
+                gray300: '#dee2e6',
+                gray400: '#ced4da',
+                gray500: '#adb5bd',
+                gray600: '#6c757d',
+                gray700: '#495057',
+                gray800: '#343a40',
+                gray900: '#212529',
                 
                 // === 语义色系 ===
-                success: '#10b981',
-                successDark: '#059669',
-                successLight: '#34d399',
-                successPale: '#064e3b',
-                successBg: '#022c22',
-                
-                warning: '#f59e0b',
-                warningDark: '#d97706',
-                warningLight: '#fbbf24',
-                warningPale: '#451a03',
-                warningBg: '#1c0701',
-                
-                error: '#ef4444',
-                errorDark: '#dc2626',
-                errorLight: '#f87171',
-                errorPale: '#450a0a',
-                errorBg: '#1c0a0a',
-                
-                info: '#3b82f6',
-                infoDark: '#2563eb',
-                infoLight: '#60a5fa',
-                infoPale: '#1e3a8a',
-                infoBg: '#0c1e3a',
-                
+                success: '#28a745',
+                successDark: '#1e7e34',
+                successLight: '#5cb85c',
+                successPale: '#1a1a1a',
+                successBg: '#0a0a0a',
+
+                warning: '#ffc107',
+                warningDark: '#e0a800',
+                warningLight: '#fff3cd',
+                warningPale: '#1a1a1a',
+                warningBg: '#0a0a0a',
+
+                error: '#dc3545',
+                errorDark: '#c82333',
+                errorLight: '#f5c6cb',
+                errorPale: '#1a1a1a',
+                errorBg: '#0a0a0a',
+
+                info: '#17a2b8',
+                infoDark: '#138496',
+                infoLight: '#bee5eb',
+                infoPale: '#1a1a1a',
+                infoBg: '#0a0a0a',
+
                 // === 功能色系 ===
-                background: '#0f172a',
-                backgroundAlt: '#1e293b',
-                backgroundDark: '#020617',
+                background: '#000000',
+                backgroundAlt: '#1a1a1a',
+                backgroundDark: '#0a0a0a',
+
+                surface: '#1a1a1a',
+                surfaceHover: '#2a2a2a',
+                surfaceActive: '#3a3a3a',
+                surfaceDisabled: '#151515',
+                surfaceElevated: '#252525',
                 
-                surface: '#1e293b',
-                surfaceHover: '#334155',
-                surfaceActive: '#475569',
-                surfaceDisabled: '#1e293b',
-                surfaceElevated: '#334155',
-                
-                textPrimary: '#f8fafc',
-                textSecondary: '#cbd5e1',
-                textTertiary: '#94a3b8',
-                textDisabled: '#64748b',
-                textInverse: '#0f172a',
-                textMuted: '#64748b',
-                
-                border: '#334155',
-                borderLight: '#475569',
-                borderDark: '#1e293b',
-                borderFocus: '#6366f1',
-                borderHover: '#475569',
-                
+                textPrimary: '#ffffff',
+                textSecondary: '#cccccc',
+                textTertiary: '#888888',
+                textDisabled: '#555555',
+                textInverse: '#000000',
+                textMuted: '#999999',
+
+                border: '#333333',
+                borderLight: '#555555',
+                borderDark: '#222222',
+                borderFocus: '#007bff',
+                borderHover: '#666666',
+
                 // === 交互色系 ===
-                hoverBg: '#334155',
-                hoverBorder: '#475569',
-                hoverText: '#8b5cf6',
-                
-                activeBg: '#1e1b4b',
-                activeBorder: '#6366f1',
-                activeText: '#a5b4fc',
-                
-                selectedBg: '#1e1b4b',
-                selectedBorder: '#6366f1',
-                selectedText: '#c7d2fe',
-                
-                disabledBg: '#1e293b',
-                disabledBorder: '#334155',
-                disabledText: '#64748b',
+                hoverBg: '#2a2a2a',
+                hoverBorder: '#555555',
+                hoverText: '#66b3ff',
+
+                activeBg: '#3a3a3a',
+                activeBorder: '#007bff',
+                activeText: '#66b3ff',
+
+                selectedBg: '#2a2a2a',
+                selectedBorder: '#007bff',
+                selectedText: '#ffffff',
+
+                disabledBg: '#151515',
+                disabledBorder: '#333333',
+                disabledText: '#555555',
                 
                 // === 阴影和透明度 ===
                 shadow: 'rgba(0, 0, 0, 0.5)',
                 shadowHover: 'rgba(0, 0, 0, 0.7)',
-                shadowFocus: 'rgba(99, 102, 241, 0.4)',
-                shadowError: 'rgba(239, 68, 68, 0.4)',
-                shadowSuccess: 'rgba(16, 185, 129, 0.4)',
-                
+                shadowFocus: 'rgba(0, 123, 255, 0.4)',
+                shadowError: 'rgba(220, 53, 69, 0.4)',
+                shadowSuccess: 'rgba(40, 167, 69, 0.4)',
+
                 overlay: 'rgba(0, 0, 0, 0.8)',
                 overlayLight: 'rgba(0, 0, 0, 0.6)',
-                backdropBlur: 'rgba(15, 23, 42, 0.8)',
-                
+                backdropBlur: 'rgba(0, 0, 0, 0.8)',
+
                 // === 数据可视化色系 ===
-                chartPrimary: '#6366f1',
-                chartSecondary: '#f59e0b',
-                chartTertiary: '#10b981',
-                chartQuaternary: '#8b5cf6',
-                chartFifth: '#ef4444',
-                chartSixth: '#06b6d4',
+                chartPrimary: '#007bff',
+                chartSecondary: '#ffc107',
+                chartTertiary: '#28a745',
+                chartQuaternary: '#17a2b8',
+                chartFifth: '#dc3545',
+                chartSixth: '#6f42c1',
                 
                 google: '#4285f4',
                 googleRed: '#ea4335',
                 googleYellow: '#fbbc05',
                 googleGreen: '#34a853',
                 
-                highlight: '#fbbf24',
-                highlightBg: '#451a03',
-                link: '#60a5fa',
-                linkHover: '#3b82f6',
-                linkVisited: '#a78bfa',
-                code: '#f472b6',
-                codeBg: '#831843'
+                highlight: '#ffc107',
+                highlightBg: '#1a1a1a',
+                link: '#66b3ff',
+                linkHover: '#007bff',
+                linkVisited: '#6f42c1',
+                code: '#e83e8c',
+                codeBg: '#1a1a1a'
             },
             fonts: {
                 family: '"Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, system-ui, sans-serif',
