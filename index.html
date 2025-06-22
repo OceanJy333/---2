@@ -103,10 +103,74 @@
                             </svg>
                             使用 Google 账号
                         </button>
+                        
                     </div>
                     
                     <!-- 消息提示容器 -->
                     <div id="login-message-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 账户激活页面 -->
+    <div id="activation-page" style="display: none;">
+        <div class="login-container-new">
+            <!-- 背景装饰元素 -->
+            <div class="login-background-blur"></div>
+            <div class="login-background-shapes">
+                <div class="bg-shape bg-shape-1"></div>
+                <div class="bg-shape bg-shape-2"></div>
+            </div>
+            
+            <!-- 激活卡片 -->
+            <div class="login-card-new">
+                <div class="login-header-new">
+                    <!-- Logo 区域 -->
+                    <div class="login-logo-new">
+                        <div class="logo-icon-container">
+                            <img src="http://localhost:3845/assets/71a5b6b39c6cbb7a357019080b2602539043ad8e.svg" alt="Logo" class="logo-icon-main">
+                        </div>
+                        <div class="logo-text-container">
+                            <img src="http://localhost:3845/assets/da821ed04dd0d1d5e21a4a63b731c1db13b08afc.svg" alt="TURING" class="logo-text-top">
+                            <img src="http://localhost:3845/assets/b7e9417ad1d6832bd7efb3d4b0359e016e924363.svg" alt="MARKET" class="logo-text-bottom">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="login-content-new">
+                    <div class="login-title-section">
+                        <h1 class="login-main-title">激活您的账户</h1>
+                        <p class="login-subtitle-new">输入邀请码完成激活</p>
+                    </div>
+                    
+                    <div class="login-form-new">
+                        <!-- 邀请码输入 -->
+                        <div class="login-input-wrapper">
+                            <div class="input-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 6H16L14 4H10L8 6H4C2.9 6 2 6.9 2 8V19C2 20.1 2.9 21 4 21H20C21.1 21 22 20.1 22 19V8C22 6.9 21.1 6 20 6ZM20 19H4V8H7.17L8.17 7H15.83L16.83 8H20V19Z" fill="rgba(255,255,255,0.6)"/>
+                                    <path d="M12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10Z" fill="rgba(255,255,255,0.6)"/>
+                                </svg>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="text" id="activation-invite-code" placeholder="请输入邀请码" class="login-input-new" autofocus>
+                        </div>
+                        
+                        <!-- 激活按钮 -->
+                        <button class="login-btn-new" id="activation-btn">
+                            激活账户
+                        </button>
+                        
+                        <!-- 说明文字 -->
+                        <div class="activation-info">
+                            <p>🎉 注册成功！请输入邀请码激活您的账户</p>
+                            <p>后续会发放更多邀请码，请持续关注我们</p>
+                        </div>
+                    </div>
+                    
+                    <!-- 消息提示容器 -->
+                    <div id="activation-message-container"></div>
                 </div>
             </div>
         </div>

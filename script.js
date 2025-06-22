@@ -458,10 +458,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function showMainApp() {
         console.log('🔐 用户登录成功');
 
-        // 隐藏登录页面
+        // 隐藏所有登录相关页面
         const loginPage = document.getElementById('login-page');
+        const activationPage = document.getElementById('activation-page');
+        
         if (loginPage) {
             loginPage.style.display = 'none';
+        }
+        
+        if (activationPage) {
+            activationPage.style.display = 'none';
         }
 
         // 显示主应用
@@ -493,33 +499,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const phoneInput = document.getElementById('phone-input-new');
                 const codeInput = document.getElementById('verification-input-new');
                 
-                if (phoneInput && codeInput) {
-                    const phone = phoneInput.value.trim();
-                    const code = codeInput.value.trim();
-                    
-                    if (!phone) {
-                        showLoginMessage('请输入手机号', 'error');
-                        return;
-                    }
-                    
-                    if (!validatePhoneNumber(phone)) {
-                        showLoginMessage('请输入正确的手机号格式', 'error');
-                        return;
-                    }
-                    
-                    if (!code) {
-                        showLoginMessage('请输入验证码', 'error');
-                        return;
-                    }
-                    
-                    if (code.length !== 6) {
-                        showLoginMessage('验证码应为6位数字', 'error');
-                        return;
-                    }
-                    
-                    // 模拟登录过程
-                    performLogin(phone, code);
-                }
+                // 统一登录流程
+                handleLogin(phoneInput, codeInput);
             });
         }
 
@@ -534,6 +515,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showGoogleAuthFlow();
             });
         }
+
 
         // 发送验证码按钮
         const sendCodeBtn = document.getElementById('send-code-btn-new');
@@ -599,6 +581,174 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
         }
+
+    }
+
+    /**
+     * 处理登录
+     */
+    function handleLogin(phoneInput, codeInput) {
+        const phone = phoneInput.value.trim();
+        const code = codeInput.value.trim();
+        
+        if (!phone) {
+            showLoginMessage('请输入手机号', 'error');
+            return;
+        }
+        
+        if (!validatePhoneNumber(phone)) {
+            showLoginMessage('请输入正确的手机号格式', 'error');
+            return;
+        }
+        
+        if (!code) {
+            showLoginMessage('请输入验证码', 'error');
+            return;
+        }
+        
+        // 执行登录（包含新用户检测）
+        performLoginWithUserCheck(phone, code);
+    }
+
+    /**
+     * 执行登录（包含新用户检测）
+     */
+    function performLoginWithUserCheck(phone, code) {
+        const loginBtn = document.getElementById('login-btn-new');
+        if (loginBtn) {
+            const originalText = loginBtn.textContent;
+            loginBtn.disabled = true;
+            loginBtn.textContent = '登录中...';
+            
+            // 模拟登录延迟
+            setTimeout(() => {
+                // 检查是否为新用户
+                const isNewUser = !isExistingUser(phone);
+                
+                if (isNewUser) {
+                    // 新用户：跳转到激活页面
+                    showLoginMessage('登录成功！正在跳转到激活页面...', 'success');
+                    setTimeout(() => {
+                        showActivationPage();
+                    }, 1000);
+                } else {
+                    // 老用户：直接进入应用
+                    showLoginMessage('登录成功！', 'success');
+                    setTimeout(() => {
+                        showMainApp();
+                    }, 1000);
+                }
+            }, 1500);
+        }
+    }
+
+    /**
+     * 显示激活页面
+     */
+    function showActivationPage() {
+        const loginPage = document.getElementById('login-page');
+        const activationPage = document.getElementById('activation-page');
+        
+        if (loginPage) loginPage.style.display = 'none';
+        if (activationPage) {
+            activationPage.style.display = 'block';
+            initActivationEvents();
+        }
+    }
+
+    /**
+     * 初始化激活页面事件
+     */
+    function initActivationEvents() {
+        const activationBtn = document.getElementById('activation-btn');
+        const inviteCodeInput = document.getElementById('activation-invite-code');
+        
+        if (activationBtn && !activationBtn.hasAttribute('data-initialized')) {
+            activationBtn.setAttribute('data-initialized', 'true');
+            activationBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (inviteCodeInput) {
+                    const inviteCode = inviteCodeInput.value.trim();
+                    
+                    if (!inviteCode) {
+                        showActivationMessage('请输入邀请码', 'error');
+                        return;
+                    }
+                    
+                    // 执行激活
+                    performActivation(inviteCode);
+                }
+            });
+        }
+        
+        // 回车键激活
+        if (inviteCodeInput && !inviteCodeInput.hasAttribute('data-initialized')) {
+            inviteCodeInput.setAttribute('data-initialized', 'true');
+            inviteCodeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    activationBtn.click();
+                }
+            });
+        }
+    }
+
+    /**
+     * 执行激活
+     */
+    function performActivation(inviteCode) {
+        const activationBtn = document.getElementById('activation-btn');
+        if (activationBtn) {
+            const originalText = activationBtn.textContent;
+            activationBtn.disabled = true;
+            activationBtn.textContent = '激活中...';
+            
+            // 演示用，任何邀请码都可以通过
+            setTimeout(() => {
+                showActivationMessage('激活成功！欢迎使用跨境运营助手', 'success');
+                setTimeout(() => {
+                    showMainApp();
+                }, 1500);
+            }, 1500);
+        }
+    }
+
+    /**
+     * 显示激活消息
+     */
+    function showActivationMessage(message, type = 'info') {
+        // 移除现有的消息
+        const existingMessage = document.querySelector('#activation-page .login-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        // 创建新消息
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `login-message login-message-${type}`;
+        messageDiv.textContent = message;
+
+        // 插入到激活消息容器中
+        const messageContainer = document.getElementById('activation-message-container');
+        if (messageContainer) {
+            messageContainer.appendChild(messageDiv);
+            
+            // 自动移除消息
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 5000);
+        }
+    }
+
+
+
+    /**
+     * 简单模拟用户存在性检查
+     */
+    function isExistingUser(phone) {
+        // 模拟逻辑：以下手机号为已存在用户
+        const existingUsers = ['13800138000', '13900139000', '18800188000'];
+        return existingUsers.includes(phone);
     }
 
     /**
@@ -613,17 +763,11 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // 模拟登录延迟
             setTimeout(() => {
-                // 简单的验证码验证（生产环境应该调用后端API）
-                if (code === '123456' || code === '888888') {
-                    showLoginMessage('登录成功！', 'success');
-                    setTimeout(() => {
-                        showMainApp();
-                    }, 1000);
-                } else {
-                    showLoginMessage('验证码错误，请重新输入', 'error');
-                    loginBtn.disabled = false;
-                    loginBtn.textContent = originalText;
-                }
+                // 演示用，任何6位验证码都可以通过
+                showLoginMessage('登录成功！', 'success');
+                setTimeout(() => {
+                    showMainApp();
+                }, 1000);
             }, 1500);
         }
     }
@@ -663,17 +807,33 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // 模拟Google登录延迟
         setTimeout(() => {
-            // 这里可以直接跳转到Google OAuth页面
-            // 或者显示现有的Google登录模拟页面
-            const googleAuthPage = document.getElementById('google-auth-page');
-            if (googleAuthPage) {
-                const loginPage = document.getElementById('login-page');
-                if (loginPage) {
-                    loginPage.style.display = 'none';
-                }
-                googleAuthPage.style.display = 'block';
+            // 模拟Google登录成功，检查用户状态
+            const mockGoogleEmail = 'user@gmail.com';
+            const isNewUser = !isExistingGoogleUser(mockGoogleEmail);
+            
+            if (isNewUser) {
+                // Google新用户：直接跳转到激活页面
+                showLoginMessage('Google登录成功！正在跳转到激活页面...', 'success');
+                setTimeout(() => {
+                    showActivationPage();
+                }, 1000);
+            } else {
+                // Google老用户：直接进入应用
+                showLoginMessage('Google登录成功！', 'success');
+                setTimeout(() => {
+                    showMainApp();
+                }, 1000);
             }
-        }, 800);
+        }, 1500);
+    }
+
+    /**
+     * 检查Google用户是否已存在
+     */
+    function isExistingGoogleUser(email) {
+        // 模拟逻辑：某些邮箱为已存在用户
+        const existingGoogleUsers = ['admin@gmail.com', 'test@gmail.com'];
+        return existingGoogleUsers.includes(email);
     }
 
     /**
