@@ -3457,14 +3457,24 @@ document.addEventListener('DOMContentLoaded', function() {
             chatInput.focus();
         }
 
-        // 创作者卡片中的按钮点击
-        if (e.target.tagName === 'BUTTON' && e.target.closest('.creator-actions')) {
-            const creatorName = e.target.closest('.creator-card').querySelector('.creator-name').textContent;
+        // 创作者卡片点击事件
+        if (e.target.closest('.creator-card')) {
+            const creatorCard = e.target.closest('.creator-card');
 
-            if (e.target.textContent.includes('查看详情')) {
+            // 如果点击的是按钮，处理按钮事件
+            if (e.target.tagName === 'BUTTON' && e.target.closest('.creator-actions')) {
+                const creatorName = creatorCard.querySelector('.creator-name').textContent;
+
+                if (e.target.textContent.includes('查看详情')) {
+                    displayCreatorDetail(creatorName);
+                } else if (e.target.textContent.includes('添加到建联列表') || e.target.textContent.includes('联系博主')) {
+                    alert(`已将 ${creatorName} 添加到建联列表，您可以在"建联记录"中查看并联系`);
+                }
+            }
+            // 如果点击的是卡片其他区域（非按钮），打开详情页面
+            else if (!e.target.closest('.creator-actions')) {
+                const creatorName = creatorCard.querySelector('.creator-name').textContent;
                 displayCreatorDetail(creatorName);
-            } else if (e.target.textContent.includes('添加到建联列表') || e.target.textContent.includes('联系博主')) {
-                alert(`已将 ${creatorName} 添加到建联列表，您可以在"建联记录"中查看并联系`);
             }
         }
     });
@@ -5003,6 +5013,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     generateEmails(selectedCreators);
                 });
             }
+
+            // 为动态生成的达人行添加点击事件
+            const creatorRowItems = document.querySelectorAll('.creator-row-item');
+            creatorRowItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // 如果点击的是复选框或标签，不触发详情页面
+                    if (e.target.closest('.creator-row-checkbox')) {
+                        return;
+                    }
+
+                    // 获取达人名称并打开详情页面
+                    const creatorName = this.querySelector('.creator-row-name').textContent;
+                    displayCreatorDetail(creatorName);
+                });
+
+                // 添加鼠标悬停效果
+                item.style.cursor = 'pointer';
+            });
         }, 500);
     }
 
@@ -6033,9 +6061,658 @@ Earbud 产品运营专员`;
 
     // 显示创作者详情
     function displayCreatorDetail(creatorName) {
-        // 这里可以实现详情展示，例如弹出一个模态框
-        alert(`查看 ${creatorName} 的详细信息将在此实现`);
+        // 获取达人数据
+        const creatorData = getCreatorData(creatorName);
+        if (!creatorData) {
+            console.error('未找到达人数据:', creatorName);
+            return;
+        }
+
+        // 填充详情页面数据
+        populateCreatorDetail(creatorData);
+
+        // 显示模态框
+        showCreatorDetailModal();
     }
+
+    // 获取达人数据（模拟数据，实际项目中应该从API获取）
+    function getCreatorData(creatorName) {
+        const creatorsDatabase = {
+            'MattVidPro AI': {
+                name: 'MattVidPro AI',
+                avatar: 'https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=120&h=120&fit=crop&q=80',
+                verified: true,
+                location: '美国',
+                language: '英语',
+                followers: 286700,
+                videoCount: 580,
+                totalViews: 103000000,
+                engagement: 2315900,
+                country: '美国',
+                primaryLanguage: '英语',
+                estimatedPrice: {
+                    min: 1500,
+                    max: 2500,
+                    currency: '$'
+                },
+                // 新的三模块数据结构
+                creatorAnalysis: {
+                    "行业分类": "3C数码",
+                    "垂类深度": "高度垂直",
+                    "推广能力": "自然软广",
+                    "品牌合作": "品牌多样",
+                    "适合商品": ["数码配件", "智能家居", "AI产品"]
+                },
+                audienceAnalysis: {
+                    "主要国家": "美国",
+                    "性别分布": "男性为主(>60%)",
+                    "年龄段": "25-34岁",
+                    "使用语言": "英语",
+                    "消费能力": "高消费力"
+                },
+                contentAnalysis: {
+                    "主要格式": ["开箱测评", "使用教程", "产品清单"],
+                    "视觉风格": "电影级画质",
+                    "内容调性": "专业权威",
+                    "拍摄场景": ["专业工作室", "居家环境"],
+                    "近期内容总结": "专注AI技术产品评测，最近3个视频主要测评智能翻译设备、AI语音助手和机器学习硬件，内容专业深入，制作精良。"
+                },
+                lastPost: '今天',
+                videos: [
+                    {
+                        title: 'AI语音识别技术的最新突破',
+                        thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=80&h=60&fit=crop&q=80',
+                        views: '125万',
+                        likes: '8.5万',
+                        publishTime: '2天前'
+                    },
+                    {
+                        title: '实时翻译耳机深度评测',
+                        thumbnail: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=80&h=60&fit=crop&q=80',
+                        views: '89万',
+                        likes: '6.2万',
+                        publishTime: '5天前'
+                    },
+                    {
+                        title: '智能穿戴设备的未来趋势',
+                        thumbnail: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=80&h=60&fit=crop&q=80',
+                        views: '156万',
+                        likes: '11.3万',
+                        publishTime: '1周前'
+                    },
+                    {
+                        title: 'AI助手在日常生活中的应用',
+                        thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=80&h=60&fit=crop&q=80',
+                        views: '203万',
+                        likes: '15.7万',
+                        publishTime: '2周前'
+                    },
+                    {
+                        title: '科技产品测评：音频设备专场',
+                        thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=80&h=60&fit=crop&q=80',
+                        views: '178万',
+                        likes: '12.9万',
+                        publishTime: '3周前'
+                    }
+                ]
+            },
+            'Two Minute Papers': {
+                name: 'Two Minute Papers',
+                avatar: 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=120&h=120&fit=crop&q=80',
+                verified: true,
+                location: '匈牙利',
+                language: '英语',
+                followers: 1620000,
+                videoCount: 1200,
+                totalViews: 150000000,
+                engagement: 8920000,
+                country: '匈牙利',
+                primaryLanguage: '英语',
+                estimatedPrice: {
+                    min: 3000,
+                    max: 5000,
+                    currency: '$'
+                },
+                // 新的三模块数据结构
+                creatorAnalysis: {
+                    "行业分类": "3C数码",
+                    "垂类深度": "高度垂直",
+                    "推广能力": "几乎无推广",
+                    "品牌合作": "无商业推广",
+                    "适合商品": ["AI产品", "教育软件", "专业工具"]
+                },
+                audienceAnalysis: {
+                    "主要国家": "匈牙利",
+                    "性别分布": "男性为主(>60%)",
+                    "年龄段": "25-34岁",
+                    "使用语言": "英语",
+                    "消费能力": "中等消费力"
+                },
+                contentAnalysis: {
+                    "主要格式": ["使用教程", "学术讲解"],
+                    "视觉风格": "简洁明了",
+                    "内容调性": "专业权威",
+                    "拍摄场景": ["专业工作室", "办公环境"],
+                    "近期内容总结": "专注机器学习和深度学习教学，最近视频涵盖神经网络原理、计算机视觉应用和自然语言处理技术，内容学术性强。"
+                },
+                lastPost: '昨天',
+                videos: [
+                    {
+                        title: '最新AI研究：语音合成技术突破',
+                        thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=80&h=60&fit=crop&q=80',
+                        views: '245万',
+                        likes: '18.3万',
+                        publishTime: '1天前'
+                    },
+                    {
+                        title: '机器学习在音频处理中的应用',
+                        thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=80&h=60&fit=crop&q=80',
+                        views: '189万',
+                        likes: '14.2万',
+                        publishTime: '4天前'
+                    },
+                    {
+                        title: '深度学习算法解析：音频识别',
+                        thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=80&h=60&fit=crop&q=80',
+                        views: '167万',
+                        likes: '12.8万',
+                        publishTime: '1周前'
+                    },
+                    {
+                        title: 'AI技术前沿：实时语言翻译',
+                        thumbnail: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=80&h=60&fit=crop&q=80',
+                        views: '298万',
+                        likes: '22.1万',
+                        publishTime: '2周前'
+                    },
+                    {
+                        title: '科技论文解读：智能音频设备',
+                        thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=80&h=60&fit=crop&q=80',
+                        views: '134万',
+                        likes: '9.7万',
+                        publishTime: '3周前'
+                    }
+                ]
+            },
+            'AI TV': {
+                name: 'AI TV',
+                avatar: 'https://images.unsplash.com/photo-1580518324671-c2f0833a3af3?w=120&h=120&fit=crop&q=80',
+                verified: false,
+                location: '加拿大',
+                language: '英语',
+                followers: '1.38万',
+                views: '11.4万',
+                engagement: '2.8万',
+                lastPost: '3天前',
+                videos: [
+                    {
+                        title: 'AI产品评测：智能耳机对比',
+                        thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=80&h=60&fit=crop&q=80',
+                        views: '3.2万',
+                        likes: '2.1万',
+                        publishTime: '3天前'
+                    },
+                    {
+                        title: '穿戴设备深度测试',
+                        thumbnail: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=80&h=60&fit=crop&q=80',
+                        views: '2.8万',
+                        likes: '1.9万',
+                        publishTime: '1周前'
+                    },
+                    {
+                        title: '智能翻译设备横向评测',
+                        thumbnail: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=80&h=60&fit=crop&q=80',
+                        views: '4.1万',
+                        likes: '2.7万',
+                        publishTime: '2周前'
+                    },
+                    {
+                        title: 'AI语音助手功能对比',
+                        thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=80&h=60&fit=crop&q=80',
+                        views: '1.9万',
+                        likes: '1.3万',
+                        publishTime: '3周前'
+                    },
+                    {
+                        title: '科技新品开箱：音频设备专场',
+                        thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=80&h=60&fit=crop&q=80',
+                        views: '2.4万',
+                        likes: '1.6万',
+                        publishTime: '1个月前'
+                    }
+                ]
+            },
+            'Sciencephile the AI': {
+                name: 'Sciencephile the AI',
+                avatar: 'https://images.unsplash.com/photo-1540569876033-6e5d046a1d77?w=120&h=120&fit=crop&q=80',
+                verified: false,
+                location: '美国',
+                language: '英语',
+                followers: '108万',
+                views: '87.2万',
+                engagement: '156万',
+                lastPost: '2天前',
+                videos: [
+                    {
+                        title: '科学解析：AI语音识别原理',
+                        thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=80&h=60&fit=crop&q=80',
+                        views: '67万',
+                        likes: '4.8万',
+                        publishTime: '2天前'
+                    },
+                    {
+                        title: '未来科技：智能翻译设备',
+                        thumbnail: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=80&h=60&fit=crop&q=80',
+                        views: '89万',
+                        likes: '6.3万',
+                        publishTime: '1周前'
+                    },
+                    {
+                        title: '技术前沿：音频处理算法',
+                        thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=80&h=60&fit=crop&q=80',
+                        views: '45万',
+                        likes: '3.2万',
+                        publishTime: '2周前'
+                    },
+                    {
+                        title: '科普视频：人工智能发展史',
+                        thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=80&h=60&fit=crop&q=80',
+                        views: '123万',
+                        likes: '8.9万',
+                        publishTime: '3周前'
+                    },
+                    {
+                        title: '深度解读：机器学习在音频中的应用',
+                        thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=80&h=60&fit=crop&q=80',
+                        views: '78万',
+                        likes: '5.6万',
+                        publishTime: '1个月前'
+                    }
+                ]
+            },
+            'Tech Insider': {
+                name: 'Tech Insider',
+                avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&h=120&fit=crop&q=80',
+                verified: true,
+                location: '美国',
+                language: '英语',
+                followers: '540万',
+                views: '45万',
+                engagement: '892万',
+                lastPost: '昨天',
+                videos: [
+                    {
+                        title: '2024年最值得关注的科技产品',
+                        thumbnail: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=80&h=60&fit=crop&q=80',
+                        views: '234万',
+                        likes: '16.8万',
+                        publishTime: '1天前'
+                    },
+                    {
+                        title: '智能穿戴设备市场分析',
+                        thumbnail: 'https://images.unsplash.com/photo-1583394838336-acd977736f90?w=80&h=60&fit=crop&q=80',
+                        views: '189万',
+                        likes: '13.4万',
+                        publishTime: '3天前'
+                    },
+                    {
+                        title: '音频技术的革命性突破',
+                        thumbnail: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=80&h=60&fit=crop&q=80',
+                        views: '167万',
+                        likes: '11.9万',
+                        publishTime: '1周前'
+                    },
+                    {
+                        title: 'AI助手功能大比拼',
+                        thumbnail: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=80&h=60&fit=crop&q=80',
+                        views: '298万',
+                        likes: '21.3万',
+                        publishTime: '2周前'
+                    },
+                    {
+                        title: '科技新闻周报：创新产品盘点',
+                        thumbnail: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=80&h=60&fit=crop&q=80',
+                        views: '145万',
+                        likes: '10.2万',
+                        publishTime: '3周前'
+                    }
+                ]
+            }
+        };
+
+        // 清理达人名称（移除验证标记等）
+        const cleanName = creatorName.replace(/\s*<.*?>.*?<\/.*?>/g, '').trim();
+
+        // 如果在数据库中找到了具体数据，返回它
+        if (creatorsDatabase[cleanName]) {
+            return creatorsDatabase[cleanName];
+        }
+
+        // 如果没有找到具体数据，生成通用数据
+        return generateGenericCreatorData(cleanName);
+    }
+
+    // 为其他达人生成通用数据
+    function generateGenericCreatorData(creatorName) {
+        // 生成随机但合理的数据
+        const followers = Math.floor(Math.random() * 500) + 50; // 50-550万
+        const views = Math.floor(Math.random() * 100) + 20; // 20-120万
+        const engagement = Math.floor(Math.random() * 50) + 10; // 10-60万
+
+        const locations = ['美国', '英国', '加拿大', '澳大利亚', '德国', '法国', '日本', '韩国'];
+        const languages = ['英语', '中文', '日语', '韩语', '德语', '法语', '西班牙语'];
+
+        const videoTitles = [
+            '最新科技产品深度评测',
+            '智能设备使用体验分享',
+            '科技趋势分析与预测',
+            '产品开箱与首次体验',
+            '技术原理深度解析',
+            '用户体验全面测试',
+            '市场竞品对比分析',
+            '创新功能详细介绍',
+            '实用技巧与使用指南',
+            '行业动态与新闻解读'
+        ];
+
+        const videos = [];
+        for (let i = 0; i < 5; i++) {
+            videos.push({
+                title: videoTitles[Math.floor(Math.random() * videoTitles.length)],
+                thumbnail: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000000)}?w=80&h=60&fit=crop&q=80`,
+                views: `${Math.floor(Math.random() * 50) + 5}万`,
+                likes: `${Math.floor(Math.random() * 10) + 1}万`,
+                publishTime: `${Math.floor(Math.random() * 30) + 1}天前`
+            });
+        }
+
+        return {
+            name: creatorName,
+            avatar: `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000000)}?w=120&h=120&fit=crop&q=80`,
+            verified: Math.random() > 0.7, // 30%概率有验证标记
+            location: locations[Math.floor(Math.random() * locations.length)],
+            language: languages[Math.floor(Math.random() * languages.length)],
+            followers: `${followers}万`,
+            views: `${views}万`,
+            engagement: `${engagement}万`,
+            lastPost: `${Math.floor(Math.random() * 7) + 1}天前`,
+            videos: videos
+        };
+    }
+
+    // 数值格式化函数
+    function formatNumber(num) {
+        if (num < 10000) return num.toLocaleString();
+        if (num < 1000000) return (num / 10000).toFixed(2) + '万';
+        if (num < 100000000) return (num / 1000000).toFixed(2) + 'M';
+        return (num / 100000000).toFixed(2) + '亿';
+    }
+
+    // 价格格式化函数
+    function formatPrice(priceData) {
+        const { min, max, currency } = priceData;
+        return `${currency}${min.toLocaleString()} - ${currency}${max.toLocaleString()}`;
+    }
+
+    // 生成三个分析模块
+    function generateAnalysisModules(creatorData) {
+        const container = document.getElementById('creatorDetailAnalysisModules');
+        container.innerHTML = '';
+
+        // 模块1：达人属性分析
+        const creatorModule = createAnalysisModule(
+            'creator-analysis',
+            'fas fa-user-tie',
+            '达人属性分析',
+            creatorData.creatorAnalysis
+        );
+
+        // 模块2：粉丝画像分析
+        const audienceModule = createAnalysisModule(
+            'audience-analysis',
+            'fas fa-users',
+            '粉丝画像分析',
+            creatorData.audienceAnalysis
+        );
+
+        // 模块3：内容特征分析
+        const contentModule = createAnalysisModule(
+            'content-analysis',
+            'fas fa-video',
+            '内容特征分析',
+            creatorData.contentAnalysis
+        );
+
+        container.appendChild(creatorModule);
+        container.appendChild(audienceModule);
+        container.appendChild(contentModule);
+    }
+
+    // 创建词云风格的分析模块
+    function createAnalysisModule(moduleId, iconClass, title, data) {
+        const module = document.createElement('div');
+        module.className = 'analysis-module-card word-cloud-style';
+        module.id = moduleId;
+
+        const header = document.createElement('div');
+        header.className = 'analysis-module-header';
+        header.innerHTML = `
+            <i class="${iconClass} analysis-module-icon"></i>
+            <h4 class="analysis-module-title">${title}</h4>
+        `;
+
+        const content = document.createElement('div');
+        content.className = 'analysis-module-content word-cloud-container';
+
+        // 收集所有标签
+        const allTags = [];
+        Object.entries(data).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                value.forEach(item => {
+                    allTags.push({
+                        text: item,
+                        type: 'multi-select',
+                        importance: Math.random() * 0.5 + 0.5 // 0.5-1.0
+                    });
+                });
+            } else if (key === '近期内容总结') {
+                const shortText = value.length > 50 ? value.substring(0, 50) + '...' : value;
+                allTags.push({
+                    text: shortText,
+                    type: 'text-summary',
+                    importance: 0.8,
+                    fullText: value
+                });
+            } else {
+                allTags.push({
+                    text: value,
+                    type: 'single-select',
+                    importance: Math.random() * 0.3 + 0.7 // 0.7-1.0
+                });
+            }
+        });
+
+        // 应用词云布局
+        applyWordCloudLayout(content, allTags);
+
+        module.appendChild(header);
+        module.appendChild(content);
+        return module;
+    }
+
+    // 词云布局算法
+    function applyWordCloudLayout(container, tags) {
+        // 按重要性排序，重要的标签放在中心
+        tags.sort((a, b) => b.importance - a.importance);
+
+        tags.forEach((tagData, index) => {
+            const tag = document.createElement('span');
+            tag.className = `analysis-tag word-cloud-tag ${tagData.type}`;
+            tag.textContent = tagData.text;
+
+            if (tagData.fullText) {
+                tag.title = tagData.fullText;
+            }
+
+            // 根据重要性设置字体大小
+            const fontSize = 11 + (tagData.importance * 4); // 11-15px
+            tag.style.fontSize = `${fontSize}px`;
+
+            // 随机间距 (4-10px)
+            const margin = 4 + Math.random() * 6;
+            tag.style.margin = `${margin}px`;
+
+            // 轻微旋转 (-3到+3度)
+            const rotation = (Math.random() - 0.5) * 6;
+            tag.style.transform = `rotate(${rotation}deg)`;
+
+            // 垂直偏移 (-8到+8px)
+            const verticalOffset = (Math.random() - 0.5) * 16;
+            tag.style.position = 'relative';
+            tag.style.top = `${verticalOffset}px`;
+
+            // 添加悬停效果
+            tag.addEventListener('mouseenter', function() {
+                this.style.transform = `rotate(${rotation}deg) scale(1.1)`;
+                this.style.zIndex = '10';
+            });
+
+            tag.addEventListener('mouseleave', function() {
+                this.style.transform = `rotate(${rotation}deg) scale(1)`;
+                this.style.zIndex = '1';
+            });
+
+            container.appendChild(tag);
+        });
+    }
+
+    // 数字动画函数
+    function animateNumber(elementId, startValue, endValue, formatter, duration = 1500) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        const startTime = performance.now();
+        const range = endValue - startValue;
+
+        function updateNumber(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // 使用缓动函数
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const currentValue = startValue + (range * easeOutQuart);
+
+            element.textContent = formatter(Math.round(currentValue));
+
+            if (progress < 1) {
+                requestAnimationFrame(updateNumber);
+            }
+        }
+
+        requestAnimationFrame(updateNumber);
+    }
+
+    // 填充达人详情页面数据
+    function populateCreatorDetail(creatorData) {
+        // 基本信息
+        document.getElementById('creatorDetailAvatar').src = creatorData.avatar;
+        document.getElementById('creatorDetailAvatar').alt = creatorData.name;
+        document.getElementById('creatorDetailName').textContent = creatorData.name;
+
+        // 验证标记
+        const verifiedElement = document.getElementById('creatorDetailVerified');
+        if (creatorData.verified) {
+            verifiedElement.style.display = 'flex';
+        } else {
+            verifiedElement.style.display = 'none';
+        }
+
+        // 地区和语言
+        document.querySelector('#creatorDetailLocation span').textContent = creatorData.location;
+        document.querySelector('#creatorDetailLanguage span').textContent = creatorData.language;
+
+        // 基础统计数据（使用格式化函数和动画效果）
+        animateNumber('creatorDetailFollowers', 0, creatorData.followers, formatNumber);
+        animateNumber('creatorDetailVideoCount', 0, creatorData.videoCount, (num) => num.toString());
+        animateNumber('creatorDetailTotalViews', 0, creatorData.totalViews, formatNumber);
+        animateNumber('creatorDetailEngagement', 0, creatorData.engagement, formatNumber);
+
+        // 商业数据
+        document.getElementById('creatorDetailEstimatedPrice').textContent = formatPrice(creatorData.estimatedPrice);
+
+        // 生成三个分析模块
+        generateAnalysisModules(creatorData);
+
+
+    }
+
+    // 显示达人详情模态框
+    function showCreatorDetailModal() {
+        const modal = document.getElementById('creatorDetailModal');
+        modal.style.display = 'flex';
+        // 使用setTimeout确保display属性生效后再添加show类
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 10);
+
+        // 防止背景滚动（如果还没有被阻止的话）
+        if (document.body.style.overflow !== 'hidden') {
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    // 关闭达人详情模态框
+    window.closeCreatorDetail = function() {
+        const modal = document.getElementById('creatorDetailModal');
+        modal.classList.remove('show');
+
+        // 等待动画完成后隐藏模态框
+        setTimeout(() => {
+            modal.style.display = 'none';
+
+            // 检查是否还有建联详情弹窗打开，如果没有才恢复滚动
+            const outreachDetail = document.querySelector('.outreach-detail');
+            if (!outreachDetail || outreachDetail.style.display === 'none') {
+                document.body.style.overflow = 'auto';
+            }
+        }, 300);
+    }
+
+    // 从建联详情弹窗打开达人详情
+    window.openCreatorDetailFromOutreach = function() {
+        // 获取当前建联详情中的达人信息
+        const creatorName = document.querySelector('.detail-creator-name').textContent;
+
+        // 使用现有的getCreatorData函数获取数据
+        const creatorData = getCreatorData(creatorName);
+
+        if (creatorData) {
+            // 填充达人详情数据
+            populateCreatorDetail(creatorData);
+
+            // 显示达人详情弹窗
+            showCreatorDetailModal();
+        } else {
+            console.warn('未找到达人数据:', creatorName);
+        }
+    }
+
+    // 添加达人到建联记录
+    window.addCreatorToOutreach = function() {
+        const creatorName = document.getElementById('creatorDetailName').textContent;
+        alert(`已将 ${creatorName} 添加到建联记录，您可以在"建联记录"中查看并联系`);
+        closeCreatorDetail();
+    }
+
+    // 键盘事件处理（ESC键关闭模态框）
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('creatorDetailModal');
+            if (modal && modal.classList.contains('show')) {
+                closeCreatorDetail();
+            }
+        }
+    });
 
     // 翻译功能
     window.toggleTranslation = function(button) {

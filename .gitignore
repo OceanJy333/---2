@@ -64,3 +64,6 @@ playwright-report/
 
 # 项目特定
 style.css.backup 
+
+# YoYo AI version control directory
+.yoyo/

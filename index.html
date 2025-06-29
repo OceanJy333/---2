@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="themes/theme-switcher.css">
     <link rel="stylesheet" href="themes/alien-effects.css">
     <link rel="stylesheet" href="themes/dark-theme-gradient.css">
+    <link rel="stylesheet" href="themes/glassmorphism-unified.css">
 
     <!-- 用户引导系统 v2.0 -->
     <link rel="stylesheet" href="libs/driver.js/driver.min.css">
@@ -1131,7 +1132,13 @@
                                             <span class="creator-tag ai">AI专家</span>
                                             <span class="creator-tag review">产品测评</span>
                                         </div>
-                                        <!-- 移除价格谈判标签，简化布局 -->
+                                        <!-- 查看达人详情按钮 -->
+                                        <div class="creator-detail-action">
+                                            <button class="view-creator-detail-btn" onclick="openCreatorDetailFromOutreach()">
+                                                <i class="ri-user-search-line"></i>
+                                                查看达人详情
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="product-section">
@@ -2857,5 +2864,130 @@ Earbud 产品运营经理</p>
             document.head.appendChild(testScript);
         }
     </script>
+
+    <!-- 达人详情页面模态框 -->
+    <div class="creator-detail-modal" id="creatorDetailModal">
+        <div class="creator-detail-overlay" onclick="closeCreatorDetail()"></div>
+        <div class="creator-detail-container">
+            <!-- 详情页面头部 -->
+            <div class="creator-detail-header">
+                <button class="creator-detail-close" onclick="closeCreatorDetail()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 class="creator-detail-title">达人详情</h2>
+            </div>
+
+            <!-- 详情页面内容 -->
+            <div class="creator-detail-content">
+                <!-- 达人基本信息区域 -->
+                <div class="creator-detail-info-section">
+                    <div class="creator-detail-avatar-container">
+                        <img src="" alt="" class="creator-detail-avatar" id="creatorDetailAvatar">
+                        <div class="creator-detail-verified" id="creatorDetailVerified">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="creator-detail-basic-info">
+                        <h3 class="creator-detail-name" id="creatorDetailName">达人名称</h3>
+                        <div class="creator-detail-location" id="creatorDetailLocation">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>所在地区</span>
+                        </div>
+                        <div class="creator-detail-language" id="creatorDetailLanguage">
+                            <i class="fas fa-language"></i>
+                            <span>使用语言</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 基础数据模块 - 统一大小的网格布局 -->
+                <div class="creator-detail-stats-section">
+                    <div class="creator-detail-stats-masonry">
+                        <!-- 统一大小的卡片 -->
+                        <div class="creator-detail-stat-item followers-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="creatorDetailFollowers">0</div>
+                                <div class="stat-label">粉丝量</div>
+                            </div>
+                            <div class="stat-decoration"></div>
+                        </div>
+
+                        <div class="creator-detail-stat-item views-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="creatorDetailTotalViews">0</div>
+                                <div class="stat-label">播放量</div>
+                            </div>
+                            <div class="stat-decoration"></div>
+                        </div>
+
+                        <div class="creator-detail-stat-item videos-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="creatorDetailVideoCount">0</div>
+                                <div class="stat-label">视频数量</div>
+                            </div>
+                            <div class="stat-decoration"></div>
+                        </div>
+
+                        <div class="creator-detail-stat-item engagement-stat">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="creatorDetailEngagement">0</div>
+                                <div class="stat-label">互动量</div>
+                            </div>
+                            <div class="stat-decoration"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 商业数据模块 - 优化设计 -->
+                <div class="creator-commercial-section">
+                    <div class="creator-commercial-card">
+                        <div class="commercial-background-decoration"></div>
+                        <div class="commercial-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <div class="commercial-content">
+                            <div class="estimated-price" id="creatorDetailEstimatedPrice">$0 - $0</div>
+                            <div class="price-label">预估报价</div>
+                            <div class="price-subtitle">基于粉丝量和互动率估算</div>
+                        </div>
+                        <div class="commercial-sparkle">
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 三个分析模块 - 词云风格 -->
+                <div class="creator-analysis-section">
+                    <div class="analysis-modules-container" id="creatorDetailAnalysisModules">
+                        <!-- 三个分析模块将通过JavaScript动态生成为词云风格 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 详情页面底部操作区域 -->
+            <div class="creator-detail-footer">
+                <button class="creator-detail-action-btn secondary" onclick="closeCreatorDetail()">
+                    <i class="fas fa-arrow-left"></i>
+                    返回
+                </button>
+                <button class="creator-detail-action-btn primary" onclick="addCreatorToOutreach()">
+                    <i class="fas fa-plus"></i>
+                    添加到建联记录
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

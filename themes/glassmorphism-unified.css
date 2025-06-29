@@ -1,0 +1,333 @@
+/* 
+ * 统一毛玻璃效果样式库 (Glassmorphism Unified Styles)
+ * 基于登录页面设计，提供一套完整的毛玻璃效果解决方案
+ */
+
+/* ==================== 全局背景设计 ==================== */
+
+/* 主应用背景 - 深蓝紫渐变 */
+[data-theme="professional"] body,
+[data-theme="professional"] #app,
+[data-theme="professional"] .main-content,
+[data-theme="professional"] .ai-assistant-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f1419 50%, #1a1a2e 75%, #16213e 100%) !important;
+    background-size: 400% 400% !important;
+    background-attachment: fixed !important;
+    animation: gradientShift 20s ease infinite !important;
+    min-height: 100vh !important;
+    position: relative !important;
+}
+
+/* 背景渐变动画 */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 背景装饰效果 */
+[data-theme="professional"] body::before {
+    content: '';
+    position: fixed;
+    top: -200px;
+    left: -200px;
+    width: calc(100% + 400px);
+    height: calc(100% + 400px);
+    background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.3) 0%, rgba(75, 0, 130, 0.2) 30%, transparent 70%),
+                radial-gradient(circle at 70% 70%, rgba(30, 144, 255, 0.3) 0%, rgba(0, 0, 255, 0.2) 30%, transparent 70%);
+    filter: blur(100px);
+    opacity: 0.7;
+    z-index: -1;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* ==================== 毛玻璃效果基础类 ==================== */
+
+/* 主要毛玻璃效果 - 用于重要组件 */
+.glassmorphism-primary {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 24px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.glassmorphism-primary:hover {
+    box-shadow: 
+        0 12px 48px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* 次要毛玻璃效果 - 用于卡片组件 */
+.glassmorphism-secondary {
+    background: rgba(26, 26, 46, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.glassmorphism-secondary:hover {
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* 轻量毛玻璃效果 - 用于导航和侧边栏 */
+.glassmorphism-light {
+    background: rgba(26, 26, 46, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 强化毛玻璃效果 - 用于模态框 */
+.glassmorphism-modal {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    box-shadow: 
+        0 16px 64px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 微妙毛玻璃效果 - 用于下拉菜单等小组件 */
+.glassmorphism-subtle {
+    background: rgba(26, 26, 46, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ==================== 特定组件样式 ==================== */
+
+/* 侧边栏毛玻璃效果 */
+[data-theme="professional"] .sidebar {
+    background: rgba(26, 26, 46, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* 用户信息卡片 */
+[data-theme="professional"] .user-profile {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* KPI卡片 */
+[data-theme="professional"] .kpi-card {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.kpi-card:hover {
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* 仪表盘卡片 */
+[data-theme="professional"] .dashboard-card {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.dashboard-card:hover {
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* 增强卡片 */
+[data-theme="professional"] .card-enhanced {
+    background: rgba(26, 26, 46, 0.8) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ==================== 模态框和弹窗 ==================== */
+
+/* 模态框背景遮罩 */
+[data-theme="professional"] .modal-overlay {
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+
+/* 模态框容器 */
+[data-theme="professional"] .modal-container,
+[data-theme="professional"] .modal-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    box-shadow: 
+        0 16px 64px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 通知弹窗 */
+[data-theme="professional"] .notifications-modal .modal-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    box-shadow: 
+        0 16px 64px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* AI工具弹窗 */
+[data-theme="professional"] .ai-tool-popup .popup-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    box-shadow: 
+        0 16px 64px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* 邮件工具模态框 */
+[data-theme="professional"] .email-tool-modal-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 20px !important;
+    backdrop-filter: blur(25px) !important;
+    -webkit-backdrop-filter: blur(25px) !important;
+    box-shadow: 
+        0 16px 64px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+/* ==================== 下拉菜单和小组件 ==================== */
+
+/* 下拉菜单 */
+[data-theme="professional"] .dropdown-menu-enhanced,
+[data-theme="professional"] .sidebar-dropdown-menu {
+    background: rgba(26, 26, 46, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 12px !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 输入框样式 */
+[data-theme="professional"] input:not(.login-input-new),
+[data-theme="professional"] textarea,
+[data-theme="professional"] select {
+    background: rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    color: #ffffff !important;
+}
+
+/* ==================== 响应式优化 ==================== */
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    .glassmorphism-primary,
+    .glassmorphism-modal {
+        border-radius: 16px !important;
+        backdrop-filter: blur(15px) !important;
+        -webkit-backdrop-filter: blur(15px) !important;
+    }
+    
+    .glassmorphism-secondary {
+        border-radius: 12px !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .glassmorphism-primary,
+    .glassmorphism-modal {
+        border-radius: 12px !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+    
+    .glassmorphism-secondary {
+        border-radius: 8px !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+    }
+}
+
+/* ==================== 性能优化 ==================== */
+
+/* 减少重绘和回流 */
+.glassmorphism-primary,
+.glassmorphism-secondary,
+.glassmorphism-light,
+.glassmorphism-modal,
+.glassmorphism-subtle {
+    will-change: transform, box-shadow !important;
+    transform: translateZ(0) !important;
+}
+
+/* 禁用低性能设备的复杂效果 */
+@media (prefers-reduced-motion: reduce) {
+    .glassmorphism-primary,
+    .glassmorphism-secondary,
+    .glassmorphism-light,
+    .glassmorphism-modal,
+    .glassmorphism-subtle {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    [data-theme="professional"] body::before {
+        animation: none !important;
+    }
+    
+    [data-theme="professional"] body,
+    [data-theme="professional"] #app {
+        animation: none !important;
+        background: #1a1a2e !important;
+    }
+}
