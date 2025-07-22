@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI助手 - 侧边导航栏原型</title>
+    
+    <!-- 资源预加载优化 -->
+    <link rel="preconnect" href="https://cdn.staticfile.net">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdn.staticfile.net">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
+    <!-- 核心CSS框架 - 优化加载顺序 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.staticfile.net/tailwindcss/2.2.9/tailwind.min.css" crossorigin="anonymous">
+    
+    <!-- 项目基础样式 -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-enhanced.css">
+    <link rel="stylesheet" href="performance-enhanced.css">
+    
+
+
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
+    
+    <!-- Chart.js for future analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+    <!-- 居中侧边栏样式 -->
+    <style>
+    /* 重置和基础样式 */
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        background: var(--background-color, #f5f5f5);
+        color: var(--text-primary, #333);
+        transition: all 0.3s ease;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+    }
+    
+    /* 侧边栏居中容器 */
+    .sidebar-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 20px;
+        width: 100%;
+    }
+    
+    /* 修改侧边栏样式，使其可以居中显示 */
+    .sidebar {
+        position: relative !important;
+        width: 320px !important;
+        max-width: 90vw;
+        height: 85vh !important;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        background: var(--surface-color, #ffffff);
+        border: 1px solid var(--border-color, rgba(0, 0, 0, 0.1));
+    }
+    
+    
+    
+    /* 项目管理区域样式增强 */
+    .project-management-area {
+        padding: 16px;
+        border-bottom: 1px solid var(--border-color, #e5e7eb);
+    }
+    
+    .project-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+    
+    .project-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-secondary, #6b7280);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .new-project-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        background: var(--primary-color, #3b82f6);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.2s ease;
+    }
+    
+    .new-project-btn:hover {
+        background: var(--primary-dark, #2563eb);
+        transform: translateY(-1px);
+    }
+    
+    /* 项目列表样式 */
+    .projects-list {
+        margin-top: 0px; /* 去掉上边距，减少空间浪费 */
+    }
+    
+    .project-item {
+        margin-bottom: 4px;
+        border: none;
+        border-radius: 0;
+        overflow: visible;
+        background: transparent;
+    }
+    
+    .project-header-item {
+        display: flex;
+        align-items: center;
+        padding: 6px 16px;
+        cursor: pointer;
+        background: transparent;
+        border-bottom: none;
+        border-radius: 0;
+    }
+    
+    .project-header-item:hover {
+        background: var(--surface-hover, #f3f4f6);
+    }
+    
+    .project-header-item i {
+        margin-right: 8px;
+        font-size: 14px;
+    }
+    
+    .project-name {
+        flex: 1;
+        font-weight: 500;
+        font-size: 14px;
+        color: var(--text-primary, #374151);
+    }
+    
+    .project-actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    
+    .project-header-item:hover .project-actions {
+        opacity: 1;
+    }
+    
+    .project-actions button {
+        padding: 4px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        border-radius: 4px;
+        color: var(--text-secondary, #6b7280);
+        font-size: 12px;
+        transition: all 0.2s ease;
+    }
+    
+    .project-actions button:hover {
+        background: var(--surface-hover, #e5e7eb);
+        color: var(--text-primary, #374151);
+    }
+    
+    .project-delete-btn:hover {
+        color: var(--error-color, #dc2626) !important;
+        background: var(--error-pale, #fee2e2) !important;
+    }
+    
+    /* 项目对话列表 - 移动到后面的样式中 */
+    
+    .conversation-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid var(--border-light, #f3f4f6);
+        transition: all 0.2s ease;
+    }
+    
+    .conversation-item:hover {
+        background: var(--surface-hover, #f3f4f6);
+    }
+    
+    .conversation-item:last-child {
+        border-bottom: none;
+    }
+    
+    .conversation-content {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        gap: 8px;
+    }
+    
+    .conversation-content i {
+        font-size: 12px;
+    }
+    
+    .conversation-title {
+        font-size: 13px;
+        color: var(--text-primary, #374151);
+    }
+    
+    .conversation-actions {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+    
+    .conversation-item:hover .conversation-actions {
+        opacity: 1;
+    }
+    
+    .conversation-actions button {
+        padding: 2px 4px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        border-radius: 3px;
+        color: var(--text-secondary, #6b7280);
+        font-size: 10px;
+        transition: all 0.2s ease;
+    }
+    
+    .conversation-actions button:hover {
+        background: var(--surface-hover, #e5e7eb);
+        color: var(--text-primary, #374151);
+    }
+    
+    /* 未归类对话区域 */
+    .uncategorized-area {
+        padding: 16px;
+    }
+    
+    .uncategorized-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+    
+    .uncategorized-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-secondary, #6b7280);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .conversation-count {
+        background: var(--primary-alpha-10, rgba(59, 130, 246, 0.1));
+        color: var(--primary-color, #3b82f6);
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+    
+    .uncategorized-conversations .conversation-item {
+        border: 1px solid var(--border-color, #e5e7eb);
+        border-radius: 6px;
+        margin-bottom: 8px;
+        background: var(--surface-color, #ffffff);
+    }
+    
+    .uncategorized-conversations .conversation-item:hover {
+        border-color: var(--primary-color, #3b82f6);
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+    }
+    
+    /* 拖拽状态 */
+    .dragging {
+        opacity: 0.5 !important;
+        transform: rotate(2deg) scale(0.95);
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        position: relative;
+    }
+    
+    .drag-over {
+        background: var(--primary-alpha-05, rgba(59, 130, 246, 0.05)) !important;
+        border-color: var(--primary-color, #3b82f6) !important;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2) !important;
+        transition: all 0.2s ease;
+    }
+    
+    /* 优化拖拽反馈 */
+    .conversation-item[draggable="true"]:hover {
+        cursor: grab;
+    }
+    
+    .conversation-item[draggable="true"]:active {
+        cursor: grabbing;
+    }
+    
+    /* 响应式适配 */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100% !important;
+            max-width: 400px;
+            height: auto !important;
+            max-height: 85vh;
+        }
+        
+        .sidebar-container {
+            padding: 10px;
+        }
+    }
+    
+    /* AI助手图标样式 */
+    .ai-assistant-icons {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: auto;
+    }
+    
+    .ai-icon-btn {
+        padding: 4px 8px;
+        border: none;
+        background: var(--surface-hover, #f3f4f6);
+        color: var(--text-primary, #374151);
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        min-width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .ai-icon-btn:hover {
+        background: var(--primary-color, #3b82f6);
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+    }
+    
+    .folder-icon-btn {
+        font-size: 12px;
+    }
+    
+    .conversation-icon-btn {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    /* 悬停显示文件夹图标 */
+    .menu-item-content:hover .folder-icon-btn {
+        display: flex !important;
+    }
+    
+    /* 内联编辑样式 */
+    .inline-edit-container {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+    }
+    
+    .inline-edit-input {
+        flex: 1;
+        padding: 2px 6px;
+        border: 1px solid var(--primary-color, #3b82f6);
+        border-radius: 3px;
+        font-size: 13px;
+        background: var(--surface-color, #ffffff);
+        color: var(--text-primary, #374151);
+        outline: none;
+    }
+    
+    .inline-edit-actions {
+        display: flex;
+        gap: 2px;
+    }
+    
+    .inline-edit-confirm,
+    .inline-edit-cancel {
+        padding: 2px 4px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 10px;
+        transition: all 0.2s ease;
+    }
+    
+    .inline-edit-confirm {
+        background: var(--primary-color, #3b82f6);
+        color: white;
+    }
+    
+    .inline-edit-confirm:hover {
+        background: var(--primary-dark, #2563eb);
+    }
+    
+    .inline-edit-cancel {
+        background: var(--error-color, #dc2626);
+        color: white;
+    }
+    
+    .inline-edit-cancel:hover {
+        background: #b91c1c;
+    }
+    
+    /* 操作提示样式 */
+    .operation-tip {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--primary-color, #3b82f6);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        animation: tipSlideIn 0.3s ease;
+    }
+
+    /* 自定义tooltip样式 */
+    .custom-tooltip {
+        position: absolute;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        pointer-events: none;
+        z-index: 1001;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        transform: translateY(-8px);
+    }
+
+    .custom-tooltip.show {
+        opacity: 1;
+    }
+
+    .custom-tooltip::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 4px solid transparent;
+        border-top-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    /* 编辑输入框防止点击穿透 */
+    .inline-edit-input {
+        pointer-events: auto;
+    }
+    
+    .operation-tip.fade-out {
+        animation: tipFadeOut 0.3s ease;
+    }
+    
+    @keyframes tipSlideIn {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes tipFadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+    }
+    
+    /* IDE文件树样式优化 */
+    .submenu {
+        padding: 8px 0 !important;
+        background: var(--surface-color, #ffffff) !important;
+    }
+
+    /* AI助手子菜单特殊滚动处理 */
+    #ai-assistant-submenu {
+        max-height: 450px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+    }
+
+    /* 自定义滚动条样式 */
+    #ai-assistant-submenu::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #ai-assistant-submenu::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    #ai-assistant-submenu::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 3px;
+    }
+
+    #ai-assistant-submenu::-webkit-scrollbar-thumb:hover {
+        background: #a1a1a1;
+    }
+    
+    .project-management-area {
+        padding: 0 !important;
+        border: none !important;
+    }
+    
+    .uncategorized-area {
+        padding: 0 !important;
+    }
+    
+    .submenu-divider {
+        height: 1px;
+        background: var(--border-light, #f3f4f6);
+        margin: 8px 0;
+    }
+    
+    .project-header {
+        display: none; /* 隐藏项目管理标题 */
+    }
+    
+    .uncategorized-header {
+        display: none; /* 隐藏未归类标题 */
+    }
+    
+    /* 统一文件树项目样式 */
+    .project-item,
+    .uncategorized-conversations .conversation-item {
+        border: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        background: transparent !important;
+    }
+    
+    .project-header-item,
+    .uncategorized-conversations .conversation-item {
+        padding: 6px 16px !important;
+        border-radius: 0 !important;
+        transition: background-color 0.2s ease;
+    }
+    
+    .project-header-item:hover,
+    .uncategorized-conversations .conversation-item:hover {
+        background: var(--surface-hover, #f3f4f6) !important;
+    }
+    
+    .project-conversations .conversation-item {
+        padding: 8px 12px 8px 24px !important; /* IDE风格的简单缩进 */
+        background: transparent !important; /* 去掉灰色背景 */
+        border: none !important; /* 去掉边框 */
+        margin: 0 !important; /* 去掉外边距 */
+        border-radius: 0 !important;
+        position: relative;
+    }
+    
+    /* 去掉横线连接符，改为IDE风格 */
+    
+    .project-conversations .conversation-item:hover {
+        background: var(--surface-hover, #f3f4f6) !important;
+    }
+    
+    .project-conversations {
+        background: transparent !important;
+        border: none !important; /* 去掉左边框线 */
+        margin-left: 0 !important; /* 去掉左边距 */
+        padding-left: 0;
+    }
+    
+    /* 高亮状态样式 */
+    .menu-item.highlighted {
+        background: var(--primary-alpha-10, rgba(59, 130, 246, 0.1)) !important;
+        border-left: 3px solid var(--primary-color, #3b82f6) !important;
+        border-radius: 0 6px 6px 0 !important;
+    }
+    
+    /* AI助手内容区域高亮样式 */
+    .menu-item-content.highlighted {
+        background: var(--primary-alpha-10, rgba(59, 130, 246, 0.1)) !important;
+        border-left: 3px solid var(--primary-color, #3b82f6) !important;
+        border-radius: 0 6px 6px 0 !important;
+    }
+    
+    .conversation-item.highlighted {
+        background: var(--primary-alpha-10, rgba(59, 130, 246, 0.1)) !important;
+        border-left: 3px solid var(--primary-color, #3b82f6) !important;
+    }
+    
+    .project-conversations .conversation-item.highlighted {
+        background: var(--primary-alpha-10, rgba(59, 130, 246, 0.1)) !important;
+        border-radius: 0 6px 6px 0 !important; /* 保持与其他高亮一致的圆角 */
+    }
+    
+    /* 确保主题变量生效 */
+    :root {
+        --primary-color: #3b82f6;
+        --primary-dark: #2563eb;
+        --primary-alpha-05: rgba(59, 130, 246, 0.05);
+        --primary-alpha-10: rgba(59, 130, 246, 0.1);
+        --surface-color: #ffffff;
+        --surface-hover: #f9fafb;
+        --background-color: #f5f5f5;
+        --background-alt: #f9fafb;
+        --text-primary: #374151;
+        --text-secondary: #6b7280;
+        --border-color: #e5e7eb;
+        --border-light: #f3f4f6;
+        --error-color: #dc2626;
+        --error-pale: #fee2e2;
+    }
+    </style>
+</head>
+<body>
+    <!-- 侧边栏居中容器 -->
+    <div class="sidebar-container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <!-- 侧边栏logo -->
+            <div class="sidebar-logo">
+                <span style="font-size: 28px; margin-right: 8px;">📧</span>
+                <h1>跨境运营助手</h1>
+            </div>
+
+            <!-- 主菜单 -->
+            <div class="menu-section">
+                <h2>主菜单</h2>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fas fa-tachometer-alt fa-icon-md text-blue-500"></i>
+                        <span>仪表盘</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fas fa-cube fa-icon-md text-purple-500"></i>
+                        <span>产品库</span>
+                        <span class="counter badge-primary-enhanced">1</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-item-content">
+                        <i class="fas fa-users fa-icon-md text-green-500"></i>
+                        <span>建联记录</span>
+                        <span class="counter badge-success-enhanced">2</span>
+                    </div>
+                </div>
+                <div class="menu-item has-submenu active" id="ai-assistant-menu">
+                    <div class="menu-item-content">
+                        <i class="fas fa-robot fa-icon-md text-indigo-500"></i>
+                        <span>AI助手</span>
+                        <div class="ai-assistant-icons">
+                            <button class="ai-icon-btn folder-icon-btn" id="new-project-icon" style="display: none;">
+                                📁+
+                            </button>
+                            <button class="ai-icon-btn conversation-icon-btn" id="new-conversation-icon">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                    <div class="submenu" id="ai-assistant-submenu">
+                        <!-- 项目管理区域 -->
+                        <div class="project-management-area">
+                            <div class="project-header">
+                                <div class="project-title">项目管理</div>
+                            </div>
+                            
+                            <!-- 项目列表 -->
+                            <div class="projects-list" id="projects-list">
+                                <div class="project-item" data-project-id="ecommerce-analysis" data-last-used="1642500000000">
+                                    <div class="project-header-item">
+                                        <i class="fas fa-chevron-down text-blue-500"></i>
+                                        <span class="project-name">电商产品分析</span>
+                                        <div class="project-actions">
+                                            <button class="project-edit-btn" title="重命名">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="project-delete-btn" title="删除项目">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="project-conversations">
+                                        <div class="conversation-item" data-chat-id="earbud-1" data-product="Earbud" data-last-used="1642500000000" draggable="true">
+                                            <div class="conversation-content">
+                                                <i class="fas fa-message text-green-500"></i>
+                                                <span class="conversation-title">Earbud 产品分析</span>
+                                            </div>
+                                            <div class="conversation-actions">
+                                                <button class="conversation-edit-btn" title="重命名">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="conversation-delete-btn" title="删除对话">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="conversation-item" data-chat-id="smartwatch-1" data-product="Smartwatch" data-last-used="1642400000000" draggable="true">
+                                            <div class="conversation-content">
+                                                <i class="fas fa-message text-purple-500"></i>
+                                                <span class="conversation-title">智能手表分析</span>
+                                            </div>
+                                            <div class="conversation-actions">
+                                                <button class="conversation-edit-btn" title="重命名">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="conversation-delete-btn" title="删除对话">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-item" data-project-id="competitor-research" data-last-used="1642300000000">
+                                    <div class="project-header-item">
+                                        <i class="fas fa-chevron-down text-orange-500"></i>
+                                        <span class="project-name">竞品研究</span>
+                                        <div class="project-actions">
+                                            <button class="project-edit-btn" title="重命名">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="project-delete-btn" title="删除项目">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="project-conversations">
+                                        <div class="conversation-item" data-chat-id="market-analysis-1" data-last-used="1642300000000" draggable="true">
+                                            <div class="conversation-content">
+                                                <i class="fas fa-message text-red-500"></i>
+                                                <span class="conversation-title">市场分析报告</span>
+                                            </div>
+                                            <div class="conversation-actions">
+                                                <button class="conversation-edit-btn" title="重命名">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="conversation-delete-btn" title="删除对话">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 分隔线 -->
+                        <div class="submenu-divider"></div>
+                        
+                        <!-- 未归类对话区域 -->
+                        <div class="uncategorized-area">
+                            <div class="uncategorized-header">
+                                <div class="uncategorized-title">未归类对话</div>
+                                <span class="conversation-count">3</span>
+                            </div>
+                            <div class="uncategorized-conversations" id="uncategorized-conversations">
+                                <div class="conversation-item" data-chat-id="speaker-1" data-product="Speaker" data-last-used="1642200000000" draggable="true">
+                                    <div class="conversation-content">
+                                        <i class="fas fa-message text-blue-500"></i>
+                                        <span class="conversation-title">蓝牙音箱推广策略</span>
+                                    </div>
+                                    <div class="conversation-actions">
+                                        <button class="conversation-edit-btn" title="重命名">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="conversation-delete-btn" title="删除对话">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="conversation-item" data-chat-id="fitness-tracker-1" data-last-used="1642100000000" draggable="true">
+                                    <div class="conversation-content">
+                                        <i class="fas fa-message text-green-500"></i>
+                                        <span class="conversation-title">健身追踪器分析</span>
+                                    </div>
+                                    <div class="conversation-actions">
+                                        <button class="conversation-edit-btn" title="重命名">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="conversation-delete-btn" title="删除对话">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="conversation-item" data-chat-id="gaming-mouse-1" data-last-used="1642000000000" draggable="true">
+                                    <div class="conversation-content">
+                                        <i class="fas fa-message text-purple-500"></i>
+                                        <span class="conversation-title">游戏鼠标评测</span>
+                                    </div>
+                                    <div class="conversation-actions">
+                                        <button class="conversation-edit-btn" title="重命名">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="conversation-delete-btn" title="删除对话">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户信息 -->
+            <div class="user-profile card-enhanced p-3 m-2" id="user-profile-sidebar">
+                <div class="user-profile-clickable cursor-pointer hover:bg-gray-50 p-2 rounded-md transition-colors duration-200" id="sidebar-profile-clickable">
+                    <div class="sidebar-avatar-container">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&q=80" alt="用户头像" id="sidebar-avatar" class="avatar-md-enhanced border-2 border-blue-200">
+                    </div>
+                    <div class="user-info flex-1">
+                        <div class="user-name font-semibold text-gray-800">跨境运营专家</div>
+                        <div class="user-email text-sm text-gray-500">user@example.com</div>
+                    </div>
+                    <i class="fas fa-chevron-down dropdown-arrow text-gray-400 fa-icon-sm"></i>
+                </div>
+                <!-- 侧边栏用户下拉菜单 -->
+                <div class="sidebar-dropdown-menu dropdown-menu-enhanced" id="sidebar-dropdown-menu">
+                    <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced" id="sidebar-account-settings-item">
+                        <i class="fas fa-user-cog fa-icon-sm text-gray-600"></i>
+                        <span>账号设置</span>
+                    </div>
+                    <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced" id="sidebar-user-guide-item">
+                        <i class="fas fa-question-circle fa-icon-sm text-blue-600"></i>
+                        <span>新手引导</span>
+                    </div>
+                    <div class="dropdown-divider border-gray-200"></div>
+                    <div class="dropdown-item dropdown-item-enhanced icon-text-enhanced text-red-600 hover:bg-red-50" id="sidebar-logout-item">
+                        <i class="fas fa-sign-out-alt fa-icon-sm text-red-500"></i>
+                        <span>退出登录</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- JavaScript 文件 -->
+    <!-- 性能优化器 -->
+    <script src="performance-optimizer.js"></script>
+    <!-- 通知更新 -->
+    <script src="notification-update.js"></script>
+    <!-- 主要脚本 -->
+    <script src="script.js"></script>
+
+    <!-- AI助手原型特定脚本 -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('AI助手侧边导航栏原型加载完成');
+        
+
+        
+        // 项目管理功能
+        initProjectManagement();
+        
+        // 对话管理功能  
+        initConversationManagement();
+        
+        // 拖拽功能
+        initDragAndDrop();
+        
+        // 初始化时间更新监听器
+        initTimeUpdateListeners();
+        
+        // 原型中暂时去掉排序
+        // sortProjectsByLastUsed();
+        // sortConversationsByLastUsed();
+    });
+
+    // 项目管理功能
+    function initProjectManagement() {
+        const newProjectIcon = document.getElementById('new-project-icon');
+        const newConversationIcon = document.getElementById('new-conversation-icon');
+        const projectsList = document.getElementById('projects-list');
+        
+        // 新建项目图标点击和tooltip
+        if (newProjectIcon) {
+            newProjectIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                createNewProject();
+            });
+            
+            newProjectIcon.addEventListener('mouseenter', function() {
+                showCustomTooltip(this, '新建项目');
+            });
+            
+            newProjectIcon.addEventListener('mouseleave', function() {
+                hideCustomTooltip();
+            });
+        }
+        
+        // 新建对话图标点击和tooltip
+        if (newConversationIcon) {
+            newConversationIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                createNewConversation();
+            });
+            
+            newConversationIcon.addEventListener('mouseenter', function() {
+                showCustomTooltip(this, '新建对话');
+            });
+            
+            newConversationIcon.addEventListener('mouseleave', function() {
+                hideCustomTooltip();
+            });
+        }
+        
+        // AI助手主菜单点击
+        const aiAssistantMenu = document.getElementById('ai-assistant-menu');
+        if (aiAssistantMenu) {
+            const menuContent = aiAssistantMenu.querySelector('.menu-item-content');
+            if (menuContent) {
+                menuContent.addEventListener('click', function(e) {
+                    // 阻止默认行为
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // 如果点击的不是图标按钮，则新建对话并高亮
+                    if (!e.target.closest('.ai-assistant-icons')) {
+                        createNewConversation();
+                        console.log('AI助手菜单被点击，新建对话');
+                    }
+                });
+            }
+        }
+        
+        // 项目操作事件委托
+        if (projectsList) {
+            projectsList.addEventListener('click', function(e) {
+                const target = e.target;
+                const projectItem = target.closest('.project-item');
+                
+                if (target.closest('.project-header-item') && !target.closest('.project-actions')) {
+                    toggleProject(projectItem);
+                } else if (target.classList.contains('project-edit-btn') || target.closest('.project-edit-btn')) {
+                    editProjectName(projectItem);
+                } else if (target.classList.contains('project-delete-btn') || target.closest('.project-delete-btn')) {
+                    deleteProject(projectItem);
+                }
+            });
+        }
+    }
+    
+    // 对话管理功能
+    function initConversationManagement() {
+        const uncategorizedArea = document.getElementById('uncategorized-conversations');
+        
+        if (uncategorizedArea) {
+            uncategorizedArea.addEventListener('click', function(e) {
+                const target = e.target;
+                const conversationItem = target.closest('.conversation-item');
+                
+                if (target.classList.contains('conversation-edit-btn') || target.closest('.conversation-edit-btn')) {
+                    editConversationTitle(conversationItem);
+                } else if (target.classList.contains('conversation-delete-btn') || target.closest('.conversation-delete-btn')) {
+                    deleteConversation(conversationItem);
+                }
+            });
+        }
+        
+        // 为项目内的对话也添加事件监听
+        const projectsList = document.getElementById('projects-list');
+        if (projectsList) {
+            projectsList.addEventListener('click', function(e) {
+                const target = e.target;
+                const conversationItem = target.closest('.conversation-item');
+                
+                if (conversationItem) {
+                    if (target.classList.contains('conversation-edit-btn') || target.closest('.conversation-edit-btn')) {
+                        editConversationTitle(conversationItem);
+                    } else if (target.classList.contains('conversation-delete-btn') || target.closest('.conversation-delete-btn')) {
+                        deleteConversation(conversationItem);
+                    }
+                }
+            });
+        }
+    }
+    
+    // 拖拽功能
+    function initDragAndDrop() {
+        // 为所有对话项添加拖拽功能
+        const conversationItems = document.querySelectorAll('.conversation-item[draggable="true"]');
+        
+        conversationItems.forEach(item => {
+            item.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', item.dataset.chatId);
+                item.classList.add('dragging');
+                console.log('开始拖拽:', item.dataset.chatId);
+            });
+            
+            item.addEventListener('dragend', function(e) {
+                item.classList.remove('dragging');
+                console.log('结束拖拽:', item.dataset.chatId);
+            });
+        });
+        
+        // 为项目区域添加拖拽接收功能
+        const projectItems = document.querySelectorAll('.project-item');
+        
+        projectItems.forEach(project => {
+            project.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                project.classList.add('drag-over');
+            });
+            
+            project.addEventListener('dragleave', function(e) {
+                // 只有当离开整个项目区域时才移除高亮
+                if (!project.contains(e.relatedTarget)) {
+                    project.classList.remove('drag-over');
+                }
+            });
+            
+            project.addEventListener('drop', function(e) {
+                e.preventDefault();
+                project.classList.remove('drag-over');
+                
+                const chatId = e.dataTransfer.getData('text/plain');
+                const draggedItem = document.querySelector(`[data-chat-id="${chatId}"]`);
+                
+                if (draggedItem) {
+                    moveConversationToProject(draggedItem, project);
+                }
+            });
+        });
+        
+        // 为未归类区域添加拖拽接收功能
+        const uncategorizedArea = document.getElementById('uncategorized-conversations');
+        if (uncategorizedArea) {
+            uncategorizedArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uncategorizedArea.classList.add('drag-over');
+            });
+            
+            uncategorizedArea.addEventListener('dragleave', function(e) {
+                if (!uncategorizedArea.contains(e.relatedTarget)) {
+                    uncategorizedArea.classList.remove('drag-over');
+                }
+            });
+            
+            uncategorizedArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uncategorizedArea.classList.remove('drag-over');
+                
+                const chatId = e.dataTransfer.getData('text/plain');
+                const draggedItem = document.querySelector(`[data-chat-id="${chatId}"]`);
+                
+                if (draggedItem) {
+                    moveConversationToUncategorized(draggedItem);
+                }
+            });
+        }
+    }
+    
+    // 创建新项目（直接内联编辑）
+    function createNewProject() {
+        const projectId = 'project-' + Date.now();
+        const projectsList = document.getElementById('projects-list');
+        
+        // 自动生成默认名称
+        const projectName = '新项目';
+        
+        const newProject = document.createElement('div');
+        newProject.className = 'project-item';
+        newProject.dataset.projectId = projectId;
+        newProject.dataset.lastUsed = Date.now();
+        
+        newProject.innerHTML = `
+            <div class="project-header-item">
+                <i class="fas fa-chevron-down text-blue-500"></i>
+                <span class="project-name">${projectName}</span>
+                <div class="project-actions">
+                    <button class="project-edit-btn" title="重命名">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="project-delete-btn" title="删除项目">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="project-conversations"></div>
+        `;
+        
+        projectsList.insertBefore(newProject, projectsList.firstChild);
+        
+        // 为新项目添加拖拽监听
+        addProjectDragListeners(newProject);
+        
+        // 原型中暂时去掉排序
+        // sortProjectsByLastUsed();
+        
+        // 自动进入编辑模式，确保焦点正确
+        setTimeout(() => {
+            editProjectName(newProject, true); // true表示是新建项目
+        }, 150);
+        
+        // 显示操作提示
+        showOperationTip('新建项目成功，正在编辑项目名称');
+        
+        console.log('创建新项目：', projectName);
+        
+        return newProject;
+    }
+    
+    // 创建新对话（无需输入标题，不在侧边栏显示）
+    function createNewConversation() {
+        // 清除所有高亮，高亮AI助手
+        highlightAIAssistant();
+        
+        // 显示操作提示，模拟新建对话的效果
+        showOperationTip('新建对话成功，已进入对话界面');
+        
+        console.log('创建新对话：用户点击AI助手，进入新对话模式');
+        
+        // 注意：按照需求，新建对话不显示在侧边栏
+        // 这里只是高亮AI助手表示当前在AI助手新对话状态
+        
+        return null; // 不返回DOM元素，因为不在侧边栏显示
+    }
+    
+    // 为项目添加拖拽监听器
+    function addProjectDragListeners(project) {
+        project.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            project.classList.add('drag-over');
+        });
+        
+        project.addEventListener('dragleave', function(e) {
+            if (!project.contains(e.relatedTarget)) {
+                project.classList.remove('drag-over');
+            }
+        });
+        
+        project.addEventListener('drop', function(e) {
+            e.preventDefault();
+            project.classList.remove('drag-over');
+            
+            const chatId = e.dataTransfer.getData('text/plain');
+            const draggedItem = document.querySelector(`[data-chat-id="${chatId}"]`);
+            
+            if (draggedItem) {
+                moveConversationToProject(draggedItem, project);
+            }
+        });
+    }
+    
+    // 切换项目展开/收缩
+    function toggleProject(projectItem) {
+        const conversations = projectItem.querySelector('.project-conversations');
+        const toggleBtn = projectItem.querySelector('.project-header-item > i');
+        
+        if (conversations.style.display === 'none') {
+            conversations.style.display = 'block';
+            toggleBtn.className = 'fas fa-chevron-down';
+        } else {
+            conversations.style.display = 'none';
+            toggleBtn.className = 'fas fa-chevron-right';
+        }
+    }
+    
+    // 编辑项目名称（内联编辑）
+    function editProjectName(projectItem, isNewProject = false) {
+        const nameElement = projectItem.querySelector('.project-name');
+        const currentName = nameElement.textContent;
+        
+        // 如果已经在编辑状态，直接返回
+        if (nameElement.querySelector('input')) {
+            return;
+        }
+        
+        // 创建内联编辑界面
+        nameElement.innerHTML = `
+            <div class="inline-edit-container">
+                <input type="text" class="inline-edit-input" value="${currentName}" placeholder="新项目" maxlength="20">
+                <div class="inline-edit-actions">
+                    <button class="inline-edit-confirm" title="确认">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="inline-edit-cancel" title="取消">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        const input = nameElement.querySelector('.inline-edit-input');
+        const confirmBtn = nameElement.querySelector('.inline-edit-confirm');
+        const cancelBtn = nameElement.querySelector('.inline-edit-cancel');
+        
+        // 聚焦并选中文本，新建项目时延迟聚焦确保DOM就绪
+        const focusInput = () => {
+            input.focus();
+            input.select();
+            // 如果是新建项目，滚动到视图中
+            if (isNewProject) {
+                input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        };
+        
+        if (isNewProject) {
+            setTimeout(focusInput, 50);
+        } else {
+            focusInput();
+        }
+        
+        // 确认编辑
+        const confirmEdit = (e) => {
+            // 阻止事件冒泡
+            if (e) e.stopPropagation();
+            
+            const newName = input.value.trim();
+            if (newName && validateName(newName) && newName !== currentName) {
+                nameElement.textContent = newName;
+                // updateProjectLastUsed(projectItem); // 原型中暂时去掉最后使用时间更新
+                showOperationTip('项目重命名成功');
+                console.log('项目重命名：', currentName, '->', newName);
+            } else if (!newName || newName === '') {
+                nameElement.textContent = currentName;
+                showOperationTip('项目名称不能为空');
+            } else {
+                nameElement.textContent = currentName;
+            }
+        };
+        
+        // 取消编辑
+        const cancelEdit = (e) => {
+            // 阻止事件冒泡
+            if (e) e.stopPropagation();
+            nameElement.textContent = currentName;
+        };
+        
+        // 事件监听
+        confirmBtn.addEventListener('click', confirmEdit);
+        cancelBtn.addEventListener('click', cancelEdit);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                confirmEdit();
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                cancelEdit();
+            }
+        });
+        
+        // 为了解决blur事件过早触发的问题，使用更长的延迟
+        let blurTimeout;
+        input.addEventListener('blur', () => {
+            blurTimeout = setTimeout(() => {
+                // 检查是否点击了确认或取消按钮
+                if (!document.activeElement || 
+                    (!document.activeElement.closest('.inline-edit-confirm') && 
+                     !document.activeElement.closest('.inline-edit-cancel'))) {
+                    confirmEdit();
+                }
+            }, 200);
+        });
+        
+        // 在点击按钮时清除blur超时
+        confirmBtn.addEventListener('mousedown', () => clearTimeout(blurTimeout));
+        cancelBtn.addEventListener('mousedown', () => clearTimeout(blurTimeout));
+    }
+    
+    // 删除项目
+    function deleteProject(projectItem) {
+        const projectName = projectItem.querySelector('.project-name').textContent;
+        
+        if (confirm(`确定要删除项目"${projectName}"吗？项目内的对话将移回未归类区域。`)) {
+            // 将项目内的对话移回未归类区域
+            const conversations = projectItem.querySelectorAll('.conversation-item');
+            const uncategorizedArea = document.getElementById('uncategorized-conversations');
+            
+            conversations.forEach(conversation => {
+                // 移除项目内对话的特殊样式，应用未归类对话样式
+                conversation.className = 'conversation-item';
+                conversation.draggable = true;
+                uncategorizedArea.appendChild(conversation);
+            });
+            
+            // 更新未归类对话计数
+            updateUncategorizedCount();
+            
+            // 删除项目
+            projectItem.remove();
+            console.log('删除项目：', projectName);
+        }
+    }
+    
+    // 编辑对话标题（内联编辑）
+    function editConversationTitle(conversationItem) {
+        const titleElement = conversationItem.querySelector('.conversation-title');
+        const currentTitle = titleElement.textContent;
+        
+        // 如果已经在编辑状态，直接返回
+        if (titleElement.querySelector('input')) {
+            return;
+        }
+        
+        // 创建内联编辑界面
+        titleElement.innerHTML = `
+            <div class="inline-edit-container">
+                <input type="text" class="inline-edit-input" value="${currentTitle}" placeholder="对话标题" maxlength="20">
+                <div class="inline-edit-actions">
+                    <button class="inline-edit-confirm" title="确认">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="inline-edit-cancel" title="取消">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        const input = titleElement.querySelector('.inline-edit-input');
+        const confirmBtn = titleElement.querySelector('.inline-edit-confirm');
+        const cancelBtn = titleElement.querySelector('.inline-edit-cancel');
+        
+        // 聚焦并选中文本
+        input.focus();
+        input.select();
+        
+        // 确认编辑
+        const confirmEdit = (e) => {
+            // 阻止事件冒泡
+            if (e) e.stopPropagation();
+            
+            const newTitle = input.value.trim();
+            if (newTitle && validateName(newTitle) && newTitle !== currentTitle) {
+                titleElement.textContent = newTitle;
+                // updateConversationLastUsed(conversationItem); // 原型中暂时去掉最后使用时间更新
+                showOperationTip('对话重命名成功');
+                console.log('对话重命名：', currentTitle, '->', newTitle);
+            } else if (!newTitle || newTitle === '') {
+                titleElement.textContent = currentTitle;
+                showOperationTip('对话标题不能为空');
+            } else {
+                titleElement.textContent = currentTitle;
+            }
+        };
+        
+        // 取消编辑
+        const cancelEdit = (e) => {
+            // 阻止事件冒泡
+            if (e) e.stopPropagation();
+            titleElement.textContent = currentTitle;
+        };
+        
+        // 事件监听
+        confirmBtn.addEventListener('click', confirmEdit);
+        cancelBtn.addEventListener('click', cancelEdit);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                confirmEdit();
+            }
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                cancelEdit();
+            }
+        });
+        
+        // 为了解决blur事件过早触发的问题，使用更长的延迟
+        let blurTimeout;
+        input.addEventListener('blur', () => {
+            blurTimeout = setTimeout(() => {
+                // 检查是否点击了确认或取消按钮
+                if (!document.activeElement || 
+                    (!document.activeElement.closest('.inline-edit-confirm') && 
+                     !document.activeElement.closest('.inline-edit-cancel'))) {
+                    confirmEdit();
+                }
+            }, 200);
+        });
+        
+        // 在点击按钮时清除blur超时
+        confirmBtn.addEventListener('mousedown', () => clearTimeout(blurTimeout));
+        cancelBtn.addEventListener('mousedown', () => clearTimeout(blurTimeout));
+    }
+    
+    // 删除对话
+    function deleteConversation(conversationItem) {
+        const title = conversationItem.querySelector('.conversation-title').textContent;
+        
+        if (confirm(`确定要删除对话"${title}"吗？`)) {
+            conversationItem.remove();
+            updateUncategorizedCount();
+            console.log('删除对话：', title);
+        }
+    }
+    
+    // 移动对话到项目
+    function moveConversationToProject(conversationItem, projectItem) {
+        const projectConversations = projectItem.querySelector('.project-conversations');
+        const conversationTitle = conversationItem.querySelector('.conversation-title').textContent;
+        const projectName = projectItem.querySelector('.project-name').textContent;
+        
+        // 移动对话
+        projectConversations.appendChild(conversationItem);
+        
+        // 更新计数
+        updateUncategorizedCount();
+        
+        console.log('移动对话：', conversationTitle, '->', projectName);
+    }
+    
+    // 移动对话到未归类区域
+    function moveConversationToUncategorized(conversationItem) {
+        const uncategorizedArea = document.getElementById('uncategorized-conversations');
+        const conversationTitle = conversationItem.querySelector('.conversation-title').textContent;
+        
+        // 移动对话
+        uncategorizedArea.appendChild(conversationItem);
+        
+        // 更新计数
+        updateUncategorizedCount();
+        
+        console.log('移动对话到未归类区域：', conversationTitle);
+    }
+    
+    // 更新未归类对话计数
+    function updateUncategorizedCount() {
+        const uncategorizedConversations = document.querySelectorAll('#uncategorized-conversations .conversation-item');
+        const countElement = document.querySelector('.conversation-count');
+        if (countElement) {
+            countElement.textContent = uncategorizedConversations.length;
+        }
+    }
+    
+    // 验证名称（长度1-20字符，禁止特殊字符）
+    function validateName(name) {
+        const trimmedName = name.trim();
+        
+        // 检查长度
+        if (trimmedName.length < 1) {
+            showOperationTip('标题不能为空');
+            return false;
+        }
+        if (trimmedName.length > 20) {
+            showOperationTip('标题不能超过20个字符');
+            return false;
+        }
+        
+        // 检查禁止的特殊字符
+        const forbiddenChars = /[\/\\:*?"<>|]/;
+        if (forbiddenChars.test(trimmedName)) {
+            showOperationTip('标题不能包含以下字符：/ \\ : * ? " < > |');
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // 为单个对话添加拖拽监听器
+    function addConversationDragListeners(conversation) {
+        conversation.addEventListener('dragstart', function(e) {
+            e.dataTransfer.setData('text/plain', conversation.dataset.chatId);
+            conversation.classList.add('dragging');
+            console.log('开始拖拽:', conversation.dataset.chatId);
+        });
+        
+        conversation.addEventListener('dragend', function(e) {
+            conversation.classList.remove('dragging');
+            console.log('结束拖拽:', conversation.dataset.chatId);
+        });
+    }
+    
+    // 按最后使用时间排序项目
+    function sortProjectsByLastUsed() {
+        const projectsList = document.getElementById('projects-list');
+        const projects = Array.from(projectsList.children);
+        
+        projects.sort((a, b) => {
+            const aTime = parseInt(a.dataset.lastUsed) || 0;
+            const bTime = parseInt(b.dataset.lastUsed) || 0;
+            return bTime - aTime; // 新的在前
+        });
+        
+        // 重新插入排序后的项目
+        projects.forEach(project => projectsList.appendChild(project));
+    }
+    
+    // 按最后使用时间排序对话
+    function sortConversationsByLastUsed() {
+        const uncategorizedArea = document.getElementById('uncategorized-conversations');
+        const conversations = Array.from(uncategorizedArea.children);
+        
+        conversations.sort((a, b) => {
+            const aTime = parseInt(a.dataset.lastUsed) || 0;
+            const bTime = parseInt(b.dataset.lastUsed) || 0;
+            return bTime - aTime; // 新的在前
+        });
+        
+        // 重新插入排序后的对话
+        conversations.forEach(conversation => uncategorizedArea.appendChild(conversation));
+    }
+    
+    // 更新项目的最后使用时间
+    function updateProjectLastUsed(projectElement) {
+        projectElement.dataset.lastUsed = Date.now();
+        // sortProjectsByLastUsed(); // 原型中暂时去掉
+    }
+    
+    // 更新对话的最后使用时间
+    function updateConversationLastUsed(conversationElement) {
+        conversationElement.dataset.lastUsed = Date.now();
+        
+        // 如果对话在项目中，也更新项目的时间
+        const projectElement = conversationElement.closest('.project-item');
+        if (projectElement) {
+            updateProjectLastUsed(projectElement);
+        } else {
+            // sortConversationsByLastUsed(); // 原型中暂时去掉
+        }
+    }
+    
+    // 显示操作提示
+    function showOperationTip(message) {
+        // 移除现有提示
+        const existingTip = document.querySelector('.operation-tip');
+        if (existingTip) {
+            existingTip.remove();
+        }
+        
+        // 创建新提示
+        const tip = document.createElement('div');
+        tip.className = 'operation-tip';
+        tip.textContent = message;
+        document.body.appendChild(tip);
+        
+        // 自动消失
+        setTimeout(() => {
+            tip.classList.add('fade-out');
+            setTimeout(() => tip.remove(), 300);
+        }, 2000);
+    }
+
+    // 自定义tooltip功能
+    function showCustomTooltip(element, text) {
+        // 移除已存在的tooltip
+        const existingTooltip = document.querySelector('.custom-tooltip');
+        if (existingTooltip) {
+            existingTooltip.remove();
+        }
+
+        // 创建tooltip元素
+        const tooltip = document.createElement('div');
+        tooltip.className = 'custom-tooltip';
+        tooltip.textContent = text;
+        document.body.appendChild(tooltip);
+
+        // 计算位置
+        const rect = element.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        tooltip.style.left = (rect.left + rect.width / 2 - tooltipRect.width / 2) + 'px';
+        tooltip.style.top = (rect.top - tooltipRect.height - 8) + 'px';
+
+        // 显示tooltip
+        requestAnimationFrame(() => {
+            tooltip.classList.add('show');
+        });
+    }
+
+    function hideCustomTooltip() {
+        const tooltip = document.querySelector('.custom-tooltip');
+        if (tooltip) {
+            tooltip.classList.remove('show');
+            setTimeout(() => tooltip.remove(), 200);
+        }
+    }
+    
+    // 高亮 AI 助手
+    function highlightAIAssistant() {
+        clearAllHighlights();
+        const aiAssistantMenu = document.getElementById('ai-assistant-menu');
+        if (aiAssistantMenu) {
+            const menuContent = aiAssistantMenu.querySelector('.menu-item-content');
+            if (menuContent) {
+                menuContent.classList.add('highlighted');
+            }
+        }
+    }
+    
+    // 高亮对话
+    function highlightConversation(conversationElement) {
+        clearAllHighlights();
+        conversationElement.classList.add('highlighted');
+    }
+    
+    // 清除所有高亮
+    function clearAllHighlights() {
+        const highlightedElements = document.querySelectorAll('.highlighted');
+        highlightedElements.forEach(el => el.classList.remove('highlighted'));
+    }
+    
+    // 为对话添加点击高亮监听
+    function addConversationClickListener(conversation) {
+        conversation.addEventListener('click', function(e) {
+            // 如果点击的不是按钮区域，则高亮该对话
+            if (!e.target.closest('.conversation-actions')) {
+                highlightConversation(conversation);
+                // 注意：点击历史对话不更新最后使用时间，只有在对话主容器内的交互才更新时间
+                showOperationTip('已选中对话：' + conversation.querySelector('.conversation-title').textContent);
+            }
+        });
+    }
+    
+    // 初始化时间更新监听器
+    function initTimeUpdateListeners() {
+        const aiSubmenu = document.getElementById('ai-assistant-submenu');
+        
+        if (aiSubmenu) {
+            // 监听所有按钮点击，更新相关项目/对话的时间
+            aiSubmenu.addEventListener('click', function(e) {
+                const target = e.target;
+                
+                // 只有点击按钮时才更新时间，不包括对话项本身的点击
+                if (target.closest('.conversation-actions') || 
+                    target.closest('.project-actions') ||
+                    target.closest('button') ||
+                    target.classList.contains('icon')) {
+                    
+                    // 找到最近的对话或项目元素
+                    const conversationElement = target.closest('.conversation-item');
+                    const projectElement = target.closest('.project-item');
+                    
+                    // 原型中暂时去掉最后使用时间更新
+                    // if (conversationElement) {
+                    //     updateConversationLastUsed(conversationElement);
+                    // } else if (projectElement) {
+                    //     updateProjectLastUsed(projectElement);
+                    // }
+                }
+            });
+        }
+        
+        // 为所有现有对话添加点击监听
+        const existingConversations = document.querySelectorAll('.conversation-item');
+        existingConversations.forEach(conversation => {
+            addConversationClickListener(conversation);
+        });
+        
+        // 全局处理编辑输入框的点击事件防止冒泡
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('inline-edit-input')) {
+                e.stopPropagation();
+            }
+        });
+    }
+    </script>
+</body>
+</html> 

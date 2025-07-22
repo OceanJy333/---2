@@ -36,6 +36,22 @@
     <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📧</text></svg>">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="libs/driver.js/driver.min.js"></script>
+
+    <!-- 自定义补丁样式 -->
+    <style>
+    /* 兼容不支持 flex-gap 的浏览器，确保输入框元素之间有 12px 间距 */
+    .input-icon + .input-divider {
+        margin-left: 12px;
+    }
+    .input-divider + .login-input-new {
+        margin-left: 12px;
+    }
+    /* 修复验证码输入框被"发送验证码"按钮压缩导致占位文字跑出容器的问题 */
+    #verification-input-new {
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+    }
+    </style>
 </head>
 <body>
     <!-- 登录页面 -->
@@ -54,7 +70,7 @@
                     <!-- Logo 区域 -->
                     <div class="login-logo-new">
                         <div class="logo-icon-container">
-                            <img src="http://localhost:3845/assets/71a5b6b39c6cbb7a357019080b2602539043ad8e.svg" alt="Logo" class="logo-icon-main">
+                            <i class="fas fa-bolt logo-icon-main"></i>
                         </div>
                         <div class="logo-text-container">
                             <img src="http://localhost:3845/assets/da821ed04dd0d1d5e21a4a63b731c1db13b08afc.svg" alt="TURING" class="logo-text-top">
@@ -66,29 +82,51 @@
                 <div class="login-content-new">
                     <div class="login-title-section">
                         <h1 class="login-main-title">跨境运营助手</h1>
-                        <p class="login-subtitle-new">登录您的账号以继续</p>
+                        <p class="login-subtitle-new" id="login-subtitle">登录您的账号以继续</p>
                     </div>
-                    
+
                     <div class="login-form-new">
                         <!-- 手机号输入 -->
                         <div class="login-input-wrapper">
                             <div class="input-icon">
-                                <img src="http://localhost:3845/assets/d6287a5a47e9f2f032023d310602e64044bcbb6e.svg" alt="手机" class="input-icon-svg">
+                                <i class="fas fa-mobile-alt"></i>
                             </div>
                             <div class="input-divider"></div>
                             <input type="tel" id="phone-input-new" placeholder="请输入手机号" class="login-input-new">
                         </div>
-                        
+
                         <!-- 验证码输入 -->
-                        <div class="login-input-wrapper verification-wrapper">
-                            <div class="input-icon">
-                                <img src="http://localhost:3845/assets/16656c95db1af2c7efe727efe1c6adb9f2b4fd17.svg" alt="验证码" class="input-icon-svg">
-                            </div>
-                            <div class="input-divider"></div>
+                        <div class="login-input-wrapper verification-wrapper" id="verification-wrapper">
+                            <i class="fas fa-shield-alt input-icon-simple"></i>
                             <input type="text" id="verification-input-new" placeholder="请输入验证码" class="login-input-new verification-input" maxlength="6">
                             <button class="send-code-btn-new" id="send-code-btn-new">发送验证码</button>
                         </div>
-                        
+
+                        <!-- 密码输入 -->
+                        <div class="login-input-wrapper password-wrapper" id="password-wrapper" style="display: none;">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="password" id="password-input-new" placeholder="请输入密码" class="login-input-new password-input">
+                            <button class="password-toggle-btn" id="password-toggle-btn" type="button">
+                                <i class="ri-eye-off-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- 忘记密码链接 -->
+                        <div class="forgot-password-wrapper" id="forgot-password-wrapper" style="display: none;">
+                            <a href="#" class="forgot-password-link" id="forgot-password-link">忘记密码？</a>
+                        </div>
+
+                        <!-- 登录方式切换按钮 -->
+                        <div class="login-mode-switch-wrapper">
+                            <button class="login-mode-switch-btn" id="login-mode-switch-btn" type="button">
+                                <i class="fas fa-lock"></i>
+                                <span>密码登录</span>
+                            </button>
+                        </div>
+
                         <!-- 登录按钮 -->
                         <button class="login-btn-new" id="login-btn-new">
                             登录
@@ -104,11 +142,214 @@
                             </svg>
                             使用 Google 账号
                         </button>
-                        
+
+                        <!-- 注册入口 -->
+                        <div class="register-link-wrapper" id="register-link-wrapper">
+                            <p class="register-text">还没有账号？ <a href="#" class="register-link" id="register-link">立即注册</a></p>
+                        </div>
+
                     </div>
                     
                     <!-- 消息提示容器 -->
                     <div id="login-message-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册页面 -->
+    <div id="register-page" style="display: none;">
+        <div class="login-container-new">
+            <!-- 背景装饰元素 -->
+            <div class="login-background-blur"></div>
+            <div class="login-background-shapes">
+                <div class="bg-shape bg-shape-1"></div>
+                <div class="bg-shape bg-shape-2"></div>
+            </div>
+
+            <!-- 注册卡片 -->
+            <div class="login-card-new">
+                <div class="login-header-new">
+                    <!-- Logo 区域 -->
+                    <div class="login-logo-new">
+                        <div class="logo-icon-container">
+                            <i class="fas fa-bolt logo-icon-main"></i>
+                        </div>
+                        <div class="logo-text-container">
+                            <img src="http://localhost:3845/assets/da821ed04dd0d1d5e21a4a63b731c1db13b08afc.svg" alt="TURING" class="logo-text-top">
+                            <img src="http://localhost:3845/assets/b7e9417ad1d6832bd7efb3d4b0359e016e924363.svg" alt="MARKET" class="logo-text-bottom">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-content-new">
+                    <div class="login-title-section">
+                        <h1 class="login-main-title">创建新账号</h1>
+                        <p class="login-subtitle-new">注册您的账号以开始使用</p>
+                    </div>
+
+                    <div class="login-form-new">
+                        <!-- 手机号输入 -->
+                        <div class="login-input-wrapper">
+                            <div class="input-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="tel" id="register-phone-input" placeholder="请输入手机号" class="login-input-new">
+                        </div>
+
+                        <!-- 验证码输入 -->
+                        <div class="login-input-wrapper verification-wrapper">
+                            <i class="fas fa-shield-alt input-icon-simple"></i>
+                            <input type="text" id="register-verification-input" placeholder="请输入验证码" class="login-input-new verification-input" maxlength="6">
+                            <button class="send-code-btn-new" id="register-send-code-btn">发送验证码</button>
+                        </div>
+
+                        <!-- 密码输入 -->
+                        <div class="login-input-wrapper password-wrapper">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="password" id="register-password-input" placeholder="请设置密码" class="login-input-new password-input">
+                            <button class="password-toggle-btn" id="register-password-toggle-btn" type="button">
+                                <i class="ri-eye-off-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- 密码强度指示器 -->
+                        <div class="password-strength-wrapper" id="register-password-strength-wrapper">
+                            <div class="password-strength-bar">
+                                <div class="password-strength-fill" id="register-password-strength-fill"></div>
+                            </div>
+                            <div class="password-strength-text" id="register-password-strength-text">密码强度：弱</div>
+                        </div>
+
+                        <!-- 确认密码输入 -->
+                        <div class="login-input-wrapper password-wrapper">
+                            <div class="input-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="password" id="register-confirm-password-input" placeholder="请确认密码" class="login-input-new password-input">
+                            <button class="password-toggle-btn" id="register-confirm-password-toggle-btn" type="button">
+                                <i class="ri-eye-off-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- 注册按钮 -->
+                        <button class="login-btn-new" id="register-btn">
+                            注册
+                        </button>
+
+                        <!-- 返回登录 -->
+                        <div class="register-link-wrapper">
+                            <p class="register-text">已有账号？ <a href="#" class="register-link" id="back-to-login-link">立即登录</a></p>
+                        </div>
+
+                    </div>
+
+                    <!-- 消息提示容器 -->
+                    <div id="register-message-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 忘记密码页面 -->
+    <div id="forgot-password-page" style="display: none;">
+        <div class="login-container-new">
+            <!-- 背景装饰元素 -->
+            <div class="login-background-blur"></div>
+            <div class="login-background-shapes">
+                <div class="bg-shape bg-shape-1"></div>
+                <div class="bg-shape bg-shape-2"></div>
+            </div>
+
+            <!-- 忘记密码卡片 -->
+            <div class="login-card-new">
+                <div class="login-header-new">
+                    <!-- Logo 区域 -->
+                    <div class="login-logo-new">
+                        <div class="logo-icon-container">
+                            <i class="fas fa-bolt logo-icon-main"></i>
+                        </div>
+                        <div class="logo-text-container">
+                            <img src="http://localhost:3845/assets/da821ed04dd0d1d5e21a4a63b731c1db13b08afc.svg" alt="TURING" class="logo-text-top">
+                            <img src="http://localhost:3845/assets/b7e9417ad1d6832bd7efb3d4b0359e016e924363.svg" alt="MARKET" class="logo-text-bottom">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="login-content-new">
+                    <div class="login-title-section">
+                        <h1 class="login-main-title">重置密码</h1>
+                        <p class="login-subtitle-new">通过手机验证码重置您的密码</p>
+                    </div>
+
+                    <div class="login-form-new">
+                        <!-- 手机号输入 -->
+                        <div class="login-input-wrapper">
+                            <div class="input-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="tel" id="forgot-phone-input" placeholder="请输入手机号" class="login-input-new">
+                        </div>
+
+                        <!-- 验证码输入 -->
+                        <div class="login-input-wrapper verification-wrapper">
+                            <i class="fas fa-shield-alt input-icon-simple"></i>
+                            <input type="text" id="forgot-verification-input" placeholder="请输入验证码" class="login-input-new verification-input" maxlength="6">
+                            <button class="send-code-btn-new" id="forgot-send-code-btn">发送验证码</button>
+                        </div>
+
+                        <!-- 新密码输入 -->
+                        <div class="login-input-wrapper password-wrapper">
+                            <div class="input-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="password" id="forgot-new-password-input" placeholder="请输入新密码" class="login-input-new password-input">
+                            <button class="password-toggle-btn" id="forgot-password-toggle-btn" type="button">
+                                <i class="ri-eye-off-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- 密码强度指示器 -->
+                        <div class="password-strength-wrapper" id="forgot-password-strength-wrapper">
+                            <div class="password-strength-bar">
+                                <div class="password-strength-fill" id="forgot-password-strength-fill"></div>
+                            </div>
+                            <div class="password-strength-text" id="forgot-password-strength-text">密码强度：弱</div>
+                        </div>
+
+                        <!-- 确认新密码输入 -->
+                        <div class="login-input-wrapper password-wrapper">
+                            <div class="input-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            <div class="input-divider"></div>
+                            <input type="password" id="forgot-confirm-password-input" placeholder="请确认新密码" class="login-input-new password-input">
+                            <button class="password-toggle-btn" id="forgot-confirm-password-toggle-btn" type="button">
+                                <i class="ri-eye-off-line"></i>
+                            </button>
+                        </div>
+
+                        <!-- 重置密码按钮 -->
+                        <button class="login-btn-new" id="reset-password-btn">
+                            重置密码
+                        </button>
+
+                        <!-- 返回登录 -->
+                        <div class="register-link-wrapper">
+                            <p class="register-text">想起密码了？ <a href="#" class="register-link" id="back-to-login-from-forgot-link">返回登录</a></p>
+                        </div>
+
+                    </div>
+
+                    <!-- 消息提示容器 -->
+                    <div id="forgot-password-message-container"></div>
                 </div>
             </div>
         </div>
@@ -130,7 +371,7 @@
                     <!-- Logo 区域 -->
                     <div class="login-logo-new">
                         <div class="logo-icon-container">
-                            <img src="http://localhost:3845/assets/71a5b6b39c6cbb7a357019080b2602539043ad8e.svg" alt="Logo" class="logo-icon-main">
+                            <i class="fas fa-bolt logo-icon-main"></i>
                         </div>
                         <div class="logo-text-container">
                             <img src="http://localhost:3845/assets/da821ed04dd0d1d5e21a4a63b731c1db13b08afc.svg" alt="TURING" class="logo-text-top">
@@ -2897,6 +3138,14 @@ Earbud 产品运营经理</p>
                             <i class="fas fa-language"></i>
                             <span>使用语言</span>
                         </div>
+                        <!-- 访问达人主页按钮 -->
+                        <div class="creator-detail-visit-action">
+                            <button class="visit-creator-homepage-btn" id="visitCreatorHomepageBtn" onclick="visitCreatorHomepage()">
+                                <i class="fab fa-youtube"></i>
+                                <span>访问主页</span>
+                                <i class="fas fa-external-link-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -2921,7 +3170,7 @@ Earbud 产品运营经理</p>
                             </div>
                             <div class="stat-content">
                                 <div class="stat-value" id="creatorDetailTotalViews">0</div>
-                                <div class="stat-label">播放量</div>
+                                <div class="stat-label">近期平均播放量</div>
                             </div>
                             <div class="stat-decoration"></div>
                         </div>
@@ -2932,7 +3181,7 @@ Earbud 产品运营经理</p>
                             </div>
                             <div class="stat-content">
                                 <div class="stat-value" id="creatorDetailVideoCount">0</div>
-                                <div class="stat-label">视频数量</div>
+                                <div class="stat-label">最近30天视频数量</div>
                             </div>
                             <div class="stat-decoration"></div>
                         </div>
@@ -2943,7 +3192,7 @@ Earbud 产品运营经理</p>
                             </div>
                             <div class="stat-content">
                                 <div class="stat-value" id="creatorDetailEngagement">0</div>
-                                <div class="stat-label">互动量</div>
+                                <div class="stat-label">近期平均互动量</div>
                             </div>
                             <div class="stat-decoration"></div>
                         </div>

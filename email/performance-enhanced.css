@@ -1,0 +1,260 @@
+/* ===========================
+   性能优化增强样式
+   Font Awesome 6.5.1 + Tailwind CSS 2.2.9 优化
+   ========================== */
+
+/* 字体加载优化 */
+@font-face {
+    font-family: 'Font Awesome 6 Free';
+    font-display: swap;
+    font-weight: 900;
+}
+
+/* 关键渲染路径优化 */
+.fa-icon-xs { font-size: 0.75rem; }
+.fa-icon-sm { font-size: 0.875rem; }
+.fa-icon-md { font-size: 1.125rem; }
+.fa-icon-lg { font-size: 1.25rem; }
+.fa-icon-xl { font-size: 1.5rem; }
+
+/* GPU加速优化 */
+.fas, .far, .fab, .fal, .fad {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* 图标动画性能优化 */
+.fa-spin {
+    animation: fa-spin 2s infinite linear;
+    will-change: transform;
+}
+
+.fa-pulse {
+    animation: fa-pulse 1s infinite steps(8);
+    will-change: opacity;
+}
+
+/* 自定义图标动画 - 性能优化版 */
+@keyframes fa-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fa-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.25; }
+    100% { opacity: 1; }
+}
+
+/* Tailwind CSS 扩展 - 性能优化 */
+.transition-all-fast {
+    transition: all 0.15s ease-in-out;
+}
+
+.transition-colors-fast {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.transition-transform-fast {
+    transition: transform 0.15s ease-in-out;
+}
+
+/* 按钮增强样式 - 结合Font Awesome */
+.btn-enhanced {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm transition-all-fast;
+}
+
+.btn-primary-enhanced {
+    @apply btn-enhanced text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.btn-secondary-enhanced {
+    @apply btn-enhanced text-gray-700 bg-white border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+.btn-outline-enhanced {
+    @apply btn-enhanced text-blue-600 bg-transparent border-blue-600 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+
+/* 卡片增强样式 */
+.card-enhanced {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 transition-all-fast hover:shadow-md;
+}
+
+.card-enhanced-hover {
+    @apply card-enhanced hover:shadow-lg hover:-translate-y-1;
+}
+
+/* 表单输入增强样式 */
+.form-input-enhanced {
+    @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors-fast;
+}
+
+/* 徽章增强样式 */
+.badge-primary-enhanced {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800;
+}
+
+.badge-success-enhanced {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800;
+}
+
+.badge-warning-enhanced {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800;
+}
+
+.badge-error-enhanced {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800;
+}
+
+/* 图标文本组合样式 */
+.icon-text-enhanced {
+    @apply flex items-center space-x-2;
+}
+
+.icon-text-enhanced i {
+    @apply flex-shrink-0;
+}
+
+/* 头像增强样式 */
+.avatar-sm-enhanced {
+    @apply w-6 h-6 rounded-full object-cover;
+}
+
+.avatar-md-enhanced {
+    @apply w-8 h-8 rounded-full object-cover;
+}
+
+.avatar-lg-enhanced {
+    @apply w-12 h-12 rounded-full object-cover;
+}
+
+.avatar-xl-enhanced {
+    @apply w-16 h-16 rounded-full object-cover;
+}
+
+/* 下拉菜单增强样式 */
+.dropdown-menu-enhanced {
+    @apply absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200;
+    transform: translateY(-10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.dropdown-menu-enhanced.show {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.dropdown-item-enhanced {
+    @apply flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer transition-colors-fast;
+}
+
+/* 加载状态优化 */
+.loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+    .fa-icon-md { font-size: 1rem; }
+    .fa-icon-lg { font-size: 1.125rem; }
+    .fa-icon-xl { font-size: 1.25rem; }
+    
+    .btn-enhanced {
+        @apply px-3 py-1.5 text-xs;
+    }
+    
+    .card-enhanced {
+        @apply rounded-md shadow-sm;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    .card-enhanced {
+        @apply bg-gray-800 border-gray-700;
+    }
+    
+    .form-input-enhanced {
+        @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400;
+    }
+    
+    .dropdown-menu-enhanced {
+        @apply bg-gray-800 border-gray-700;
+    }
+    
+    .dropdown-item-enhanced {
+        @apply text-gray-300 hover:bg-gray-700;
+    }
+}
+
+/* 性能优化 - 减少重绘 */
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-opacity {
+    will-change: opacity;
+}
+
+.will-change-auto {
+    will-change: auto;
+}
+
+/* 关键帧动画优化 */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-in-up {
+    animation: slideInUp 0.3s ease-out;
+}
+
+.animate-slide-in-down {
+    animation: slideInDown 0.3s ease-out;
+}
+
+/* 内容可见性优化 */
+.content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+}
+
+/* 滚动性能优化 */
+.scroll-smooth {
+    scroll-behavior: smooth;
+}
+
+.overscroll-contain {
+    overscroll-behavior: contain;
+}

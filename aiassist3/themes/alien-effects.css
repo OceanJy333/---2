@@ -1,0 +1,774 @@
+/* Alien 主题特殊效果样式 */
+
+/* 当使用 alien 主题时的特殊效果 */
+[data-theme="alien"] {
+  /* 全局发光效果 */
+  --glow-color: var(--primary-color);
+  --glow-size: 0 0 10px;
+  --glow-size-hover: 0 0 20px;
+  --glow-size-focus: 0 0 30px;
+}
+
+/* 发光效果基类 */
+[data-theme="alien"] .glow {
+  box-shadow: var(--glow-size) var(--glow-color);
+  transition: box-shadow var(--animation-duration) var(--animation-easing);
+}
+
+[data-theme="alien"] .glow:hover {
+  box-shadow: var(--glow-size-hover) var(--glow-color);
+}
+
+[data-theme="alien"] .glow:focus {
+  box-shadow: var(--glow-size-focus) var(--glow-color);
+}
+
+/* 按钮发光效果 */
+[data-theme="alien"] .btn-primary,
+[data-theme="alien"] .primary-btn,
+[data-theme="alien"] button.primary {
+  background: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+[data-theme="alien"] .btn-primary:hover,
+[data-theme="alien"] .primary-btn:hover,
+[data-theme="alien"] button.primary:hover {
+  box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+/* 输入框发光效果 */
+[data-theme="alien"] input:focus,
+[data-theme="alien"] textarea:focus,
+[data-theme="alien"] select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+  outline: none;
+}
+
+/* 卡片发光效果 */
+[data-theme="alien"] .card,
+[data-theme="alien"] .panel,
+[data-theme="alien"] .widget {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
+  transition: all var(--animation-duration) var(--animation-easing);
+}
+
+[data-theme="alien"] .card:hover,
+[data-theme="alien"] .panel:hover,
+[data-theme="alien"] .widget:hover {
+  box-shadow: 0 8px 30px rgba(139, 92, 246, 0.2);
+  transform: translateY(-4px);
+}
+
+/* 链接发光效果 */
+[data-theme="alien"] a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all var(--animation-duration-fast) var(--animation-easing);
+}
+
+[data-theme="alien"] a:hover {
+  color: var(--primary-light);
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.5);
+}
+
+/* 成功状态发光 */
+[data-theme="alien"] .success,
+[data-theme="alien"] .alert-success {
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+/* 警告状态发光 */
+[data-theme="alien"] .warning,
+[data-theme="alien"] .alert-warning {
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.3);
+}
+
+/* 错误状态发光 */
+[data-theme="alien"] .error,
+[data-theme="alien"] .alert-error {
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.3);
+}
+
+/* 扫描线动画 */
+[data-theme="alien"] .scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="alien"] .scan-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  animation: scan 2s infinite;
+}
+
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* 脉冲动画 */
+[data-theme="alien"] .pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.6);
+  }
+}
+
+/* 边框动画 */
+[data-theme="alien"] .border-glow {
+  position: relative;
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="alien"] .border-glow::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--animation-duration) var(--animation-easing);
+}
+
+[data-theme="alien"] .border-glow:hover::before {
+  opacity: 0.5;
+}
+
+/* 数据流动画 */
+[data-theme="alien"] .data-flow {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="alien"] .data-flow::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 10px,
+    rgba(139, 92, 246, 0.1) 10px,
+    rgba(139, 92, 246, 0.1) 20px
+  );
+  animation: dataFlow 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes dataFlow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 全息效果 */
+[data-theme="alien"] .hologram {
+  background: linear-gradient(
+    45deg,
+    rgba(139, 92, 246, 0.08),
+    rgba(6, 182, 212, 0.08),
+    rgba(139, 92, 246, 0.08)
+  );
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+/* 科技感文本效果 */
+[data-theme="alien"] .tech-text {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* 加载动画 */
+[data-theme="alien"] .loading {
+  position: relative;
+}
+
+[data-theme="alien"] .loading::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 主题切换器特殊样式 */
+[data-theme="alien"] .theme-switcher .theme-toggle-btn {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+[data-theme="alien"] .theme-switcher .theme-toggle-btn:hover {
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+  transform: scale(1.05);
+}
+
+[data-theme="alien"] .theme-panel {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+/* 滚动条样式 */
+[data-theme="alien"] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme="alien"] ::-webkit-scrollbar-track {
+  background: var(--surface-color);
+  border-radius: 4px;
+}
+
+[data-theme="alien"] ::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 4px;
+  box-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+}
+
+[data-theme="alien"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-light);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+}
+
+/* 选择文本样式 */
+[data-theme="alien"] ::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: var(--text-primary);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  [data-theme="alien"] .glow,
+  [data-theme="alien"] .card:hover,
+  [data-theme="alien"] .panel:hover {
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    transform: none;
+  }
+}
+
+/* 性能优化 - 禁用动画选项 */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="alien"] * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 外星人主题特效 - Alienware风格视觉效果 */
+
+/* === 基础发光效果 === */
+@keyframes alienGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color), 0 0 15px var(--primary-color);
+    }
+    50% {
+        box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+    }
+}
+
+@keyframes alienPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+@keyframes scanLine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes dataFlow {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+/* === 外星人主题专用样式 === */
+[data-theme="alien"] {
+    /* 全局背景效果 */
+    background: radial-gradient(ellipse at center, #0f1a1d 0%, #0a0a0a 100%);
+}
+
+[data-theme="alien"] body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* === 发光效果类 === */
+[data-theme="alien"] .glow {
+    position: relative;
+    border: 1px solid var(--primary-color);
+    box-shadow: 
+        0 0 5px var(--primary-color),
+        inset 0 0 5px rgba(0, 212, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+[data-theme="alien"] .glow:hover {
+    box-shadow: 
+        0 0 10px var(--primary-color),
+        0 0 20px var(--primary-color),
+        inset 0 0 10px rgba(0, 212, 255, 0.2);
+    border-color: var(--primary-light);
+}
+
+[data-theme="alien"] .pulse {
+    animation: alienPulse 2s ease-in-out infinite;
+}
+
+/* === 按钮特效 === */
+[data-theme="alien"] .btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+    border: 1px solid var(--primary-color);
+    color: var(--background-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+[data-theme="alien"] .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+[data-theme="alien"] .btn-primary:hover::before {
+    left: 100%;
+}
+
+[data-theme="alien"] .btn-primary:hover {
+    box-shadow: 
+        0 0 15px var(--primary-color),
+        0 0 30px var(--primary-color),
+        inset 0 0 10px rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* === 卡片特效 === */
+[data-theme="alien"] .card {
+    background: linear-gradient(135deg, var(--surface-color) 0%, rgba(26, 26, 26, 0.8) 100%);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="alien"] .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--primary-color), transparent);
+    animation: scanLine 3s linear infinite;
+}
+
+[data-theme="alien"] .card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 
+        0 5px 15px rgba(0, 212, 255, 0.2),
+        inset 0 1px 0 rgba(0, 212, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+/* === 输入框特效 === */
+[data-theme="alien"] .input,
+[data-theme="alien"] input,
+[data-theme="alien"] textarea {
+    background: rgba(26, 26, 26, 0.8);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+[data-theme="alien"] .input:focus,
+[data-theme="alien"] input:focus,
+[data-theme="alien"] textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 
+        0 0 10px rgba(124, 58, 237, 0.4),
+        inset 0 0 5px rgba(124, 58, 237, 0.1);
+    outline: none;
+}
+
+/* === 边框发光效果 === */
+[data-theme="alien"] .border-glow {
+    position: relative;
+}
+
+[data-theme="alien"] .border-glow::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-theme="alien"] .border-glow:hover::before {
+    opacity: 1;
+}
+
+/* === 全息效果 === */
+[data-theme="alien"] .hologram {
+    background: linear-gradient(45deg, 
+        rgba(124, 58, 237, 0.1) 0%, 
+        rgba(0, 212, 255, 0.1) 50%, 
+        rgba(124, 58, 237, 0.1) 100%);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="alien"] .hologram::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(124, 58, 237, 0.3), 
+        transparent);
+    animation: scanLine 2s linear infinite;
+}
+
+/* === 科技文字效果 === */
+[data-theme="alien"] .tech-text {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* === 数据流效果 === */
+[data-theme="alien"] .data-flow {
+    position: relative;
+    overflow: hidden;
+}
+
+[data-theme="alien"] .data-flow::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, 
+        transparent, 
+        var(--primary-color), 
+        transparent);
+    animation: dataFlow 2s linear infinite;
+}
+
+/* === 扫描线效果 === */
+[data-theme="alien"] .scan-lines {
+    position: relative;
+}
+
+[data-theme="alien"] .scan-lines::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(124, 58, 237, 0.03) 2px,
+        rgba(124, 58, 237, 0.03) 4px
+    );
+    pointer-events: none;
+}
+
+/* === 响应式调整 === */
+@media (max-width: 768px) {
+    [data-theme="alien"] .glow {
+        box-shadow: 
+            0 0 3px var(--primary-color),
+            inset 0 0 3px rgba(124, 58, 237, 0.1);
+    }
+    
+    [data-theme="alien"] .btn-primary:hover {
+        box-shadow: 
+            0 0 10px var(--primary-color),
+            inset 0 0 5px rgba(124, 58, 237, 0.2);
+    }
+}
+
+/* === 滚动条样式 === */
+[data-theme="alien"] ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+[data-theme="alien"] ::-webkit-scrollbar-track {
+    background: var(--surface-color);
+    border-radius: 4px;
+}
+
+[data-theme="alien"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="alien"] ::-webkit-scrollbar-thumb:hover {
+    box-shadow: 0 0 5px var(--primary-color);
+}
+
+/* === 选择文本样式 === */
+[data-theme="alien"] ::selection {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--text-primary);
+}
+
+[data-theme="alien"] ::-moz-selection {
+    background: rgba(139, 92, 246, 0.2);
+    color: var(--text-primary);
+}
+
+/* === 可访问性增强 === */
+@media (prefers-reduced-motion: reduce) {
+    [data-theme="alien"] .pulse,
+    [data-theme="alien"] .card::before,
+    [data-theme="alien"] .hologram::after,
+    [data-theme="alien"] .data-flow::before {
+        animation: none;
+    }
+    
+    [data-theme="alien"] .glow,
+    [data-theme="alien"] .btn-primary,
+    [data-theme="alien"] .card {
+        transition: none;
+    }
+}
+
+/* === 高对比度模式 === */
+@media (prefers-contrast: high) {
+    [data-theme="alien"] .glow {
+        border-width: 2px;
+    }
+    
+    [data-theme="alien"] .btn-primary {
+        border-width: 2px;
+    }
+    
+    [data-theme="alien"] .card {
+        border-width: 2px;
+    }
+}
+
+/* === 外星人深空渐变背景效果 === */
+[data-theme="alien"] body {
+    background: linear-gradient(
+        135deg,
+        #0A0A0A 0%,
+        #1A1A1A 25%,
+        #2A2A2A 50%,
+        #1A1A1A 75%,
+        #0A0A0A 100%
+    );
+    background-size: 400% 400%;
+    animation: alienBackground 15s ease infinite;
+}
+
+@keyframes alienBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === 外星人星空效果 === */
+[data-theme="alien"] body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(139, 92, 246, 0.2), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(6, 182, 212, 0.15), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(139, 92, 246, 0.25), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(139, 92, 246, 0.15), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(6, 182, 212, 0.2), transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: alienStars 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes alienStars {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-200px); }
+}
+
+/* === 增强的紫色发光效果 === */
+[data-theme="alien"] .alien-glow {
+    box-shadow: 
+        0 0 5px rgba(139, 92, 246, 0.2),
+        0 0 10px rgba(139, 92, 246, 0.15),
+        0 0 15px rgba(139, 92, 246, 0.08),
+        inset 0 0 5px rgba(139, 92, 246, 0.08);
+}
+
+[data-theme="alien"] .alien-glow:hover {
+    box-shadow: 
+        0 0 10px rgba(139, 92, 246, 0.35),
+        0 0 20px rgba(139, 92, 246, 0.25),
+        0 0 30px rgba(139, 92, 246, 0.15),
+        inset 0 0 10px rgba(139, 92, 246, 0.15);
+}
+
+/* === 外星人紫色边框动画 === */
+[data-theme="alien"] .alien-border {
+    position: relative;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+[data-theme="alien"] .alien-border::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(139, 92, 246, 0.3),
+        transparent,
+        rgba(6, 182, 212, 0.2),
+        transparent
+    );
+    background-size: 300% 300%;
+    animation: alienBorderGlow 3s linear infinite;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+[data-theme="alien"] .alien-border:hover::before {
+    opacity: 1;
+}
+
+@keyframes alienBorderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === 外星人紫色脉冲圆圈 === */
+[data-theme="alien"] .alien-pulse-circle {
+    position: relative;
+    border-radius: 50%;
+}
+
+[data-theme="alien"] .alien-pulse-circle::before,
+[data-theme="alien"] .alien-pulse-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid rgba(124, 58, 237, 0.3);
+    animation: alienPulseRing 2s ease-out infinite;
+}
+
+[data-theme="alien"] .alien-pulse-circle::after {
+    animation-delay: 1s;
+}
+
+@keyframes alienPulseRing {
+    0% {
+        width: 100%;
+        height: 100%;
+        opacity: 1;
+    }
+    100% {
+        width: 200%;
+        height: 200%;
+        opacity: 0;
+    }
+} 

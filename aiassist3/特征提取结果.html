@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特征提取结果 - 原型</title>
+    <!-- 内部CSS链接 -->
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style-enhanced.css">
+    <link rel="stylesheet" href="./performance-enhanced.css">
+    <!-- Remi Icon 图标库 -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: var(--background-color, #f4f7fa);
+            padding: 40px;
+            font-family: var(--font-family);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        #prototype-container {
+            width: 100%;
+            max-width: 850px;
+        }
+        /* 强制隐藏主题切换UI */
+        .theme-switcher {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="prototype-container">
+        <!-- 特征提取卡片将由JS动态生成并插入此处 -->
+    </div>
+
+    <!-- 内部JS链接 -->
+    <script src="./themes/theme-config.js"></script>
+    <script src="./themes/theme-manager.js"></script>
+    <script src="./feature_extraction_script.js"></script>
+</body>
+</html> 
