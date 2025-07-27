@@ -308,6 +308,70 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <input type="number" id="target-contacts" class="campaign-input" value="10">
                                 <span class="input-hint">最高数量: 50个</span>
                             </div>
+                            
+                            <!-- 推广平台选择 -->
+                            <div class="input-group">
+                                <label class="campaign-label">推广平台</label>
+                                <div class="platform-filter-tags">
+                                    <div class="platform-tag selected" data-platform="youtube">
+                                        <i class="ri-youtube-line"></i>
+                                        <span>YouTube</span>
+                                        <i class="ri-check-line check-icon"></i>
+                                    </div>
+                                    <div class="platform-tag selected" data-platform="tiktok">
+                                        <i class="ri-tiktok-line"></i>
+                                        <span>TikTok</span>
+                                        <i class="ri-check-line check-icon"></i>
+                                    </div>
+                                    <div class="platform-tag selected" data-platform="instagram">
+                                        <i class="ri-instagram-line"></i>
+                                        <span>Instagram</span>
+                                        <i class="ri-check-line check-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 粉丝数范围选择 -->
+                            <div class="input-group">
+                                <label class="campaign-label">粉丝数范围</label>
+                                <div class="followers-range-tags">
+                                    <div class="range-tag selected" data-range="unlimited">
+                                        <span>不限</span>
+                                    </div>
+                                    <div class="range-tag" data-range="1k-10k">
+                                        <span>1K-10K</span>
+                                    </div>
+                                    <div class="range-tag" data-range="10k-100k">
+                                        <span>10K-100K</span>
+                                    </div>
+                                    <div class="range-tag" data-range="100k-1m">
+                                        <span>100K-1M</span>
+                                    </div>
+                                    <div class="range-tag" data-range="1m+">
+                                        <span>1M+</span>
+                                    </div>
+                                    <div class="range-tag custom-toggle" data-range="custom">
+                                        <span>自定义</span>
+                                        <i class="ri-arrow-down-s-line toggle-icon"></i>
+                                    </div>
+                                </div>
+                                
+                                <!-- 自定义输入区域（默认隐藏） -->
+                                <div class="custom-range-container" style="display: none;">
+                                    <div class="custom-range-inputs">
+                                        <input type="number" id="custom-min" class="custom-range-input" placeholder="最小值" value="">
+                                        <span class="range-separator">-</span>
+                                        <input type="number" id="custom-max" class="custom-range-input" placeholder="最大值" value="">
+                                        <button class="apply-custom-btn">
+                                            <i class="ri-check-line"></i>
+                                        </button>
+                                    </div>
+                                    <div class="custom-range-hint">
+                                        支持输入具体数值，如：1000, 50000
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -321,4 +385,153 @@ document.addEventListener('DOMContentLoaded', () => {
 
     showFeatureExtractionCard();
     initializeEditableSections();
-}); 
+    initializeAdvancedFilters();
+});
+
+// 初始化高级筛选功能
+function initializeAdvancedFilters() {
+    // 平台筛选逻辑
+    const platformTags = document.querySelectorAll('.platform-tag');
+    
+    platformTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            const selectedTags = document.querySelectorAll('.platform-tag.selected');
+            
+            if (tag.classList.contains('selected')) {
+                // 如果是最后一个选中的，则不允许取消
+                if (selectedTags.length > 1) {
+                    tag.classList.remove('selected');
+                }
+            } else {
+                tag.classList.add('selected');
+            }
+            
+            updatePlatformSelection();
+        });
+    });
+    
+    // 粉丝数范围标签筛选逻辑
+    const rangeTags = document.querySelectorAll('.range-tag');
+    const customContainer = document.querySelector('.custom-range-container');
+    const customMinInput = document.getElementById('custom-min');
+    const customMaxInput = document.getElementById('custom-max');
+    const applyCustomBtn = document.querySelector('.apply-custom-btn');
+    
+    // 预设范围映射
+    const rangeMapping = {
+        'unlimited': { min: 0, max: 0, label: '不限' },
+        '1k-10k': { min: 1000, max: 10000, label: '1K-10K' },
+        '10k-100k': { min: 10000, max: 100000, label: '10K-100K' },
+        '100k-1m': { min: 100000, max: 1000000, label: '100K-1M' },
+        '1m+': { min: 1000000, max: 0, label: '1M+' },
+        'custom': { min: 0, max: 0, label: '自定义' }
+    };
+    
+    let currentRange = 'unlimited';
+    
+    function selectRangeTag(selectedTag) {
+        // 移除所有选中状态
+        rangeTags.forEach(tag => {
+            tag.classList.remove('selected', 'active');
+        });
+        
+        // 选中当前标签
+        selectedTag.classList.add('selected');
+        currentRange = selectedTag.dataset.range;
+        
+        // 处理自定义选项
+        if (currentRange === 'custom') {
+            selectedTag.classList.add('active');
+            customContainer.style.display = 'block';
+            // 聚焦到第一个输入框
+            setTimeout(() => customMinInput.focus(), 100);
+        } else {
+            customContainer.style.display = 'none';
+            updateRangeSelection();
+        }
+    }
+    
+    function updateRangeSelection() {
+        const range = rangeMapping[currentRange];
+        console.log('已选择粉丝数范围:', range.label, range);
+        // 这里可以添加额外的逻辑，比如更新匹配参数等
+    }
+    
+    function formatCustomValue(value) {
+        const num = parseInt(value);
+        if (isNaN(num) || num <= 0) return '';
+        
+        if (num >= 1000000) {
+            return (num / 1000000).toFixed(1).replace('.0', '') + 'M';
+        } else if (num >= 1000) {
+            return (num / 1000).toFixed(1).replace('.0', '') + 'K';
+        }
+        return num.toString();
+    }
+    
+    function applyCustomRange() {
+        const minVal = parseInt(customMinInput.value) || 0;
+        const maxVal = parseInt(customMaxInput.value) || 0;
+        
+        if (minVal <= 0 && maxVal <= 0) {
+            alert('请输入有效的粉丝数范围');
+            return;
+        }
+        
+        if (minVal > 0 && maxVal > 0 && minVal >= maxVal) {
+            alert('最小值必须小于最大值');
+            return;
+        }
+        
+        // 更新自定义标签显示
+        const customTag = document.querySelector('[data-range="custom"]');
+        const minText = minVal > 0 ? formatCustomValue(minVal) : '0';
+        const maxText = maxVal > 0 ? formatCustomValue(maxVal) : '∞';
+        
+        if (minVal > 0 && maxVal > 0) {
+            customTag.querySelector('span').textContent = `${minText}-${maxText}`;
+        } else if (minVal > 0) {
+            customTag.querySelector('span').textContent = `${minText}+`;
+        } else if (maxVal > 0) {
+            customTag.querySelector('span').textContent = `<${maxText}`;
+        }
+        
+        // 隐藏自定义输入区域
+        customContainer.style.display = 'none';
+        customTag.classList.remove('active');
+        
+        // 更新当前范围数据
+        rangeMapping.custom = { min: minVal, max: maxVal, label: customTag.querySelector('span').textContent };
+        updateRangeSelection();
+    }
+    
+    // 范围标签点击事件
+    rangeTags.forEach(tag => {
+        tag.addEventListener('click', () => {
+            selectRangeTag(tag);
+        });
+    });
+    
+    // 自定义输入框回车事件
+    [customMinInput, customMaxInput].forEach(input => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                applyCustomRange();
+            }
+        });
+    });
+    
+    // 应用自定义范围按钮
+    applyCustomBtn.addEventListener('click', applyCustomRange);
+    
+    // 初始化
+    updateRangeSelection();
+}
+
+function updatePlatformSelection() {
+    const selectedPlatforms = Array.from(document.querySelectorAll('.platform-tag.selected'))
+        .map(tag => tag.dataset.platform);
+    
+    console.log('已选中的平台:', selectedPlatforms);
+    // 这里可以添加额外的逻辑，比如更新匹配参数等
+} 
