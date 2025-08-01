@@ -1534,18 +1534,46 @@ class InfluencerSearchPage {
         ];
         
         const platforms = ['youtube', 'tiktok'];
+        const categories = ['entertainment', 'lifestyle', 'gaming', 'beauty', 'tech', 'education', 'music', 'sports', 'food', 'travel'];
+        const subCategories = ['vlog', 'tutorial', 'review', 'comedy', 'dance', 'music', 'news', 'kids'];
+        const countries = ['美国', '印度', '英国', '加拿大', '澳大利亚', '德国', '法国', '日本', '韩国', '中国'];
         
         return Array.from({length: 200}, (_, i) => {
             const baseName = influencerNames[i % influencerNames.length];
             const name = i < influencerNames.length ? baseName : `${baseName} ${Math.floor(i / influencerNames.length)}`;
             const platform = platforms[Math.floor(Math.random() * platforms.length)];
+            const followers = Math.floor(Math.random() * 50000000) + 100000;
+            const totalViews = Math.floor(followers * (5 + Math.random() * 20)); // 5-25倍粉丝数的总观看量
+            const videoCount = Math.floor(Math.random() * 2000) + 50;
+            const cooperationScore = Math.floor(Math.random() * 10) + 1;
+            const engagementRate = (Math.random() * 15).toFixed(1);
+            const viewsToFollowersRatio = (totalViews / followers * 100).toFixed(1);
+            const estimatedReach = Math.floor(followers * (0.1 + Math.random() * 0.4)); // 10%-50%的预计曝光量
+            
+            // 随机选择2-4个标签
+            const numTags = 2 + Math.floor(Math.random() * 3);
+            const allTags = [...categories, ...subCategories];
+            const tags = [];
+            while (tags.length < numTags) {
+                const tag = allTags[Math.floor(Math.random() * allTags.length)];
+                if (!tags.includes(tag)) {
+                    tags.push(tag);
+                }
+            }
             
             return {
                 id: i + 1,
                 name: name,
                 platform: platform,
-                followers: Math.floor(Math.random() * 50000000) + 100000,
-                engagementRate: (Math.random() * 15).toFixed(1)
+                followers: followers,
+                totalViews: totalViews,
+                videoCount: videoCount,
+                cooperationScore: cooperationScore,
+                engagementRate: parseFloat(engagementRate),
+                viewsToFollowersRatio: parseFloat(viewsToFollowersRatio),
+                estimatedReach: estimatedReach,
+                country: countries[Math.floor(Math.random() * countries.length)],
+                tags: tags
             };
         });
     }
@@ -1645,24 +1673,68 @@ class InfluencerSearchPage {
         const platformIcon = influencer.platform === 'youtube' ? 'fa-youtube' : 'fa-tiktok';
         const platformClass = influencer.platform;
         
+        // 生成标签HTML
+        const tagsHtml = influencer.tags.slice(0, 3).map(tag => 
+            `<span class="tag">${tag}</span>`
+        ).join('');
+        
         return `
             <div class="simple-influencer-card" data-influencer-id="${influencer.id}">
                 <div class="simple-influencer-avatar">
                     <i class="fas fa-user-circle"></i>
                 </div>
-                <div class="simple-influencer-info">
+                
+                <div class="influencer-basic-info">
                     <div class="simple-influencer-name">${influencer.name}</div>
-                    <div class="simple-influencer-meta">
-                        <span class="platform-badge ${platformClass}">
-                            <i class="fab ${platformIcon}"></i>
-                            ${influencer.platform === 'youtube' ? 'YouTube' : 'TikTok'}
-                        </span>
-                        <span class="followers-count">
+                    <div class="influencer-tags">
+                        ${tagsHtml}
+                        ${influencer.tags.length > 3 ? '<span class="tag-more">...</span>' : ''}
+                    </div>
+                    <div class="basic-stats">
+                        <div class="stat-item">
                             <i class="fas fa-users"></i>
-                            ${this.formatNumber(influencer.followers)} 粉丝
-                        </span>
+                            <span>${this.formatNumber(influencer.followers)}</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-eye"></i>
+                            <span>${this.formatNumber(influencer.totalViews)}</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-video"></i>
+                            <span>${influencer.videoCount}</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${influencer.country}</span>
+                        </div>
                     </div>
                 </div>
+                
+                <div class="cooperation-info">
+                    <div class="cooperation-title">合作倾向</div>
+                    <div class="cooperation-metrics">
+                        <div class="metric-item">
+                            <span class="metric-label">合作倾向</span>
+                            <span class="metric-value cooperation-score">
+                                <i class="fas fa-heart"></i>
+                                ${influencer.cooperationScore}/10
+                            </span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">观看量/粉丝数</span>
+                            <span class="metric-value">${influencer.viewsToFollowersRatio}%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">粉丝互动率</span>
+                            <span class="metric-value">${influencer.engagementRate}%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">预计曝光量</span>
+                            <span class="metric-value">${this.formatNumber(influencer.estimatedReach)}</span>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
         `;
     }

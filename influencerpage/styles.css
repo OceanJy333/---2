@@ -4427,17 +4427,18 @@ body {
     gap: 16px;
 }
 
-/* 简洁网红卡片 */
+/* 丰富数据网红卡片 */
 .simple-influencer-card {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 20px;
+    align-items: stretch;
+    gap: 24px;
+    padding: 24px;
     background: white;
     border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.2s ease;
     border: 1px solid #e5e5e5;
+    position: relative;
 }
 
 .simple-influencer-card:hover {
@@ -4446,55 +4447,143 @@ body {
 
 /* 头像 */
 .simple-influencer-avatar {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     background: #e8f0ff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    align-self: center;
 }
 
 .simple-influencer-avatar i {
-    font-size: 28px;
+    font-size: 48px;
     color: #4285F4;
 }
 
-/* 信息区域 */
-.simple-influencer-info {
-    flex: 1;
-    min-width: 0;
+/* 基础信息区域 */
+.influencer-basic-info {
+    flex: 2;
+    min-width: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .simple-influencer-name {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: #333;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.simple-influencer-meta {
+.influencer-tags {
     display: flex;
-    align-items: center;
-    gap: 16px;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #f0f0f0;
+    color: #666;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.tag-more {
+    color: #999;
+    font-size: 12px;
+}
+
+.basic-stats {
+    display: flex;
+    gap: 20px;
     font-size: 14px;
     color: #666;
     flex-wrap: wrap;
 }
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.stat-item i {
+    font-size: 13px;
+    color: #999;
+}
+
+/* 合作信息区域 */
+.cooperation-info {
+    flex: 2;
+    min-width: 220px;
+    padding-left: 24px;
+    border-left: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cooperation-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+
+.cooperation-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metric-label {
+    font-size: 12px;
+    color: #999;
+    font-weight: 500;
+}
+
+.metric-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+.cooperation-score {
+    color: #ff6b35;
+}
+
+.cooperation-score i {
+    color: #ff6b35;
+    margin-right: 4px;
+}
+
 
 /* 平台标识 */
 .platform-badge {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 4px 8px;
-    border-radius: 4px;
+    padding: 6px 10px;
+    border-radius: 16px;
     font-weight: 500;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .platform-badge i {
@@ -4509,20 +4598,6 @@ body {
 .platform-badge.tiktok {
     background: #f0f0f0;
     color: #000;
-}
-
-/* 粉丝数显示 */
-.followers-count {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 500;
-    color: #555;
-}
-
-.followers-count i {
-    font-size: 12px;
-    color: #999;
 }
 
 /* 加载更多按钮 */
@@ -4622,22 +4697,49 @@ body {
         gap: 16px;
     }
     
+    
     .simple-influencer-avatar {
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 80px;
+        align-self: flex-start;
     }
     
     .simple-influencer-avatar i {
-        font-size: 24px;
+        font-size: 40px;
+    }
+    
+    .influencer-basic-info {
+        min-width: auto;
+        text-align: center;
     }
     
     .simple-influencer-name {
         font-size: 16px;
     }
     
-    .simple-influencer-meta {
+    .basic-stats {
         justify-content: center;
+        gap: 12px;
     }
+    
+    .cooperation-info {
+        padding-left: 0;
+        border-left: none;
+        border-top: 1px solid #e5e5e5;
+        padding-top: 20px;
+        margin-top: 16px;
+        min-width: auto;
+    }
+    
+    .cooperation-metrics {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    
+    .metric-item {
+        text-align: center;
+    }
+    
     
     .load-more-btn {
         width: 180px;
