@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网红营销智能体</title>
+    <link href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.staticfile.net/tailwindcss/2.2.9/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="top-header">
+        <div class="header-content">
+            <h1 class="page-title">网红营销智能体</h1>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- 左侧导航栏 -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <div class="nav-item" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>仪表盘</span>
+                </div>
+                <div class="nav-item" data-page="influencer-search">
+                    <i class="fas fa-search"></i>
+                    <span>网红搜索</span>
+                </div>
+                <div class="nav-item" data-page="products">
+                    <i class="fas fa-box"></i>
+                    <span>产品库</span>
+                </div>
+                <div class="nav-item" data-page="contacts">
+                    <i class="fas fa-address-book"></i>
+                    <span>建联记录</span>
+                </div>
+                <div class="nav-item" data-page="ai-assistant">
+                    <i class="fas fa-robot"></i>
+                    <span>AI 助手</span>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 达人详情页内容 -->
+            <div class="page-content" id="dashboard-page" style="display: block;">
+                <!-- 网红信息卡片 -->
+                <section class="bento-card influencer-info-card">
+                <!-- 网红基本信息 -->
+                <div class="influencer-content">
+                    <div class="influencer-left">
+                        <div class="avatar-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="basic-info">
+                            <div class="name-row">
+                                <h2 class="name">MrBeast</h2>
+                                <span class="username">@mrbeast</span>
+                            </div>
+                            <div class="location-row">
+                                <span class="info-tag country-tag">美国</span>
+                                <span class="info-tag language-tag">英语</span>
+                                <span class="info-tag category-tag">娱乐</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="influencer-right">
+                        <div class="action-buttons">
+                            <button class="btn-youtube">
+                                <i class="fab fa-youtube"></i>
+                                YouTube
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 关键指标卡片组 -->
+            <section class="metrics-grid">
+                <div class="bento-card metric-card">
+                    <div class="metric-header">粉丝数</div>
+                    <div class="metric-value">4.14亿</div>
+                </div>
+
+                <div class="bento-card metric-card">
+                    <div class="metric-header">最近发布时间</div>
+                    <div class="metric-value">7天前</div>
+                </div>
+
+                <div class="bento-card metric-card">
+                    <div class="metric-header">最近推广时间</div>
+                    <div class="metric-value">13天前</div>
+                </div>
+
+                <div class="bento-card metric-card">
+                    <div class="metric-header">综合评分</div>
+                    <div class="metric-value">4.56</div>
+                </div>
+
+                <div class="bento-card metric-card">
+                    <div class="metric-header">合作指数</div>
+                    <div class="metric-value">6/10</div>
+                </div>
+            </section>
+
+            <!-- 数据标签页 -->
+            <section class="data-tabs-section">
+                <div class="tab-buttons">
+                    <button class="tab-button active" data-tab="overview">
+                        <i class="fas fa-chart-line"></i>
+                        数据总览
+                    </button>
+                    <button class="tab-button" data-tab="audience">
+                        <i class="fas fa-users"></i>
+                        受众数据
+                    </button>
+                    <button class="tab-button" data-tab="content">
+                        <i class="fas fa-video"></i>
+                        内容数据
+                    </button>
+                    <button class="tab-button" data-tab="brand">
+                        <i class="fas fa-tags"></i>
+                        品牌数据
+                    </button>
+                </div>
+            </section>
+
+            <!-- 数据总览页签内容 -->
+            <div class="tab-content" id="overviewTabContent">
+                <!-- 基本数据 -->
+                <section class="bento-card basic-data-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-bar"></i>
+                            基本数据
+                        </h3>
+                    </div>
+                    <div class="data-grid" id="dataGrid">
+                        <!-- 数据卡片将通过JavaScript动态生成 -->
+                    </div>
+                </section>
+
+                <!-- 增长数据 -->
+                <section class="bento-card growth-data-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-trending-up"></i>
+                            增长数据
+                        </h3>
+                    </div>
+
+                    <div class="growth-cards">
+                        <div class="growth-card">
+                            <div class="growth-icon blue">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="growth-info">
+                                <div class="growth-label">粉丝数</div>
+                                <div class="growth-value" id="fansCount">68,700,000</div>
+                            </div>
+                        </div>
+                        <div class="growth-card">
+                            <div class="growth-icon green">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="growth-info">
+                                <div class="growth-label">观看量</div>
+                                <div class="growth-value" id="viewsCount">21,550,277,449</div>
+                            </div>
+                        </div>
+                        <div class="growth-card">
+                            <div class="growth-icon orange">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <div class="growth-info">
+                                <div class="growth-label">评论</div>
+                                <div class="growth-value" id="commentsCount">1,553</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 增长数据标签和图表控制 -->
+                    <div class="growth-tabs-container">
+                        <div class="growth-tabs">
+                            <button class="growth-tab active" data-type="fans">粉丝数增长</button>
+                            <button class="growth-tab" data-type="views">播放量增长</button>
+                            <button class="growth-tab" data-type="posts">作品数增长</button>
+                        </div>
+
+                    </div>
+
+                    <!-- 图表容器 -->
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+
+
+                </section>
+
+                <!-- 频道质量 -->
+                <section class="bento-card channel-quality-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-star"></i>
+                            频道质量
+                        </h3>
+                    </div>
+                    <!-- Bento Grid 卡片布局 -->
+                    <div class="quality-bento-grid">
+                        <!-- 综合评分卡片 -->
+                        <div class="quality-card score-card">
+                            <div class="card-header">
+                                <h4>达人评分</h4>
+                                <span class="score-badge excellent">优秀</span>
+                            </div>
+                            <div class="score-display">
+                                <span class="score-number">4.56</span>
+                                <span class="score-suffix">/5</span>
+                            </div>
+                            <div class="star-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="card-description">
+                                达人评分由5个重要指标数据组成（粉丝增长、创作数量、频道质量、粉丝互动质量与参与），数据由1到5分的各项指标
+                            </p>
+                        </div>
+
+                        <!-- 评分指标雷达图卡片 -->
+                        <div class="quality-card radar-chart-card">
+                            <div class="card-header">
+                                <h4>评分指标</h4>
+                            </div>
+                            <div class="radar-container">
+                                <canvas id="radarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 详细指标评分卡片 -->
+                        <div class="quality-card detailed-scores-card">
+                            <div class="detailed-scores">
+                                <div class="score-item">
+                                    <span class="score-label">粉丝增长</span>
+                                    <div class="score-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="score-level excellent">优秀</span>
+                                </div>
+                                <div class="score-item">
+                                    <span class="score-label">创作频率</span>
+                                    <div class="score-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="score-level average">中等</span>
+                                </div>
+                                <div class="score-item">
+                                    <span class="score-label">频道质量</span>
+                                    <div class="score-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="score-level excellent">优秀</span>
+                                </div>
+                                <div class="score-item">
+                                    <span class="score-label">互动率</span>
+                                    <div class="score-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="score-level good">良好</span>
+                                </div>
+                                <div class="score-item">
+                                    <span class="score-label">粉丝可信度</span>
+                                    <div class="score-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="score-level excellent">优秀</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 合作指向卡片 -->
+                        <div class="quality-card cooperation-score-card">
+                            <div class="card-header">
+                                <h4>合作指向</h4>
+                            </div>
+                            <div class="cooperation-rating">
+                                <span class="cooperation-number">6</span>
+                                <span class="cooperation-divider">/</span>
+                                <span class="cooperation-total">10</span>
+                            </div>
+                            <p class="cooperation-description">
+                                良好 - 合作概率相对较高
+                            </p>
+                            <p class="cooperation-range-note">
+                                范围从0到10，分数越高，合作倾向性越强
+                            </p>
+                        </div>
+
+                        <!-- 合作行为标签卡片 -->
+                        <div class="quality-card cooperation-tags-card">
+                            <div class="card-header">
+                                <h4>合作行为标签</h4>
+                            </div>
+                            <div class="tag-container">
+                                <span class="tag">主动发布宣传视频</span>
+                                <span class="tag">主动发布宣传动态</span>
+                                <span class="tag">积极配合</span>
+                                <span class="tag">主动提供数据截图</span>
+                                <span class="tag">高参与度</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 合作价格和CPM -->
+                <section class="bento-card cooperation-pricing-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-dollar-sign"></i>
+                            合作价格和CPM
+                        </h3>
+                    </div>
+                    <div class="pricing-grid">
+                        <!-- CPM数据卡片 -->
+                        <div class="bento-card cpm-card">
+                            <div class="card-header">
+                                <h4>CPM</h4>
+                            </div>
+                            <div class="cpm-value">
+                                <span class="currency">$</span>
+                                <span class="amount">25.5</span>
+                            </div>
+                            <div class="cpm-description">
+                                每千次展示成本CPM $23 - $28
+                            </div>
+                            <div class="cpm-note">
+                                CPM（Cost Per 1000 impressions）基于千次展示成本
+                            </div>
+                        </div>
+
+                        <!-- 植入视频价格卡片 -->
+                        <div class="bento-card video-pricing-card">
+                            <div class="card-header">
+                                <h4>植入视频</h4>
+                            </div>
+                            <div class="pricing-value">
+                                <span class="currency">$</span>
+                                <span class="amount-range">375.66万 - $ 450.44万</span>
+                            </div>
+                            <div class="pricing-description">
+                                预估合作价格
+                            </div>
+                            <div class="pricing-note">
+                                价格基于频道数据，包括观看量及其他相关指标。由于影响要素较多且经常变化，实际合作价格、费用、条件、要求等，受众多因素影响。
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 频道粉丝数排名 -->
+                <section class="bento-card ranking-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-trophy"></i>
+                            频道粉丝数排名
+                        </h3>
+                    </div>
+                    <div class="ranking-grid">
+                        <!-- 粉丝数行业排名卡片 -->
+                        <div class="bento-card ranking-card">
+                            <div class="ranking-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="ranking-content">
+                                <div class="ranking-label">粉丝数行业排名</div>
+                                <div class="ranking-value">
+                                    <span class="rank-percentage">前 1%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 粉丝数美国排名卡片 -->
+                        <div class="bento-card ranking-card">
+                            <div class="ranking-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="ranking-content">
+                                <div class="ranking-label">粉丝数美国排名</div>
+                                <div class="ranking-value">
+                                    <span class="rank-percentage">前 1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 受众数据页签内容 -->
+            <div class="tab-content" id="audienceTabContent" style="display: none;">
+                <!-- 基本数据 -->
+                <section class="bento-card audience-basic-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-bar"></i>
+                            基本数据
+                        </h3>
+                    </div>
+                    <div class="audience-overview-grid">
+                    <div class="audience-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">粉丝可信度</div>
+                            <div class="stat-value">4.25 <span class="stat-unit">分</span></div>
+                            <div class="stat-status excellent">优秀</div>
+                        </div>
+                    </div>
+
+                    <div class="audience-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">最多受众区域</div>
+                            <div class="stat-value">美国</div>
+                        </div>
+                    </div>
+
+                    <div class="audience-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-venus-mars"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">最多受众性别</div>
+                            <div class="stat-value">男性 <span class="stat-percentage">52.4%</span></div>
+                        </div>
+                    </div>
+
+                    <div class="audience-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-label">最多受众年龄</div>
+                            <div class="stat-value">18-24 <span class="stat-percentage">24.3%</span></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 受众特征 -->
+                <section class="bento-card audience-characteristics-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-globe-americas"></i>
+                            受众特征
+                        </h3>
+                    </div>
+                    <div class="audience-analysis-grid">
+                    <!-- 受众区域分布 -->
+                    <div class="audience-chart-card region-card">
+                        <div class="card-header">
+                            <h4>受众区域</h4>
+                        </div>
+
+                        <!-- 横向条形图 -->
+                        <div class="horizontal-bar-section">
+                            <div class="horizontal-bar-container">
+                                <div class="horizontal-bar">
+                                    <div class="bar-segment" data-region="美国" data-percentage="68.7" style="background-color: #4285F4; width: 68.7%;"></div>
+                                    <div class="bar-segment" data-region="加拿大" data-percentage="9.8" style="background-color: #34A853; width: 9.8%;"></div>
+                                    <div class="bar-segment" data-region="英国" data-percentage="4.7" style="background-color: #FBBC04; width: 4.7%;"></div>
+                                    <div class="bar-segment" data-region="澳大利亚" data-percentage="4.3" style="background-color: #EA4335; width: 4.3%;"></div>
+                                    <div class="bar-segment" data-region="印度" data-percentage="3.5" style="background-color: #9C27B0; width: 3.5%;"></div>
+                                    <div class="bar-segment" data-region="德国" data-percentage="3.1" style="background-color: #FF9800; width: 3.1%;"></div>
+                                    <div class="bar-segment" data-region="其他" data-percentage="5.9" style="background-color: #607D8B; width: 5.9%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 详细地区列表 -->
+                        <div class="region-detail-list">
+                            <div class="detail-item">
+                                <span class="detail-label">美国</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 68.7%; background-color: #4285F4;"></div>
+                                </div>
+                                <span class="detail-percentage">68.7%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">加拿大</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 9.8%; background-color: #34A853;"></div>
+                                </div>
+                                <span class="detail-percentage">9.8%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">英国</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 4.7%; background-color: #FBBC04;"></div>
+                                </div>
+                                <span class="detail-percentage">4.7%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">澳大利亚</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 4.3%; background-color: #EA4335;"></div>
+                                </div>
+                                <span class="detail-percentage">4.3%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">印度</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 3.5%; background-color: #9C27B0;"></div>
+                                </div>
+                                <span class="detail-percentage">3.5%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">德国</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 3.1%; background-color: #FF9800;"></div>
+                                </div>
+                                <span class="detail-percentage">3.1%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">其他</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 5.9%; background-color: #607D8B;"></div>
+                                </div>
+                                <span class="detail-percentage">5.9%</span>
+                            </div>
+                        </div>
+
+                        <div class="chart-note">
+                            受众地理数据基于过去30天的观看数据统计，通过IP地址分析得出地理位置分布
+                        </div>
+                    </div>
+
+                    <!-- 受众语言分布 -->
+                    <div class="audience-chart-card language-card">
+                        <div class="card-header">
+                            <h4>受众语言</h4>
+                        </div>
+
+                        <!-- 横向条形图 -->
+                        <div class="horizontal-bar-section">
+                            <div class="horizontal-bar-container">
+                                <div class="horizontal-bar">
+                                    <div class="bar-segment" data-language="英语" data-percentage="84.5" style="background-color: #4285F4; width: 84.5%;"></div>
+                                    <div class="bar-segment" data-language="西班牙语" data-percentage="7.3" style="background-color: #FF9800; width: 7.3%;"></div>
+                                    <div class="bar-segment" data-language="葡萄牙语" data-percentage="6.4" style="background-color: #34A853; width: 6.4%;"></div>
+                                    <div class="bar-segment" data-language="其他语言" data-percentage="1.8" style="background-color: #607D8B; width: 1.8%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 详细语言列表 -->
+                        <div class="language-detail-list">
+                            <div class="detail-item">
+                                <span class="detail-label">英语</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 84.5%; background-color: #4285F4;"></div>
+                                </div>
+                                <span class="detail-percentage">84.5%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">西班牙语</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 7.3%; background-color: #FF9800;"></div>
+                                </div>
+                                <span class="detail-percentage">7.3%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">葡萄牙语</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 6.4%; background-color: #34A853;"></div>
+                                </div>
+                                <span class="detail-percentage">6.4%</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">其他语言</span>
+                                <div class="detail-bar">
+                                    <div class="detail-fill" style="width: 1.8%; background-color: #607D8B;"></div>
+                                </div>
+                                <span class="detail-percentage">1.8%</span>
+                            </div>
+                        </div>
+
+                        <div class="chart-note">
+                            受众语言数据基于用户设备语言设置和观看行为分析，通过机器学习算法识别用户语言偏好
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 年龄和性别 -->
+                <section class="bento-card demographics-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-users-cog"></i>
+                            年龄和性别
+                        </h3>
+                    </div>
+                    <div class="demographics-grid">
+                    <!-- 年龄分布图表 -->
+                    <div class="audience-chart-card">
+                        <div class="card-header">
+                            <h4>年龄分布</h4>
+                            <div class="chart-controls">
+                                <span class="total-count">总计 100%</span>
+                            </div>
+                        </div>
+                        <div class="age-chart-container">
+                            <canvas id="ageDistributionChart" width="400" height="300"></canvas>
+                        </div>
+                        <div class="chart-note">
+                            年龄数据基于用户账户信息和观看行为模式分析，显示主要受众年龄分布情况
+                        </div>
+                    </div>
+
+                    <!-- 性别分布图表 -->
+                    <div class="audience-chart-card">
+                        <div class="card-header">
+                            <h4>性别分布</h4>
+                            <div class="chart-controls">
+                                <span class="total-count">总计 100%</span>
+                            </div>
+                        </div>
+                        <div class="gender-chart-container">
+                            <canvas id="genderDistributionChart" width="300" height="300"></canvas>
+                        </div>
+                        <div class="gender-stats-summary">
+                            <div class="gender-stat-item">
+                                <div class="gender-indicator male"></div>
+                                <span class="gender-label">男性</span>
+                                <span class="gender-percentage">52.4%</span>
+                            </div>
+                            <div class="gender-stat-item">
+                                <div class="gender-indicator female"></div>
+                                <span class="gender-label">女性</span>
+                                <span class="gender-percentage">47.6%</span>
+                            </div>
+                        </div>
+                        <div class="chart-note">
+                            性别数据基于用户账户信息和内容偏好分析，男性受众略多于女性受众
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 营销分析 -->
+                <section class="bento-card marketing-analysis-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-line"></i>
+                            营销分析
+                        </h3>
+                    </div>
+                    <div class="marketing-analysis-grid">
+                        <!-- 受众反馈 -->
+                        <div class="audience-chart-card marketing-feedback-card">
+                            <div class="card-header">
+                                <h4>受众反馈</h4>
+                            </div>
+
+                            <div class="feedback-metrics">
+                                <div class="feedback-item">
+                                    <div class="feedback-label">正向反馈的受众</div>
+                                    <div class="feedback-value">61%</div>
+                                    <div class="feedback-bar">
+                                        <div class="feedback-fill positive" style="width: 61%"></div>
+                                    </div>
+                                    <div class="feedback-description">
+                                        MrBeast的粉丝普遍对其内容表现出积极的反馈，表现为高点赞率和正面评论。
+                                    </div>
+                                </div>
+
+                                <div class="feedback-item">
+                                    <div class="feedback-label">推广内容感兴趣的受众</div>
+                                    <div class="feedback-value">60%</div>
+                                    <div class="feedback-bar">
+                                        <div class="feedback-fill interested" style="width: 60%"></div>
+                                    </div>
+                                    <div class="feedback-description">
+                                        MrBeast的推广内容获得较高的受众关注度，观众对其推荐的产品和服务表现出较强的兴趣。
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="chart-note">
+                                数据基于粉丝互动行为分析，包括点赞、评论、分享等互动指标。
+                            </div>
+                        </div>
+
+                        <!-- 消费影响力 -->
+                        <div class="audience-chart-card marketing-influence-card">
+                            <div class="card-header">
+                                <h4>消费影响力</h4>
+                            </div>
+
+                            <div class="influence-metrics">
+                                <div class="influence-item">
+                                    <div class="influence-label">推广吸引度</div>
+                                    <div class="star-rating">
+                                        <i class="fas fa-star active"></i>
+                                        <i class="fas fa-star active"></i>
+                                        <i class="fas fa-star active"></i>
+                                        <i class="fas fa-star-half-alt active"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <div class="influence-description">
+                                        MrBeast的推广内容具有很强的吸引力，能够有效吸引观众注意力并产生购买意向。
+                                    </div>
+                                </div>
+
+                                <div class="influence-item">
+                                    <div class="influence-label">推广专业度</div>
+                                    <div class="star-rating">
+                                        <i class="fas fa-star active"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <div class="influence-description">
+                                        MrBeast的推广内容专业度有待提升，建议在产品介绍和专业性方面加强内容质量。
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="chart-note">
+                                评估基于推广内容的表现数据，包括点击率、转化率等关键营销指标。
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 内容与兴趣 -->
+                <section class="bento-card content-interest-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-heart"></i>
+                            内容与兴趣
+                        </h3>
+                    </div>
+                    <div class="content-interest-grid">
+                        <!-- 内容分布 -->
+                        <div class="audience-chart-card content-distribution-card">
+                            <div class="card-header">
+                                <h4>内容分布</h4>
+                            </div>
+
+                            <div class="content-chart-container">
+                                <canvas id="contentDistributionChart" width="400" height="300"></canvas>
+                            </div>
+
+                            <div class="chart-note">
+                                基于受众观看内容类型分析，反映受众对不同内容的偏好
+                            </div>
+                        </div>
+
+                        <!-- 内容详情列表 -->
+                        <div class="audience-chart-card content-details-card">
+                            <div class="card-header">
+                                <h4>详情</h4>
+                                <div class="chart-controls">
+                                    <span class="total-count">百分比</span>
+                                </div>
+                            </div>
+
+                            <div class="content-details-list">
+                                <div class="content-detail-item">
+                                    <div class="content-category">
+                                        <div class="category-icon automotive"></div>
+                                        <span class="category-name">汽车</span>
+                                    </div>
+                                    <div class="content-description">
+                                        MrBeast的汽车主题内容获得观众高度关注，平均观看时长达7分14秒，平均每个视频获得超过1.8亿次观看，是其受众最感兴趣的内容之一。
+                                    </div>
+                                    <div class="content-percentage">32%</div>
+                                </div>
+
+                                <div class="content-detail-item">
+                                    <div class="content-category">
+                                        <div class="category-icon mobile"></div>
+                                        <span class="category-name">手机游戏</span>
+                                    </div>
+                                    <div class="content-description">
+                                        MrBeast在游戏领域的内容受到观众喜爱，其中手机游戏相关视频获得较高的互动率，观看完成度达到85%，显示了受众对此类内容的强烈兴趣。
+                                    </div>
+                                    <div class="content-percentage">18%</div>
+                                </div>
+
+                                <div class="content-detail-item">
+                                    <div class="content-category">
+                                        <div class="category-icon family"></div>
+                                        <span class="category-name">家庭&时尚</span>
+                                    </div>
+                                    <div class="content-description">
+                                        MrBeast的家庭和时尚相关内容获得稳定关注，平均每个视频获得超过7415万次观看，大部分观看时间集中在前5分钟，显示内容吸引力较强。
+                                    </div>
+                                    <div class="content-percentage">17%</div>
+                                </div>
+
+                                <div class="content-detail-item">
+                                    <div class="content-category">
+                                        <div class="category-icon beauty"></div>
+                                        <span class="category-name">美妆&时尚</span>
+                                    </div>
+                                    <div class="content-description">
+                                        MrBeast的美妆时尚类内容在年轻观众中表现出色，其中18-24岁观众占比达到71%，获得了较高的点赞率和分享率，展现出强大的影响力。
+                                    </div>
+                                    <div class="content-percentage">17%</div>
+                                </div>
+
+                                <div class="content-detail-item">
+                                    <div class="content-category">
+                                        <div class="category-icon vlog"></div>
+                                        <span class="category-name">vlog</span>
+                                    </div>
+                                    <div class="content-description">
+                                        MrBeast的日常vlog内容获得观众真实反馈，平均观看时长达4分7秒，观看完成度达94.4%，充分展现了观众对其个人生活内容的关注度。
+                                    </div>
+                                    <div class="content-percentage">17%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 粉丝可信度 -->
+                <section class="fan-credibility-header">
+                    <div class="credibility-title">
+                        <i class="fas fa-shield-alt"></i>
+                        粉丝可信度
+                    </div>
+                </section>
+
+                <div class="fan-credibility-cards-container">
+                    <!-- 受众类型卡片 -->
+                    <section class="bento-card audience-type-card">
+                        <div class="card-header">
+                            <h4>受众类型</h4>
+                        </div>
+                        <div class="audience-type-content">
+                            <div class="audience-type-chart">
+                                <div class="pie-chart-container">
+                                    <canvas id="audienceTypeChart" width="200" height="200"></canvas>
+                                </div>
+                                <div class="audience-type-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color-bar">
+                                            <div class="legend-color normal" style="width: 100%"></div>
+                                        </div>
+                                        <span class="legend-label">普通粉</span>
+                                        <span class="legend-percentage">76.8%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color-bar">
+                                            <div class="legend-color suspicious" style="width: 18.6%"></div>
+                                        </div>
+                                        <span class="legend-label">可疑粉</span>
+                                        <span class="legend-percentage">14.3%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color-bar">
+                                            <div class="legend-color zombie" style="width: 8.1%"></div>
+                                        </div>
+                                        <span class="legend-label">僵尸粉</span>
+                                        <span class="legend-percentage">6.2%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color-bar">
+                                            <div class="legend-color influencer" style="width: 3.5%"></div>
+                                        </div>
+                                        <span class="legend-label">网红粉</span>
+                                        <span class="legend-percentage">2.7%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="audience-type-summary">
+                                受众类型中，真实用户为主要群体，普通粉占比较高，可疑粉和僵尸粉占比相对较小，说明粉丝质量可信度较高，网红粉占比适中表明受众具有一定的影响力
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 真实受众卡片 -->
+                    <section class="bento-card real-audience-card">
+                        <div class="card-header">
+                            <h4>真实受众</h4>
+                        </div>
+                        <div class="real-audience-content">
+                            <div class="real-audience-chart">
+                                <div class="donut-chart-container">
+                                    <canvas id="realAudienceChart" width="180" height="180"></canvas>
+                                    <div class="donut-center">
+                                        <div class="center-percentage">79.5%</div>
+                                        <div class="center-label">真实</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="real-audience-description">
+                                网红@Unbox Therapy 的真实受众为79.5%，77.1%-79.3% 是相似规模网红的平均等级数值
+                            </div>
+                            <div class="real-audience-summary">
+                                网红粉的真实受众占主导
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- 内容数据页签内容 -->
+            <div class="tab-content" id="contentTabContent" style="display: none;">
+                <!-- 基本数据 -->
+                <section class="bento-card content-basic-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-bar"></i>
+                            基本数据
+                        </h3>
+                        <span class="time-filter">近30个内容</span>
+                    </div>
+                    <div class="content-metrics-grid">
+                        <div class="content-metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-label">互动率</div>
+                                <div class="metric-value">6.13%</div>
+                                <div class="metric-status moderate">及格</div>
+                            </div>
+                            <div class="metric-chart">
+                                <canvas id="interactionRateChart" width="80" height="80"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="content-metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-label">观看量/粉丝数</div>
+                                <div class="metric-value">94.85%</div>
+                                <div class="metric-status excellent">优秀</div>
+                            </div>
+                            <div class="metric-chart">
+                                <canvas id="viewRateChart" width="80" height="80"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="content-metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-thumbs-up"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-label">点赞数/观看数</div>
+                                <div class="metric-value">5.47%</div>
+                                <div class="metric-status moderate">中等</div>
+                            </div>
+                            <div class="metric-chart">
+                                <canvas id="likeRateChart" width="80" height="80"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="content-metric-card">
+                            <div class="metric-icon">
+                                <i class="fas fa-comment"></i>
+                            </div>
+                            <div class="metric-content">
+                                <div class="metric-label">评论数/观看数</div>
+                                <div class="metric-value">0.04%</div>
+                                <div class="metric-status moderate">中等</div>
+                            </div>
+                            <div class="metric-chart">
+                                <canvas id="commentRateChart" width="80" height="80"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- 发布分析 -->
+                <section class="bento-card publishing-analysis-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-calendar-alt"></i>
+                            发布分析
+                        </h3>
+                    </div>
+                    <div class="publishing-analysis-grid">
+                            <!-- 发布时间表 -->
+                            <div class="audience-chart-card publishing-calendar-card">
+                                <div class="card-header">
+                                    <h4>发布时间表</h4>
+                                </div>
+
+                                <div class="calendar-container">
+                                    <div class="calendar-navigation">
+                                        <button class="nav-btn prev-btn" id="prevMonth">
+                                            <i class="fas fa-chevron-left"></i>
+                                        </button>
+                                        <span class="month-display" id="monthDisplay">2025-7</span>
+                                        <button class="nav-btn next-btn" id="nextMonth">
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="calendar-weekdays">
+                                        <div class="weekday">星期日</div>
+                                        <div class="weekday">星期一</div>
+                                        <div class="weekday">星期二</div>
+                                        <div class="weekday">星期三</div>
+                                        <div class="weekday">星期四</div>
+                                        <div class="weekday">星期五</div>
+                                        <div class="weekday">星期六</div>
+                                    </div>
+
+                                    <div class="calendar-grid" id="publishingCalendar">
+                                        <!-- 日历将通过JavaScript动态生成 -->
+                                    </div>
+                                </div>
+
+                                <div class="chart-note">
+                                    网红视频发布时间的日历视图
+                                </div>
+                            </div>
+
+                            <!-- 发布频率 -->
+                            <div class="audience-chart-card publishing-frequency-card">
+                                <div class="card-header">
+                                    <h4>发布频率</h4>
+                                </div>
+
+                                <div class="frequency-stats-cards">
+                                    <div class="stat-card">
+                                        <div class="stat-number">18</div>
+                                        <div class="stat-label">每周发布</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">79</div>
+                                        <div class="stat-label">每月发布</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-date">2025-07-17</div>
+                                        <div class="stat-label">最近发布时间</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-badge excellent">优秀</div>
+                                        <div class="stat-label">发布频率等级</div>
+                                    </div>
+                                </div>
+
+                                <div class="frequency-chart-container">
+                                    <canvas id="publishingFrequencyChart" width="400" height="200"></canvas>
+                                </div>
+
+                                <div class="chart-note">
+                                    创作者发布内容的频次
+                                </div>
+                            </div>
+                        </div>
+                </section>
+
+                <!-- 频道标签 -->
+                <section class="bento-card tags-analysis-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-tags"></i>
+                            频道标签
+                        </h3>
+                    </div>
+                    <!-- 69标签统计 -->
+                        <div class="tags-count-header">
+                            <span class="tags-count">69 标签</span>
+                            <i class="fas fa-info-circle tags-info-icon"></i>
+                        </div>
+
+                        <!-- 标签云 -->
+                        <div class="tags-cloud-section">
+                            <div class="tags-cloud-container">
+                                <span class="tag-item size-6">cocomelon</span>
+                                <span class="tag-item size-5">nurseryrhymes</span>
+                                <span class="tag-item size-4">kids</span>
+                                <span class="tag-item size-4">entertainment</span>
+                                <span class="tag-item size-3">baby</span>
+                                <span class="tag-item size-2">performing arts</span>
+                                <span class="tag-item size-1">animal time</span>
+                                <span class="tag-item size-3">kids song</span>
+                                <span class="tag-item size-2">cody cocomelon</span>
+                                <span class="tag-item size-4">kids animation</span>
+                                <span class="tag-item size-1">shorts for kids</span>
+                                <span class="tag-item size-2">lellolee</span>
+                                <span class="tag-item size-3">cocomelon friends</span>
+                                <span class="tag-item size-1">songs</span>
+                                <span class="tag-item size-2">coco baby</span>
+                                <span class="tag-item size-1">nina cocomelon</span>
+                                <span class="tag-item size-3">wheels on the bus cocomelon</span>
+                                <span class="tag-item size-1">healthy</span>
+                                <span class="tag-item size-4">cocomelon nursery rhymes</span>
+                                <span class="tag-item size-1">kindergarten</span>
+                                <span class="tag-item size-2">sing-along</span>
+                                <span class="tag-item size-3">sing-along songs</span>
+                                <span class="tag-item size-1">play cocomelon</span>
+                                <span class="tag-item size-2">baby coco</span>
+                                <span class="tag-item size-1">song</span>
+                                <span class="tag-item size-1">habit</span>
+                                <span class="tag-item size-2">health kids songs</span>
+                                <span class="tag-item size-3">kids videos</span>
+                                <span class="tag-item size-1">baby songs</span>
+                                <span class="tag-item size-2">school movie</span>
+                                <span class="tag-item size-4">shorts</span>
+                                <span class="tag-item size-1">short</span>
+                                <span class="tag-item size-4">music</span>
+                                <span class="tag-item size-1">cocomelon family</span>
+                                <span class="tag-item size-2">kidssongs tv show</span>
+                                <span class="tag-item size-1">healthy habits</span>
+                                <span class="tag-item size-2">nursery</span>
+                                <span class="tag-item size-1">kid songs</span>
+                                <span class="tag-item size-5">kids education nursery rhymes</span>
+                                <span class="tag-item size-1">toddler</span>
+                                <span class="tag-item size-2">preschool</span>
+                                <span class="tag-item size-1">cocomelon dance party</span>
+                                <span class="tag-item size-1">rainyday</span>
+                                <span class="tag-item size-2">cocomelon song</span>
+                                <span class="tag-item size-3">children songs</span>
+                                <span class="tag-item size-1">abckidy</span>
+                                <span class="tag-item size-2">rhymes</span>
+                                <span class="tag-item size-1">dance party</span>
+                                <span class="tag-item size-1">abc song</span>
+                                <span class="tag-item size-2">babyshark</span>
+                                <span class="tag-item size-1">play cocomelon on youtube</span>
+                                <span class="tag-item size-2">cocomelon shorts</span>
+                                <span class="tag-item size-3">kids video</span>
+                                <span class="tag-item size-4">baby entertainment</span>
+                                <span class="tag-item size-1">healthyhabits</span>
+                                <span class="tag-item size-1">cocomelon dance</span>
+                                <span class="tag-item size-2">baby shark</span>
+                                <span class="tag-item size-3">nursery rhymes for kids</span>
+                                <span class="tag-item size-2">wheels on the bus</span>
+                                <span class="tag-item size-1">cocomelon nina</span>
+                                <span class="tag-item size-1">cocomelon animation</span>
+                            </div>
+                        </div>
+
+                        <div class="tags-analysis-grid">
+                            <!-- 网红类别 -->
+                            <div class="audience-chart-card category-analysis-card">
+                                <div class="card-header">
+                                    <h4>网红类别</h4>
+                                </div>
+
+                                <div class="category-list">
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <span class="category-name">娱乐</span>
+                                            <div class="category-bar entertainment">
+                                                <div class="category-fill" style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                        <span class="category-percentage">45%</span>
+                                    </div>
+
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <span class="category-name">孩子</span>
+                                            <div class="category-bar kids">
+                                                <div class="category-fill" style="width: 56%"></div>
+                                            </div>
+                                        </div>
+                                        <span class="category-percentage">25%</span>
+                                    </div>
+
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <span class="category-name">教育</span>
+                                            <div class="category-bar education">
+                                                <div class="category-fill" style="width: 44%"></div>
+                                            </div>
+                                        </div>
+                                        <span class="category-percentage">20%</span>
+                                    </div>
+
+                                    <div class="category-item">
+                                        <div class="category-info">
+                                            <span class="category-name">电影</span>
+                                            <div class="category-bar movie">
+                                                <div class="category-fill" style="width: 22%"></div>
+                                            </div>
+                                        </div>
+                                        <span class="category-percentage">10%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 前5的主题标签 -->
+                            <div class="audience-chart-card top-tags-card">
+                                <div class="card-header">
+                                    <h4>前5的主题标签</h4>
+                                </div>
+
+                                <div class="top-tags-list">
+                                    <div class="top-tag-item">
+                                        <div class="tag-dot blue"></div>
+                                        <div class="tag-info">
+                                            <div class="tag-name">#kids</div>
+                                        </div>
+                                        <div class="tag-percentage">2.5%</div>
+                                    </div>
+
+                                    <div class="top-tag-item">
+                                        <div class="tag-dot orange"></div>
+                                        <div class="tag-info">
+                                            <div class="tag-name">#nursery rhymes</div>
+                                        </div>
+                                        <div class="tag-percentage">2.5%</div>
+                                    </div>
+
+                                    <div class="top-tag-item">
+                                        <div class="tag-dot green"></div>
+                                        <div class="tag-info">
+                                            <div class="tag-name">#kids education</div>
+                                        </div>
+                                        <div class="tag-percentage">2.5%</div>
+                                    </div>
+
+                                    <div class="top-tag-item">
+                                        <div class="tag-dot orange"></div>
+                                        <div class="tag-info">
+                                            <div class="tag-name">#school</div>
+                                        </div>
+                                        <div class="tag-percentage">2.5%</div>
+                                    </div>
+
+                                    <div class="top-tag-item">
+                                        <div class="tag-dot blue"></div>
+                                        <div class="tag-info">
+                                            <div class="tag-name">#shorts</div>
+                                        </div>
+                                        <div class="tag-percentage">2.5%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+            </div>
+
+            <!-- 品牌数据页签内容 -->
+            <div id="brand-data" class="tab-content">
+                <!-- 基本数据 -->
+                <section class="bento-card brand-basic-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-line"></i>
+                            基本数据
+                        </h3>
+                        <div class="time-filter">
+                            <span>近30个月</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div class="brand-overview-grid">
+                            <!-- 品牌广告效果 -->
+                            <div class="brand-stat-card">
+                                <div class="stat-header">
+                                    <h4>品牌广告效果</h4>
+                                </div>
+                                <div class="stat-main">
+                                    <div class="stat-number">6.06%</div>
+                                    <div class="stat-label">互动率</div>
+                                </div>
+                                <div class="stat-description">
+                                    该网红的平均互动率为1.31%，其广告内容的互动率为6.06%
+                                </div>
+                            </div>
+
+                            <!-- 发布品牌频次 -->
+                            <div class="brand-stat-card">
+                                <div class="stat-header">
+                                    <h4>发布品牌频次</h4>
+                                </div>
+                                <div class="stat-main">
+                                    <div class="stat-number">3.7/每月</div>
+                                    <div class="stat-label">每月发布数量</div>
+                                </div>
+                                <div class="stat-description">
+                                    该网红每月发布3.7个广告内容，占总内容的35.48%
+                                </div>
+                            </div>
+                        </div>
+
+                    <!-- 非推广vs.推广 -->
+                    <div class="brand-trend-section">
+                        <div class="section-header">
+                            <h3>
+                                <i class="fas fa-chart-area"></i>
+                                非推广vs.推广
+                            </h3>
+                        </div>
+                        <div class="brand-trend-card">
+                            <div class="trend-chart-container">
+                                <canvas id="brandTrendChart"></canvas>
+                            </div>
+
+                            <div class="trend-summary">
+                                <div class="trend-stat">
+                                    <div class="trend-label">平均观看量</div>
+                                    <div class="trend-value">17.36万</div>
+                                </div>
+                                <div class="trend-stat">
+                                    <div class="trend-label">平均观看量-推广</div>
+                                    <div class="trend-value">224.14万</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 品牌提及 -->
+                <section class="bento-card brand-mention-section">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-bullhorn"></i>
+                            品牌提及
+                        </h3>
+                    </div>
+                    <div class="brand-mention-card">
+                            <div class="mention-header">
+                                <div class="mention-title">提及品牌</div>
+                            </div>
+
+                            <div class="mention-table">
+                                <div class="table-header">
+                                    <div class="header-item">品牌</div>
+                                    <div class="header-item">推广 <i class="fas fa-sort"></i></div>
+                                    <div class="header-item">互动频率 <i class="fas fa-sort"></i></div>
+                                    <div class="header-item">总观看量 <i class="fas fa-sort"></i></div>
+                                    <div class="header-item">上次发布时间 <i class="fas fa-sort"></i></div>
+                                </div>
+
+                                <div class="table-body">
+                                    <div class="table-row">
+                                        <div class="brand-cell">
+                                            <div class="brand-name">Weverse</div>
+                                        </div>
+                                        <div class="data-cell number-cell">733</div>
+                                        <div class="data-cell number-cell">6.5%</div>
+                                        <div class="data-cell number-cell">20.82亿</div>
+                                        <div class="data-cell date-cell">2025-07-10</div>
+                                    </div>
+
+                                    <div class="table-row">
+                                        <div class="brand-cell">
+                                            <div class="brand-name">douyin</div>
+                                        </div>
+                                        <div class="data-cell number-cell">302</div>
+                                        <div class="data-cell number-cell">6.01%</div>
+                                        <div class="data-cell number-cell">5.63亿</div>
+                                        <div class="data-cell date-cell">2025-07-10</div>
+                                    </div>
+
+                                    <div class="table-row">
+                                        <div class="brand-cell">
+                                            <div class="brand-name">onelink</div>
+                                        </div>
+                                        <div class="data-cell number-cell">276</div>
+                                        <div class="data-cell number-cell">11.88%</div>
+                                        <div class="data-cell number-cell">18.77亿</div>
+                                        <div class="data-cell date-cell">2025-07-08</div>
+                                    </div>
+
+                                    <div class="table-row">
+                                        <div class="brand-cell">
+                                            <div class="brand-name">ibighit</div>
+                                        </div>
+                                        <div class="data-cell number-cell">252</div>
+                                        <div class="data-cell number-cell">14.65%</div>
+                                        <div class="data-cell number-cell">14.7亿</div>
+                                        <div class="data-cell date-cell">2025-07-10</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="pagination">
+                                <div class="pagination-info">
+                                    <span class="current-page">1</span>
+                                    <span class="page-separator">2</span>
+                                    <span class="page-number">3</span>
+                                    <span class="page-dots">...</span>
+                                    <span class="total-pages">10条/页</span>
+                                </div>
+                            </div>
+                        </div>
+                </section>
+            </div>
+            </div>
+
+            <!-- 网红搜索页内容 -->
+            <div class="page-content" id="influencer-search-page" style="display: none;">
+                <!-- 现代化简化版搜索页面 -->
+                <section class="simple-search-container">
+                    <div class="simple-search-content">
+                        <h1 class="simple-search-title">网红搜索</h1>
+                        <p class="simple-search-subtitle">发现优质内容创作者，开启合作之旅</p>
+                        
+                        <div class="simple-search-box">
+                            <div class="search-input-container">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="simple-search-input" 
+                                       id="simple-search-input" 
+                                       placeholder="输入网红名称搜索..."
+                                       autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="search-results-container">
+                            <div class="results-list" id="search-results-list">
+                                <!-- 搜索结果将通过 JavaScript 动态生成 -->
+                            </div>
+                            
+                            <button class="load-more-btn" id="load-more-btn" style="display: none;">
+                                <i class="fas fa-plus-circle"></i>
+                                加载更多
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
