@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>建联详情 - 主页面原型</title>
+  <link href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="left">
+      <h1>建联记录</h1>
+    </div>
+    <div class="right">
+      <div class="toolbar">
+        <input class="search" placeholder="博主名称、内容标签…" />
+        <button class="btn">筛选</button>
+        <button class="btn">合作状态</button>
+        <button class="btn primary">导出</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- 过滤条 -->
+    <section class="filter-bar">
+      <div class="chips">
+        <button class="chip active">全部</button>
+        <button class="chip">首次联系</button>
+        <button class="chip">已回复</button>
+        <button class="chip">价格商议</button>
+        <button class="chip">合同确认</button>
+        <button class="chip">样品发送</button>
+        <button class="chip">内容制作</button>
+        <button class="chip">交付完成</button>
+      </div>
+      <div class="summary">4 / 4 个联系人</div>
+    </section>
+
+    <!-- 列表 -->
+    <section class="list">
+      <!-- 单项 -->
+      <article class="row">
+        <div class="col influencer">
+          <img class="avatar" src="https://i.pravatar.cc/40?img=1" alt="" />
+          <div class="meta">
+            <div class="name">MattVidPro AI <i class="fas fa-circle-check verified"></i></div>
+            <div class="stats"><i class="fas fa-user"></i> 26.87万 · <i class="fas fa-eye"></i> 3878万</div>
+          </div>
+        </div>
+        <div class="col product">
+          <div class="product-title">Earbud</div>
+          <div class="product-note">单条9500美元，接受样品测评</div>
+        </div>
+        <div class="col status">
+          <span class="badge purple">价格商议</span>
+        </div>
+        <div class="col actions">
+          <i class="fas fa-cloud-upload-alt"></i> 上次联系：2023/03/21
+        </div>
+        <div class="col ops">
+          <button class="ghost">查看详情</button>
+          <button class="primary">发建联信</button>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="col influencer">
+          <img class="avatar" src="https://i.pravatar.cc/40?img=12" alt="" />
+          <div class="meta">
+            <div class="name">AI TV <i class="fas fa-circle-check verified"></i></div>
+            <div class="stats"><i class="fas fa-user"></i> 13.8K · <i class="fas fa-eye"></i> 114万</div>
+          </div>
+        </div>
+        <div class="col product">
+          <div class="product-title">Earbud</div>
+          <div class="product-note">单条$7500，支持赠品置换</div>
+        </div>
+        <div class="col status">
+          <span class="badge magenta">价格单</span>
+        </div>
+        <div class="col actions">
+          <i class="fas fa-cloud-upload-alt"></i> 上次联系：2023/03/22
+        </div>
+        <div class="col ops">
+          <button class="ghost">查看详情</button>
+          <button class="primary">发建联信</button>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="col influencer">
+          <img class="avatar" src="https://i.pravatar.cc/40?img=32" alt="" />
+          <div class="meta">
+            <div class="name">Two Minute Papers</div>
+            <div class="stats"><i class="fas fa-user"></i> 162万 · <i class="fas fa-eye"></i> 1.5亿</div>
+          </div>
+        </div>
+        <div class="col product">
+          <div class="product-title">Earbud</div>
+          <div class="product-note">内容创作中，待校对</div>
+        </div>
+        <div class="col status">
+          <span class="badge orange">内容创作</span>
+        </div>
+        <div class="col actions">
+          <i class="fas fa-cloud-upload-alt"></i> 上次联系：2023/03/20
+        </div>
+        <div class="col ops">
+          <button class="ghost">查看详情</button>
+          <button class="primary">发建联信</button>
+        </div>
+      </article>
+
+      <article class="row">
+        <div class="col influencer">
+          <img class="avatar" src="https://i.pravatar.cc/40?img=56" alt="" />
+          <div class="meta">
+            <div class="name">Sciencephile the AI</div>
+            <div class="stats"><i class="fas fa-user"></i> 108万 · <i class="fas fa-eye"></i> 2557万</div>
+          </div>
+        </div>
+        <div class="col product">
+          <div class="product-title">Earbud</div>
+          <div class="product-note">内容完成，准备发布</div>
+        </div>
+        <div class="col status">
+          <span class="badge green">交付完成</span>
+        </div>
+        <div class="col actions">
+          <i class="fas fa-cloud-upload-alt"></i> 上次联系：2023/03/10
+        </div>
+        <div class="col ops">
+          <button class="ghost">查看详情</button>
+          <button class="primary">发建联信</button>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <button class="fab"><i class="fas fa-comments"></i></button>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

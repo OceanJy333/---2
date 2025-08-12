@@ -66,5 +66,8 @@ playwright-report/
 # 项目特定
 style.css.backup 
 
+# 插件调研文件夹
+tk插件/
+
 # YoYo AI version control directory
 .yoyo/

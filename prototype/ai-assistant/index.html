@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 助手 - 主界面原型</title>
+  <link href="https://cdn.staticfile.net/font-awesome/6.5.1/css/all.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <button class="icon-btn menu-btn" aria-label="菜单">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">AI助手</div>
+    </div>
+    <div class="topbar__right">
+      <button class="icon-btn" aria-label="通知">
+        <i class="far fa-bell"></i>
+        <span class="badge">2</span>
+      </button>
+      <div class="avatar">
+        <img src="https://i.pravatar.cc/40?img=12" alt="avatar" />
+      </div>
+    </div>
+  </header>
+
+  <!-- 页面主体 -->
+  <main class="page">
+    <!-- 内容区域 -->
+    <div class="content-area">
+      <section class="welcome-card">
+        <div class="welcome-card__icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <h1 class="welcome-title">👋 欢迎使用 AI 助手！</h1>
+        <p class="welcome-subtitle">我是您的跨境运营伙伴，可以帮您：</p>
+
+
+        <ul class="feature-list">
+          <li>
+            <span class="feature-icon blue"><i class="fas fa-magnifying-glass"></i></span>
+            <span>分析商品信息并推荐适合的 YouTube 博主</span>
+          </li>
+          <li>
+            <span class="feature-icon green"><i class="fas fa-user-check"></i></span>
+            <span>为商品特性匹配最适合的合作人选</span>
+          </li>
+          <li>
+            <span class="feature-icon purple"><i class="fas fa-envelope-open-text"></i></span>
+            <span>生成高质量的初步建联邮件</span>
+          </li>
+        </ul>
+
+        <!-- TK 插件提示区域 -->
+        <div class="tk-plugin-section" id="tkPluginSection" style="display: none;">
+          <div class="plugin-notice">
+            <span class="feature-icon primary"><i class="fas fa-puzzle-piece"></i></span>
+            <span>请先安装插件后才可建联</span>
+            <button class="plugin-install-btn" id="pluginInstallBtn">
+              <i class="fas fa-download"></i>
+              安装插件
+            </button>
+          </div>
+        </div>
+
+        <!-- 模式切换移到底部 -->
+        <div class="mode-switch-bottom">
+          <div class="mode-options-compact">
+            <span class="mode-text" data-mode="email">邮箱建联</span>
+            <label class="switch">
+              <input type="checkbox" id="modeSwitch">
+              <span class="slider"></span>
+            </label>
+            <span class="mode-text" data-mode="tk">TK 私信</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 简单结果预留区 -->
+      <section class="result" id="result" aria-live="polite"></section>
+    </div>
+
+    <!-- 输入区域 - 固定在底部 -->
+    <section class="input-area">
+      <div class="input-container">
+        <div class="input-wrapper">
+          <input id="productInput" class="input" placeholder="粘贴您的商品链接……" />
+          <div class="input-actions">
+            <button class="send-btn" id="analyzeBtn" title="发送" disabled>
+              <i class="fas fa-arrow-up"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

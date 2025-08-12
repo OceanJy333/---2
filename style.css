@@ -4963,6 +4963,65 @@ input:checked + .slider:before {
     color: rgba(255, 255, 255, 0.6);
 }
 
+/* 二维码区域样式 */
+.qrcode-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 8px;
+}
+
+.qrcode-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.qrcode-container:hover {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+.qrcode-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    display: block;
+}
+
+.qrcode-text {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.qrcode-title {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.qrcode-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    margin: 0;
+    line-height: 1.4;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .login-card-new {
@@ -4980,6 +5039,25 @@ input:checked + .slider:before {
 
     .bg-shape-1, .bg-shape-2 {
         display: none;
+    }
+
+    /* 二维码区域移动端适配 */
+    .qrcode-section {
+        padding: 20px 16px;
+        gap: 14px;
+    }
+
+    .qrcode-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .qrcode-title {
+        font-size: 15px;
+    }
+
+    .qrcode-subtitle {
+        font-size: 12px;
     }
 }
 
@@ -5003,6 +5081,25 @@ input:checked + .slider:before {
 
     .login-subtitle-new {
         font-size: 14px;
+    }
+
+    /* 二维码区域超小屏幕适配 */
+    .qrcode-section {
+        padding: 16px 12px;
+        gap: 12px;
+    }
+
+    .qrcode-image {
+        width: 90px;
+        height: 90px;
+    }
+
+    .qrcode-title {
+        font-size: 14px;
+    }
+
+    .qrcode-subtitle {
+        font-size: 11px;
     }
 
     .login-input-wrapper {
@@ -13952,6 +14049,50 @@ a[href^="#"] {
 .email-intent-tag.reply {
     background-color: var(--success-color, #10b981);
     color: white;
+}
+
+/* 邮件状态标签样式 */
+.email-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 500;
+    margin-left: 8px;
+    gap: 3px;
+}
+
+.email-status i {
+    font-size: 10px;
+}
+
+/* 已发送状态 */
+.email-status.sent {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* 待发送状态 */
+.email-status.pending {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* 发送失败状态 */
+.email-status.failed {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* 已接收状态 */
+.email-status.received {
+    background-color: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 /* 响应式调整 */

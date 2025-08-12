@@ -1,0 +1,436 @@
+/* AI 助手主界面样式（ChatGPT 风格） */
+:root{
+  --bg: linear-gradient(135deg, 
+    #667eea 0%, 
+    #764ba2 10%, 
+    #f093fb 20%, 
+    #f5576c 30%,
+    #fccb90 40%,
+    #d57eeb 50%,
+    #a8edea 60%,
+    #fed6e3 70%,
+    #c3cfe2 80%,
+    #667eea 100%);
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --primary:#3b82f6;
+  --success:#22c55e;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --purple:#7c3aed;
+  --ring:rgba(59,130,246,0.35);
+  --input-bg: #f9fafb;
+  --border: #e5e7eb;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; 
+  font-family: ui-sans-serif, -apple-system, system-ui, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--text); 
+  background: #f4f6f8;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 顶部导航 */
+.topbar{
+  height:56px; 
+  background:rgba(255, 255, 255, 0.8); 
+  backdrop-filter: blur(10px);
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  padding:0 20px; 
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+  position: relative;
+  z-index: 10;
+}
+.topbar__left, .topbar__right{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.topbar .logo{font-weight:700; font-size: 16px;}
+.icon-btn{
+  position:relative; 
+  display:inline-flex; 
+  align-items:center; 
+  justify-content:center; 
+  width:36px; 
+  height:36px; 
+  border-radius:10px; 
+  border:none; 
+  background:rgba(239, 246, 255, 0.8); 
+  color:#1e40af; 
+  cursor:pointer;
+  transition: all .2s;
+}
+.icon-btn:hover{
+  background:rgba(219, 234, 254, 0.9);
+}
+.icon-btn .badge{
+  position:absolute; 
+  top:-4px; 
+  right:-4px; 
+  background:#ef4444; 
+  color:#fff; 
+  border-radius:999px; 
+  padding:2px 6px; 
+  font-size:10px;
+}
+.avatar img{
+  width:32px; 
+  height:32px; 
+  border-radius:50%;
+}
+
+/* 页面主体 */
+.page{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 内容区域 */
+.content-area{
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 20px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 欢迎卡片 */
+.welcome-card{
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius:20px; 
+  padding:40px 50px; 
+  box-shadow:0 10px 40px rgba(0,0,0,.08); 
+  text-align:center;
+  max-width: 480px;
+  width: 100%;
+}
+.welcome-card__icon{
+  width:60px; 
+  height:60px; 
+  border-radius:14px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  margin:0 auto 16px; 
+  background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+  color:#fff;
+  font-size: 28px;
+}
+.welcome-title{
+  margin:16px 0 12px; 
+  font-size:32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.welcome-subtitle{
+  margin:0 0 32px; 
+  color:var(--muted);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* TK 插件提示区域 */
+.tk-plugin-section{
+  margin: 12px 0 0;
+}
+.plugin-notice{
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: var(--input-bg);
+  transition: all .2s;
+}
+.feature-icon.primary{
+  background: var(--primary);
+}
+.plugin-install-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  margin-left: auto;
+}
+.plugin-install-btn:hover{
+  background: #2563eb;
+}
+
+/* 模式切换 - 底部紧凑版 */
+.mode-switch-bottom{
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+.mode-options-compact{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  background: var(--input-bg);
+  padding:6px 12px;
+  border-radius:999px;
+  border: 1px solid var(--border);
+}
+.mode-text{
+  font-size:13px;
+  font-weight:500;
+  transition:color .2s;
+  padding: 2px 4px;
+}
+.mode-text[data-mode="email"]{
+  color:var(--primary);
+}
+.mode-text[data-mode="tk"]{
+  color:var(--muted);
+}
+
+/* Switch 组件样式 */
+.switch{
+  position:relative;
+  display:inline-block;
+  width:40px;
+  height:22px;
+}
+.switch input{
+  opacity:0;
+  width:0;
+  height:0;
+}
+.slider{
+  position:absolute;
+  cursor:pointer;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:#e5e7eb;
+  transition:.3s;
+  border-radius:999px;
+}
+.slider:before{
+  position:absolute;
+  content:"";
+  height:16px;
+  width:16px;
+  left:3px;
+  bottom:3px;
+  background:white;
+  transition:.3s;
+  border-radius:50%;
+  box-shadow:0 2px 4px rgba(0,0,0,.15);
+}
+input:checked + .slider{
+  background:var(--primary);
+}
+input:focus + .slider{
+  box-shadow:0 0 0 3px var(--ring);
+}
+input:checked + .slider:before{
+  transform:translateX(18px);
+}
+
+/* 功能列表 */
+.feature-list{
+  list-style:none; 
+  padding:0; 
+  margin:32px 0 0; 
+  text-align:left; 
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.feature-list li{
+  display:flex; 
+  gap:14px; 
+  align-items:center; 
+  padding:12px 16px; 
+  border-radius:14px;
+  background: var(--input-bg);
+  transition: all .2s;
+}
+.feature-list li:hover{
+  background: #f3f4f6;
+  transform: translateX(4px);
+}
+.feature-icon{
+  display:inline-flex; 
+  width:36px; 
+  height:36px; 
+  border-radius:10px; 
+  align-items:center; 
+  justify-content:center; 
+  color:#fff;
+  flex-shrink: 0;
+}
+.feature-icon.blue{background:var(--blue)}
+.feature-icon.green{background:var(--green)}
+.feature-icon.purple{background:var(--purple)}
+
+/* 输入区域 - 固定在底部 */
+.input-area{
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.95) 80%, transparent 100%);
+  padding: 20px 20px 30px;
+  backdrop-filter: blur(10px);
+}
+.input-container{
+  max-width: 620px;
+  margin: 0 auto;
+}
+.input-wrapper{
+  display:flex; 
+  align-items:center; 
+  gap:8px; 
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius:26px; 
+  padding:8px 8px 8px 20px; 
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  transition: all .2s;
+}
+.input-wrapper:focus-within{
+  box-shadow:0 8px 24px rgba(0,0,0,.12);
+  border-color: var(--primary);
+}
+.input{
+  flex:1; 
+  height:44px; 
+  border:0; 
+  background:transparent; 
+  padding:0; 
+  font-size:15px; 
+  outline:none;
+  color: var(--text);
+}
+.input::placeholder{
+  color: var(--muted);
+}
+.input-actions{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.icon-btn.attach{
+  background: transparent;
+  color: var(--muted);
+  width: 32px;
+  height: 32px;
+}
+.icon-btn.attach:hover{
+  background: var(--input-bg);
+  color: var(--text);
+}
+.send-btn{
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  border: none;
+  background: var(--text);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+.send-btn:hover:not(:disabled){
+  background: #111827;
+  transform: scale(1.05);
+}
+.send-btn:disabled{
+  background: var(--border);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.input-footer{
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  justify-content: center;
+}
+.ghost-btn{
+  display:inline-flex; 
+  align-items:center; 
+  gap:6px; 
+  padding:8px 14px; 
+  border-radius:999px; 
+  border:1px solid var(--border); 
+  background:rgba(255,255,255,0.8); 
+  color:var(--muted); 
+  cursor:pointer;
+  font-size: 13px;
+  transition: all .2s;
+}
+.ghost-btn:hover{
+  background:white;
+  color: var(--text);
+  border-color: var(--primary);
+}
+.ghost-btn.small{
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* 结果区域 */
+.result{
+  max-width: 480px;
+  width: 100%;
+  margin-top: 24px;
+}
+.result .msg{
+  background:rgba(255,255,255,0.95); 
+  border-radius:16px; 
+  padding:16px 20px; 
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+  line-height: 1.6;
+}
+
+/* 响应式 */
+@media (max-width:640px){
+  .welcome-card{
+    padding:24px;
+  }
+  .welcome-title{
+    font-size: 24px;
+  }
+  .content-area{
+    padding: 24px 16px 120px;
+  }
+  .input-area{
+    padding: 16px 16px 24px;
+  }
+  .feature-list li{
+    padding: 10px 12px;
+  }
+  .feature-icon{
+    width: 32px;
+    height: 32px;
+  }
+}
